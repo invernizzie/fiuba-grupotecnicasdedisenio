@@ -1,0 +1,182 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ar.fi.uba.tecnicasdedisenio</groupId>
+	<artifactId>ingenierosindustriales</artifactId>
+	<packaging>jar</packaging>
+	<name>simuladorfabricas</name>
+	<version>1.0.0</version>
+	<description>
+	</description>
+	<url>http://maven.apache.org/maven2</url>
+	<inceptionYear>2010</inceptionYear>
+
+	<build>
+		<finalName>${project.name}-${project.version}</finalName>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/resources/images</directory>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.objectstyle.woproject.maven2</groupId>
+				<artifactId>maven-japplication-plugin</artifactId>
+				<version>2.0.16</version>
+				<configuration>
+					<name>SimuladorDeFabricas</name>
+					<mainClass>ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Simulador</mainClass>
+					<os>${japplication.os.name}</os>
+					<icon>${project.basedir}/src/main/resources/images/iconoDesktop.ico</icon>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>japplication</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>unix</id>
+			<activation>
+				<os>
+					<family>unix</family>
+					<arch>amd64</arch>
+				</os>
+			</activation>
+			<properties>
+				<profile.name></profile.name>
+				<subprofile></subprofile>
+				<swt.os-specific-dep>swt-linux-gtk-64</swt.os-specific-dep>
+				<swt.version>3.5.1</swt.version>
+				<japplication.os.name>java</japplication.os.name>
+			</properties>
+		</profile>
+		<profile>
+			<id>unix-x86</id>
+			<activation>
+				<os>
+					<family>unix</family>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<properties>
+				<profile.name></profile.name>
+				<subprofile></subprofile>
+				<swt.os-specific-dep>swt-linux-gtk</swt.os-specific-dep>
+				<swt.version>3.5.1</swt.version>
+				<japplication.os.name>java</japplication.os.name>
+			</properties>
+		</profile>
+		<profile>
+			<id>windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<properties>
+				<profile.name></profile.name>
+				<subprofile></subprofile>
+				<swt.os-specific-dep>swt-win</swt.os-specific-dep>
+				<swt.version>3.5.1</swt.version>
+				<japplication.os.name>windows</japplication.os.name>
+			</properties>
+		</profile>
+		<profile>
+			<id>mac</id>
+			<activation>
+				<os>
+					<family>macosx</family>
+				</os>
+			</activation>
+			<properties>
+				<profile.name></profile.name>
+				<subprofile></subprofile>
+				<swt.os-specific-dep>swt-mac</swt.os-specific-dep>
+				<swt.version>3.5.1</swt.version>
+				<japplication.os.name>mac</japplication.os.name>
+			</properties>
+		</profile>
+		
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>swt</groupId>
+			<artifactId>${swt.os-specific-dep}</artifactId>
+			<version>${swt.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.9</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<repositories>
+
+		<repository>
+			<id>grupoesfera-internal</id>
+			<url>https://app.grupoesfera.com.ar/archiva/repository/internal</url>
+		</repository>
+
+		<repository>
+			<id>jApplication-plugin</id>
+			<url>
+                http://webobjects.mdimension.com/maven2/releases
+            </url>
+		</repository>
+
+	</repositories>
+
+</project>
