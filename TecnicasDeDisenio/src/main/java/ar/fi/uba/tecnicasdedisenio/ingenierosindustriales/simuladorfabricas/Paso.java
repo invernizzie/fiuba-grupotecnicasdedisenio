@@ -2,23 +2,23 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
 public class Paso {
 	
-	private Maquina maquina;
+	private TipoMaquina maquina;
 	
 	public Paso() {
 		
 	}
 
 	public void elegirMaquina(){
-		this.setMaquina(new Maquina());
+		this.setMaquina(new TipoMaquina());
 		this.getMaquina().setEntrada(new Entrada());
 		this.getMaquina().setSalida(new Salida());
 	}
 
-	public void setMaquina(Maquina maquina) {
+	public void setMaquina(TipoMaquina maquina) {
 		this.maquina = maquina;
 	}
 
-	public Maquina getMaquina() {
+	public TipoMaquina getMaquina() {
 		return maquina;
 	}
 	

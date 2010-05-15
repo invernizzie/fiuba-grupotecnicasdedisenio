@@ -12,9 +12,9 @@ public class TestLaboratorio {
 	
 	private Jugador jugador = new Jugador();
 	private Laboratorio laboratorio = Laboratorio.getInstance();
-	private Receta receta = new Receta();
+	private Proceso receta = new Proceso();
 	private Paso paso = new Paso();
-	private Maquina maquina = new Maquina();
+	private TipoMaquina maquina = new TipoMaquina();
 	private Entrada entrada = new Entrada();
 	private Salida salida = new Salida();
 	
@@ -61,12 +61,12 @@ public class TestLaboratorio {
 	}
 	
 	@Test
-	public void testPasoSinMaquina(){
+	public void testPasoSinTipoMaquina(){
 		assertNull("Tiene maquina asignada", paso.getMaquina());
 	}
 	
 	@Test
-	public void testPasoConMaquina(){
+	public void testPasoConTipoMaquina(){
 		paso.elegirMaquina();
 		assertNotNull("No tiene maquina asignada", paso.getMaquina());
 	}
@@ -80,13 +80,13 @@ public class TestLaboratorio {
 	
 	
 	@Test
-	public void testMaquinaSinEntradaSalida(){
+	public void testTipoMaquinaSinEntradaSalida(){
 		assertNull("Tiene una salida asignada", maquina.getSalida());
 		assertNull("Tiene una entrada asignada", maquina.getEntrada());
 	}
 	
 	@Test
-	public void testMaquinaConEntradaSalida(){
+	public void testTipoMaquinaConEntradaSalida(){
 		maquina.setSalida(new Salida());
 		maquina.setEntrada(new Entrada());
 		
@@ -95,7 +95,7 @@ public class TestLaboratorio {
 	}
 	
 	@Test
-	public void testMaquinaConMismaEntradaSalidaQueAsignada(){
+	public void testTipoMaquinaConMismaEntradaSalidaQueAsignada(){
 		Salida s = new Salida();
 		maquina.setSalida(s);
 		
