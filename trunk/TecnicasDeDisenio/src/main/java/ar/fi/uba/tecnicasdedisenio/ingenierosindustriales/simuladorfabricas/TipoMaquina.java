@@ -1,6 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
-public class Maquina {
+public class TipoMaquina {
 	private Entrada entrada;
 	private Salida salida;
 	

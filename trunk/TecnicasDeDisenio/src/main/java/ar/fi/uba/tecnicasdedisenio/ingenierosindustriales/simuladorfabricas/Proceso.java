@@ -2,11 +2,11 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
 import java.util.ArrayList;
 
-public class Receta {
+public class Proceso {
 	
 	private ArrayList<Paso> pasos;
 	
-	public Receta(){
+	public Proceso(){
 		this.setPasos(new ArrayList<Paso>());
 	}
 	

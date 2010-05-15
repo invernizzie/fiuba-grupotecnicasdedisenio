@@ -4,26 +4,26 @@ import java.util.ArrayList;
 
 public class Laboratorio {
 	
-	private ArrayList<Receta> recetas;
+	private ArrayList<Proceso> recetas;
 	private static Laboratorio laboratorio = new Laboratorio();
 	
 	private Laboratorio(){
-		this.setRecetas(new ArrayList<Receta>());
+		this.setRecetas(new ArrayList<Proceso>());
 	}
 	
 	public static Laboratorio getInstance(){
 		return laboratorio;
 	}
 
-	public void setRecetas(ArrayList<Receta> recetas) {
+	public void setRecetas(ArrayList<Proceso> recetas) {
 		this.recetas = recetas;
 	}
 
-	public ArrayList<Receta> getRecetas() {
+	public ArrayList<Proceso> getRecetas() {
 		return recetas;
 	}
 	
 	public void generarReceta(){
-		this.getRecetas().add(new Receta());
+		this.getRecetas().add(new Proceso());
 	}
 }
