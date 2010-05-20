@@ -3,6 +3,11 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lin
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Prensado;
 
+/**
+ * Maquina ({@link Maquina}) encargada de prensar un elemento ({@link Elemento}).
+ * @author santiago
+ *
+ */
 public class Prensa extends Maquina {
 
 	@Override
