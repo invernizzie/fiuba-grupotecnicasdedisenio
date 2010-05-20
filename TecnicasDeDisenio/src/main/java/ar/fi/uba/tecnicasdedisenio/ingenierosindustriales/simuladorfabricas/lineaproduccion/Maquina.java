@@ -5,6 +5,12 @@ import java.util.List;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.InputOutput;
 
+/**
+ * Abstracción que representa una entidad encargada de realizar un procesamiento sobre 
+ * una serie de materiales ({@link Elemento}).
+ * @author santiago
+ *
+ */
 public abstract class Maquina {
 	
 	private InputOutput entrada;
