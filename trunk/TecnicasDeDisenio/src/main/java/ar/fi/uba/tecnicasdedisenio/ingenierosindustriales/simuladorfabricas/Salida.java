@@ -1,10 +1,11 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Salida implements InputOutput {
 
-	private ArrayList<Elemento> elementos;
+	private List<Elemento> elementos;
 	
 	public Salida(){ 
 		this.setElementos(new ArrayList<Elemento>());
@@ -14,11 +15,11 @@ public class Salida implements InputOutput {
 		this.getElementos().add(e);
 	}
 
-	public void setElementos(ArrayList<Elemento> elementos) {
+	public void setElementos(List<Elemento> elementos) {
 		this.elementos = elementos;
 	}
 
-	public ArrayList<Elemento> getElementos() {
+	public List<Elemento> getElementos() {
 		return elementos;
 	}
 
