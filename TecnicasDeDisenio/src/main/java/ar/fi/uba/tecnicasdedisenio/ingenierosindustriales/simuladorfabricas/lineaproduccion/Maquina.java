@@ -3,22 +3,24 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lin
 import java.util.List;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.InputOutput;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.IEntrada;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISalida;
+
 
 /**
- * AbstracciÃ³n que representa una entidad encargada de realizar un procesamiento sobre 
+ * Abstracción que representa una entidad encargada de realizar un procesamiento sobre 
  * una serie de materiales ({@link Elemento}).
  * @author santiago
  *
  */
 public abstract class Maquina {
 	
-	private InputOutput entrada;
-	private InputOutput salida;
+	private IEntrada entrada;
+	private ISalida salida;
 	private List<Elemento> elementos;
 
 	/**
-	 * MÃ©todo que realiza el procesamiento de los elementos, devuelve el elemento
+	 * Método que realiza el procesamiento de los elementos, devuelve el elemento
 	 * resultado de procesar los elementos de entrada.
 	 * 
 	 * @return
@@ -47,19 +49,19 @@ public abstract class Maquina {
 		return elementos;
 	}
 
-	public void setEntrada(InputOutput entrada) {
+	public void setEntrada(IEntrada entrada) {
 		this.entrada = entrada;
 	}
 
-	public InputOutput getEntrada() {
+	public IEntrada getEntrada() {
 		return entrada;
 	}
 
-	public void setSalida(InputOutput salida) {
+	public void setSalida(ISalida salida) {
 		this.salida = salida;
 	}
 
-	public InputOutput getSalida() {
+	public ISalida getSalida() {
 		return salida;
 	}
 }

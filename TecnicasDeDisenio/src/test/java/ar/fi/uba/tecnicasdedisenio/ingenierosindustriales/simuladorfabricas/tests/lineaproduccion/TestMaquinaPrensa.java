@@ -8,7 +8,8 @@ import org.junit.Test;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Entrada;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.InputOutput;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.IEntrada;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISalida;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Salida;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Prensa;
@@ -20,8 +21,8 @@ public class TestMaquinaPrensa {
 	@Before
 	public void setUp() throws Exception {
 		prensa = new Prensa();
-		InputOutput entrada = new Entrada();
-		InputOutput salida = new Salida();
+		IEntrada entrada = new Entrada();
+		ISalida salida = new Salida();
 		
 		prensa.setEntrada(entrada);
 		prensa.setSalida(salida);
@@ -35,11 +36,11 @@ public class TestMaquinaPrensa {
 	@Test
 	public void testProcesar() {
 		Elemento elementoAPrensar = new Elemento();
-		this.prensa.getEntrada().asignarElemento(elementoAPrensar);
+		this.prensa.getEntrada().agregarElemento(elementoAPrensar);
 		
 		this.prensa.procesar();
 		
-		Elemento elementoPrensado = this.prensa.getSalida().getElementos().get(0);
+		Elemento elementoPrensado = this.prensa.getSalida().obtenerElemento();
 		
 		Assert.assertEquals("El elemento no es un elemento prensado", "Prensado", elementoPrensado.getNombre());
 	}

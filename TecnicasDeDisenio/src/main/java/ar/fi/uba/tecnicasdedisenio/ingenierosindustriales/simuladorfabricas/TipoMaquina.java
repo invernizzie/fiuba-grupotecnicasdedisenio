@@ -1,35 +1,35 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
 public class TipoMaquina {
-	private Entrada entrada;
-	private Salida salida;
+	private IEntrada entrada;
+	private ISalida salida;
 	
 	public TipoMaquina(){
 		
 	}
 	
-	public TipoMaquina(Entrada entrada, Salida salida){
+	public TipoMaquina(IEntrada entrada, ISalida salida){
 		this.setEntrada(entrada);
 		this.setSalida(salida);
 	}
 	
-	public void setEntrada(Entrada entrada) {
+	public void setEntrada(IEntrada entrada) {
 		this.entrada = entrada;
 	}
 	
-	public Entrada getEntrada() {
+	public IEntrada getEntrada() {
 		return entrada;
 	}
 	
-	public void setSalida(Salida salida) {
+	public void setSalida(ISalida salida) {
 		this.salida = salida;
 	}
 	
-	public Salida getSalida() {
+	public ISalida getSalida() {
 		return salida;
 	}
 	
 	public void procesar(){
-		this.salida.asignarElemento(new Elemento());
+		
 	}
 }
