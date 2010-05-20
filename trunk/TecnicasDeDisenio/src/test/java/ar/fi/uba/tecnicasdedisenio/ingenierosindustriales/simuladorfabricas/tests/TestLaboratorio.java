@@ -14,9 +14,8 @@ public class TestLaboratorio {
 	
 	private Jugador jugador = new Jugador();
 	private Laboratorio laboratorio = Laboratorio.getInstance();
-	private Proceso receta = new Proceso();
-	private Paso paso = new Paso();
-	private Iterator<TipoMaquina> itMaq = paso.iterator();
+	private Proceso proceso = new Proceso();
+	private Iterator<TipoMaquina> itMaq = proceso.iterator();
 	private TipoMaquina maquina = new TipoMaquina();
 	private Entrada entrada = new Entrada();
 	private Salida salida = new Salida();
@@ -46,32 +45,16 @@ public class TestLaboratorio {
 		assertTrue("No tiene dos recetas asignada",laboratorio.getRecetas().size()==2);
 	}
 	
-	@Test
-	public void testRecetaSinPasos() {
-		assertTrue("Tiene una paso creado",receta.getPasos().size()==0);
-		
-	}
 	
 	@Test
-	public void testRecetaConPasos() {
-		
-		receta.generarPaso();
-		assertTrue("No tiene un paso creado",receta.getPasos().size()==1);
-		
-		receta.generarPaso();
-		assertTrue("No tiene dos pasos creados",receta.getPasos().size()==2);
-		
-	}
-	
-	@Test
-	public void testPasoSinTipoMaquina(){
+	public void testProcesoSinTipoMaquina(){
 		assertFalse("Tiene una maquina asignada", itMaq.hasNext());
 	}
 	
 	@Test
-	public void testPasoConTipoMaquina(){
+	public void testProcesoConTipoMaquina(){
 		TipoMaquina tipoMaquina = new TipoMaquina(new Entrada(), new Salida());
-		paso.agregarTipoMaquina(tipoMaquina);
+		proceso.agregarTipoMaquina(tipoMaquina);
 		assertTrue("No tiene una maquina asignada", itMaq.hasNext());
 		assertEquals("No son la misma maquina", itMaq.next(),tipoMaquina);
 	}
