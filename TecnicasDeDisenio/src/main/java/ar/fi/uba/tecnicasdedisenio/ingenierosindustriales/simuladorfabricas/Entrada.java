@@ -3,7 +3,7 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entrada implements InputOutput {
+public class Entrada implements IEntrada {
 	
 	private List<Elemento> elementos;
 	
@@ -11,7 +11,7 @@ public class Entrada implements InputOutput {
 		this.setElementos(new ArrayList<Elemento>());
 	}
 	
-	public void asignarElemento(Elemento e) {
+	public void agregarElemento(Elemento e) {
 		this.getElementos().add(e);
 	}
 
