@@ -1,9 +1,8 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
-import java.util.List;
-
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.InputOutput;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.IEntrada;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISalida;
 
 
 /**
@@ -14,39 +13,35 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Inpu
  */
 public class CintaTransportadora{
 	
-	private InputOutput extremoInicial;
-	private InputOutput extremoFinal;
+	private ISalida extremoInicial;
+	private IEntrada extremoFinal;
 	
 	
-	public CintaTransportadora(InputOutput extremoInicial,
-			InputOutput extremoFinal) {
+	public CintaTransportadora(ISalida extremoInicial,
+			IEntrada extremoFinal) {
 		super();
 		this.extremoInicial = extremoInicial;
 		this.extremoFinal = extremoFinal;
 	}
 
 	/**
-	 * Traslada todos los elementos del extremo inicial al final.
+	 * Traslada un elemento del extremo inicial al final.
 	 */
 	public void trasladarElementos(){
-		
-		List<Elemento> elementos = this.getExtremoInicial().getElementos();
-		for (Elemento elemento : elementos) {
-			this.getExtremoFinal().asignarElemento(elemento);
-		}
-		
+		Elemento elemento = this.getExtremoInicial().obtenerElemento();
+		this.getExtremoFinal().agregarElemento(elemento);
 	}
 	
-	public void setExtremoInicial(InputOutput extremoInicial) {
+	public void setExtremoInicial(ISalida extremoInicial) {
 		this.extremoInicial = extremoInicial;
 	}
-	public InputOutput getExtremoInicial() {
+	public ISalida getExtremoInicial() {
 		return extremoInicial;
 	}
-	public void setExtremoFinal(InputOutput extremoFinal) {
+	public void setExtremoFinal(IEntrada extremoFinal) {
 		this.extremoFinal = extremoFinal;
 	}
-	public InputOutput getExtremoFinal() {
+	public IEntrada getExtremoFinal() {
 		return extremoFinal;
 	}
 	
