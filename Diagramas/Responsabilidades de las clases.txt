@@ -1,0 +1,12 @@
+CintaTransportadora
+Representa la conexión entre dos máquinas {@link Maquina} o una fuente de materia prima 
+y una máquina. Traslada los elementos ({@link Elemento}) entre ellas.
+
+Maquina
+Abstracción que representa una entidad encargada de realizar un procesamiento sobre una serie de materiales ({@link Elemento}).
+
+Prensa
+Maquina ({@link Maquina}) encargada de prensar un elemento ({@link Elemento}).
+
+Prensado
+Clase que representa un producto prensado.
