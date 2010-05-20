@@ -1,4 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests;
+import java.util.Iterator;
+
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.*;
 
 import static org.junit.Assert.*;
@@ -14,6 +16,7 @@ public class TestLaboratorio {
 	private Laboratorio laboratorio = Laboratorio.getInstance();
 	private Proceso receta = new Proceso();
 	private Paso paso = new Paso();
+	private Iterator<TipoMaquina> itMaq = paso.iterator();
 	private TipoMaquina maquina = new TipoMaquina();
 	private Entrada entrada = new Entrada();
 	private Salida salida = new Salida();
@@ -62,22 +65,16 @@ public class TestLaboratorio {
 	
 	@Test
 	public void testPasoSinTipoMaquina(){
-		assertNull("Tiene maquina asignada", paso.getMaquina());
+		assertFalse("Tiene una maquina asignada", itMaq.hasNext());
 	}
 	
 	@Test
 	public void testPasoConTipoMaquina(){
-		paso.elegirMaquina();
-		assertNotNull("No tiene maquina asignada", paso.getMaquina());
+		TipoMaquina tipoMaquina = new TipoMaquina(new Entrada(), new Salida());
+		paso.agregarTipoMaquina(tipoMaquina);
+		assertTrue("No tiene una maquina asignada", itMaq.hasNext());
+		assertEquals("No son la misma maquina", itMaq.next(),tipoMaquina);
 	}
-	
-	@Test
-	public void testPasoGeneraMaquinaConEntradaSalida(){
-		paso.elegirMaquina();
-		assertNotNull("La maquina creada no tiene una entrada asignada", paso.getMaquina().getEntrada());
-		assertNotNull("La maquina creada no tiene una salida asignada", paso.getMaquina().getSalida());
-	}
-	
 	
 	@Test
 	public void testTipoMaquinaSinEntradaSalida(){
@@ -108,23 +105,23 @@ public class TestLaboratorio {
 	
 	@Test
 	public void testEntradaSalidaSinElemento(){
-		assertTrue("La salida tiene un elemento",salida.getElementos().size()==0);
+		assertNull("La salida tiene un elemento",salida.obtenerElemento());
 		assertTrue("La entrada tiene un elemento",entrada.getElementos().size()==0);
 	}
 	
 	@Test
 	public void testEntradaConElemento(){
 		this.salida.asignarElemento(new Elemento());
-		this.entrada.asignarElemento(new Elemento());
+		this.entrada.agregarElemento(new Elemento());
 		
-		assertTrue("La salida no tiene un elemento",salida.getElementos().size()==1);
+		assertNotNull("La salida no tiene un elemento",salida.obtenerElemento());
 		assertTrue("La entrada no tiene un elemento",entrada.getElementos().size()==1);
 		
 		
 		this.salida.asignarElemento(new Elemento());
-		this.entrada.asignarElemento(new Elemento());
+		this.entrada.agregarElemento(new Elemento());
 		
-		assertTrue("La salida no tiene dos elementos",salida.getElementos().size()==2);
+		assertNotNull("La salida no tiene un elemento",salida.obtenerElemento());
 		assertTrue("La entrada no tiene dos elementos",entrada.getElementos().size()==2);
 	}
 	
@@ -133,11 +130,11 @@ public class TestLaboratorio {
 	public void testEntradaSalidaConMismoElementoQueAsignado(){
 		Elemento e = new Elemento();
 		salida.asignarElemento(e);
-		entrada.asignarElemento(e);
+		entrada.agregarElemento(e);
 		
-		assertEquals("No tiene el mismo elemento", salida.getElementos().get(salida.getElementos().size()-1),e);
+		assertEquals("No tiene el mismo elemento", salida.obtenerElemento(),e);
 		assertEquals("No tiene el mismo elemento", entrada.getElementos().get(entrada.getElementos().size()-1),e);
-		assertEquals("No tienen el mismo elemento entre ellos", salida.getElementos().get(salida.getElementos().size()-1), entrada.getElementos().get(entrada.getElementos().size()-1));
+		assertEquals("No tienen el mismo elemento entre ellos", salida.obtenerElemento(), entrada.getElementos().get(entrada.getElementos().size()-1));
 	}
 	
 	

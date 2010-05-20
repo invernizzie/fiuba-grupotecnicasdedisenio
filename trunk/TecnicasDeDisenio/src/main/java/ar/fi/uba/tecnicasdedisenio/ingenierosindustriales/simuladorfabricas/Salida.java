@@ -1,26 +1,23 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class Salida implements InputOutput {
+public class Salida implements ISalida {
 
-	private List<Elemento> elementos;
+	private Elemento elemento;
 	
 	public Salida(){ 
-		this.setElementos(new ArrayList<Elemento>());
 	}
 	
-	public void asignarElemento(Elemento e) {
-		this.getElementos().add(e);
+	public Salida(Elemento e){
+		this.elemento = e;
+	}
+	
+	public void asignarElemento(Elemento elemento) {
+		this.elemento = elemento;
 	}
 
-	public void setElementos(List<Elemento> elementos) {
-		this.elementos = elementos;
-	}
-
-	public List<Elemento> getElementos() {
-		return elementos;
+	public Elemento obtenerElemento(){
+		return this.elemento;
 	}
 
 }
