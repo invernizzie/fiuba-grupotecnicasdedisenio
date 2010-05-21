@@ -1,50 +1,27 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.testlaboratorio;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Iterator;
-
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.*;
-
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Entrada;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Proceso;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Salida;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.TipoMaquina;
 
-
-
-public class TestLaboratorio {
-	
-	private Jugador jugador = new Jugador();
-	private Laboratorio laboratorio = Laboratorio.getInstance();
-	private Proceso proceso = new Proceso();
+public class TestLaboratorioValidacion {
+	private Proceso proceso = new Proceso(100);
 	private Iterator<TipoMaquina> itMaq = proceso.iterator();
 	private TipoMaquina maquina = new TipoMaquina();
 	private Entrada entrada = new Entrada();
 	private Salida salida = new Salida();
-	
-	@Test
-	public void testJugadorSinLaboratorioVacio() {
-		assertNull("Tiene laboratorio asignado",jugador.getLaboratorio());
-	}
-	
-	@Test
-	public void testJugadorConLaboratorioVacio() {
-		jugador.crearLaboratorio();
-		assertNotNull("No tiene laboratorio asignado",jugador.getLaboratorio());
-	}
-	
-	@Test
-	public void testLaboratorioSinRecetas() {
-		assertTrue("Tiene una receta asignada",laboratorio.getRecetas().size()==0);
-	}
-	
-	@Test
-	public void testLaboratorioConRecetas() {
-		laboratorio.generarReceta();
-		assertTrue("No tiene una receta asignada",laboratorio.getRecetas().size()==1);
-		
-		laboratorio.generarReceta();
-		assertTrue("No tiene dos recetas asignada",laboratorio.getRecetas().size()==2);
-	}
-	
 	
 	@Test
 	public void testProcesoSinTipoMaquina(){

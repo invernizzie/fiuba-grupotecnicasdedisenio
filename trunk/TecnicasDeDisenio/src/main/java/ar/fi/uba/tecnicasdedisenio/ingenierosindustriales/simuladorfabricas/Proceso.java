@@ -6,9 +6,11 @@ import java.util.Iterator;
 public class Proceso {
 	
 	private ArrayList<TipoMaquina> tiposDeMaquinas;
+	private float costo;
 	
-	public Proceso() {
+	public Proceso(float costo) {
 		this.setMaquinas(new ArrayList<TipoMaquina>());
+		this.setCosto(costo);
 	}
 
 	public void agregarTipoMaquina(TipoMaquina tipoMaquina){
@@ -24,13 +26,25 @@ public class Proceso {
 	}
 	
 	public Iterator<TipoMaquina> iterator(){
-		return new IteradorProceso();
+		return new IteradorMaquinas();
 	}
 	
-	public class IteradorProceso implements Iterator<TipoMaquina>{
+	public void setCosto(float costo) {
+		this.costo = costo;
+	}
+
+	public float getCosto() {
+		return costo;
+	}
+	
+	public boolean habilitar(float oferta){
+		return this.getCosto()<=oferta;
+	}
+	
+	public class IteradorMaquinas implements Iterator<TipoMaquina>{
 		private int indice;
 		
-		public IteradorProceso(){
+		public IteradorMaquinas(){
 			indice = 0;
 		}
 		
@@ -39,7 +53,9 @@ public class Proceso {
 		}
 
 		public TipoMaquina next() {
-			return getMaquinas().get(indice);
+			TipoMaquina tipoMaq = getMaquinas().get(indice);
+			indice ++;
+			return tipoMaq;
 		}
 
 		public void remove() {
