@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Producto>
+	<nombre>Producto1</nombre>
+	<costo_inicial>1</costo_inicial>
+	<fabricacion>Planchado</fabricacion>
+</Producto>
+<Producto>
+	<nombre>Producto2</nombre>
+	<costo_inicial>2</costo_inicial>
+	<fabricacion>Prensado</fabricacion>
+</Producto>
+<Producto>
+	<nombre>Producto3</nombre>
+	<costo_inicial>3</costo_inicial>
+	<fabricacion>Horno</fabricacion>
+</Producto>
+<Producto>
+	<nombre>Producto4</nombre>
+	<costo_inicial>4</costo_inicial>
+	<fabricacion>Prensado+Planchado</fabricacion>
+</Producto>
+<Producto>
+	<nombre>Producto5</nombre>
+	<costo_inicial>5</costo_inicial>
+	<fabricacion>Horno+Planchado</fabricacion>
+</Producto>
+<Producto>
+	<nombre>Producto6</nombre>
+	<costo_inicial>6</costo_inicial>
+	<fabricacion>Prensado+Horno</fabricacion>
+</Producto>
