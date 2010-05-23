@@ -13,6 +13,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISal
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Salida;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Prensa;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
 
 public class TestMaquinaPrensa {
 	
@@ -38,11 +39,32 @@ public class TestMaquinaPrensa {
 		Elemento elementoAPrensar = new Elemento();
 		this.prensa.getEntrada().agregarElemento(elementoAPrensar);
 		
-		this.prensa.procesar();
+		try {
+			this.prensa.procesar();
+		} catch (EntradaInvalidaException e) {
+			Assert.fail("La entrada a la prensa es inválida");
+		}
 		
 		Elemento elementoPrensado = this.prensa.getSalida().obtenerElemento();
 		
-		Assert.assertEquals("El elemento no es un elemento prensado", "Prensado", elementoPrensado.getNombre());
+		Assert.assertEquals("El elemento no es un elemento prensado", "Prensado", 
+				elementoPrensado.getNombre());
+	}
+	
+	@Test
+	public void testEntradaInvalida() {
+		Elemento elementoAPrensar1 = new Elemento();
+		Elemento elementoAPrensar2 = new Elemento();
+		this.prensa.getEntrada().agregarElemento(elementoAPrensar1);
+		this.prensa.getEntrada().agregarElemento(elementoAPrensar2);
+		
+		try {
+			this.prensa.procesar();
+			Assert.fail("Se esperaba una excepción pero no se produjo");
+		} catch (Exception e) {
+			Assert.assertEquals("Se esperaba una excepción de tipo EntradaInvalidaException", 
+					EntradaInvalidaException.class , e.getClass());
+		}
 	}
 
 }

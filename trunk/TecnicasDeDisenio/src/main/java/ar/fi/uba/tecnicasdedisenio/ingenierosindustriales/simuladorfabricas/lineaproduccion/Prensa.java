@@ -12,10 +12,21 @@ public class Prensa extends Maquina {
 
 	@Override
 	protected Elemento realizarProceso() {
-// TODO Definir como vamos a manejar la diferencia entre procesos que 
-// afectan a un elemento y procesos que afectan a varios.
-// ¿Cómo sabemos de que tipo es cada elemento de una manera elegante?
 		return new Prensado(this.getElementos().get(0));
+	}
+
+	/**
+	 * Una prensa puede operar con cualquier tipo de elemento, pero solo con uno por vez.
+	 * @see ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina#validarEntrada()
+	 */
+	@Override
+	protected Boolean validarEntrada() {
+		return (this.getElementos().size() == 1);
+	}
+	
+	@Override
+	public Prensa clone(){
+		return new Prensa();
 	}
 
 }
