@@ -17,6 +17,10 @@ public interface TipoMaquina {
 	
 	public void procesar();
 	
+	public void setCosto(float costo);
+	
+	public float getCosto();
+	
 	/**
 	 * Construye una nueva instancia del tipo de máquina al que se hace
 	 * referencia.

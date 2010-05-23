@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
+
 public class Laboratorio {
 	
 	private float dineroAcumulado;
@@ -89,7 +91,21 @@ public class Laboratorio {
 	public boolean isHabilitado() {
 		return habilitado;
 	}
-
+	
+	/* Si existe un proceso que sea igual a la linea de producción
+	 * entonces devuelve el elemento que produce*/
+	public Elemento procesoValido(ArrayList<Maquina> maquinas){
+		Iterator<Proceso> itProcesos = this.iteratorProcesosHabilitados();
+		Elemento e;
+		while(itProcesos.hasNext()){
+			e = itProcesos.next().validarLinea(maquinas);
+			if (e!=null){
+				return e;
+			}
+		}
+		return null;
+	}
+	
 	public class IteradorProcesos implements Iterator<Proceso>{
 		private int indice;
 		List<Proceso> lista;
