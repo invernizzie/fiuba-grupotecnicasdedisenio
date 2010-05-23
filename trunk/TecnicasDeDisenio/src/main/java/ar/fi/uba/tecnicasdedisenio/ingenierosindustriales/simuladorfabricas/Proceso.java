@@ -3,6 +3,7 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
 
 public class Proceso {
@@ -10,13 +11,13 @@ public class Proceso {
 	private ArrayList<TipoMaquina> tiposDeMaquinas;
 	private float costo;
 	
-	public Proceso(float costo) {
+	public Proceso() {
 		this.setMaquinas(new ArrayList<TipoMaquina>());
-		this.setCosto(costo);
 	}
 
 	public void agregarTipoMaquina(TipoMaquina tipoMaquina){
 		this.getMaquinas().add(tipoMaquina);
+		this.setCosto(this.getCosto()+tipoMaquina.getCosto());
 	}
 
 	public void setMaquinas(ArrayList<TipoMaquina> maquina) {
@@ -43,6 +44,43 @@ public class Proceso {
 		return this.getCosto()<=oferta;
 	}
 	
+	public Elemento validarLinea(ArrayList<Maquina> listaMaq){
+		if(this.esProcesoIgualALinea(listaMaq))
+			return new Elemento();
+		else
+			return null;
+	}
+	
+	/*Se deberian pasar las maquinas de la linea.*/
+	public boolean esProcesoIgualALinea(ArrayList<Maquina> listaMaq) {
+		/*Se copia el array a otro para poder comparar.*/
+		ArrayList<Maquina> maquinas =  new ArrayList<Maquina>(listaMaq);
+		TipoMaquina tipoMaq = null;
+		int i;
+		
+		/*Si los dos tienen tamaños distintos entonces no son el mismo proceso. */
+		if(this.getMaquinas().size()!=maquinas.size()){
+			return false;
+		}
+		
+		/*Por cada tipo de maquina que tiene el proceso.*/
+		Iterator<TipoMaquina> itTipos = this.iterator();
+		while(itTipos.hasNext()){
+			tipoMaq = itTipos.next();
+			for(i=0;i<maquinas.size();i++){
+				if(tipoMaq.verificarTipo(maquinas.get(i))){
+					//Aca habria que comparar las entradas.
+					maquinas.remove(i);
+					i=maquinas.size();
+				}
+			}
+		}
+		if(maquinas.size()==0)
+				return true;
+		
+		return false;
+	}
+	
 	public class IteradorMaquinas implements Iterator<TipoMaquina>{
 		private int indice;
 		
@@ -61,7 +99,7 @@ public class Proceso {
 		}
 
 		public void remove() {
-			getMaquinas().remove(indice);
+			getMaquinas().remove(--indice);
 		
 		}
 	}

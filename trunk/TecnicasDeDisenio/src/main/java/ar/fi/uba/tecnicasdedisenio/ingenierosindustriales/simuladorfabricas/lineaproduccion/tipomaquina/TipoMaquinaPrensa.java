@@ -13,6 +13,7 @@ public class TipoMaquinaPrensa implements TipoMaquina {
 	private ISalida salida;
 	private Prensa prensa;
 	private ComparadorDeMaquinas comparador;
+	private float costo;
 	
 	public TipoMaquinaPrensa(ComparadorDeMaquinas comparador) {
 		this.comparador = comparador;
@@ -62,6 +63,16 @@ public class TipoMaquinaPrensa implements TipoMaquina {
 	@Override
 	public Boolean verificarTipo(Maquina maquina) {
 		return (comparador.compare(maquina, prensa) == 0);
+	}
+
+	@Override
+	public float getCosto() {
+		return this.costo;
+	}
+
+	@Override
+	public void setCosto(float costo) {
+		this.costo = costo;	
 	}
 
 }
