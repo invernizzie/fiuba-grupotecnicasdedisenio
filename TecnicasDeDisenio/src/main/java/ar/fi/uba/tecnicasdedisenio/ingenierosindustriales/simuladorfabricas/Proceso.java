@@ -3,6 +3,8 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
+
 public class Proceso {
 	
 	private ArrayList<TipoMaquina> tiposDeMaquinas;

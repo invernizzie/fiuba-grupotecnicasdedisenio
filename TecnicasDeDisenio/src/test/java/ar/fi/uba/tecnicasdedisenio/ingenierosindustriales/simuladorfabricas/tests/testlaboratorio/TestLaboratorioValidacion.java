@@ -14,12 +14,14 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elem
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Entrada;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Proceso;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Salida;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.TipoMaquina;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.ComparadorDeMaquinasSimple;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPrensa;
 
 public class TestLaboratorioValidacion {
 	private Proceso proceso = new Proceso(100);
 	private Iterator<TipoMaquina> itMaq = proceso.iterator();
-	private TipoMaquina maquina = new TipoMaquina();
+	private TipoMaquina maquina = new TipoMaquinaPrensa(new ComparadorDeMaquinasSimple());
 	private Entrada entrada = new Entrada();
 	private Salida salida = new Salida();
 	
@@ -30,7 +32,7 @@ public class TestLaboratorioValidacion {
 	
 	@Test
 	public void testProcesoConTipoMaquina(){
-		TipoMaquina tipoMaquina = new TipoMaquina(new Entrada(), new Salida());
+		TipoMaquina tipoMaquina = new TipoMaquinaPrensa(new Entrada(), new Salida());
 		proceso.agregarTipoMaquina(tipoMaquina);
 		assertTrue("No tiene una maquina asignada", itMaq.hasNext());
 		assertEquals("No son la misma maquina", itMaq.next(),tipoMaquina);

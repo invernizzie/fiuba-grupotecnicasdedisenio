@@ -5,22 +5,32 @@ import java.util.List;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.IEntrada;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISalida;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
 
 
 /**
- * Abstracci�n que representa una entidad encargada de realizar un procesamiento sobre 
+ * Abstracción que representa una entidad encargada de realizar un procesamiento sobre 
  * una serie de materiales ({@link Elemento}).
  * @author santiago
  *
  */
-public abstract class Maquina {
+public abstract class Maquina implements Cloneable  {
 	
 	private IEntrada entrada;
 	private ISalida salida;
 	private List<Elemento> elementos;
 
 	/**
-	 * M�todo que realiza el procesamiento de los elementos, devuelve el elemento
+	 * Verifica que ingresen los elementos correctos para realizar la tarea que 
+	 * le corresponde a cada máquina.
+	 * La validación puede ser por tipo, cantidad, etc.
+	 * @return true si y solo si los elementos son los que precisa la máquina 
+	 * para operar, false en otro caso.
+	 */
+	protected abstract Boolean validarEntrada();
+	
+	/**
+	 * Método que realiza el procesamiento de los elementos, devuelve el elemento
 	 * resultado de procesar los elementos de entrada.
 	 * 
 	 * @return
@@ -34,10 +44,17 @@ public abstract class Maquina {
 	 * Este método toma los elementos de la entrada, los procesa y deposita el
 	 * resultado en la salida.
 	 */
-	public final void procesar(){
+	public final void procesar() throws EntradaInvalidaException{
 		this.setElementos(getEntrada().getElementos());
-		Elemento elementoProcesado = this.realizarProceso();
-		this.getSalida().asignarElemento(elementoProcesado); 
+		Boolean isEntradaValida = this.validarEntrada();
+		
+		if(isEntradaValida){
+			Elemento elementoProcesado = this.realizarProceso();
+			this.getSalida().asignarElemento(elementoProcesado); 
+		}else{
+			throw new EntradaInvalidaException("Los elementos que ingresaron" +
+					" no se corresponden con los necesarios para que esta máquina opere");
+		}
 		
 	}
 
