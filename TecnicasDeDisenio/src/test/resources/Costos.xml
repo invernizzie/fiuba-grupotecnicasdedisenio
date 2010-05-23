@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<InversionInicial>1000000</InversionInicial>
+<Semana>1
+	<Producto>
+		<nombre>Producto1</nombre>
+		<precio>10</precio>
+	</Producto>
+	<Producto>
+		<nombre>Producto2</nombre>
+		<precio>20</precio>
+	</Producto>
+	<Producto>
+		<nombre>Producto3</nombre>
+		<precio>50</precio>
+	</Producto>
+	<Producto>
+		<nombre>Producto4</nombre>
+		<precio>5</precio>
+	</Producto>
+</Semana>
+<Semana>2
+	<Producto>
+		<nombre>Producto1</nombre>
+		<precio>11</precio>
+	</Producto>
+	<Producto>
+		<nombre>Producto2</nombre>
+		<precio>19</precio>
+	</Producto>
+	<Producto>
+		<nombre>Producto3</nombre>
+		<precio>55</precio>
+	</Producto>
+	<Producto>
+		<nombre>Producto4</nombre>
+		<precio>7</precio>
+	</Producto>
+</Semana>
