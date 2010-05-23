@@ -1,30 +1,51 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.testlaboratorio;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.*;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.*;
+import java.util.ArrayList;
 
-import org.junit.Test;
 import junit.framework.Assert;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Entrada;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Jugador;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Proceso;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Salida;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPlancha;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPrensa;
 
 
 
 
 public class TestLaboratorioInversion {
 	
-	private Jugador jugador = new Jugador(10000);
-	private float porcentaje = 10;
 	
+	private Jugador jugador;
+	private float porcentaje;
 	
+	@Before
+	public void setUp() throws Exception {
+		jugador = new Jugador(10000);
+		porcentaje = 10;
+		jugador.getLaboratorio().setProcesosHabilitados(new ArrayList<Proceso>());
+		jugador.getLaboratorio().setProcesosInhabilitados(new ArrayList<Proceso>());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
 	
 	@Test
 	public void testJugadorConLaboratorio() {
-		Assert.assertNotNull("No tiene laboratorio creado, cuando deberÌa tenerlo",jugador.getLaboratorio());
+		Assert.assertNotNull("No tiene laboratorio creado, cuando deber√≠a tenerlo",jugador.getLaboratorio());
 	}
 	
 	@Test
 	public void testInvertirEnLaboratorioInhabilitado(){
 		jugador.invertirDineroLaboratorio(porcentaje);
 		
-		Assert.assertTrue("No deberÌa tener dinero acumulado el laboratorio", jugador.getLaboratorio().getDineroAcumulado()==0);	
+		Assert.assertTrue("No deber√≠a tener dinero acumulado el laboratorio", jugador.getLaboratorio().getDineroAcumulado()==0);	
 	}
 	
 	@Test
@@ -43,11 +64,11 @@ public class TestLaboratorioInversion {
 		jugadorInvertido = jugador.getDineroActual()*porcentaje/100;
 		laboratorioAntesInversion = jugador.getLaboratorio().getDineroAcumulado();
 		
-		/*InversiÛn de dinero.*/
+		/*Inversi√≥n de dinero.*/
 		jugador.invertirDineroLaboratorio(porcentaje);
 		
-		Assert.assertTrue("El Laboratorio deberÌa tener de dinero acumulado, lo que ten√≠a antes m√°s el porcentaje sacado del dinero total del jugador", jugador.getLaboratorio().getDineroAcumulado() == laboratorioAntesInversion + jugadorInvertido);
-		Assert.assertTrue("El jugador deberÌa tener de dinero actual, lo mismo de antes menos el porcentaje sacado", jugador.getDineroActual()+jugadorInvertido == jugadorAntesInvertir);
+		Assert.assertTrue("El Laboratorio deber√≠a tener de dinero acumulado, lo que ten√≠a antes m√°s el porcentaje sacado del dinero total del jugador", jugador.getLaboratorio().getDineroAcumulado() == laboratorioAntesInversion + jugadorInvertido);
+		Assert.assertTrue("El jugador deber√≠a tener de dinero actual, lo mismo de antes menos el porcentaje sacado", jugador.getDineroActual()+jugadorInvertido == jugadorAntesInvertir);
 		
 		
 		/*Dinero antes de invertir y lo que se va a invertir.*/
@@ -55,17 +76,17 @@ public class TestLaboratorioInversion {
 		jugadorInvertido = jugador.getDineroActual()*porcentaje/100;
 		laboratorioAntesInversion = jugador.getLaboratorio().getDineroAcumulado();
 		
-		/*InversiÛn de dinero.*/
+		/*Inversi√≥n de dinero.*/
 		jugador.invertirDineroLaboratorio(porcentaje);
 		
-		Assert.assertTrue("El Laboratorio deberÌa tener de dinero acumulado, lo que ten√≠a antes m√°s el porcentaje sacado del dinero total del jugador", jugador.getLaboratorio().getDineroAcumulado() == laboratorioAntesInversion + jugadorInvertido);
-		Assert.assertTrue("El jugador deberÌa tener de dinero actual, lo mismo de antes menos el porcentaje sacado", jugador.getDineroActual()+jugadorInvertido == jugadorAntesInvertir);
+		Assert.assertTrue("El Laboratorio deber√≠a tener de dinero acumulado, lo que ten√≠a antes m√°s el porcentaje sacado del dinero total del jugador", jugador.getLaboratorio().getDineroAcumulado() == laboratorioAntesInversion + jugadorInvertido);
+		Assert.assertTrue("El jugador deber√≠a tener de dinero actual, lo mismo de antes menos el porcentaje sacado", jugador.getDineroActual()+jugadorInvertido == jugadorAntesInvertir);
 	}
 	
 	@Test
 	public void testLaboratorioSinProcesos() {
-		Assert.assertTrue("Tiene un proceso habilitado cuando no deberÌa tenerlo",jugador.getLaboratorio().getProcesosHabilitados().size()==0);
-		Assert.assertTrue("Tiene un proceso inhabilitado cuando no deberÌa tenerlo",jugador.getLaboratorio().getProcesosInhabilitados().size()==0);
+		Assert.assertTrue("Tiene un proceso habilitado cuando no deber√≠a tenerlo",jugador.getLaboratorio().getProcesosHabilitados().size()==0);
+		Assert.assertTrue("Tiene un proceso inhabilitado cuando no deber√≠a tenerlo",jugador.getLaboratorio().getProcesosInhabilitados().size()==0);
 	}
 	
 	@Test
@@ -80,8 +101,8 @@ public class TestLaboratorioInversion {
 		proc.agregarTipoMaquina(tipoMaq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
 		
-		Assert.assertTrue("No tiene ning˙n proceso habilitado, cuando deberÌa tener uno",jugador.getLaboratorio().getProcesosHabilitados().size()==1);
-		Assert.assertTrue("Tiene alg˙n proceso inhabilitado cuando no deberÌa tenerlo",jugador.getLaboratorio().getProcesosInhabilitados().size()==0);
+		Assert.assertTrue("No tiene ning√∫n proceso habilitado, cuando deber√≠a tener uno",jugador.getLaboratorio().getProcesosHabilitados().size()==1);
+		Assert.assertTrue("Tiene alg√∫n proceso inhabilitado cuando no deber√≠a tenerlo",jugador.getLaboratorio().getProcesosInhabilitados().size()==0);
 		
 		/*Agrego un proceso habilitado.*/
 		proc = new Proceso();
@@ -90,8 +111,8 @@ public class TestLaboratorioInversion {
 		proc.agregarTipoMaquina(tipoMaq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
 		
-		Assert.assertTrue("No tiene dos procesos habilitados, cuando deberÌa tener dos",jugador.getLaboratorio().getProcesosHabilitados().size()==2);
-		Assert.assertTrue("Tiene alg˙n proceso inhabilitado cuando no deberÌa tenerlo",jugador.getLaboratorio().getProcesosInhabilitados().size()==0);
+		Assert.assertTrue("No tiene dos procesos habilitados, cuando deber√≠a tener dos",jugador.getLaboratorio().getProcesosHabilitados().size()==2);
+		Assert.assertTrue("Tiene alg√∫n proceso inhabilitado cuando no deber√≠a tenerlo",jugador.getLaboratorio().getProcesosInhabilitados().size()==0);
 		
 		/*Agrego un proceso inhabilitado.*/
 		proc = new Proceso();
@@ -116,11 +137,53 @@ public class TestLaboratorioInversion {
 		proc.agregarTipoMaquina(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
 		
-		Assert.assertTrue("No tiene dos procesos inhabilitados, cuando deberÌa tener dos",jugador.getLaboratorio().getProcesosInhabilitados().size()==2);
+		Assert.assertTrue("No tiene dos procesos inhabilitados, cuando deber√≠a tener dos",jugador.getLaboratorio().getProcesosInhabilitados().size()==2);
 	}
 	
 	@Test
 	public void habilitarNuevosProcesos(){
+		
+		TipoMaquina tipoMaq;
+		Proceso proc;
+		
+		/*Agrego un proceso habilitado.*/
+		proc = new Proceso();
+		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq.setCosto(100);
+		proc.agregarTipoMaquina(tipoMaq);
+		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
+		
+		/*Agrego un proceso habilitado.*/
+		proc = new Proceso();
+		tipoMaq = new TipoMaquinaPlancha(new Entrada(), new Salida());
+		tipoMaq.setCosto(125);
+		proc.agregarTipoMaquina(tipoMaq);
+		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
+		
+		/*Agrego un proceso inhabilitado.*/
+		proc = new Proceso();
+		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq.setCosto(1000);
+		proc.agregarTipoMaquina(tipoMaq);
+		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq.setCosto(1000);
+		proc.agregarTipoMaquina(tipoMaq);
+		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
+		
+		/*Agrego un proceso inhabilitado.*/
+		proc = new Proceso();
+		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq.setCosto(1000);
+		proc.agregarTipoMaquina(tipoMaq);
+		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq.setCosto(1000);
+		proc.agregarTipoMaquina(tipoMaq);
+		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq.setCosto(1000);
+		proc.agregarTipoMaquina(tipoMaq);
+		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
+		
+		
 		
 		/*Se invierte dinero. El laboratorio ya puede descubrir un nuevo producto.*/
 		jugador.invertirDineroLaboratorio(porcentaje);
