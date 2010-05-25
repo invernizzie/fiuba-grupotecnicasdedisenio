@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AvanceSemanal>
 	<InversionInicial>1000000</InversionInicial>
-	<Semana>1
+	<Semana numero="1">
 		<Producto>
 			<nombre>Producto1</nombre>
 			<precio>10</precio>
@@ -19,7 +19,7 @@
 			<precio>5</precio>
 		</Producto>
 	</Semana>
-	<Semana>2
+	<Semana numero="2" >
 		<Producto>
 			<nombre>Producto1</nombre>
 			<precio>11</precio>
