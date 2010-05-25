@@ -8,8 +8,17 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.pro
  */
 public class Producto {
 	private String estado;
+	private double defectuoso;
 
 	
+	public double getDefectuoso() {
+		return defectuoso;
+	}
+
+	public void setDefectuoso(double defectuoso) {
+		this.defectuoso = defectuoso;
+	}
+
 	public String getEstado() {
 		return estado;
 	}
@@ -18,10 +27,11 @@ public class Producto {
 		this.estado = estado;
 	}
 
-	public Producto(String estado) {
+	public Producto(String estado, double defectos) {
 		super();
+		this.defectuoso = defectos;
 		double proba= Math.random();
-		if(proba > 0.2) {
+		if(proba > this.defectuoso) {
 			this.estado = estado;
 		} else{
 			this.estado= "Defectuoso";
