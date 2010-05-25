@@ -1,16 +1,20 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
+
+import java.util.*;
 import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-
+/**
+ * 
+ * @author Diego
+ *
+ */
 public class XMLParser {
-	public ArrayList<Producto> LeerDoc(String path){
+	public HashMap<String,String> LeerDoc(String path){
 		SAXBuilder builder = new SAXBuilder();
 		try {
 			InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
