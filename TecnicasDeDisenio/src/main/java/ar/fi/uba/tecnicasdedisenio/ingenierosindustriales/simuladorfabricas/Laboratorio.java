@@ -92,7 +92,7 @@ public class Laboratorio {
 		return habilitado;
 	}
 	
-	/* Si existe un proceso que sea igual a la linea de producción
+	/* Si existe un proceso que sea igual a la linea de producciÃ³n
 	 * entonces devuelve el elemento que produce*/
 	public Elemento procesoValido(ArrayList<Maquina> maquinas){
 		Iterator<Proceso> itProcesos = this.iteratorProcesosHabilitados();

@@ -123,19 +123,19 @@ public class TestLaboratorioValidacion {
 		maquinas.add(new Plancha());
 		maquinas.add(new Prensa());
 		
-		Assert.assertNull("No debería haber ningun proceso",laboratorio.procesoValido(maquinas));
+		Assert.assertNull("No deberia haber ningun proceso",laboratorio.procesoValido(maquinas));
 		
 		/*Modifico la linea y vuelvo a ver si hay algun proceso que sea igual.*/
 		maquinas.add(new Plancha());
-		Assert.assertNotNull("Debería haber algun proceso",laboratorio.procesoValido(maquinas));
+		Assert.assertNotNull("Deberia haber algun proceso",laboratorio.procesoValido(maquinas));
 		
 		/*Modifico la linea y vuelvo a ver si hay algun proceso que sea igual.*/
 		maquinas.add(new Prensa());
-		Assert.assertNotNull("Debería haber algun proceso",laboratorio.procesoValido(maquinas));
+		Assert.assertNotNull("Deberia haber algun proceso",laboratorio.procesoValido(maquinas));
 		
 		/*Modifico la linea y vuelvo a ver si hay algun proceso que sea igual.*/
 		maquinas.add(new Plancha());
-		Assert.assertNull("No debería haber ningun proceso",laboratorio.procesoValido(maquinas));
+		Assert.assertNull("No deberia haber ningun proceso",laboratorio.procesoValido(maquinas));
 
 		/*Agrego un nuevo proceso y vuelvo a validar.*/
 		proceso = new Proceso();
@@ -148,7 +148,7 @@ public class TestLaboratorioValidacion {
 		laboratorio.getProcesosHabilitados().add(proceso);
 		
 		
-		Assert.assertNotNull("Debería haber algun proceso",laboratorio.procesoValido(maquinas));
+		Assert.assertNotNull("Deberï¿½a haber algun proceso",laboratorio.procesoValido(maquinas));
 		
 	}
 	

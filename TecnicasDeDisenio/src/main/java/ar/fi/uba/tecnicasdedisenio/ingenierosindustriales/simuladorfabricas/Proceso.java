@@ -58,7 +58,7 @@ public class Proceso {
 		TipoMaquina tipoMaq = null;
 		int i;
 		
-		/*Si los dos tienen tamaños distintos entonces no son el mismo proceso. */
+		/*Si los dos tienen tamaÃ±os distintos entonces no son el mismo proceso. */
 		if(this.getMaquinas().size()!=maquinas.size()){
 			return false;
 		}
