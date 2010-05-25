@@ -3,7 +3,7 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.pro
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
 
 /**
- * Clase que representa un producto prensado.
+ * Clase que representa un producto planchado.
  * 
  * @author santiago
  */
