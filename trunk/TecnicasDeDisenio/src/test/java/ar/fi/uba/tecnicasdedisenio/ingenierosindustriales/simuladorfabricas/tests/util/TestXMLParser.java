@@ -1,7 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.util;
 
-import static org.junit.Assert.*;
-import junit.framework.Assert;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
@@ -29,8 +28,12 @@ public class TestXMLParser {
 
 	@Test
 	public void testLeerDoc() {
-		parser.LeerDoc("Costos.xml");
-		//Assert.assertEquals("Se leyo correctamente el archivo");
+		try{
+			parser.LeerDoc("Costos.xml");
+		}catch(Exception e){
+			e.printStackTrace();
+			fail("Falló la lectura del XML: " + e.getMessage());
+		}
 	}
 
 }
