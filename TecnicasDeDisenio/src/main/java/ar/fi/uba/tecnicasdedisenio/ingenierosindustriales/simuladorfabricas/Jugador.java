@@ -9,18 +9,11 @@ public class Jugador {
 	
 	public Jugador(float dineroActual){
 		this.setDineroActual(dineroActual);
-		this.crearLaboratorio();
+		this.laboratorio = Laboratorio.getNewInstance();
 	}
 	
-	public void setLaboratorio(Laboratorio laboratorio) {
-		this.laboratorio = laboratorio;
-	}
 	public Laboratorio getLaboratorio() {
 		return laboratorio;
-	}
-
-	public void crearLaboratorio(){
-		this.setLaboratorio(Laboratorio.getInstance());
 	}
 
 	public void setDineroActual(float dineroActual) {

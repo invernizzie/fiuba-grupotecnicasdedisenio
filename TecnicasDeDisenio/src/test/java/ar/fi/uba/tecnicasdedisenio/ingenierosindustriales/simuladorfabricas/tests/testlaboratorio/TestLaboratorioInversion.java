@@ -142,9 +142,10 @@ public class TestLaboratorioInversion {
 	
 	@Test
 	public void habilitarNuevosProcesos(){
-		
 		TipoMaquina tipoMaq;
 		Proceso proc;
+		
+		jugador.habilitarLaboratorio();
 		
 		/*Agrego un proceso habilitado.*/
 		proc = new Proceso();
@@ -165,9 +166,6 @@ public class TestLaboratorioInversion {
 		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
 		tipoMaq.setCosto(1000);
 		proc.agregarTipoMaquina(tipoMaq);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(1000);
-		proc.agregarTipoMaquina(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
 		
 		/*Agrego un proceso inhabilitado.*/
@@ -179,11 +177,9 @@ public class TestLaboratorioInversion {
 		tipoMaq.setCosto(1000);
 		proc.agregarTipoMaquina(tipoMaq);
 		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(1000);
+		tipoMaq.setCosto(439);
 		proc.agregarTipoMaquina(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
-		
-		
 		
 		/*Se invierte dinero. El laboratorio ya puede descubrir un nuevo producto.*/
 		jugador.invertirDineroLaboratorio(porcentaje);
@@ -191,9 +187,11 @@ public class TestLaboratorioInversion {
 		Assert.assertEquals("La cantidad de procesos habilitados esperada es 3",jugador.getLaboratorio().getProcesosHabilitados().size(),3);
 		Assert.assertEquals("La cantidad de procesos inhabilitados esperada es 1",jugador.getLaboratorio().getProcesosInhabilitados().size(),1);
 		
+		/*Se invierte dinero. Pero no se puede descubrir nada.*/
+		jugador.invertirDineroLaboratorio(porcentaje);
+		/*Se invierte dinero. Pero no se puede descubrir nada.*/
+		jugador.invertirDineroLaboratorio(porcentaje);
 		/*Se invierte dinero. El laboratorio ya puede descubrir un nuevo producto.*/
-		jugador.invertirDineroLaboratorio(porcentaje);
-		jugador.invertirDineroLaboratorio(porcentaje);
 		jugador.invertirDineroLaboratorio(porcentaje);
 		
 		Assert.assertEquals("La cantidad de procesos habilitados esperada es 4",jugador.getLaboratorio().getProcesosHabilitados().size(),4);
