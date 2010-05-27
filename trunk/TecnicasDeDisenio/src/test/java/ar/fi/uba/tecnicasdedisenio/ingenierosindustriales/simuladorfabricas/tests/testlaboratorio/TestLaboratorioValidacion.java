@@ -15,7 +15,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.*;
 
 public class TestLaboratorioValidacion {
-	private Laboratorio laboratorio = Laboratorio.getInstance();
+	private Laboratorio laboratorio = Laboratorio.getNewInstance();
 	private Proceso proceso = new Proceso();
 	private Iterator<TipoMaquina> itMaq = proceso.iterator();
 	private TipoMaquina maquina = new TipoMaquinaPrensa(new ComparadorDeMaquinasSimple());

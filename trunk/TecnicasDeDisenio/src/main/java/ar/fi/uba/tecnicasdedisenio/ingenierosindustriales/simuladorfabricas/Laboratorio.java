@@ -12,7 +12,6 @@ public class Laboratorio {
 	private boolean habilitado;
 	private ArrayList<Proceso> procesosHabilitados;
 	private ArrayList<Proceso> procesosInhabilitados;
-	private static Laboratorio laboratorio = new Laboratorio();
 	
 	private Laboratorio(){
 		this.setProcesosHabilitados(new ArrayList<Proceso>());
@@ -21,8 +20,8 @@ public class Laboratorio {
 		this.setHabilitado(false);
 	}
 	
-	public static Laboratorio getInstance(){
-		return laboratorio;
+	public static Laboratorio getNewInstance(){
+		return new Laboratorio();
 	}
 
 	public void setProcesosHabilitados(ArrayList<Proceso> procesosHabilitados) {
