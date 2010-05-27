@@ -11,19 +11,34 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util
 public class ValidadorProductos {
 	
 	private HashMap<String,String> MapProductos;
+	private XMLParser parser;
 	
 	public boolean Existe(String producto){ 
 		//TODO Devolver TRUE si existe en el HASH o FALSE sino
+		
+		MapProductos = parser.LeerDoc(producto);
 		return false;}
 
-	public ValidadorProductos(String pathProductos) {
-		super();
-		XMLParser parser = new XMLParser();
-	
-		MapProductos = parser.LeerDoc(pathProductos);
+	public boolean esValido(String producto){ 
+		//TODO Devolver TRUE si existe se puede crear o FALSE sino
+
+		MapProductos = parser.LeerDoc(producto);
+		return false;}
+
+	public HashMap<String, String> getMapProductos() {
+		return MapProductos;
 	}
 
-	
-	
+	public void setMapProductos(HashMap<String, String> mapProductos) {
+		MapProductos = mapProductos;
+	}
+
+	public XMLParser getParser() {
+		return parser;
+	}
+
+	public void setParser(XMLParser parser) {
+		this.parser = parser;
+	}
 	
 }

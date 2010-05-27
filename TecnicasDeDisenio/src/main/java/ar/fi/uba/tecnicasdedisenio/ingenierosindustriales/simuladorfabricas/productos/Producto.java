@@ -1,5 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 /**
  * Clase que representa a cualquier Producto
@@ -27,15 +28,21 @@ public class Producto {
 		this.estado = estado;
 	}
 
-	public Producto(String estado, double defectos) {
+	public Producto(ValidadorProductos val, String estado, double defectos) {
 		super();
-		this.defectuoso = defectos;
-		double proba= Math.random();
-		if(proba > this.defectuoso) {
-			this.estado = estado;
-		} else{
-			this.estado= "Defectuoso";
+		if(val.esValido(estado)){
+			this.defectuoso = defectos;
+			double proba= Math.random();
+			if(proba > this.defectuoso) {
+				this.estado = estado;
+			} else{
+				this.estado= "Defectuoso";
+			}
 		}
+		else {
+			this.estado= "Desecho";
+		}
+			
 	}
 	
 	
