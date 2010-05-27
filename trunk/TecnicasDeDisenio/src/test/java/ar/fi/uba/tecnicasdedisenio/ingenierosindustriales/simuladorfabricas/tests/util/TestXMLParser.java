@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Properties;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.XMLParser;
 
 /**
@@ -29,7 +30,10 @@ public class TestXMLParser {
 	@Test
 	public void testLeerDoc() {
 		try{
-			parser.LeerDoc("Costos.xml");
+			Properties p = System.getProperties();
+			System.out.println("java version: " + p.getProperty("java.version"));
+			System.out.println("Class path: " + p.getProperty("sun.boot.class.path"));
+			parser.LeerDoc(".\\Costos.xml");
 		}catch(Exception e){
 			e.printStackTrace();
 			fail("Falló la lectura del XML: " + e.getMessage());

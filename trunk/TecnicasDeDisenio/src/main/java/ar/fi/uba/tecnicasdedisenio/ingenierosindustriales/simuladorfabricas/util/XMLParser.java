@@ -17,7 +17,14 @@ public class XMLParser {
 	public HashMap<String,String> LeerDoc(String path){
 		SAXBuilder builder = new SAXBuilder();
 		try {
-			InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
+			// UNO
+			//InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
+			// DOS
+			//InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+			// TRES
+			ClassLoader cl = this.getClass().getClassLoader();
+            java.net.URL url = cl.getResource(path);
+            InputStream is = url.openStream();
 			Document document = builder.build(is);
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
