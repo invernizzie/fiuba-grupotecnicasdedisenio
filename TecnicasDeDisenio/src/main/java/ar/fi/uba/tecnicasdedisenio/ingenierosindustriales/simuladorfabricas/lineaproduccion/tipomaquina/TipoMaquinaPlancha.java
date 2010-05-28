@@ -11,22 +11,23 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 public class TipoMaquinaPlancha extends TipoMaquina {
 
 	private Plancha plancha;
-	private ComparadorDeMaquinas comparador;
 	
 	
 	
 	public TipoMaquinaPlancha(ComparadorDeMaquinas comparador) {
+		super();
 		this.setComparador(comparador);
 		plancha = new Plancha();
-	}
-
-	public TipoMaquinaPlancha(IEntrada entrada, ISalida salida) {
-		this(new ComparadorDeMaquinasSimple());
 		
 	}
 
-	@Override
-	public void procesar() {
+	/*public TipoMaquinaPlancha(IEntrada entrada, ISalida salida) {
+		this(new ComparadorDeMaquinasSimple());
+		
+	}*/
+	
+	public TipoMaquinaPlancha(){
+		this(new ComparadorDeMaquinasSimple());
 	}
 
 	@Override
@@ -41,7 +42,7 @@ public class TipoMaquinaPlancha extends TipoMaquina {
 
 	@Override
 	public Boolean verificarTipo(Maquina maquina) {
-		return (comparador.compare(maquina, plancha) == 0);
+		return (this.getComparador().compare(maquina, plancha) == 0);
 	}
 
 }

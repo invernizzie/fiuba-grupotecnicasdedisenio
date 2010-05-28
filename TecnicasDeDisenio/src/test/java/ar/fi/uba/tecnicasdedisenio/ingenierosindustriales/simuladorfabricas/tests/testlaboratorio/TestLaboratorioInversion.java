@@ -7,10 +7,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Entrada;
+
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Jugador;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Proceso;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Salida;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Proceso;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPlancha;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPrensa;
@@ -96,7 +95,7 @@ public class TestLaboratorioInversion {
 		
 		/*Agrego un proceso habilitado.*/
 		proc = new Proceso(100);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq = new TipoMaquinaPrensa();
 		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
 		
@@ -105,7 +104,7 @@ public class TestLaboratorioInversion {
 		
 		/*Agrego un proceso habilitado.*/
 		proc = new Proceso(125);
-		tipoMaq = new TipoMaquinaPlancha(new Entrada(), new Salida());
+		tipoMaq = new TipoMaquinaPlancha();
 		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
 		
@@ -114,13 +113,13 @@ public class TestLaboratorioInversion {
 		
 		/*Agrego un proceso inhabilitado.*/
 		proc = new Proceso(2000);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq = new TipoMaquinaPrensa();
 		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
 		
 		/*Agrego un proceso inhabilitado.*/
 		proc = new Proceso(3000);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq = new TipoMaquinaPrensa();
 		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
 		
@@ -136,25 +135,25 @@ public class TestLaboratorioInversion {
 		
 		/*Agrego un proceso habilitado.*/
 		proc = new Proceso(100);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq = new TipoMaquinaPrensa();
 		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
 		
 		/*Agrego un proceso habilitado.*/
 		proc = new Proceso(125);
-		tipoMaq = new TipoMaquinaPlancha(new Entrada(), new Salida());
+		tipoMaq = new TipoMaquinaPlancha();
 		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
 		
 		/*Agrego un proceso inhabilitado.*/
 		proc = new Proceso(1000);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq = new TipoMaquinaPrensa();
 		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
 		
 		/*Agrego un proceso inhabilitado.*/
 		proc = new Proceso(2439);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		tipoMaq = new TipoMaquinaPrensa();
 		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
 		

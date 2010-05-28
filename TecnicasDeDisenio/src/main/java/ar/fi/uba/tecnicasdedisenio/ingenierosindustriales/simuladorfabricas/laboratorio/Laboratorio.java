@@ -1,4 +1,4 @@
-package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
+package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -93,7 +93,7 @@ public class Laboratorio {
 	
 	/* Si existe un proceso que sea igual a la linea de producción
 	 * entonces devuelve el elemento que produce*/
-	public boolean procesoValido(Maquina maquinaFinalLinea){
+	public boolean existeProcesoValido(Maquina maquinaFinalLinea){
 		Iterator<Proceso> itProcesos = this.iteratorProcesosHabilitados();
 		boolean procesoValido;
 		while(itProcesos.hasNext()){

@@ -1,25 +1,19 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.testlaboratorio;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.junit.Test;
 import junit.framework.Assert;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Entrada;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Laboratorio;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Proceso;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Salida;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Proceso;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.*;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class TestLaboratorioValidacion {
 	private Laboratorio laboratorio = Laboratorio.getNewInstance();
 	private Proceso proceso = new Proceso(1000);
-	private TipoMaquina maquina = new TipoMaquinaPrensa(new ComparadorDeMaquinasSimple());
-	private Entrada entrada = new Entrada();
-	private Salida salida = new Salida();
 	
 	@Test
 	public void testProcesoSinTipoMaquina(){
@@ -28,7 +22,7 @@ public class TestLaboratorioValidacion {
 	
 	@Test
 	public void testProcesoConTipoMaquina(){
-		TipoMaquina tipoMaquina = new TipoMaquinaPrensa(new Entrada(), new Salida());
+		TipoMaquina tipoMaquina = new TipoMaquinaPrensa();
 		proceso.setMaquinaFinal(tipoMaquina);
 		Assert.assertNotNull("No tiene una maquina asignada", proceso.getMaquinaFinal());
 		Assert.assertEquals("No son la misma maquina", proceso.getMaquinaFinal(),tipoMaquina);
@@ -38,59 +32,73 @@ public class TestLaboratorioValidacion {
 	
 	
 	@Test
-	public void testExisteProcesoValidoSinEntradas(){
+	public void testExisteProcesoValido(){
+		TipoMaquina maq = null;
+		Maquina maquina = null;
 		
-	/*	Agrego dos procesos distintos.
-		proceso = new Proceso();
-		proceso.agregarTipoMaquina(new TipoMaquinaPrensa(new ComparadorDeMaquinasSimple()));
-		proceso.agregarTipoMaquina(new TipoMaquinaPlancha(new ComparadorDeMaquinasSimple()));
-		proceso.agregarTipoMaquina(new TipoMaquinaPlancha(new ComparadorDeMaquinasSimple()));
-		
+		proceso = new Proceso(1000);
+		maq = new TipoMaquinaPrensa();
+		maq.getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().add(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+//		maq.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto1"), 0));
+//		maq.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto2"), 0));
+		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
 		
 		
-		proceso = new Proceso();
-		proceso.agregarTipoMaquina(new TipoMaquinaPrensa(new ComparadorDeMaquinasSimple()));
-		proceso.agregarTipoMaquina(new TipoMaquinaPlancha(new ComparadorDeMaquinasSimple()));
-		proceso.agregarTipoMaquina(new TipoMaquinaPlancha(new ComparadorDeMaquinasSimple()));
-		proceso.agregarTipoMaquina(new TipoMaquinaPrensa(new ComparadorDeMaquinasSimple()));
-		
+		proceso = new Proceso(1500);
+		maq = new TipoMaquinaPrensa();
+		maq.getPrecedentes().add(new TipoMaquinaPlancha());
+//		maq.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto1"), 0));
+		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
 		
 		
-		
-		Creo un conjunto de maquinas y veo si hay algun proceso que sea igual.
-		ArrayList<Maquina> maquinas = new ArrayList<Maquina>();
-		maquinas.add(new Plancha());
-		maquinas.add(new Prensa());
-		
-		Assert.assertNull("No deberia haber ningun proceso",laboratorio.procesoValido(maquinas));
-		
-		Modifico la linea y vuelvo a ver si hay algun proceso que sea igual.
-		maquinas.add(new Plancha());
-		Assert.assertNotNull("Deberia haber algun proceso",laboratorio.procesoValido(maquinas));
-		
-		Modifico la linea y vuelvo a ver si hay algun proceso que sea igual.
-		maquinas.add(new Prensa());
-		Assert.assertNotNull("Deberia haber algun proceso",laboratorio.procesoValido(maquinas));
-		
-		Modifico la linea y vuelvo a ver si hay algun proceso que sea igual.
-		maquinas.add(new Plancha());
-		Assert.assertNull("No deberia haber ningun proceso",laboratorio.procesoValido(maquinas));
+		maquina = new Prensa();
+		maquina.getPrecedentes().add(new Prensa());
+		maquina.getPrecedentes().add(new Plancha());
+		maquina.getPrecedentes().get(1).getPrecedentes().add(new Prensa());
+		maquina.getPrecedentes().get(1).getPrecedentes().get(0).getPrecedentes().add(new Plancha());
+		maquina.getPrecedentes().get(1).getPrecedentes().add(new Plancha());
+//		maquina.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto1"), 0));
+//		maquina.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto2"), 0));
 
-		Agrego un nuevo proceso y vuelvo a validar.
-		proceso = new Proceso();
-		proceso.agregarTipoMaquina(new TipoMaquinaPrensa(new ComparadorDeMaquinasSimple()));
-		proceso.agregarTipoMaquina(new TipoMaquinaPlancha(new ComparadorDeMaquinasSimple()));
-		proceso.agregarTipoMaquina(new TipoMaquinaPlancha(new ComparadorDeMaquinasSimple()));
-		proceso.agregarTipoMaquina(new TipoMaquinaPrensa(new ComparadorDeMaquinasSimple()));
-		proceso.agregarTipoMaquina(new TipoMaquinaPlancha(new ComparadorDeMaquinasSimple()));
 		
+		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));		
+
+		maquina = new Prensa();
+		maquina.getPrecedentes().add(new Prensa());
+		maquina.getPrecedentes().add(new Plancha());
+		maquina.getPrecedentes().get(1).getPrecedentes().add(new Prensa());
+		maquina.getPrecedentes().get(1).getPrecedentes().get(0).getPrecedentes().add(new Plancha());
+		maquina.getPrecedentes().get(1).getPrecedentes().get(0).getPrecedentes().add(new Plancha());
+		maquina.getPrecedentes().get(1).getPrecedentes().add(new Plancha());
+		
+		Assert.assertFalse("No debería haber un proceso valido",laboratorio.existeProcesoValido(maquina));
+		
+		
+		proceso = new Proceso(1000);
+		maq = new TipoMaquinaPrensa();
+		maq.getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().add(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
 		
+		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));
 		
-		Assert.assertNotNull("Deberï¿½a haber algun proceso",laboratorio.procesoValido(maquinas));
-		*/
+		
+		maquina = new Prensa();
+		maquina.getPrecedentes().add(new Plancha());
+		
+		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));
+		
 	}
 	
 }

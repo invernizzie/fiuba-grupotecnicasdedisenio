@@ -24,6 +24,11 @@ public abstract class Maquina implements Cloneable  {
 	private ArrayList<Producto> materiasPrimas;
 	private ArrayList<Maquina> precedentes;
 
+	public Maquina(){
+		this.setMateriasPrimas(new ArrayList<Producto>());
+		this.setPrecedentes(new ArrayList<Maquina>());
+	}
+	
 	/**
 	 * Verifica que ingresen los elementos correctos para realizar la tarea que 
 	 * le corresponde a cada máquina.

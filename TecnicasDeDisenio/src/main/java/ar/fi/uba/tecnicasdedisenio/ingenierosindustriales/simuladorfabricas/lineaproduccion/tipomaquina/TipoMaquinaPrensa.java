@@ -13,19 +13,15 @@ public class TipoMaquinaPrensa extends TipoMaquina {
 	private Prensa prensa;
 	
 	public TipoMaquinaPrensa(ComparadorDeMaquinas comparador) {
+		super();
 		this.setComparador(comparador);
 		prensa = new Prensa();
 	}
-
-	public TipoMaquinaPrensa(IEntrada entrada, ISalida salida) {
-		this(new ComparadorDeMaquinasSimple());
-		
-	}
-
 	
-	@Override
-	public void procesar() {
+	public TipoMaquinaPrensa() {
+		this(new ComparadorDeMaquinasSimple());
 	}
+	
 
 	@Override
 	public Maquina getInstancia() {
@@ -39,7 +35,7 @@ public class TipoMaquinaPrensa extends TipoMaquina {
 
 	@Override
 	public Boolean verificarTipo(Maquina maquina) {
-		return (getComparador().compare(maquina, prensa) == 0);
+		return (this.getComparador().compare(maquina, prensa) == 0);
 	}
 
 }
