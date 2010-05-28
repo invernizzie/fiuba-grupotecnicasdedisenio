@@ -7,45 +7,22 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Sali
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Prensa;
 
-public class TipoMaquinaPrensa implements TipoMaquina {
+public class TipoMaquinaPrensa extends TipoMaquina {
 
-	private IEntrada entrada;
-	private ISalida salida;
+
 	private Prensa prensa;
-	private ComparadorDeMaquinas comparador;
-	private float costo;
 	
 	public TipoMaquinaPrensa(ComparadorDeMaquinas comparador) {
-		this.comparador = comparador;
+		this.setComparador(comparador);
 		prensa = new Prensa();
 	}
 
 	public TipoMaquinaPrensa(IEntrada entrada, ISalida salida) {
 		this(new ComparadorDeMaquinasSimple());
-		this.setEntrada(entrada);
-		this.setSalida(salida);
+		
 	}
 
-	@Override
-	public IEntrada getEntrada() {
-		return entrada;
-	}
-
-	@Override
-	public ISalida getSalida() {
-		return salida;
-	}
-
-	@Override
-	public void setEntrada(IEntrada entrada) {
-		this.entrada = entrada;
-	}
 	
-	@Override
-	public void setSalida(ISalida salida) {
-		this.salida = salida;
-	}
-
 	@Override
 	public void procesar() {
 	}
@@ -62,17 +39,7 @@ public class TipoMaquinaPrensa implements TipoMaquina {
 
 	@Override
 	public Boolean verificarTipo(Maquina maquina) {
-		return (comparador.compare(maquina, prensa) == 0);
-	}
-
-	@Override
-	public float getCosto() {
-		return this.costo;
-	}
-
-	@Override
-	public void setCosto(float costo) {
-		this.costo = costo;	
+		return (getComparador().compare(maquina, prensa) == 0);
 	}
 
 }

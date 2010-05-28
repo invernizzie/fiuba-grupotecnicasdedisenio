@@ -1,11 +1,13 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.IEntrada;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISalida;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 
 /**
@@ -19,6 +21,8 @@ public abstract class Maquina implements Cloneable  {
 	private IEntrada entrada;
 	private ISalida salida;
 	private List<Elemento> elementos;
+	private ArrayList<Producto> materiasPrimas;
+	private ArrayList<Maquina> precedentes;
 
 	/**
 	 * Verifica que ingresen los elementos correctos para realizar la tarea que 
@@ -81,4 +85,21 @@ public abstract class Maquina implements Cloneable  {
 	public ISalida getSalida() {
 		return salida;
 	}
+	
+	public void setMateriasPrimas(ArrayList<Producto> materiasPrimas) {
+		this.materiasPrimas = materiasPrimas;
+	}
+
+	public ArrayList<Producto> getMateriasPrimas() {
+		return materiasPrimas;
+	}
+
+	public void setPrecedentes(ArrayList<Maquina> precedentes) {
+		this.precedentes = precedentes;
+	}
+
+	public ArrayList<Maquina> getPrecedentes() {
+		return precedentes;
+	}
+	
 }

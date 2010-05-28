@@ -93,16 +93,16 @@ public class Laboratorio {
 	
 	/* Si existe un proceso que sea igual a la linea de producción
 	 * entonces devuelve el elemento que produce*/
-	public Elemento procesoValido(ArrayList<Maquina> maquinas){
+	public boolean procesoValido(Maquina maquinaFinalLinea){
 		Iterator<Proceso> itProcesos = this.iteratorProcesosHabilitados();
-		Elemento e;
+		boolean procesoValido;
 		while(itProcesos.hasNext()){
-			e = itProcesos.next().validarLinea(maquinas);
-			if (e!=null){
-				return e;
+			procesoValido = itProcesos.next().esProcesoIgualALinea(maquinaFinalLinea);
+			if(procesoValido){
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 	
 	public class IteradorProcesos implements Iterator<Proceso>{
