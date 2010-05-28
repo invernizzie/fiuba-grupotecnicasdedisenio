@@ -1,4 +1,4 @@
-package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
+package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
@@ -33,29 +33,7 @@ public class Proceso {
 	}
 		
 	public boolean esProcesoIgualALinea(Maquina maquinaFinalLinea) {
-		return this.getMaquinaFinal().comparar(maquinaFinalLinea);
-		
-	/*
-		if(this.getMaquinas().size()!=maquinas.size()){
-			return false;
-		}
-		
-		
-		Iterator<TipoMaquina> itTipos = this.iterator();
-		while(itTipos.hasNext()){
-			tipoMaq = itTipos.next();
-			for(i=0;i<maquinas.size();i++){
-				if(tipoMaq.verificarTipo(maquinas.get(i))){
-					//Aca habria que comparar las entradas.
-					maquinas.remove(i);
-					i=maquinas.size();
-				}
-			}
-		}
-		if(maquinas.size()==0)
-				return true;
-		
-		return false;*/
+		return this.getMaquinaFinal().equals(maquinaFinalLinea);
 	}
 	
 }
