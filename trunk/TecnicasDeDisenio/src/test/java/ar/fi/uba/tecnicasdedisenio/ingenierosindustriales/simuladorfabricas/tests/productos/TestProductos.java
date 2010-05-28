@@ -10,12 +10,12 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 public class TestProductos {
 	private Producto producto;
 	private String posibleEstado;
-	private ValidadorProducto val;
+	private ValidadorProductos val;
 	
 	@Before
 	public void setUp() throws Exception {
 		posibleEstado="pan";
-		Producto producto = new Producto();
+		Producto producto = new Producto(val, posibleEstado, 0.02);
 	}
 
 	@After
