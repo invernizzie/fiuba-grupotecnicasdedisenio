@@ -10,11 +10,12 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 public class TestProductos {
 	private Producto producto;
 	private String posibleEstado;
+	private ValidadorProducto val;
 	
 	@Before
 	public void setUp() throws Exception {
-		//jugador = new Jugador(10000);
-		//porcentaje = 10;
+		posibleEstado="pan";
+		Producto producto = new Producto();
 	}
 
 	@After
