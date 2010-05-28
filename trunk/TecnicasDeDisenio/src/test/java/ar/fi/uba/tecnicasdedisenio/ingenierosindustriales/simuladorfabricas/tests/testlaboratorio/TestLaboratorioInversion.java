@@ -95,46 +95,33 @@ public class TestLaboratorioInversion {
 		Proceso proc;
 		
 		/*Agrego un proceso habilitado.*/
-		proc = new Proceso();
+		proc = new Proceso(100);
 		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(100);
-		proc.agregarTipoMaquina(tipoMaq);
+		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
 		
 		Assert.assertTrue("No tiene ningún proceso habilitado, cuando debería tener uno",jugador.getLaboratorio().getProcesosHabilitados().size()==1);
 		Assert.assertTrue("Tiene algún proceso inhabilitado cuando no debería tenerlo",jugador.getLaboratorio().getProcesosInhabilitados().size()==0);
 		
 		/*Agrego un proceso habilitado.*/
-		proc = new Proceso();
+		proc = new Proceso(125);
 		tipoMaq = new TipoMaquinaPlancha(new Entrada(), new Salida());
-		tipoMaq.setCosto(125);
-		proc.agregarTipoMaquina(tipoMaq);
+		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
 		
 		Assert.assertTrue("No tiene dos procesos habilitados, cuando debería tener dos",jugador.getLaboratorio().getProcesosHabilitados().size()==2);
 		Assert.assertTrue("Tiene algún proceso inhabilitado cuando no debería tenerlo",jugador.getLaboratorio().getProcesosInhabilitados().size()==0);
 		
 		/*Agrego un proceso inhabilitado.*/
-		proc = new Proceso();
+		proc = new Proceso(2000);
 		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(1000);
-		proc.agregarTipoMaquina(tipoMaq);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(1000);
-		proc.agregarTipoMaquina(tipoMaq);
+		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
 		
 		/*Agrego un proceso inhabilitado.*/
-		proc = new Proceso();
+		proc = new Proceso(3000);
 		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(1000);
-		proc.agregarTipoMaquina(tipoMaq);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(1000);
-		proc.agregarTipoMaquina(tipoMaq);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(1000);
-		proc.agregarTipoMaquina(tipoMaq);
+		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
 		
 		Assert.assertTrue("No tiene dos procesos inhabilitados, cuando debería tener dos",jugador.getLaboratorio().getProcesosInhabilitados().size()==2);
@@ -148,37 +135,27 @@ public class TestLaboratorioInversion {
 		jugador.habilitarLaboratorio();
 		
 		/*Agrego un proceso habilitado.*/
-		proc = new Proceso();
+		proc = new Proceso(100);
 		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(100);
-		proc.agregarTipoMaquina(tipoMaq);
+		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
 		
 		/*Agrego un proceso habilitado.*/
-		proc = new Proceso();
+		proc = new Proceso(125);
 		tipoMaq = new TipoMaquinaPlancha(new Entrada(), new Salida());
-		tipoMaq.setCosto(125);
-		proc.agregarTipoMaquina(tipoMaq);
+		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proc);
 		
 		/*Agrego un proceso inhabilitado.*/
-		proc = new Proceso();
+		proc = new Proceso(1000);
 		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(1000);
-		proc.agregarTipoMaquina(tipoMaq);
+		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
 		
 		/*Agrego un proceso inhabilitado.*/
-		proc = new Proceso();
+		proc = new Proceso(2439);
 		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(1000);
-		proc.agregarTipoMaquina(tipoMaq);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(1000);
-		proc.agregarTipoMaquina(tipoMaq);
-		tipoMaq = new TipoMaquinaPrensa(new Entrada(), new Salida());
-		tipoMaq.setCosto(439);
-		proc.agregarTipoMaquina(tipoMaq);
+		proc.setMaquinaFinal(tipoMaq);
 		jugador.getLaboratorio().getProcesosInhabilitados().add(proc);
 		
 		/*Se invierte dinero. El laboratorio ya puede descubrir un nuevo producto.*/

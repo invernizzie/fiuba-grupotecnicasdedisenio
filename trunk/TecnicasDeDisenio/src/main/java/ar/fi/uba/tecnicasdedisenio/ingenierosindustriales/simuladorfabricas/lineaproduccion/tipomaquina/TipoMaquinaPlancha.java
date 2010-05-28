@@ -1,5 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina;
 
+
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Entrada;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.IEntrada;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISalida;
@@ -7,43 +8,21 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Sali
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Plancha;
 
-public class TipoMaquinaPlancha implements TipoMaquina {
+public class TipoMaquinaPlancha extends TipoMaquina {
 
-	private IEntrada entrada;
-	private ISalida salida;
 	private Plancha plancha;
 	private ComparadorDeMaquinas comparador;
-	private float costo;
+	
+	
 	
 	public TipoMaquinaPlancha(ComparadorDeMaquinas comparador) {
-		this.comparador = comparador;
+		this.setComparador(comparador);
 		plancha = new Plancha();
 	}
 
 	public TipoMaquinaPlancha(IEntrada entrada, ISalida salida) {
 		this(new ComparadorDeMaquinasSimple());
-		this.setEntrada(entrada);
-		this.setSalida(salida);
-	}
-
-	@Override
-	public IEntrada getEntrada() {
-		return entrada;
-	}
-
-	@Override
-	public ISalida getSalida() {
-		return salida;
-	}
-
-	@Override
-	public void setEntrada(IEntrada entrada) {
-		this.entrada = entrada;
-	}
-	
-	@Override
-	public void setSalida(ISalida salida) {
-		this.salida = salida;
+		
 	}
 
 	@Override
@@ -63,16 +42,6 @@ public class TipoMaquinaPlancha implements TipoMaquina {
 	@Override
 	public Boolean verificarTipo(Maquina maquina) {
 		return (comparador.compare(maquina, plancha) == 0);
-	}
-
-	@Override
-	public float getCosto() {
-		return this.costo;
-	}
-
-	@Override
-	public void setCosto(float costo) {
-		this.costo = costo;	
 	}
 
 }

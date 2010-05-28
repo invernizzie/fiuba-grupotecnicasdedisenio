@@ -1,37 +1,71 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.IEntrada;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISalida;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
+import java.util.ArrayList;
 
-public interface TipoMaquina {
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+
+public abstract class TipoMaquina implements ITipoMaquina {
 	
+	private float costo;
+	private ArrayList<Producto> materiasPrimas;
+	private ArrayList<TipoMaquina> precedentes;
+	private ComparadorDeMaquinas comparador;
 	
-	public void setEntrada(IEntrada entrada);
+	@Override
+	public Maquina getInstancia() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void procesar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Boolean verificarTipo(Maquina maquina) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setCosto(float costo) {
+		this.costo = costo;
+	}
+
+	public float getCosto() {
+		return costo;
+	}
 	
-	public IEntrada getEntrada();
+	public void setMateriasPrimas(ArrayList<Producto> materiasPrimas) {
+		this.materiasPrimas = materiasPrimas;
+	}
+
+	public ArrayList<Producto> getMateriasPrimas() {
+		return materiasPrimas;
+	}
+
+	public void setPrecedentes(ArrayList<TipoMaquina> precedentes) {
+		this.precedentes = precedentes;
+	}
+
+	public ArrayList<TipoMaquina> getPrecedentes() {
+		return precedentes;
+	}
+
+	public void setComparador(ComparadorDeMaquinas comparador) {
+		this.comparador = comparador;
+	}
+
+	public ComparadorDeMaquinas getComparador() {
+		return comparador;
+	}
 	
-	public void setSalida(ISalida salida);
+	public boolean comparar(Maquina maquinaFinalLinea){
+		if(this.verificarTipo(maquinaFinalLinea))
+			return true;
+		return false;
+	}
 	
-	public ISalida getSalida();
-	
-	public void procesar();
-	
-	public void setCosto(float costo);
-	
-	public float getCosto();
-	
-	/**
-	 * Construye una nueva instancia del tipo de máquina al que se hace
-	 * referencia.
-	 * @return
-	 */
-	public Maquina getInstancia();
-	
-	/**
-	 * Comprueba si la máquina recibida por parámetro es del tipo correspondiente.
-	 * @param maquina
-	 * @return
-	 */
-	public Boolean verificarTipo(Maquina maquina);
 }

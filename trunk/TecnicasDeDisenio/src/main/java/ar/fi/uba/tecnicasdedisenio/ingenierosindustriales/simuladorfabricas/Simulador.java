@@ -2,7 +2,6 @@
  * 
  */
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.XMLParser;
 
 /**
