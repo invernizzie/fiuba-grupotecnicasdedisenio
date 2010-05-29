@@ -6,7 +6,11 @@ import org.eclipse.swt.widgets.*;
 public class MenuItemListener extends SelectionAdapter {
 	private Shell shell;
 
-    public void widgetSelected(SelectionEvent event) {
+    public MenuItemListener(Shell shell) {
+		this.shell = shell;
+	}
+
+	public void widgetSelected(SelectionEvent event) {
         if (((MenuItem) event.widget).getText().equals("Exit")) {
           shell.close();
         }
