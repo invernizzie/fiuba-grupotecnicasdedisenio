@@ -35,15 +35,18 @@ public class TestLaboratorioValidacion {
 	public void testExisteProcesoValido(){
 		TipoMaquina maq = null;
 		Maquina maquina = null;
+		ValidadorProductos val = new ValidadorProductos();
+		val.Cargar();
 		
 		proceso = new Proceso(1000);
 		maq = new TipoMaquinaPrensa();
 		maq.getPrecedentes().add(new TipoMaquinaPlancha());
 		maq.getPrecedentes().add(new TipoMaquinaPrensa());
 		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getMateriasPrimas().add(new Producto(val, "pan", 0));
 		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
 		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
-//		maq.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto1"), 0));
+		maq.getMateriasPrimas().add(new Producto(val, "pan", 0));
 //		maq.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto2"), 0));
 		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
@@ -52,7 +55,6 @@ public class TestLaboratorioValidacion {
 		proceso = new Proceso(1500);
 		maq = new TipoMaquinaPrensa();
 		maq.getPrecedentes().add(new TipoMaquinaPlancha());
-//		maq.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto1"), 0));
 		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
 		
@@ -61,10 +63,10 @@ public class TestLaboratorioValidacion {
 		maquina.getPrecedentes().add(new Prensa());
 		maquina.getPrecedentes().add(new Plancha());
 		maquina.getPrecedentes().get(1).getPrecedentes().add(new Prensa());
+		maquina.getPrecedentes().get(1).getMateriasPrimas().add(new Producto(val, "pan", 0));
 		maquina.getPrecedentes().get(1).getPrecedentes().get(0).getPrecedentes().add(new Plancha());
 		maquina.getPrecedentes().get(1).getPrecedentes().add(new Plancha());
-//		maquina.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto1"), 0));
-//		maquina.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto2"), 0));
+		maquina.getMateriasPrimas().add(new Producto(val, "pan", 0));
 
 		
 		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));		
