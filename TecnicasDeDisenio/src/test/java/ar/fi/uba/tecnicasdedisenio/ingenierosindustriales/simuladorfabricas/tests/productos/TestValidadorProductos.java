@@ -34,6 +34,6 @@ public class TestValidadorProductos {
 	
 	@Test
 	public void testEsValidoProductoInexistente() {
-		Assert.assertEquals(true, val.esValido("auto"));
+		Assert.assertEquals(false, val.esValido("auto"));
 	}	
 }
