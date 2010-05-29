@@ -17,7 +17,7 @@ public class TestProductos {
 		posibleEstado="pan";
 		val = new ValidadorProductos();
 		val.Cargar();
-		producto = new Producto(val, posibleEstado, 0);
+		producto = new Producto(val, posibleEstado, 0.2);
 	}
 
 	@After
@@ -27,11 +27,13 @@ public class TestProductos {
 	@Test
 	public void testCrearProducto() {
 		Assert.assertNotNull("No se puede crear producto",producto.getEstado());
+		//System.out.print("Estado: " + producto.getEstado());
 	}
 	
 	@Test
 	public void testEqualsProducto() {
-		
-		Assert.assertEquals(true, producto.equals( new Producto(val, "pan",0)));
+		Producto prod = new Producto(val, "auto",0);
+		//Assert.assertEquals(true, producto.equals( prod));
+		Assert.assertEquals("Error en el estado de Producto", prod.getEstado(), producto.getEstado());
 	}
 }
