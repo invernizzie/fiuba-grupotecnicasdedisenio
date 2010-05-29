@@ -48,7 +48,7 @@ public class RecursosAplicacion {
             
             
         } catch (Exception error) {
-            
+            error.printStackTrace();
         }
     }
 
