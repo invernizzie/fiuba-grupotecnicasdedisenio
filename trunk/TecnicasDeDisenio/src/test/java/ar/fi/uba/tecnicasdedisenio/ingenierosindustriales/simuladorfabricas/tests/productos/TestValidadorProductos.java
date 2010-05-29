@@ -1,23 +1,19 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.productos;
-import junit.framework.Assert;
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.*;
 
-public class TestProductos {
-	private Producto producto;
-	private String posibleEstado;
+public class TestValidadorProductos {
 	private ValidadorProductos val;
 	
 	@Before
 	public void setUp() throws Exception {
-		posibleEstado="pan";
 		val = new ValidadorProductos();
 		val.Cargar();
-		producto = new Producto(val, posibleEstado, 0.02);
 	}
 
 	@After
@@ -25,8 +21,15 @@ public class TestProductos {
 	}
 	
 	@Test
-	public void testCrearProducto() {
-		Assert.assertNotNull("No se puede crear producto",producto.getEstado());
+	public void testEncontrarProducto() {
+		Assert.assertEquals(true, val.Existe("pan"));
+		System.out.print("Se encontro el producto buscado\n");
+	}
+	
+	@Test
+	public void testEsValidoProducto() {
+		Assert.assertEquals(false, val.esValido("miel"));
+		System.out.print("No es válido el producto buscado\n");
 	}
 	
 }
