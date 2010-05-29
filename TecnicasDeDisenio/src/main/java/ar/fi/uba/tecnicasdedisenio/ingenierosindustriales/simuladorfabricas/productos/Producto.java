@@ -1,14 +1,14 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 /**
  * Clase que representa a cualquier Producto
  * @author Diego
  *
  */
-public class Producto {
+public class Producto implements Cloneable {
 	private String estado;
+	private ValidadorProductos validador;
 
 	public String getEstado() {
 		return estado;
@@ -21,6 +21,7 @@ public class Producto {
 
 	public Producto(ValidadorProductos val, String estado, double tasa_falla) {
 		super();
+		this.validador = val;
 		if(val.esValido(estado)){
 			double proba= Math.random();
 			if(tasa_falla < proba) {
@@ -39,5 +40,8 @@ public class Producto {
 		return this.estado.equals(prod.estado);
 	}
 	
+	public Producto clone(){
+		return new Producto(this.validador, estado, 0F);
+	}
 	
 }

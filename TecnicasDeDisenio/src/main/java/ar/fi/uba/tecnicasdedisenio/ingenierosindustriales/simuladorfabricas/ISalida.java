@@ -1,6 +1,8 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+
 public interface ISalida {
-	public void asignarElemento(Elemento elemento);
-	public Elemento obtenerElemento();
+	public void asignarProducto(Producto producto);
+	public Producto obtenerProducto();
 }

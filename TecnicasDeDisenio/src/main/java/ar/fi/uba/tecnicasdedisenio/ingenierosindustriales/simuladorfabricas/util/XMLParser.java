@@ -1,9 +1,8 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
-
-import java.util.*;
 import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;

@@ -1,7 +1,8 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Prensado;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 /**
  * Maquina ({@link Maquina}) encargada de prensar un elemento ({@link Elemento}).
@@ -11,8 +12,10 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 public class Prensa extends Maquina {
 
 	@Override
-	protected Elemento realizarProceso() {
-		return new Prensado(this.getElementos().get(0));
+	protected Producto realizarProceso() {
+		ValidadorProductos val = new ValidadorProductos();
+		val.Cargar();
+		return new Producto(val,"prensado",this.getTasaDeFallos());
 	}
 
 	/**
@@ -21,7 +24,7 @@ public class Prensa extends Maquina {
 	 */
 	@Override
 	protected Boolean validarEntrada() {
-		return (this.getElementos().size() == 1);
+		return (this.getProductos().size() == 1);
 	}
 	
 	@Override

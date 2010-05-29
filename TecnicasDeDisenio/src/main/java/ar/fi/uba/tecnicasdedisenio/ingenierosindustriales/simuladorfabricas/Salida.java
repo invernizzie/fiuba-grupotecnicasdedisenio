@@ -1,23 +1,25 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+
 
 public class Salida implements ISalida {
 
-	private Elemento elemento;
+	private Producto producto;
 	
 	public Salida(){ 
 	}
 	
-	public Salida(Elemento e){
-		this.elemento = e;
+	public Salida(Producto producto){
+		this.producto = producto;
 	}
 	
-	public void asignarElemento(Elemento elemento) {
-		this.elemento = elemento;
+	public void asignarProducto(Producto producto) {
+		this.producto = producto;
 	}
 
-	public Elemento obtenerElemento(){
-		return this.elemento;
+	public Producto obtenerProducto(){
+		return this.producto;
 	}
 
 }

@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Entrada;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.IEntrada;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISalida;
@@ -14,13 +13,18 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Sali
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Prensa;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class TestMaquinaPrensa {
 	
 	private Maquina prensa;
+	private ValidadorProductos val;
 
 	@Before
 	public void setUp() throws Exception {
+		val = new ValidadorProductos();
+		val.Cargar();
 		prensa = new Prensa();
 		IEntrada entrada = new Entrada();
 		ISalida salida = new Salida();
@@ -36,33 +40,33 @@ public class TestMaquinaPrensa {
 
 	@Test
 	public void testProcesar() {
-		Elemento elementoAPrensar = new Elemento();
-		this.prensa.getEntrada().agregarElemento(elementoAPrensar);
+		Producto productoAPrensar = new Producto(val, "Pan", 0F);
+		this.prensa.getEntrada().agregarProducto(productoAPrensar);
 		
 		try {
 			this.prensa.procesar();
 		} catch (EntradaInvalidaException e) {
-			Assert.fail("La entrada a la prensa es inv√°lida");
+			Assert.fail("La entrada a la prensa es inv·lida");
 		}
 		
-		Elemento elementoPrensado = this.prensa.getSalida().obtenerElemento();
+		Producto productoPrensado = this.prensa.getSalida().obtenerProducto();
 		
-		Assert.assertEquals("El elemento no es un elemento prensado", "Prensado", 
-				elementoPrensado.getNombre());
+		Assert.assertEquals("El Producto no es un Producto prensado", "prensado", 
+				productoPrensado.getEstado());
 	}
 	
 	@Test
 	public void testEntradaInvalida() {
-		Elemento elementoAPrensar1 = new Elemento();
-		Elemento elementoAPrensar2 = new Elemento();
-		this.prensa.getEntrada().agregarElemento(elementoAPrensar1);
-		this.prensa.getEntrada().agregarElemento(elementoAPrensar2);
+		Producto productoAPrensar1 = new Producto(val, "Pan", 0F);
+		Producto productoAPrensar2 = new Producto(val, "Pan", 0F);
+		this.prensa.getEntrada().agregarProducto(productoAPrensar1);
+		this.prensa.getEntrada().agregarProducto(productoAPrensar2);
 		
 		try {
 			this.prensa.procesar();
-			Assert.fail("Se esperaba una excepci√≥n pero no se produjo");
+			Assert.fail("Se esperaba una excepciÛn pero no se produjo");
 		} catch (Exception e) {
-			Assert.assertEquals("Se esperaba una excepci√≥n de tipo EntradaInvalidaException", 
+			Assert.assertEquals("Se esperaba una excepciÛn de tipo EntradaInvalidaException", 
 					EntradaInvalidaException.class , e.getClass());
 		}
 	}

@@ -2,9 +2,11 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
 import java.util.List;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+
 
 
 public interface IEntrada {
-	public void agregarElemento(Elemento e);
-	public List<Elemento> getElementos();
+	public void agregarProducto(Producto producto);
+	public List<Producto> getProdcutos();
 }
