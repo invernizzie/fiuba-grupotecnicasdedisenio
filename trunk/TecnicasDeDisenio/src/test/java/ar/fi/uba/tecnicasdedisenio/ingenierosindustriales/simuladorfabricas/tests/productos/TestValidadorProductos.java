@@ -23,13 +23,17 @@ public class TestValidadorProductos {
 	@Test
 	public void testEncontrarProducto() {
 		Assert.assertEquals(true, val.Existe("pan"));
-		System.out.print("Se encontro el producto buscado\n");
+		//System.out.print("Se encontro el producto buscado\n");
 	}
 	
 	@Test
 	public void testEsValidoProducto() {
 		Assert.assertEquals(false, val.esValido("miel"));
-		System.out.print("No es válido el producto buscado\n");
+		//System.out.print("No es válido el producto buscado\n");
 	}
 	
+	@Test
+	public void testEsValidoProductoInexistente() {
+		Assert.assertEquals(true, val.esValido("auto"));
+	}	
 }

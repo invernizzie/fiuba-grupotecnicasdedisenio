@@ -54,6 +54,8 @@ public class ValidadorProductos {
 		}
 
 	public boolean esValido(String producto){ 
+		if(!this.MapProductos.containsKey(producto))
+			return false;		
 		if(this.MapProductos.get(producto).equals("habilitado"))
 				return true;
 		return false;
