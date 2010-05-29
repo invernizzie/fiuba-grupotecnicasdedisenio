@@ -23,9 +23,10 @@ public class TestVentana {
 
 	@Test
 	public void testPantalla() {
-		testsnippet.dibujar();
+		//testsnippet.dibujar();
+		testsnippet.dibujarMenu();
 		//assertEquals("No se encontró el texto esperado", "Un texto", simulador.getTexto());
 	}
-
+	
 }
 
