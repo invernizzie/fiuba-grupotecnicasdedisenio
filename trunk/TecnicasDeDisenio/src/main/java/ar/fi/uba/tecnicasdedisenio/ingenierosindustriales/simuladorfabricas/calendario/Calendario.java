@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class Calendario {
 
-    private static final int ANIO_INICIAL = 2000;
-    private static final int MES_INICIAL = 1;
-    private static final int DIA_INICIAL = 1;
+    public static final int ANIO_INICIAL = 2000;
+    public static final int MES_INICIAL = 0;
+    public static final int DIA_INICIAL = 1;
 
     private static Calendario instancia = new Calendario();
 
@@ -27,7 +27,7 @@ public class Calendario {
     private boolean detenido = false;
     private boolean pausado = false;
     private Calendar virtualCalendar = new GregorianCalendar(ANIO_INICIAL, MES_INICIAL, DIA_INICIAL);
-    private Thread threadCalendario = new ThreadCalendario();
+    private Thread threadCalendario = new ThreadCalendario(this);
 
     /**
      * Devuelve la unica instancia valida del Calendario
@@ -42,12 +42,15 @@ public class Calendario {
      * Debe ser iniciado para comenzar el paso del tiempo.
      */
     public void restaurar() {
-        threadCalendario.interrupt();
+        detener();
+        try {
+        threadCalendario.join(100);
+        } catch (InterruptedException e) { /* ?? */ }
         sincronizados = new ArrayList<Sincronizado>();
         virtualCalendar = new GregorianCalendar(ANIO_INICIAL, MES_INICIAL, DIA_INICIAL);
         detenido = false;
         pausado = false;
-        threadCalendario = new Calendario.ThreadCalendario();
+        threadCalendario = new ThreadCalendario(this);
     }
 
     /**
@@ -90,7 +93,7 @@ public class Calendario {
      * Detiene el paso del tiempo en el Calendario virtual.
      * Solo podra ser reiniciado si es restaurado.
      */
-    public synchronized void detener() {
+    public void detener() {
         detenido = true;
     }
 
@@ -115,7 +118,7 @@ public class Calendario {
      *
      * @return true si el Calendario ha sido detenido.
      */
-    public boolean isActivo() {
+    public boolean esValido() {
         return !detenido;
     }
 
@@ -124,7 +127,7 @@ public class Calendario {
      *
      * @return true si el Calendario se encuentra pausado.
      */
-    public boolean isPausado() {
+    public boolean estaPausado() {
         return pausado;
     }
 
@@ -153,56 +156,19 @@ public class Calendario {
         return sincronizados;
     }
 
-    private synchronized Calendar getVirtualCalendar() {
+    // Acceso de paquete
+    synchronized Calendar getVirtualCalendar() {
         return virtualCalendar;
     }
 
-    private void notificar(Evento evento) {
+    // Acceso de paquete
+    void notificar(Evento evento) {
         for (Sincronizado sincronizado: getSincronizados())
             sincronizado.notificar(evento);
     }
 
     /**
-     * Constructor privado para evitar instanciacion directa.
+     * Constructor privado para evitar instanciacion externa.
      */
     private Calendario() {}
-
-    /**
-     * Representa el hilo de ejecucion que lleva cuenta del paso
-     * del tiempo, y lanza las notificaciones correspondientes.
-     */
-    private class ThreadCalendario extends Thread {
-
-        /**
-         * Bucle de ejecucion del hilo.
-         * Debe dejar pasar tantos segundos como devuelva getSegundosPorDia(),
-         * y luego notificar un evento del tipo Evento.COMIENZO_DE_DIA.
-         * Cada siete eventos de ese tipo, debe notificar un evento del tipo
-         * Evento.COMIENZO_DE_SEMANA.
-         */
-        @Override
-        public void run() {
-            int i = 7;
-            while (isActivo()) {
-                try {
-                    if (isPausado()) {
-                        sleep(100);
-                        continue;
-                    }
-                    Date inicio = new Date();
-                    while (new Date().getTime() - inicio.getTime() < 1000 * getSegundosPorDia())
-                        sleep(1000);
-
-                    getVirtualCalendar().add(GregorianCalendar.DAY_OF_MONTH, 1);
-                    notificar(Evento.COMIENZO_DE_DIA);
-                    if ((i % 7) == 0) {
-                        notificar(Evento.COMIENZO_DE_SEMANA);
-                        i -= 7;
-                    }
-                    i++;
-                } catch (InterruptedException e) { /* ?? */ }
-            }
-        }
-    }
-
 }
