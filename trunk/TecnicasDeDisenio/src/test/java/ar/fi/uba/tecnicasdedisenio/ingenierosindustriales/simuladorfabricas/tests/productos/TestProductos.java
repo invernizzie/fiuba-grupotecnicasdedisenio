@@ -17,7 +17,7 @@ public class TestProductos {
 		posibleEstado="pan";
 		val = new ValidadorProductos();
 		val.Cargar();
-		producto = new Producto(val, posibleEstado, 0.02);
+		producto = new Producto(val, posibleEstado, 0);
 	}
 
 	@After
@@ -29,4 +29,9 @@ public class TestProductos {
 		Assert.assertNotNull("No se puede crear producto",producto.getEstado());
 	}
 	
+	@Test
+	public void testEqualsProducto() {
+		
+		Assert.assertEquals(true, producto.equals( new Producto(val, "pan",0)));
+	}
 }
