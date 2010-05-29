@@ -30,13 +30,10 @@ public class TestXMLParser {
 	@Test
 	public void testLeerDoc() {
 		try{
-			Properties p = System.getProperties();
-			System.out.println("java version: " + p.getProperty("java.version"));
-			System.out.println("Class path: " + p.getProperty("sun.boot.class.path"));
-			parser.LeerDoc(".\\Costos.xml");
+			parser.LeerDoc("Costos.xml");
 		}catch(Exception e){
 			e.printStackTrace();
-			fail("FallÃ³ la lectura del XML: " + e.getMessage());
+			fail("Falló la lectura del XML: " + e.getMessage());
 		}
 	}
 
