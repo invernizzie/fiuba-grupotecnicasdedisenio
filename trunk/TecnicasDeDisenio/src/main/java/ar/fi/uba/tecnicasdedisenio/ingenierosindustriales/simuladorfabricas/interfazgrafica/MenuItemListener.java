@@ -11,9 +11,10 @@ public class MenuItemListener extends SelectionAdapter {
 	}
 
 	public void widgetSelected(SelectionEvent event) {
-        if (((MenuItem) event.widget).getText().equals("Exit")) {
+        if (((MenuItem) event.widget).getText().equals("Salir\tCtrl+X")) {
           shell.close();
         }
      }
+
 
 }
