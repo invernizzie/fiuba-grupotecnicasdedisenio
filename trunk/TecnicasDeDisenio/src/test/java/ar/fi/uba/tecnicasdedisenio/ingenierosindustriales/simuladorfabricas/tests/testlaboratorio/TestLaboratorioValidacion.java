@@ -44,10 +44,11 @@ public class TestLaboratorioValidacion {
 		maq.getPrecedentes().add(new TipoMaquinaPrensa());
 		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPrensa());
 		maq.getPrecedentes().get(0).getMateriasPrimas().add(new Producto(val, "pan", 0));
+		maq.getPrecedentes().get(0).getMateriasPrimas().add(new Producto(val, "agua", 0));
 		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
 		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
-		maq.getMateriasPrimas().add(new Producto(val, "pan", 0));
-//		maq.getMateriasPrimas().add(new Producto(new ValidadorProductos(), new String("Producto2"), 0));
+		maq.getMateriasPrimas().add(new Producto(val, "agua", 0));
+		maq.getMateriasPrimas().add(new Producto(val, "trigo", 0));
 		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
 		
@@ -63,10 +64,12 @@ public class TestLaboratorioValidacion {
 		maquina.getPrecedentes().add(new Prensa());
 		maquina.getPrecedentes().add(new Plancha());
 		maquina.getPrecedentes().get(1).getPrecedentes().add(new Prensa());
+		maquina.getPrecedentes().get(1).getMateriasPrimas().add(new Producto(val, "agua", 0));
 		maquina.getPrecedentes().get(1).getMateriasPrimas().add(new Producto(val, "pan", 0));
 		maquina.getPrecedentes().get(1).getPrecedentes().get(0).getPrecedentes().add(new Plancha());
 		maquina.getPrecedentes().get(1).getPrecedentes().add(new Plancha());
-		maquina.getMateriasPrimas().add(new Producto(val, "pan", 0));
+		maquina.getMateriasPrimas().add(new Producto(val, "trigo", 0));
+		maquina.getMateriasPrimas().add(new Producto(val, "agua", 0));
 
 		
 		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));		
@@ -78,6 +81,7 @@ public class TestLaboratorioValidacion {
 		maquina.getPrecedentes().get(1).getPrecedentes().get(0).getPrecedentes().add(new Plancha());
 		maquina.getPrecedentes().get(1).getPrecedentes().get(0).getPrecedentes().add(new Plancha());
 		maquina.getPrecedentes().get(1).getPrecedentes().add(new Plancha());
+		maquina.getPrecedentes().get(1).getMateriasPrimas().add(new Producto(val, "agua", 0));
 		
 		Assert.assertFalse("No debería haber un proceso valido",laboratorio.existeProcesoValido(maquina));
 		
@@ -90,6 +94,7 @@ public class TestLaboratorioValidacion {
 		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
 		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
 		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).getMateriasPrimas().add(new Producto(val, "agua", 0));
 		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
 		

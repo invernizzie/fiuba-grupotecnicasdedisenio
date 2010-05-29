@@ -5,6 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPlancha;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPrensa;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class Laboratorio {
 	
@@ -32,7 +37,47 @@ public class Laboratorio {
 		return procesosHabilitados;
 	}
 	
+	/*Carga de procesos. Deberia ser de un XML pero por ahora es harcodeado.*/
 	public void cargarProcesos(){
+		TipoMaquina maq = null;
+		Proceso proceso = null;
+		ValidadorProductos val = new ValidadorProductos();
+		val.Cargar();
+		
+		proceso = new Proceso(1000);
+		maq = new TipoMaquinaPrensa();
+		maq.getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().add(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getMateriasPrimas().add(new Producto(val, "pan", 0));
+		maq.getPrecedentes().get(0).getMateriasPrimas().add(new Producto(val, "agua", 0));
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getMateriasPrimas().add(new Producto(val, "agua", 0));
+		maq.getMateriasPrimas().add(new Producto(val, "trigo", 0));
+		proceso.setMaquinaFinal(maq);
+		this.getProcesosHabilitados().add(proceso);
+		
+		
+		proceso = new Proceso(1500);
+		maq = new TipoMaquinaPrensa();
+		maq.getPrecedentes().add(new TipoMaquinaPlancha());
+		proceso.setMaquinaFinal(maq);
+		this.getProcesosHabilitados().add(proceso);
+		
+		proceso = new Proceso(1000);
+		maq = new TipoMaquinaPrensa();
+		maq.getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().add(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).getPrecedentes().add(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).getMateriasPrimas().add(new Producto(val, "agua", 0));
+		proceso.setMaquinaFinal(maq);
+		this.getProcesosHabilitados().add(proceso);
+
+		
 	}
 
 	public void setProcesosInhabilitados(ArrayList<Proceso> procesosInhabilitados) {
