@@ -23,7 +23,7 @@ public class Producto {
 		super();
 		if(val.esValido(estado)){
 			double proba= Math.random();
-			if(tasa_falla > proba) {
+			if(tasa_falla < proba) {
 				this.estado = estado;
 			} else{
 				this.estado= "Defectuoso";
