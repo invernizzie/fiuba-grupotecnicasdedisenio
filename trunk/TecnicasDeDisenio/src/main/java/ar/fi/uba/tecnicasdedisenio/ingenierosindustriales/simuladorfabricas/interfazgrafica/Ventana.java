@@ -74,7 +74,7 @@ public class Ventana {
 	    MenuItem fontItem = new MenuItem(viewMenu, SWT.NONE);
 	    fontItem.setText("Font");
 
-	    exitItem.addSelectionListener(new MenuItemListener());
+	    exitItem.addSelectionListener(new MenuItemListener(shell));
 	  
 	    shell.setMenuBar(menu);
 	    shell.open();
