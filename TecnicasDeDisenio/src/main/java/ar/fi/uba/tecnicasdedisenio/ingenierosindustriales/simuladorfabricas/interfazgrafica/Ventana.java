@@ -29,52 +29,59 @@ public class Ventana {
 	}
 
 	public void dibujarMenu() {
-		//itemArchivoSalir.setText ("Salir\tCtrl+X");
-		//itemArchivoSalir.setAccelerator (SWT.MOD1 + 'X');
 		Menu menu = new Menu(shell, SWT.BAR);
 	    MenuItem fileItem = new MenuItem(menu, SWT.CASCADE);
-	    fileItem.setText("File");
+	    fileItem.setText("Archivo");
 	    MenuItem editItem = new MenuItem(menu, SWT.CASCADE);
-	    editItem.setText("Edit");
+	    editItem.setText("Edicion");
 	    MenuItem viewItem = new MenuItem(menu, SWT.CASCADE);
-	    viewItem.setText("View");
+	    viewItem.setText("Ver");
 	    MenuItem helpItem = new MenuItem(menu, SWT.CASCADE);
-	    helpItem.setText("Help");
+	    helpItem.setText("Ayuda");
 
 	    Menu fileMenu = new Menu(menu);
 	    fileItem.setMenu(fileMenu);
 	    MenuItem newItem = new MenuItem(fileMenu, SWT.NONE);
-	    newItem.setText("New");
+	    newItem.setText("Juego Nuevo\tCtrl+N");
+	    newItem.setAccelerator (SWT.MOD1 + 'N');
 	    MenuItem openItem = new MenuItem(fileMenu, SWT.NONE);
-	    openItem.setText("Open...");
+	    openItem.setText("Abrir...\tCtrl+O");
+	    openItem.setAccelerator (SWT.MOD1 + 'O');
 	    MenuItem saveItem = new MenuItem(fileMenu, SWT.NONE);
-	    saveItem.setText("Save");
+	    saveItem.setText("Guardar\tCtrl+S");
+	    saveItem.setAccelerator (SWT.MOD1 + 'S');
 	    MenuItem saveAsItem = new MenuItem(fileMenu, SWT.NONE);
-	    saveAsItem.setText("Save As...");
-	    new MenuItem(fileMenu, SWT.SEPARATOR);
-	    MenuItem pageSetupItem = new MenuItem(fileMenu, SWT.NONE);
-	    pageSetupItem.setText("Page Setup...");
-	    MenuItem printItem = new MenuItem(fileMenu, SWT.NONE);
-	    printItem.setText("Print...");
+	    saveAsItem.setText("Guardar como...\tCtrl+G");
+	    saveAsItem.setAccelerator (SWT.MOD1 + 'G');
 	    new MenuItem(fileMenu, SWT.SEPARATOR);
 	    MenuItem exitItem = new MenuItem(fileMenu, SWT.NONE);
-	    exitItem.setText("Exit");
+	    exitItem.setText("Salir\tCtrl+X");
+	    exitItem.setAccelerator (SWT.MOD1 + 'X');
 
 	    Menu editMenu = new Menu(menu);
 	    editItem.setMenu(editMenu);
 	    MenuItem cutItem = new MenuItem(editMenu, SWT.NONE);
-	    cutItem.setText("Cut");
+	    cutItem.setText("Copiar\tCtrl+C");
+	    cutItem.setAccelerator (SWT.MOD1 + 'C');
 	    MenuItem pasteItem = new MenuItem(editMenu, SWT.NONE);
-	    pasteItem.setText("Paste");
+	    pasteItem.setText("Pegar\tCtrl+V");
+	    pasteItem.setAccelerator (SWT.MOD1 + 'V');
 
 	    Menu viewMenu = new Menu(menu);
 	    viewItem.setMenu(viewMenu);
 	    MenuItem toolItem = new MenuItem(viewMenu, SWT.NONE);
-	    toolItem.setText("ToolBars");
+	    toolItem.setText("Barra de Herramientas");
 	    MenuItem fontItem = new MenuItem(viewMenu, SWT.NONE);
-	    fontItem.setText("Font");
-
-	    exitItem.addSelectionListener(new MenuItemListener(shell));
+	    fontItem.setText("Tipos de Letras");
+	    
+	    Menu helpMenu = new Menu(menu);
+	    helpItem.setMenu(helpMenu);
+	    MenuItem HelpItem = new MenuItem(helpMenu, SWT.NONE);
+	    HelpItem.setText("Contenido de Ayuda...");
+	    MenuItem AboutItem = new MenuItem(helpMenu, SWT.NONE);
+	    AboutItem.setText("Acerca de...");
+	    
+	    exitItem.addSelectionListener(new MenuItemListener(this.shell));
 	  
 	    shell.setMenuBar(menu);
 	    shell.open();
