@@ -3,8 +3,10 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lin
 import java.util.LinkedList;
 import java.util.List;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISalida;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Salida;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.MateriaPrimaInsuficienteException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 /**
  * Fuente de una materia prima.
@@ -14,14 +16,16 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
  */
 public class Fuente {
 	
-	private String tipoMateria;
+	private Producto producto;
 	private int cantidad;
 	private List<CintaTransportadora> cintas;
+	private ISalida salida;
 	
-	public Fuente(String tipoMateria, int cantidad){
-		this.tipoMateria = tipoMateria;
+	public Fuente(String tipoMateria, int cantidad, Producto producto){
+		this.producto = producto;
 		this.cantidad = cantidad;
 		this.cintas = new LinkedList<CintaTransportadora>();
+		this.salida = new Salida();
 	}
 	
 	public void agregarCinta(CintaTransportadora cinta){
@@ -39,7 +43,23 @@ public class Fuente {
 					"materia prima suficiente para proveer a la cinta");
 		}
 		
-		cinta.getExtremoInicial().asignarElemento(new Elemento());
+		cinta.getExtremoInicial().asignarProducto(producto.clone());
+	}
+
+	public void setSalida(ISalida salida) {
+		this.salida = salida;
+	}
+
+	public ISalida getSalida() {
+		return salida;
+	}
+
+	/**
+	 * Devuelve un producto que representa el tipo de producto que provee esta máquina.
+	 * @return
+	 */
+	public Producto getTipoProducto() {
+		return producto;
 	}
 
 }

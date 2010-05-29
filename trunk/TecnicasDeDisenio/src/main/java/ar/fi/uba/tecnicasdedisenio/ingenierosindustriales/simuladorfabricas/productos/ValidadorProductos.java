@@ -1,7 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos;
 import java.util.HashMap;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.*;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.XMLParser;
 
 /**
  * Clase que contiene las colecciones de Productos utilizables
@@ -44,6 +44,7 @@ public class ValidadorProductos {
 		this.MapProductos.put("centeno", "habilitado");
 		this.MapProductos.put("maiz", "habilitado");
 		this.MapProductos.put("sal", "habilitado");
+		this.MapProductos.put("prensado", "habilitado");
 		this.MapProductos.put("azucar", "no habilitado");
 		this.MapProductos.put("miel", "no habilitado");
 		this.MapProductos.put("edulcorante", "no habilitado");

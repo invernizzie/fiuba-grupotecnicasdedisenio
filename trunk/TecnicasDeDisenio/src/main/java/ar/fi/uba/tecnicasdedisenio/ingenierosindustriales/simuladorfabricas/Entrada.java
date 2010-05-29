@@ -3,24 +3,26 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+
 public class Entrada implements IEntrada {
 	
-	private List<Elemento> elementos;
+	private List<Producto> productos;
 	
 	public Entrada(){
-		this.setElementos(new ArrayList<Elemento>());
+		this.setElementos(new ArrayList<Producto>());
 	}
 	
-	public void agregarElemento(Elemento e) {
-		this.getElementos().add(e);
+	public void agregarProducto(Producto producto) {
+		this.getProdcutos().add(producto);
 	}
 
-	public void setElementos(List<Elemento> elementos) {
-		this.elementos = elementos;
+	public void setElementos(List<Producto> productos) {
+		this.productos = productos;
 	}
 
-	public List<Elemento> getElementos() {
-		return elementos;
+	public List<Producto> getProdcutos() {
+		return productos;
 	}
 
 }
