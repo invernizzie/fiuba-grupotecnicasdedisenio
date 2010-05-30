@@ -1,5 +1,4 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
-
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -8,13 +7,12 @@ import org.junit.Test;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.*;
 
-public class TestVentana {
-
-	private Ventana ventanaPPAL;
+public class TestMainWindow {
+	private MainWindow ventana;
 	
 	@Before
 	public void setUp() throws Exception {
-		this.ventanaPPAL = new Ventana(800, 600, "TP Tecnicas de Diseño");
+		this.ventana = new MainWindow();
 	}
 
 	@After
@@ -23,10 +21,7 @@ public class TestVentana {
 
 	@Test
 	public void testPantalla() {
-		ventanaPPAL.dibujar3();
-		//ventanaPPAL.dibujarMenu();
-		//assertEquals("No se encontrÃ³ el texto esperado", "Un texto", simulador.getTexto());
-	}
-	
-}
+		this.ventana.run();
+		}
 
+}
