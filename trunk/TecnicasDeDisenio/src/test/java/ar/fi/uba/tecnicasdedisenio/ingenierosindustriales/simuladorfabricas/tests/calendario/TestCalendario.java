@@ -40,7 +40,7 @@ public class TestCalendario {
             }
         };
 
-        Calendario.instancia().restaurar();
+        Calendario.instancia().inicializar();
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         Calendario.instancia().registrar(sincronizado);
         Calendario.instancia().iniciar();
@@ -64,7 +64,7 @@ public class TestCalendario {
             }
         };
 
-        Calendario.instancia().restaurar();
+        Calendario.instancia().inicializar();
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         Calendario.instancia().registrar(sincronizado);
         Calendario.instancia().iniciar();
@@ -78,7 +78,7 @@ public class TestCalendario {
     public void testConteoDeNotificaciones() {
         ContadorSincronizado sincronizado = new ContadorSincronizado();
 
-        Calendario.instancia().restaurar();
+        Calendario.instancia().inicializar();
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         Calendario.instancia().registrar(sincronizado);
         Calendario.instancia().iniciar();
@@ -93,7 +93,7 @@ public class TestCalendario {
     public void testPausaYReanudacion() {
         ContadorSincronizado sincronizado = new ContadorSincronizado();
 
-        Calendario.instancia().restaurar();
+        Calendario.instancia().inicializar();
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         Calendario.instancia().registrar(sincronizado);
         Calendario.instancia().iniciar();
@@ -109,17 +109,52 @@ public class TestCalendario {
     }
 
     /* TODO Testear:
-     *  Detencion y restauracion
-     *  Registracion de varios Sincronizados
      *  Desregistracion de Sincronizados
      */
+
+    @Test
+    public void testDesregistracionDeSincronizados() {
+        ContadorSincronizado s1 = new ContadorSincronizado();
+        ContadorSincronizado s2 = new ContadorSincronizado();
+        ContadorSincronizado s3 = new ContadorSincronizado();
+
+        Calendario.instancia().inicializar();
+        Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
+        Calendario.instancia().registrar(s1);
+        Calendario.instancia().iniciar();
+        esperar(SEGUNDOS_POR_DIA * 3);
+        Calendario.instancia().pausar();
+        Calendario.instancia().desregistrar(s1);
+        Calendario.instancia().registrar(s2);
+        Calendario.instancia().registrar(s3);
+        Calendario.instancia().reanudar();
+        esperar(SEGUNDOS_POR_DIA * 4);
+        Calendario.instancia().pausar();
+        Calendario.instancia().desregistrar(s2);
+        Calendario.instancia().reanudar();
+        esperar(SEGUNDOS_POR_DIA * 3);
+        Calendario.instancia().detener();
+
+        Assert.assertEquals("Cantidad de dias incorrecta para s1",
+                2, s1.notificacionesDiarias);
+        Assert.assertEquals("Cantidad de semanas incorrecta para s1",
+                1, s1.notificacionesSemanales);
+        Assert.assertEquals("Cantidad de dias incorrecta para s2",
+                4, s2.notificacionesDiarias);
+        Assert.assertEquals("Cantidad de semanas incorrecta para s2",
+                0, s2.notificacionesSemanales);
+        Assert.assertEquals("Cantidad de dias incorrecta para s3",
+                7, s3.notificacionesDiarias);
+        Assert.assertEquals("Cantidad de semanas incorrecta para s3",
+                1, s3.notificacionesSemanales);
+    }
 
     @Test
     public void testVariosSincronizados() {
         ContadorSincronizado s1 = new ContadorSincronizado();
         ContadorSincronizado s2 = new ContadorSincronizado();
 
-        Calendario.instancia().restaurar();
+        Calendario.instancia().inicializar();
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         Calendario.instancia().registrar(s1);
         Calendario.instancia().iniciar();
@@ -136,7 +171,7 @@ public class TestCalendario {
 
     @Test
     public void testFechaVirtual() {
-        Calendario.instancia().restaurar();
+        Calendario.instancia().inicializar();
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         Calendario.instancia().iniciar();
         esperar(SEGUNDOS_POR_DIA * 5);
@@ -155,27 +190,26 @@ public class TestCalendario {
                 Calendario.instancia().getFechaActual());
     }
 
-    // Al debuggear no falla, ¿por que??
     @Test
     public void testDetencionYRestauracion() {
         ContadorSincronizado s1 = new ContadorSincronizado();
         ContadorSincronizado s2 = new ContadorSincronizado();
 
-        Calendario.instancia().restaurar();
+        Calendario.instancia().inicializar();
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         Calendario.instancia().registrar(s1);
         Calendario.instancia().iniciar();
         esperar(SEGUNDOS_POR_DIA * 7);
         Calendario.instancia().pausar();
         Calendario.instancia().detener();
-        Calendario.instancia().restaurar();
+        Calendario.instancia().inicializar();
 
         Assert.assertEquals("No se restaura la fecha inicial",
                 new GregorianCalendar(Calendario.ANIO_INICIAL, Calendario.MES_INICIAL, Calendario.DIA_INICIAL).getTime(),
                 Calendario.instancia().getFechaActual());
-        Assert.assertTrue("Se encuentra detenido tras restaurar", Calendario.instancia().esValido());
+        Assert.assertTrue("Se encuentra detenido tras inicializar", Calendario.instancia().esValido());
         Assert.assertFalse("Se encuentra pausado tras reanudar", Calendario.instancia().estaPausado());
-        Assert.assertEquals("No se mantiene la configuracion de segundos por dia tras restaurar",
+        Assert.assertEquals("No se mantiene la configuracion de segundos por dia tras inicializar",
                 SEGUNDOS_POR_DIA,
                 Calendario.instancia().getSegundosPorDia());
 
