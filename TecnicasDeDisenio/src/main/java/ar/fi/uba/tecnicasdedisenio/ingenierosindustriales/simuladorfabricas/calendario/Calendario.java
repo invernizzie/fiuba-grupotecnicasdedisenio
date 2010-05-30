@@ -11,6 +11,19 @@ import java.util.List;
  * el cual puede ser pausado y reanudado las veces que sea necesario,
  * detenido definitivamente, y reiniciado para recomenzar.
  *
+ * Debe siempre accederse a la instancia valida mediante el metodo
+ * de clase instancia(). En la implementacion actual, si se guarda
+ * la referencia devuelta por este metodo sera siempre valida, pero
+ * esto no es un invariante, se recomienda siempre usar instancia().
+ *
+ * Para iniciarse el paso del tiempo, debe invocarse el metodo
+ * iniciar(). Para pausarlo pausar() y para reanudarlo reanudar().
+ * Si se intenta pausar al Calendario ya pausado, o reanudar al
+ * Calendario no pausado, no habra efectos secundarios. El metodo
+ * detener() interrumpe permanentemente el paso del tiempo, solo
+ * podra ser reiniciado invocando iniciar() luego de invocar a
+ * inicializar().
+ *
  * @author Esteban I. Invernizzi (invernizzie@gmail.com)
  * @created 24/05/2010
  */
@@ -19,10 +32,11 @@ public class Calendario {
     public static final int ANIO_INICIAL = 2000;
     public static final int MES_INICIAL = 0;
     public static final int DIA_INICIAL = 1;
+    public static final int DEFAULT_SEGUNDOS_POR_DIA = 5;
 
     private static Calendario instancia = new Calendario();
 
-    private int segundosPorDia = 5;
+    private int segundosPorDia = DEFAULT_SEGUNDOS_POR_DIA;
     private List<Sincronizado> sincronizados = new ArrayList<Sincronizado>();
     private boolean detenido = false;
     private boolean pausado = false;
@@ -39,9 +53,9 @@ public class Calendario {
 
     /**
      * Restaura el calendario virtual a la fecha inicial.
-     * Debe ser iniciado para comenzar el paso del tiempo.
+     * Luego debe ser iniciado para comenzar el paso del tiempo.
      */
-    public void restaurar() {
+    public void inicializar() {
         detener();
         try {
         threadCalendario.join(100);
@@ -143,10 +157,10 @@ public class Calendario {
     }
 
     /**
-     * Configura la cnatidad de segundos del sistema que deben
+     * Configura la cantidad de segundos del sistema que deben
      * transcurrir para que ocurra un evento del tipo Evento.COMIENZO_DE_DIA.
      * 
-     * @param segundosPorDia
+     * @param segundosPorDia Nueva cantidad de segundos por dia
      */
     public synchronized void setSegundosPorDia(int segundosPorDia) {
         this.segundosPorDia = segundosPorDia;
