@@ -23,7 +23,7 @@ public class TestVentana {
 
 	@Test
 	public void testPantalla() {
-		ventanaPPAL.dibujar3();
+		ventanaPPAL.dibujar4();
 		//ventanaPPAL.dibujarMenu();
 		//assertEquals("No se encontró el texto esperado", "Un texto", simulador.getTexto());
 	}

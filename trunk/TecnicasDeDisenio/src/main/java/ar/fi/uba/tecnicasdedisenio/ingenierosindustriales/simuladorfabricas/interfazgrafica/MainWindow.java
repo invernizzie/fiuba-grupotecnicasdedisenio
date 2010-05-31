@@ -1,4 +1,4 @@
-package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
+package IG;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.graphics.Point;
@@ -6,24 +6,14 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.MenuItem;
-import javax.swing.JMenuItem;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.custom.CBanner;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.custom.CTabFolder;
 
 public class MainWindow {
 
@@ -33,7 +23,7 @@ public class MainWindow {
 	private Menu HelpItem = null;
 	private Menu EditItem = null;
 	private ScrolledComposite scAreaTrabajo = null;
-	private TabFolder tabWorkingControls = null;
+	private CTabFolder tabWorkingControls = null;
 	private Table tMapa = null;
 	private ScrolledComposite scControl = null;
 	private Tree tree1 = null;
@@ -60,13 +50,13 @@ public class MainWindow {
 	 *
 	 */
 	private void createTabWorkingControls() {
-		tabWorkingControls = new TabFolder(scAreaTrabajo, SWT.H_SCROLL | SWT.BORDER | SWT.V_SCROLL);
+		tabWorkingControls = new CTabFolder(scAreaTrabajo, SWT.H_SCROLL | SWT.BORDER | SWT.V_SCROLL);
 		tabWorkingControls.setToolTipText("Mapa");
-		TabItem tabItem1 = new TabItem(tabWorkingControls, SWT.NONE);
+		tabWorkingControls.setMaximizeVisible(true);
+		tabWorkingControls.setMaximized(true);
+		CTabItem tabItem1 = new CTabItem(tabWorkingControls, SWT.NONE);
 		tabItem1.setText("Mapa");
-		TabItem tabItem2 = new TabItem(tabWorkingControls, SWT.NONE);
-		tabItem2.setText("Fabrica");
-		TabItem tabItem3 = new TabItem(tabWorkingControls, SWT.NONE);
+		CTabItem tabItem3 = new CTabItem(tabWorkingControls, SWT.NONE);
 		tabItem3.setText("Laboratorio");
 		tMapa = new Table(tabWorkingControls, SWT.BORDER | SWT.FULL_SELECTION | SWT.HIDE_SELECTION);
 		tMapa.setHeaderVisible(true);
@@ -92,7 +82,7 @@ public class MainWindow {
 	/**
 	 * @param args
 	 */
-	public void run() {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		/* Before this is run, be sure to set up the launch configuration (Arguments->VM Arguments)
 		 * for the correct SWT library path in order to run with the SWT dlls.
@@ -136,6 +126,14 @@ public class MainWindow {
 		FileItem.setVisible(true);
 		MenuItem newItem4 = new MenuItem(FileItem, SWT.PUSH);
 		newItem4.setText("Nuevo");
+		newItem4.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
+			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
+			}
+			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+				System.out.println("widgetDefaultSelected()");
+				juegoNuevo();
+			}
+		});
 		MenuItem openItem = new MenuItem(FileItem, SWT.PUSH);
 		openItem.setText("Abrir");
 		MenuItem saveItem = new MenuItem(FileItem, SWT.PUSH);
@@ -168,4 +166,9 @@ public class MainWindow {
 		sShell.setMenuBar(menuBar);
 	}
 
+	public void juegoNuevo(){
+		CrearPartida partida= new CrearPartida();
+		partida.hacerVisible();
+		System.out.println("Se Invoca la pantalla de Creacion");
+	}
 }
