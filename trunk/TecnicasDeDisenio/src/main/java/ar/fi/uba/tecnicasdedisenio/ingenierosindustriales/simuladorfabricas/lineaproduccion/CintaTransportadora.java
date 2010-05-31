@@ -16,10 +16,11 @@ public class CintaTransportadora{
 	private ISalida extremoInicial;
 	private IEntrada extremoFinal;
 	
+	public CintaTransportadora() {
+	}
 	
 	public CintaTransportadora(ISalida extremoInicial,
 			IEntrada extremoFinal) {
-		super();
 		this.extremoInicial = extremoInicial;
 		this.extremoFinal = extremoFinal;
 	}
@@ -54,6 +55,7 @@ public class CintaTransportadora{
 	public void conectar(Fuente origen, Maquina destino){
 		this.extremoInicial = origen.getSalida();
 		this.extremoFinal = destino.getEntrada();
+		origen.agregarCinta(this);
 		destino.addMateriaPrima(origen.getTipoProducto());
 	}
 	
@@ -66,6 +68,7 @@ public class CintaTransportadora{
 	public void desconectar(Fuente origen, Maquina destino){
 		this.extremoInicial = null;
 		this.extremoFinal = null;
+		origen.removerCinta(this);
 		destino.removeMateriaPrima(origen.getTipoProducto());
 	}
 }
