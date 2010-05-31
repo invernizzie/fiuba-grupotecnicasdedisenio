@@ -1,4 +1,4 @@
-package IG;
+package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
@@ -90,3 +90,4 @@ public class CrearPartida {
 	}
 
 }
+
