@@ -62,4 +62,9 @@ public class Fuente {
 		return producto;
 	}
 
+	public void removerCinta(CintaTransportadora cintaTransportadora) {
+		this.cintas.remove(cintaTransportadora);
+		
+	}
+
 }
