@@ -82,7 +82,7 @@ public class MainWindow {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public void run() {
 		// TODO Auto-generated method stub
 		/* Before this is run, be sure to set up the launch configuration (Arguments->VM Arguments)
 		 * for the correct SWT library path in order to run with the SWT dlls.
