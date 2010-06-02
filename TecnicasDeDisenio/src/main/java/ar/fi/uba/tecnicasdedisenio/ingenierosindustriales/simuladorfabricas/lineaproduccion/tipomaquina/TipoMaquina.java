@@ -84,10 +84,14 @@ public abstract class TipoMaquina {
 	
 	public boolean equals(Maquina maquina){
 		
+		/*Se copian las listas a auxiliares para poder trabajar mejor.*/
+		List<Producto> listMatPrimasAux = new ArrayList<Producto>(maquina.getMateriasPrimas());
+		List<Maquina> listPrecedentesAux = new ArrayList<Maquina>(maquina.getPrecedentes());
+		
 		if(this.verificarTipo(maquina)){
 			try{
-				this.verificarMateriasPrimas(maquina.getMateriasPrimas());
-				this.verificarPrecedencias(maquina.getPrecedentes());
+				this.verificarMateriasPrimas(listMatPrimasAux);
+				this.verificarPrecedencias(listPrecedentesAux);
 			}
 			catch(MateriaPrimaDistintaException e){
 				return false;
@@ -97,20 +101,16 @@ public abstract class TipoMaquina {
 				return false;
 
 			}
+			return true;
 		}
 		else{
 			return false;
 		}
 			
-		return true;
 	}
 	
-	
-	public void verificarMateriasPrimas(List<Producto> list) throws MateriaPrimaDistintaException{
+	public void verificarMateriasPrimas(List<Producto> matPrimas) throws MateriaPrimaDistintaException{
 		int i,j;
-		
-		/*Se copia a un Array para trabajar mejor.*/
-		ArrayList<Producto> matPrimas = new ArrayList<Producto>(list);
 		
 		/*Si las cantidades son distintas no estan bien las materias primas.*/
 		if(this.getMateriasPrimas().size()!=matPrimas.size()){
@@ -133,11 +133,8 @@ public abstract class TipoMaquina {
 		}
 	}
 	
-	public void verificarPrecedencias(List<Maquina> list) throws PrecedentesDistintosException{
+	public void verificarPrecedencias(List<Maquina> maquinas) throws PrecedentesDistintosException{
 		int i, j;
-		
-		/*Se copia a un Array para trabajar mejor.*/
-		ArrayList<Maquina> maquinas = new ArrayList<Maquina>(list);
 		
 		/*Si las cantidades son distintas no estan bien las precedencias.*/
 		if(this.getPrecedentes().size()!=maquinas.size()){

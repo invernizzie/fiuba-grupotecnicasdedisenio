@@ -38,6 +38,12 @@ public class TestLaboratorioValidacion {
 		ValidadorProductos val = new ValidadorProductos();
 		val.Cargar();
 		
+		proceso = new Proceso(1500);
+		maq = new TipoMaquinaPrensa();
+		maq.addPrecedente(new TipoMaquinaPlancha());
+		proceso.setMaquinaFinal(maq);
+		laboratorio.getProcesosHabilitados().add(proceso);
+		
 		proceso = new Proceso(1000);
 		maq = new TipoMaquinaPrensa();
 		maq.getPrecedentes().add(new TipoMaquinaPlancha());
@@ -49,13 +55,6 @@ public class TestLaboratorioValidacion {
 		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
 		maq.addMateriaPrima(new Producto(val, "agua", 0));
 		maq.addMateriaPrima(new Producto(val, "trigo", 0));
-		proceso.setMaquinaFinal(maq);
-		laboratorio.getProcesosHabilitados().add(proceso);
-		
-		
-		proceso = new Proceso(1500);
-		maq = new TipoMaquinaPrensa();
-		maq.addPrecedente(new TipoMaquinaPlancha());
 		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
 		
