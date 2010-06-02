@@ -1,7 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.LaboratorioInhabilitadoException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 
@@ -16,7 +15,8 @@ public class Jugador {
 	
 	public Jugador(float dineroActual){
 		this.setDineroActual(dineroActual);
-		this.laboratorio = Laboratorio.getNewInstance();
+		//Aca deberia dejarte elegir.//
+		this.laboratorio = new LaboratorioComidas();
 	}
 	
 	public Laboratorio getLaboratorio() {

@@ -44,6 +44,9 @@ public class ValidadorProductos {
 		this.MapProductos.put("centeno", "habilitado");
 		this.MapProductos.put("maiz", "habilitado");
 		this.MapProductos.put("sal", "habilitado");
+		this.MapProductos.put("azucar", "habilitado");
+		this.MapProductos.put("vainilla", "habilitado");
+		this.MapProductos.put("edulcorante", "habilitado");
 		this.MapProductos.put("prensado", "habilitado");
 		this.MapProductos.put("azucar", "no habilitado");
 		this.MapProductos.put("miel", "no habilitado");

@@ -1,6 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.MateriaPrimaDistintaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.PrecedentesDistintosException;
@@ -10,8 +11,8 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 public abstract class TipoMaquina {
 	
 	private float costo;
-	private ArrayList<Producto> materiasPrimas;
-	private ArrayList<TipoMaquina> precedentes;
+	private List<Producto> materiasPrimas;
+	private List<TipoMaquina> precedentes;
 	private ComparadorDeMaquinas comparador;
 	
 	public TipoMaquina(){
@@ -31,20 +32,46 @@ public abstract class TipoMaquina {
 		return costo;
 	}
 	
-	public void setMateriasPrimas(ArrayList<Producto> materiasPrimas) {
+	public void setMateriasPrimas(List<Producto> materiasPrimas) {
 		this.materiasPrimas = materiasPrimas;
 	}
 
-	public ArrayList<Producto> getMateriasPrimas() {
+	public List<Producto> getMateriasPrimas() {
 		return materiasPrimas;
 	}
 
-	public void setPrecedentes(ArrayList<TipoMaquina> precedentes) {
+	public void setPrecedentes(List<TipoMaquina> precedentes) {
 		this.precedentes = precedentes;
 	}
 
-	public ArrayList<TipoMaquina> getPrecedentes() {
+	public List<TipoMaquina> getPrecedentes() {
 		return precedentes;
+	}
+
+	public void addPrecedente(TipoMaquina precedente) {
+		if(this.precedentes == null){
+			this.precedentes = new ArrayList<TipoMaquina>();
+		}
+		this.precedentes.add(precedente);
+		
+	}
+
+	public void addMateriaPrima(Producto tipoProducto) {
+		if(this.materiasPrimas == null){
+			this.materiasPrimas = new ArrayList<Producto>();
+		}
+		this.materiasPrimas.add(tipoProducto);
+		
+	}
+	
+	public void removePrecedente(TipoMaquina precedente) {
+		this.precedentes.remove(precedente);
+		
+	}
+
+	public void removeMateriaPrima(Producto tipoProducto) {
+		this.materiasPrimas.remove(tipoProducto);
+		
 	}
 
 	public void setComparador(ComparadorDeMaquinas comparador) {
@@ -59,8 +86,8 @@ public abstract class TipoMaquina {
 		
 		if(this.verificarTipo(maquina)){
 			try{
-				this.verificarMateriasPrimas(maquina);
-				this.verificarPrecedencias(maquina);
+				this.verificarMateriasPrimas(maquina.getMateriasPrimas());
+				this.verificarPrecedencias(maquina.getPrecedentes());
 			}
 			catch(MateriaPrimaDistintaException e){
 				return false;
@@ -78,11 +105,12 @@ public abstract class TipoMaquina {
 		return true;
 	}
 	
-	public void verificarMateriasPrimas(Maquina maquina) throws MateriaPrimaDistintaException{
+	
+	public void verificarMateriasPrimas(List<Producto> list) throws MateriaPrimaDistintaException{
 		int i,j;
 		
 		/*Se copia a un Array para trabajar mejor.*/
-		ArrayList<Producto> matPrimas = new ArrayList<Producto>(maquina.getMateriasPrimas());
+		ArrayList<Producto> matPrimas = new ArrayList<Producto>(list);
 		
 		/*Si las cantidades son distintas no estan bien las materias primas.*/
 		if(this.getMateriasPrimas().size()!=matPrimas.size()){
@@ -105,11 +133,11 @@ public abstract class TipoMaquina {
 		}
 	}
 	
-	public void verificarPrecedencias(Maquina maquina) throws PrecedentesDistintosException{
+	public void verificarPrecedencias(List<Maquina> list) throws PrecedentesDistintosException{
 		int i, j;
 		
 		/*Se copia a un Array para trabajar mejor.*/
-		ArrayList<Maquina> maquinas = new ArrayList<Maquina>(maquina.getPrecedentes());
+		ArrayList<Maquina> maquinas = new ArrayList<Maquina>(list);
 		
 		/*Si las cantidades son distintas no estan bien las precedencias.*/
 		if(this.getPrecedentes().size()!=maquinas.size()){
