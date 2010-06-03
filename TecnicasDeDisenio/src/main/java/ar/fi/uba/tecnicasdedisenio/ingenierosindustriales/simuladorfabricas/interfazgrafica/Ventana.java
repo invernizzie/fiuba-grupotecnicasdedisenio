@@ -233,7 +233,7 @@ public class Ventana {
 		for (int i = 0 ; i < 32; i++) {
 			for (int j = 0 ; j < 24; j++) {
 				botones[i][j] = new Button(c, SWT.PUSH);
-				botones[i][j].setText("1");
+				botones[i][j].setText("");
 			}
 		}
 		//for (int i = 0 ; i < 32*24; i++) {
