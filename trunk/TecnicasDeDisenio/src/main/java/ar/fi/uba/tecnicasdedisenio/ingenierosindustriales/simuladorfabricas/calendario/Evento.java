@@ -8,6 +8,7 @@ public enum Evento {
 
     COMIENZO_DE_DIA,
     COMIENZO_DE_SEMANA,
+    COMIENZO_DE_MES,
     INICIO_TIEMPO,
     FIN_TIEMPO,
     INICIO_PAUSA,

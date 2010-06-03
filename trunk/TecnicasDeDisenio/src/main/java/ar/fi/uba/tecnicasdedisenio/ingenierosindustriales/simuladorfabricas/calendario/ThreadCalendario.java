@@ -46,13 +46,19 @@ class ThreadCalendario extends Thread {
                 if (!calendario.esValido() || calendario.estaPausado())
                     continue;
 
+                int mesAnterior = calendario.getVirtualCalendar().get(Calendar.MONTH);
                 calendario.getVirtualCalendar().add(Calendar.DAY_OF_WEEK, 1);
+
                 calendario.notificar(Evento.COMIENZO_DE_DIA);
+
                 if ((i % 7) == 0) {
                     calendario.notificar(Evento.COMIENZO_DE_SEMANA);
                     i -= 7;
                 }
                 i++;
+
+                if (mesAnterior != calendario.getVirtualCalendar().get(Calendar.MONTH))
+                    calendario.notificar(Evento.COMIENZO_DE_MES);
             } catch (InterruptedException e) { /* ?? */ }
         }
     }
