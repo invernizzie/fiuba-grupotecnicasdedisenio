@@ -1,5 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario;
 
+import com.sun.corba.se.spi.activation._ActivatorImplBase;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -31,18 +33,18 @@ class ThreadCalendario extends Thread {
         int i = 7;
         while (calendario.esValido()) {
             try {
-                if (calendario.estaPausado()) {
-                    sleep(10);
+                while (calendario.estaPausado()) {
+                    sleep(1);
                     if (!calendario.esValido())
                         break;
                 }
                 Date inicio = new Date();
                 while ((new Date().getTime() - inicio.getTime() < 1000 * calendario.getSegundosPorDia())
-                        && calendario.esValido())
-                    sleep(250);
+                        && calendario.esValido() && !calendario.estaPausado())
+                    sleep(10);
 
-                if (!calendario.esValido())
-                    break;
+                if (!calendario.esValido() || calendario.estaPausado())
+                    continue;
 
                 calendario.getVirtualCalendar().add(Calendar.DAY_OF_WEEK, 1);
                 calendario.notificar(Evento.COMIENZO_DE_DIA);

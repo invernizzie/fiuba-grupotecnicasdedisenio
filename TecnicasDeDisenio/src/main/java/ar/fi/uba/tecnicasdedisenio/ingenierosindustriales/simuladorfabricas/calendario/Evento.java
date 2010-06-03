@@ -7,5 +7,9 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.cal
 public enum Evento {
 
     COMIENZO_DE_DIA,
-    COMIENZO_DE_SEMANA;
+    COMIENZO_DE_SEMANA,
+    INICIO_TIEMPO,
+    FIN_TIEMPO,
+    INICIO_PAUSA,
+    FIN_PAUSA;
 }

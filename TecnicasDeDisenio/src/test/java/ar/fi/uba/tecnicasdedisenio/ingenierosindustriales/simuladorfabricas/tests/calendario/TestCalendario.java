@@ -85,7 +85,7 @@ public class TestCalendario {
         esperar(SEGUNDOS_POR_DIA * 17);
         Calendario.instancia().detener();
 
-        Assert.assertEquals("Cantidad de dias incorrecta", 16, sincronizado.notificacionesDiarias);
+        Assert.assertEquals("Cantidad de dias incorrecta", 17, sincronizado.notificacionesDiarias);
         Assert.assertEquals("Cantidad de semanas incorrecta", 3, sincronizado.notificacionesSemanales);
     }
 
@@ -104,13 +104,9 @@ public class TestCalendario {
         esperar(SEGUNDOS_POR_DIA * 6);
         Calendario.instancia().detener();
 
-        Assert.assertEquals("Cantidad de dias incorrecta", 13, sincronizado.notificacionesDiarias);
+        Assert.assertEquals("Cantidad de dias incorrecta", 12, sincronizado.notificacionesDiarias);
         Assert.assertEquals("Cantidad de semanas incorrecta", 2, sincronizado.notificacionesSemanales);
     }
-
-    /* TODO Testear:
-     *  Desregistracion de Sincronizados
-     */
 
     @Test
     public void testDesregistracionDeSincronizados() {
@@ -136,7 +132,7 @@ public class TestCalendario {
         Calendario.instancia().detener();
 
         Assert.assertEquals("Cantidad de dias incorrecta para s1",
-                2, s1.notificacionesDiarias);
+                3, s1.notificacionesDiarias);
         Assert.assertEquals("Cantidad de semanas incorrecta para s1",
                 1, s1.notificacionesSemanales);
         Assert.assertEquals("Cantidad de dias incorrecta para s2",
@@ -158,7 +154,7 @@ public class TestCalendario {
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         Calendario.instancia().registrar(s1);
         Calendario.instancia().iniciar();
-        esperar(SEGUNDOS_POR_DIA * 3);
+        esperar(SEGUNDOS_POR_DIA * 2);
         Calendario.instancia().pausar();
         Assert.assertEquals("Dias incorrectos", 2, s1.notificacionesDiarias);
 
@@ -178,7 +174,7 @@ public class TestCalendario {
         Calendario.instancia().pausar();
 
         Assert.assertEquals("Fecha incorrecta",
-                new GregorianCalendar(Calendario.ANIO_INICIAL, Calendario.MES_INICIAL, Calendario.DIA_INICIAL + 4).getTime(),
+                new GregorianCalendar(Calendario.ANIO_INICIAL, Calendario.MES_INICIAL, Calendario.DIA_INICIAL + 5).getTime(),
                 Calendario.instancia().getFechaActual());
 
         Calendario.instancia().reanudar();
@@ -186,7 +182,7 @@ public class TestCalendario {
         Calendario.instancia().detener();
 
         Assert.assertEquals("Fecha incorrecta",
-                new GregorianCalendar(Calendario.ANIO_INICIAL, Calendario.MES_INICIAL, Calendario.DIA_INICIAL + 14).getTime(),
+                new GregorianCalendar(Calendario.ANIO_INICIAL, Calendario.MES_INICIAL, Calendario.DIA_INICIAL + 15).getTime(),
                 Calendario.instancia().getFechaActual());
     }
 
@@ -200,7 +196,6 @@ public class TestCalendario {
         Calendario.instancia().registrar(s1);
         Calendario.instancia().iniciar();
         esperar(SEGUNDOS_POR_DIA * 7);
-        Calendario.instancia().pausar();
         Calendario.instancia().detener();
         Calendario.instancia().inicializar();
 
@@ -219,7 +214,7 @@ public class TestCalendario {
         Calendario.instancia().detener();
 
         Assert.assertEquals("Cantidad de dias incorrecta",
-                14, s1.notificacionesDiarias+ s2.notificacionesDiarias);
+                16, s1.notificacionesDiarias+ s2.notificacionesDiarias);
         Assert.assertEquals("Cantidad de semanas incorrecta",
                 3, s1.notificacionesSemanales + s2.notificacionesSemanales);
     }
@@ -234,11 +229,13 @@ public class TestCalendario {
         */
 
         Date inicio = new Date();
-        /* Se agrega un offset de 100ms para evitar el problema
+        long diferencia = 0;
+        /* Se agrega un offset de 250ms para evitar el problema
          * de terminar la espera antes de concluir la actividad
-         * de los suscriptores al calendario. */
-        long diferencia = -100;
-        while (diferencia < 1000 * segundos) {
+         * de los suscriptores al calendario. Eso probablemente
+         * sucede porque este thread es muy activo y se prioriza
+         * ante el del calendario. */
+        while (diferencia < 1000 * segundos + 250) {
             diferencia = new Date().getTime() - inicio.getTime();
         }
     }
