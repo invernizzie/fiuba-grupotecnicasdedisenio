@@ -3,12 +3,15 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.CintaTransportadora;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.LineaProduccion;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 
-public class Fabrica {
+public class Fabrica implements Sincronizado{
 
 	private List<Maquina> maquinas;
 	private List<LineaProduccion> lineas;
@@ -29,6 +32,7 @@ public class Fabrica {
 		this.setCostoAlquiler(costoAlquiler);
 		this.setCantMaximaLineas(cantMaximaLineas);
 		this.setCostoFabricaXMes(0);
+		Calendario.instancia().registrar(this);
 	}
 
 	public void agregarFuente(Fuente fuente) {
@@ -241,5 +245,23 @@ public class Fabrica {
 	public boolean isComprada(){
 		return (this.getCostoFabricaXMes()==0 && this.getJugador()!=null);
 	}
+
+	@Override
+	public void notificar(Evento evento) {
+		if(evento==Evento.COMIENZO_DE_MES)
+			this.asignarCostoJugador();
+	}
 	
+	public void asignarCostoJugador(){
+		
+		try {
+			this.verificarJugadorAsignado();
+		} 
+		catch (FabricaOcupadaException e) {
+			//Habria que sumarle el costo de las lineas de produccion.
+			this.getJugador().disminuirDinero(this.getCostoFabricaXMes());
+		}
+		
+		
+	}
 }

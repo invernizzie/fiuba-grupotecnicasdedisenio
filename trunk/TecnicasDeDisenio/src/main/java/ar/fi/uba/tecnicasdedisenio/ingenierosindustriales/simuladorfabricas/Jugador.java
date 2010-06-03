@@ -12,6 +12,8 @@ public class Jugador {
 
 	private Fabrica fabrica;
 	
+	private static float dineroParaGanar = 1000000;
+	
 	
 	public Jugador(float dineroActual){
 		this.setDineroActual(dineroActual);
@@ -69,7 +71,8 @@ public class Jugador {
 	}
 	
 	public void comprarFabrica(Fabrica fabrica){
-		this.setDineroActual(this.getDineroActual()-fabrica.getCostoCompra());
+		
+		this.disminuirDinero(fabrica.getCostoCompra());
 		this.setFabrica(fabrica);
 	}
 	
@@ -98,9 +101,23 @@ public class Jugador {
 			this.verificarFabricaAsignada();
 		}
 		catch(JugadorConFabricaException e){
-			this.setDineroActual(this.getDineroActual()+ganancia);
+			this.aumentarDinero(ganancia); 
 			this.setFabrica(null);
 		}
+	}
+	
+	public void aumentarDinero(float dinero){
+		this.setDineroActual(this.getDineroActual()+dinero);
+		if(this.getDineroActual()>=Jugador.dineroParaGanar)
+			System.out.println("GANO");
+			//GANO!!!
+	}
+	
+	public void disminuirDinero(float dinero){
+		this.setDineroActual(this.getDineroActual()-dinero);
+		if(this.getDineroActual()<0)
+			System.out.println("PERDIO");
+			//PERDIO!!!
 	}
 	
 }

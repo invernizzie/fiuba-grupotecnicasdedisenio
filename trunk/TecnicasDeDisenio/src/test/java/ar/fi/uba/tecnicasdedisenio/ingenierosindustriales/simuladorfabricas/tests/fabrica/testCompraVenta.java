@@ -16,7 +16,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Juga
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.JugadorConFabricaException;
 
 
-public class testCompraVenta {
+public class TestCompraVenta {
 	private Jugador jugador;
 	private ArrayList<Fabrica> fabricas;
 	
