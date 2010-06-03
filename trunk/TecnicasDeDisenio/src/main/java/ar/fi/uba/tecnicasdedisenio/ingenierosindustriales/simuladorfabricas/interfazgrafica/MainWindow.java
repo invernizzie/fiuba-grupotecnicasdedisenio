@@ -14,6 +14,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 
 public class MainWindow {
 
@@ -24,9 +26,12 @@ public class MainWindow {
 	private Menu EditItem = null;
 	private ScrolledComposite scAreaTrabajo = null;
 	private CTabFolder tabWorkingControls = null;
-	private Table tMapa = null;
 	private ScrolledComposite scControl = null;
 	private Tree tree1 = null;
+	private Composite composite = null;
+	private Button[][] botones = null;
+
+
 	/**
 	 * This method initializes scAreaTrabajo
 	 *
@@ -53,15 +58,18 @@ public class MainWindow {
 		tabWorkingControls = new CTabFolder(scAreaTrabajo, SWT.H_SCROLL | SWT.BORDER | SWT.V_SCROLL);
 		tabWorkingControls.setToolTipText("Mapa");
 		tabWorkingControls.setMaximizeVisible(true);
+		createComposite();
 		tabWorkingControls.setMaximized(true);
 		CTabItem tabItem1 = new CTabItem(tabWorkingControls, SWT.NONE);
 		tabItem1.setText("Mapa");
+		CTabItem tabItem2 = new CTabItem(tabWorkingControls, SWT.NONE);
+		tabItem2.setText("Fabrica");
 		CTabItem tabItem3 = new CTabItem(tabWorkingControls, SWT.NONE);
 		tabItem3.setText("Laboratorio");
-		tMapa = new Table(tabWorkingControls, SWT.BORDER | SWT.FULL_SELECTION | SWT.HIDE_SELECTION);
-		tMapa.setHeaderVisible(true);
-		tMapa.setLinesVisible(true);
-		tabItem1.setControl(tMapa);
+
+		tabItem1.setControl(composite);
+		tabWorkingControls.setEnabled(true);
+		tabWorkingControls.setVisible(true);
 		tabWorkingControls.pack();
 	}
 
@@ -80,27 +88,28 @@ public class MainWindow {
 	}
 
 	/**
-	 * @param args
+	 * This method initializes composite
+	 *
 	 */
-	public void run() {
-		// TODO Auto-generated method stub
-		/* Before this is run, be sure to set up the launch configuration (Arguments->VM Arguments)
-		 * for the correct SWT library path in order to run with the SWT dlls.
-		 * The dlls are located in the SWT plugin jar.
-		 * For example, on Windows the Eclipse SWT 3.1 plugin jar is:
-		 *       installation_directory\plugins\org.eclipse.swt.win32_3.1.0.jar
-		 */
-		Display display = Display.getDefault();
-		MainWindow thisClass = new MainWindow();
-		thisClass.createSShell();
-		thisClass.sShell.open();
+	private void createComposite() {
+		GridLayout gridLayout1 = new GridLayout(32, true);
+		gridLayout1.numColumns = 32;
+		gridLayout1.verticalSpacing = 0;
+		gridLayout1.horizontalSpacing = 0;
+		composite = new Composite(tabWorkingControls, SWT.BORDER);
+		composite.setLayout(gridLayout1);
 
-		while (!thisClass.sShell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
+		botones = new Button[32][24];
+		for (int i = 0 ; i < 32; i++) {
+			for (int j = 0 ; j < 24; j++) {
+				this.botones[i][j] = new Button(composite, SWT.PUSH );
+				this.botones[i][j].setText("1");
+				this.botones[i][j].setEnabled(true);
+				this.botones[i][j].setVisible(true);
+			}
 		}
-		display.dispose();
 	}
+
 
 	/**
 	 * This method initializes sShell
@@ -132,14 +141,20 @@ public class MainWindow {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("widgetDefaultSelected()");
 				juegoNuevo();
+				//openItem.setEnabled(true);
+				//saveItem.setEnabled(true);
+				//saveAllItem.setEnabled(true);
 			}
 		});
 		MenuItem openItem = new MenuItem(FileItem, SWT.PUSH);
 		openItem.setText("Abrir");
+		openItem.setEnabled(false);
 		MenuItem saveItem = new MenuItem(FileItem, SWT.PUSH);
 		saveItem.setText("Guardar");
+		saveItem.setEnabled(false);
 		MenuItem saveAllItem = new MenuItem(FileItem, SWT.PUSH);
 		saveAllItem.setText("Guardar todo");
+		saveAllItem.setEnabled(false);
 		MenuItem separatorFile = new MenuItem(FileItem, SWT.SEPARATOR);
 		newItem.setMenu(FileItem);
 		MenuItem exitItem = new MenuItem(FileItem, SWT.PUSH);
@@ -149,6 +164,10 @@ public class MainWindow {
 		EditItem = new Menu(Edit);
 		MenuItem copy = new MenuItem(EditItem, SWT.PUSH);
 		copy.setText("Copiar");
+		copy.setEnabled(false);
+		MenuItem paste = new MenuItem(EditItem, SWT.PUSH);
+		paste.setText("Pegar");
+		paste.setEnabled(false);
 		Edit.setMenu(EditItem);
 		exitItem.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -171,4 +190,29 @@ public class MainWindow {
 		partida.hacerVisible();
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
+	
+
+	/**
+	 * @param args
+	 */
+	public void run() {
+		// TODO Auto-generated method stub
+		/* Before this is run, be sure to set up the launch configuration (Arguments->VM Arguments)
+		 * for the correct SWT library path in order to run with the SWT dlls.
+		 * The dlls are located in the SWT plugin jar.
+		 * For example, on Windows the Eclipse SWT 3.1 plugin jar is:
+		 *       installation_directory\plugins\org.eclipse.swt.win32_3.1.0.jar
+		 */
+		Display display = Display.getDefault();
+		MainWindow thisClass = new MainWindow();
+		thisClass.createSShell();
+		thisClass.sShell.open();
+
+		while (!thisClass.sShell.isDisposed()) {
+			if (!display.readAndDispatch())
+				display.sleep();
+		}
+		display.dispose();
+	}
+	
 }
