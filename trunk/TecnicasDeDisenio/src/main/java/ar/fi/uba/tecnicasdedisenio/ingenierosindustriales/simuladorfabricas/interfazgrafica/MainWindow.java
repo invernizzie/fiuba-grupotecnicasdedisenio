@@ -1,10 +1,13 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -17,7 +20,7 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
-public class MainWindow {
+public class MainWindow implements Sincronizado {
 
 	private Shell sShell = null;  //  @jve:decl-index=0:visual-constraint="106,8"
 	private Menu menuBar = null;
@@ -30,6 +33,10 @@ public class MainWindow {
 	private Tree tree1 = null;
 	private Composite composite = null;
 	private Button[][] botones = null;
+    private ToolBar toolbarCalendario = null;
+    private ToolItem botonControlDeTiempo;
+    private Label labelFecha;
+    private boolean actualizado = false;
 
 
 	/**
@@ -112,6 +119,55 @@ public class MainWindow {
 
 
 	/**
+     * Crea la barra de herramientas del tiempo y su contenido
+     */
+    private void crearToolbarCalendario() {
+        toolbarCalendario = new ToolBar(sShell, SWT.BORDER);
+
+        labelFecha = new Label(sShell, SWT.PUSH);
+        
+        labelFecha.setText("Fecha");
+
+        botonControlDeTiempo = new ToolItem(toolbarCalendario, SWT.PUSH);
+        botonControlDeTiempo.setText("Comenzar");
+        botonControlDeTiempo.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent selectionEvent) {
+                if (!Calendario.instancia().estaIniciado()) {
+                    Calendario.instancia().iniciar();
+                }
+                else
+                    if (Calendario.instancia().estaPausado())
+                        Calendario.instancia().reanudar();
+                    else
+                        Calendario.instancia().pausar();
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent selectionEvent) {}
+        });
+
+        toolbarCalendario.pack();
+    }
+
+    private synchronized boolean necesitaActualizacion() {
+        return !actualizado;
+    }
+
+    private synchronized void notificarActualizacion() {
+        actualizado = true;
+    }
+
+    private synchronized void forzarActualizacion() {
+        actualizado = false;
+    }
+
+    private void actualizar() {
+        labelFecha.setText(Calendario.instancia().getFechaActual().toString());
+        notificarActualizacion();
+    }
+
+	/**
 	 * This method initializes sShell
 	 */
 	private void createSShell() {
@@ -124,6 +180,7 @@ public class MainWindow {
 		sShell.setMaximized(false);
 		sShell.setVisible(true);
 		sShell.setLayout(gridLayout);
+        crearToolbarCalendario();
 		createScControl();
 		createScAreaTrabajo();
 		sShell.setSize(new Point(481, 382));
@@ -190,9 +247,31 @@ public class MainWindow {
 		partida.hacerVisible();
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
-	
 
-	/**
+    @Override
+    public void notificar(Evento evento) {
+        String textoControlDeTiempo = null;
+        switch (evento) {
+            case INICIO_TIEMPO:
+            case FIN_PAUSA:
+                textoControlDeTiempo = "Pausar";
+                break;
+            case INICIO_PAUSA:
+                textoControlDeTiempo = "Reanudar";
+                break;
+            case FIN_TIEMPO:
+                botonControlDeTiempo.setEnabled(false);
+                break;
+            case COMIENZO_DE_DIA:
+                forzarActualizacion();
+                break;
+        }
+
+        if (textoControlDeTiempo != null)
+            botonControlDeTiempo.setText(textoControlDeTiempo);
+    }
+
+    /**
 	 * @param args
 	 */
 	public void run() {
@@ -208,11 +287,16 @@ public class MainWindow {
 		thisClass.createSShell();
 		thisClass.sShell.open();
 
+        Calendario.instancia().registrar(thisClass);
+        Calendario.instancia().setSegundosPorDia(1);
+
 		while (!thisClass.sShell.isDisposed()) {
 			if (!display.readAndDispatch())
 				display.sleep();
+            if (thisClass.necesitaActualizacion())
+                thisClass.actualizar();
 		}
 		display.dispose();
 	}
-	
+
 }

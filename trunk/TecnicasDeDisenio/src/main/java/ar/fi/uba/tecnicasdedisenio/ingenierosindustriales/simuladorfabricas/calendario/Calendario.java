@@ -38,9 +38,15 @@ public class Calendario {
 
     private int segundosPorDia = DEFAULT_SEGUNDOS_POR_DIA;
     private List<Sincronizado> sincronizados = new ArrayList<Sincronizado>();
+
+    private boolean iniciado = false;
+
     private boolean detenido = false;
+
     private boolean pausado = false;
+
     private Calendar virtualCalendar = new GregorianCalendar(ANIO_INICIAL, MES_INICIAL, DIA_INICIAL);
+
     private Thread threadCalendario = new ThreadCalendario(this);
 
     /**
@@ -62,6 +68,7 @@ public class Calendario {
         } catch (InterruptedException e) { /* ?? */ }
         sincronizados = new ArrayList<Sincronizado>();
         virtualCalendar = new GregorianCalendar(ANIO_INICIAL, MES_INICIAL, DIA_INICIAL);
+        iniciado = false;
         detenido = false;
         pausado = false;
         threadCalendario = new ThreadCalendario(this);
@@ -100,7 +107,9 @@ public class Calendario {
      * Iniciar el paso del tiempo en el Calendario virtual.
      */
     public synchronized void iniciar() {
+        iniciado = true;
         threadCalendario.start();
+        notificar(Evento.INICIO_TIEMPO); // TODO Testear
     }
 
     /**
@@ -109,6 +118,7 @@ public class Calendario {
      */
     public void detener() {
         detenido = true;
+        notificar(Evento.FIN_TIEMPO); // TODO Testear
     }
 
     /**
@@ -117,6 +127,7 @@ public class Calendario {
      */
     public synchronized void pausar() {
         pausado = true;
+        notificar(Evento.INICIO_PAUSA); // TODO Testear
     }
 
     /**
@@ -125,6 +136,7 @@ public class Calendario {
      */
     public synchronized void reanudar() {
         pausado = false;
+        notificar(Evento.FIN_PAUSA);// TODO Testear
     }
 
     /**
@@ -134,6 +146,10 @@ public class Calendario {
      */
     public boolean esValido() {
         return !detenido;
+    }
+
+    public boolean estaIniciado() {
+        return iniciado;
     }
 
     /**
