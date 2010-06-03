@@ -124,7 +124,7 @@ public class MainWindow implements Sincronizado {
     private void crearToolbarCalendario() {
         toolbarCalendario = new ToolBar(sShell, SWT.BORDER);
 
-        labelFecha = new Label(sShell, SWT.PUSH);
+        labelFecha = new Label(sShell, SWT.PUSH | SWT.BORDER);
         
         labelFecha.setText("Fecha");
 
