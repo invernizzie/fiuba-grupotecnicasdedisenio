@@ -224,17 +224,28 @@ public class Ventana {
 		final ScrolledComposite sc = new ScrolledComposite(shell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		sc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		Composite c = new Composite(sc, SWT.NONE);
-		c.setLayout(new GridLayout(64, true));
-		for (int i = 0 ; i < 64*48; i++) {
-			Button b = new Button(c, SWT.PUSH);
+		GridLayout gridLayout1 = new GridLayout(32, true);
+		gridLayout1.numColumns = 32;
+		gridLayout1.verticalSpacing = 0;
+		gridLayout1.horizontalSpacing = 0;
+		c.setLayout(gridLayout1);
+		Button[][] botones = new Button[32][24];
+		for (int i = 0 ; i < 32; i++) {
+			for (int j = 0 ; j < 24; j++) {
+				botones[i][j] = new Button(c, SWT.PUSH);
+				botones[i][j].setText("1");
+			}
 		}
+		//for (int i = 0 ; i < 32*24; i++) {
+		//	Button b = new Button(c, SWT.PUSH);
+		//}
 		sc.setContent(c);
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
 		sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		sc.setShowFocusedControl(true);
 		
-		shell.setSize(300, 500);
+		//shell.setSize(300, 500);
 		shell.open ();
 		while (!shell.isDisposed ()) {
 			if (!display.readAndDispatch ()) display.sleep ();
