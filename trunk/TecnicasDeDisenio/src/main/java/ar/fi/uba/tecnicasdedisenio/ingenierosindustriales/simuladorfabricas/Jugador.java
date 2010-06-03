@@ -44,29 +44,63 @@ public class Jugador {
 		}
 	}
 	
-	/**
-	 * Construye una fábrica con las dimensiones especificadas.
-	 * @param ancho
-	 * @param largo
-	 */
-	public void construirFabrica(int ancho, int largo){
-		this.fabrica = new Fabrica(ancho, largo);
-	}
-	
 	public void agregarMaquina(Maquina maquina){
-		this.fabrica.agregarMaquina(maquina);
+		this.getFabrica().agregarMaquina(maquina);
 	}
 	
 	public void agregarFuente(Fuente fuente){
-		this.fabrica.agregarFuente(fuente);
+		this.getFabrica().agregarFuente(fuente);
 	}
 	
 	public void conectarMaquina(Fuente fuente, Maquina maquina){
-		this.fabrica.conectarMaquina(fuente, maquina);
+		this.getFabrica().conectarMaquina(fuente, maquina);
 	}
 	
 	public void conectarMaquina(Maquina origen, Maquina destino){
-		this.fabrica.conectarMaquina(origen, destino);
+		this.getFabrica().conectarMaquina(origen, destino);
+	}
+
+	public void setFabrica(Fabrica fabrica) {
+		this.fabrica = fabrica;
+	}
+
+	public Fabrica getFabrica() {
+		return fabrica;
+	}
+	
+	public void comprarFabrica(Fabrica fabrica){
+		this.setDineroActual(this.getDineroActual()-fabrica.getCostoCompra());
+		this.setFabrica(fabrica);
+	}
+	
+	public void alquilarFabrica(Fabrica fabrica){
+		this.setFabrica(fabrica);
+	}
+	
+	/**
+	 * Verifica la existencia de una fábrica asignada a un jugador.
+	 * @throws JugadorConFabricaException
+	 */
+	public void verificarFabricaAsignada() throws JugadorConFabricaException{
+		if(this.getFabrica()!=null)
+			throw new JugadorConFabricaException();
+	}
+	
+	public void verificarDineroSuficiente(float costo) throws DineroInsuficienteException{
+		if(this.getDineroActual()< costo)
+			throw new DineroInsuficienteException();
+	}
+	
+	/**
+	 * El jugador deja de tener una fábrica y recupera parte del dinero que gastó.*/
+	public void venderFabrica(float ganancia){
+		try{
+			this.verificarFabricaAsignada();
+		}
+		catch(JugadorConFabricaException e){
+			this.setDineroActual(this.getDineroActual()+ganancia);
+			this.setFabrica(null);
+		}
 	}
 	
 }
