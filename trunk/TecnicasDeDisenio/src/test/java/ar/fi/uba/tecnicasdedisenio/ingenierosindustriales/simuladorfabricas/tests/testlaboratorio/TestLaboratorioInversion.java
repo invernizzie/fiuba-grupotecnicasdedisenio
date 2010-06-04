@@ -9,6 +9,7 @@ import org.junit.Test;
 
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Jugador;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Proceso;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPlancha;
@@ -25,7 +26,8 @@ public class TestLaboratorioInversion {
 	
 	@Before
 	public void setUp() throws Exception {
-		jugador = new Jugador(10000);
+		jugador = new Jugador("Gustavo",10000);
+		jugador.setLaboratorio(new Laboratorio("Comida"));
 		porcentaje = 10;
 		jugador.getLaboratorio().setProcesosHabilitados(new ArrayList<Proceso>());
 		jugador.getLaboratorio().setProcesosInhabilitados(new ArrayList<Proceso>());

@@ -12,7 +12,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class TestLaboratorioValidacion {
-	private Laboratorio laboratorio = new LaboratorioComidas();
+	private Laboratorio laboratorio = new Laboratorio("Comida");
 	private Proceso proceso = new Proceso(1000);
 	
 	@Test

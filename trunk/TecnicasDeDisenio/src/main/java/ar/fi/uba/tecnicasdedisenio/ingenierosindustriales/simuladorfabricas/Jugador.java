@@ -14,11 +14,16 @@ public class Jugador {
 	
 	private static float dineroParaGanar = 1000000;
 	
+	private String nombre;
 	
-	public Jugador(float dineroActual){
+	
+	public Jugador(String nombre, float dineroActual){
 		this.setDineroActual(dineroActual);
-		//Aca deberia dejarte elegir.//
-		this.laboratorio = new LaboratorioComidas();
+		this.setNombre(nombre);
+	}
+	
+	public void setLaboratorio(Laboratorio laboratorio){
+		this.laboratorio = laboratorio;
 	}
 	
 	public Laboratorio getLaboratorio() {
@@ -118,6 +123,14 @@ public class Jugador {
 		if(this.getDineroActual()<0)
 			System.out.println("PERDIO");
 			//PERDIO!!!
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getNombre() {
+		return nombre;
 	}
 	
 }
