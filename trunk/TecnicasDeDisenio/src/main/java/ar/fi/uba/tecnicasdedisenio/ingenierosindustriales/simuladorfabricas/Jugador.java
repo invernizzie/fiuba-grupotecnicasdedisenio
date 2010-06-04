@@ -1,21 +1,21 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 
-public class Jugador {
+public class Jugador implements Sincronizado {
+	
 	
 	private float dineroActual;
-	
 	private Laboratorio laboratorio;
-
 	private Fabrica fabrica;
-	
-	private static float dineroParaGanar = 1000000;
-	
 	private String nombre;
 	
+	private static float DINERO_PARA_GANAR = 1000000;
+	private static final float PORCENTAJE_INVERSION_LABORATORIO = 10;
 	
 	public Jugador(String nombre, float dineroActual){
 		this.setDineroActual(dineroActual);
@@ -113,7 +113,7 @@ public class Jugador {
 	
 	public void aumentarDinero(float dinero){
 		this.setDineroActual(this.getDineroActual()+dinero);
-		if(this.getDineroActual()>=Jugador.dineroParaGanar)
+		if(this.getDineroActual()>=Jugador.DINERO_PARA_GANAR)
 			System.out.println("GANO");
 			//GANO!!!
 	}
@@ -131,6 +131,13 @@ public class Jugador {
 
 	public String getNombre() {
 		return nombre;
+	}
+
+	@Override
+	public void notificar(Evento evento) {
+		if(evento==Evento.COMIENZO_DE_MES)
+			this.invertirDineroLaboratorio(PORCENTAJE_INVERSION_LABORATORIO);
+		
 	}
 	
 }

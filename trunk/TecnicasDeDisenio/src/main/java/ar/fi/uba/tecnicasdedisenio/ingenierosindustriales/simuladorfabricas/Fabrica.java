@@ -207,6 +207,7 @@ public class Fabrica implements Sincronizado{
 	public void realizarCompraOAlquiler(Jugador jugador, float costoXMes) throws FabricaOcupadaException, JugadorConFabricaException{
 		jugador.verificarFabricaAsignada();
 		this.verificarJugadorAsignado();
+		this.lineas = new ArrayList<LineaProduccion>();
 		this.setJugador(jugador);
 		this.setCostoFabricaXMes(costoXMes);
 	}
@@ -226,8 +227,10 @@ public class Fabrica implements Sincronizado{
 		this.setCostoFabricaXMes(0);
 		this.setJugador(null);
 		
-		/*Deberia borrar todas sus lineas de produccion y tambien pasarle el 50%
+		/*Antes de borrar todas sus lineas de produccion y tambien pasarle el 50%
 		 * del valor de cada maquina que no este rota al jugador.*/
+		this.lineas = null;
+		
 	}
 	
 	/**
