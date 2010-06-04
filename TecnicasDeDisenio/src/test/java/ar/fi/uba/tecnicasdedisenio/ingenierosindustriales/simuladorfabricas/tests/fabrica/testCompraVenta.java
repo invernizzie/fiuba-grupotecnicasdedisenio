@@ -42,7 +42,7 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testCompraFallidaXDineroInsuficiente(){
-		jugador = new Jugador(1000);
+		jugador = new Jugador("Gustavo",1000);
 		
 		try {
 			this.fabricas.get(1).comprar(jugador);
@@ -64,7 +64,7 @@ public class TestCompraVenta {
 
 	@Test
 	public void testCompraExitosa(){
-		jugador = new Jugador(3000);
+		jugador = new Jugador("Gustavo",3000);
 		
 		float plata = this.jugador.getDineroActual();
 		try {
@@ -89,7 +89,7 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testAlquilerExitoso(){
-		jugador = new Jugador(2000);
+		jugador = new Jugador("Gustavo",2000);
 		
 		float plata = this.jugador.getDineroActual();
 		
@@ -113,8 +113,8 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testDoblesAsignacionesCompra(){
-		jugador = new Jugador(5000);
-		Jugador jug2 = new Jugador(5000);
+		jugador = new Jugador("Gustavo",5000);
+		Jugador jug2 = new Jugador("Gustavo",5000);
 		
 		float plata = this.jugador.getDineroActual();
 		float plata2 = jug2.getDineroActual();
@@ -174,8 +174,8 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testDoblesAsignacionesAlquiler(){
-		jugador = new Jugador(5000);
-		Jugador jug2 = new Jugador(5000);
+		jugador = new Jugador("Gustavo",5000);
+		Jugador jug2 = new Jugador("Gustavo",5000);
 		
 		try {
 			this.fabricas.get(1).comprar(jugador);
@@ -229,7 +229,7 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testCompraYVentaExitosa(){
-		jugador = new Jugador(3000);
+		jugador = new Jugador("Gustavo",3000);
 		float plata = this.jugador.getDineroActual();
 		try {
 			this.fabricas.get(1).comprar(jugador);
@@ -255,7 +255,7 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testAlquilerYVentaExitoso(){
-		jugador = new Jugador(3000);
+		jugador = new Jugador("Gustavo",3000);
 		float plata = this.jugador.getDineroActual();
 		try {
 			this.fabricas.get(1).alquilar(jugador);
@@ -279,7 +279,7 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testVenderSinCompraOAlquiler(){
-		jugador = new Jugador(3000);
+		jugador = new Jugador("Gustavo",3000);
 		float plata = this.jugador.getDineroActual();
 		this.fabricas.get(1).vender();
 		this.jugador.venderFabrica(1000);

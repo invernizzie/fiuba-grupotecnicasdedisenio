@@ -41,7 +41,7 @@ public class TestCompraVentaCalendario {
 	public void testCompraAlquilerVentaCalendario(){
 		Jugador jugador, jugador2;
 
-		jugador = new Jugador(3000);
+		jugador = new Jugador("Gustavo",3000);
 		float plata = jugador.getDineroActual();
 		try {
 			fabricas.get(2).alquilar(jugador);
@@ -53,7 +53,7 @@ public class TestCompraVentaCalendario {
 			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		jugador2 = new Jugador(2000);
+		jugador2 = new Jugador("Gustavo",2000);
 		float plata2 = jugador2.getDineroActual();
 		try {
 			fabricas.get(1).comprar(jugador2);
