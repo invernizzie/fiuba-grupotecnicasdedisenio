@@ -4,6 +4,7 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
@@ -294,6 +295,34 @@ public class Ventana {
 		}
 		display.dispose ();
 	}
+	
+	public void dibujar5 () {
+		Listener listener = new Listener () {
+			int lastX = 0, lastY = 0;
+			public void handleEvent (Event event) {
+				switch (event.type) {
+					case SWT.MouseMove:
+						if ((event.stateMask & SWT.BUTTON1) == 0) break;
+						GC gc = new GC (shell);
+						gc.drawLine (lastX, lastY, event.x, event.y);
+						gc.dispose ();
+						//FALL THROUGH
+					case SWT.MouseDown:
+						lastX = event.x;
+						lastY = event.y;
+						break;
+				}
+			}
+		};
+		shell.addListener (SWT.MouseDown, listener);
+		shell.addListener (SWT.MouseMove, listener);
+		shell.open ();
+		while (!shell.isDisposed ()) {
+			if (!display.readAndDispatch ()) display.sleep ();
+		}
+		display.dispose ();
+	}
+
 
 }
 	
