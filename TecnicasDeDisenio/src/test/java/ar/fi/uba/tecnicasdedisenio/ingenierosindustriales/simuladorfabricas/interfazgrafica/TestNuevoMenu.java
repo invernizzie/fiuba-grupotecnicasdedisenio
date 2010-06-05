@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.*;
 
-public class TestNuwvoMenu {
+public class TestNuevoMenu {
 	private NuevoMenu ventana;
 	
 	@Before

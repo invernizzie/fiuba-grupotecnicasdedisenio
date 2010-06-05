@@ -1,5 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
@@ -41,6 +42,7 @@ public class MainWindow implements Sincronizado {
     private ToolItem botonControlDeTiempo;
     private Label labelFecha;
     private boolean actualizado = false;
+    private Jugador jugador = null;
 
 
 	/**
@@ -274,7 +276,7 @@ public class MainWindow implements Sincronizado {
 	}
 
 	public void juegoNuevo(){
-		CrearPartida partida= new CrearPartida();
+		CrearPartida partida= new CrearPartida(null);
 		partida.hacerVisible();
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
