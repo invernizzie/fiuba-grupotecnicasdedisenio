@@ -17,6 +17,8 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.cale
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -28,6 +30,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -41,7 +44,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 	private Menu menuBar = null;
 	private Group groupTiempo = null;
 	private Group groupJugador = null;
-	private TabFolder tabFolderFabrica = null;
+	private CTabFolder tabFolderFabrica = null;
 	private Menu submenuJuego = null;
 	private Menu submenuAyuda = null;
 	private Button buttonTimer = null;
@@ -162,6 +165,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		groupTiempo.setLayout(gridLayout1);
 		buttonTimer = new Button(groupTiempo, SWT.NONE);
 		buttonTimer.setText("Comenzar");
+		buttonTimer.setEnabled(false);
 		textTime = new Text(groupTiempo, SWT.BORDER);
 		textTime.setEditable(false);
 		textTime.setLayoutData(gridData3);
@@ -247,12 +251,12 @@ public class NuevoMenu implements Sincronizado, Observer {
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.grabExcessVerticalSpace = true;
 		gridData.horizontalAlignment = GridData.FILL;
-		tabFolderFabrica = new TabFolder(shellPrincipal, SWT.BORDER);
+		tabFolderFabrica = new CTabFolder(shellPrincipal, SWT.BORDER);
 		tabFolderFabrica.setLayoutData(gridData);
 		createCanvasFabrica();
-		TabItem tabItemFabrica = new TabItem(tabFolderFabrica, SWT.NONE);
+		CTabItem tabItemFabrica = new CTabItem(tabFolderFabrica, SWT.NONE);
 		tabItemFabrica.setText("Fabrica");
-		TabItem tabItemLaboratorio = new TabItem(tabFolderFabrica, SWT.NONE);
+		CTabItem tabItemLaboratorio = new CTabItem(tabFolderFabrica, SWT.NONE);
 		tabItemLaboratorio.setText("Laboratorio");
 
 		tabItemFabrica.setControl(canvasFabrica);
@@ -341,6 +345,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 	public void juegoNuevo(){
 		CrearPartida partida= new CrearPartida(this);
 		partida.hacerVisible();
+		buttonTimer.setEnabled(true);
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
 
@@ -443,22 +448,23 @@ public class NuevoMenu implements Sincronizado, Observer {
 			habilitarVenta();
 		} 
 		catch (DineroInsuficienteException e) {
-			JOptionPane.showMessageDialog(null,
-					"No se tiene dinero suficiente.",
-					"Error",
-					JOptionPane.ERROR_MESSAGE);
+			 MessageBox messageBox =
+				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+				 messageBox.setMessage("No se tiene dinero suficiente.");
+				 messageBox.open();
 		}
 		catch (FabricaOcupadaException e) {
-			JOptionPane.showMessageDialog(null,
-					"La fábrica ya se encuentra comprada por otro jugador.",
-					"Error",
-					JOptionPane.ERROR_MESSAGE);
+			 MessageBox messageBox =
+				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+				 messageBox.setMessage("La fábrica ya se encuentra comprada por otro jugador.");
+				 messageBox.open();
 		} 
 		catch (JugadorConFabricaException e) {
-			JOptionPane.showMessageDialog(null,
-					"El jugador ya tiene una fábrica.",
-					"Error",
-					JOptionPane.ERROR_MESSAGE);
+			
+			 MessageBox messageBox =
+				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+				 messageBox.setMessage("El jugador ya tiene una fábrica.");
+				 messageBox.open();
 		}
 		
 	}
@@ -471,18 +477,19 @@ public class NuevoMenu implements Sincronizado, Observer {
 		try {
 			fabrica.alquilar(this.getJugador());
 			habilitarVenta();
-		} 
+		}
 		catch (FabricaOcupadaException e) {
-			JOptionPane.showMessageDialog(null,
-					"La fábrica ya se encuentra comprada por otro jugador.",
-					"Error",
-					JOptionPane.ERROR_MESSAGE);
+			 MessageBox messageBox =
+				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+				 messageBox.setMessage("La fábrica ya se encuentra comprada por otro jugador.");
+				 messageBox.open();
 		} 
 		catch (JugadorConFabricaException e) {
-			JOptionPane.showMessageDialog(null,
-					"El jugador ya tiene una fábrica.",
-					"Error",
-					JOptionPane.ERROR_MESSAGE);
+			 MessageBox messageBox =
+				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+				 messageBox.setMessage("El jugador ya tiene una fábrica.");
+				 messageBox.open();
+
 		}
 		
 	}
