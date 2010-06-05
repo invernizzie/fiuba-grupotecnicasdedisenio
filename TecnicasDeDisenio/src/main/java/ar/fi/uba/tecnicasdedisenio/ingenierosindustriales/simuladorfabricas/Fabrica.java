@@ -267,4 +267,8 @@ public class Fabrica implements Sincronizado{
 		
 		
 	}
+	
+	public String toString(){
+		return "Mts2: " + this.getMetrosCuadrados() + "-Compra: " + this.getCostoCompra() + "-Alquiler: " + this.getCostoAlquiler() + "-Max LP: " + this.getCantMaximaLineas();
+	}
 }

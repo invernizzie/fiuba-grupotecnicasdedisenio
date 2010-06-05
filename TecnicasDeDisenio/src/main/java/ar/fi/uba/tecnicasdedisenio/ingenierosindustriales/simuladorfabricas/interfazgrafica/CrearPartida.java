@@ -27,9 +27,6 @@ public class CrearPartida {
 	private Spinner sDineroInicial = null;
 	private Label lTipoLaboratorio = null;
 	private Combo cTipoLaboratorio = null;
-	private Label lCompra = null;
-	private Button rButtonCompra = null;
-	private Button rButtonAlquiler = null;
 	private HashMap<String,Laboratorio> hashLaboratorios = null;
 	private NuevoMenu menu;
 
@@ -90,20 +87,11 @@ public class CrearPartida {
 		lDineroInicial.setText("Monto Inicial");
 		lDineroInicial.setLayoutData(gridData6);
 		sDineroInicial = new Spinner(shellPartida, SWT.BORDER);
-		sDineroInicial.setSelection(500000);
+		sDineroInicial.setSelection(1000);
 		sDineroInicial.setEnabled(true);
-		sDineroInicial.setPageIncrement(10000);
+		sDineroInicial.setPageIncrement(1000);
 		sDineroInicial.setLayoutData(gridData4);
-		sDineroInicial.setMaximum(10000000);
-		lCompra = new Label(shellPartida, SWT.NONE);
-		lCompra.setText("Compra/Aquiler");
-		lCompra.setLayoutData(gridData1);
-		rButtonAlquiler = new Button(shellPartida, SWT.RADIO);
-		rButtonAlquiler.setText("Alquiler");
-		rButtonAlquiler.setLayoutData(gridData5);
-		rButtonCompra = new Button(shellPartida, SWT.RADIO);
-		rButtonCompra.setText("Compra");
-		rButtonCompra.setLayoutData(gridData2);
+		sDineroInicial.setMaximum(10000);
 		lTipoLaboratorio = new Label(shellPartida, SWT.NONE);
 		lTipoLaboratorio.setText("Tipo de Laboratorio");
 		createCTipoLaboratorio();

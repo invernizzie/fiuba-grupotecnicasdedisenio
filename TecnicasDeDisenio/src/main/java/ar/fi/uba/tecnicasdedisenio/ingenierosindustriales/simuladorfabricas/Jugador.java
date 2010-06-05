@@ -50,6 +50,10 @@ public class Jugador extends Observable implements Sincronizado {
 		this.getLaboratorio().setHabilitado(true);
 	}
 	
+	public void deshabilitarLaboratorio() {
+		this.getLaboratorio().setHabilitado(false);
+	}
+	
 	public void invertirDineroLaboratorio(float porcentaje){
 		try{
 			this.getLaboratorio().invertir(this.getDineroActual()*porcentaje/100);
@@ -150,5 +154,7 @@ public class Jugador extends Observable implements Sincronizado {
 			this.invertirDineroLaboratorio(PORCENTAJE_INVERSION_LABORATORIO);
 		
 	}
+
+	
 	
 }

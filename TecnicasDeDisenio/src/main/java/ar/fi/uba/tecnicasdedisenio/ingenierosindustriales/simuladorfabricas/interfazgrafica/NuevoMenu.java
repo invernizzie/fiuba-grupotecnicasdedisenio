@@ -1,17 +1,22 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JOptionPane;
+
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.DineroInsuficienteException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Fabrica;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.FabricaOcupadaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Jugador;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.JugadorConFabricaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -28,9 +33,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.graphics.Rectangle;
 
 public class NuevoMenu implements Sincronizado, Observer {
 
@@ -54,6 +56,10 @@ public class NuevoMenu implements Sincronizado, Observer {
 	private Canvas canvasFabrica = null;
 	private Menu submenuFabrica = null;
 	private Jugador jugador = null;
+	private Button buttonComprar = null;
+	private Button buttonAlquilar = null;
+	private Button buttonVender = null;
+	private HashMap<String, Fabrica> fabricas;
 	
 	/**
 	 * This method initializes shellPrincipal
@@ -212,6 +218,17 @@ public class NuevoMenu implements Sincronizado, Observer {
 		textDineroAcum.setEditable(false);
 		checkBoxInvertirLabo = new Button(groupJugador, SWT.CHECK);
 		checkBoxInvertirLabo.setText("Invertir en Laboratorio");
+		checkBoxInvertirLabo.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+				if(!jugador.getLaboratorio().isHabilitado())
+					jugador.habilitarLaboratorio();
+					
+				else
+					jugador.deshabilitarLaboratorio();
+				
+			}
+		});
+		
 		Label filler = new Label(groupJugador, SWT.NONE);
 		createComboFabrica();
 		buttonFabrica = new Button(groupJugador, SWT.NONE);
@@ -246,15 +263,61 @@ public class NuevoMenu implements Sincronizado, Observer {
 	 *
 	 */
 	private void createComboFabrica() {
+		int i;
+		String[] fab = new String[5];
 		GridData gridData6 = new GridData();
 		gridData6.grabExcessHorizontalSpace = false;
 		gridData6.verticalAlignment = GridData.BEGINNING;
 		gridData6.grabExcessVerticalSpace = false;
 		gridData6.horizontalAlignment = GridData.FILL;
+		
+		buttonAlquilar = new Button(groupJugador, SWT.NONE);
+		buttonAlquilar.setText("Alquilar Fábrica");
+		buttonAlquilar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+				alquilar();
+			}
+		});
+		
+		buttonComprar = new Button(groupJugador, SWT.NONE);
+		buttonComprar.setText("Comprar Fábrica");
+		buttonComprar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+				comprar();
+			}
+		});
+		
+		buttonVender = new Button(groupJugador, SWT.NONE);
+		buttonVender.setText("Vender Fábrica");
+		buttonVender.setEnabled(false);
+		buttonVender.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+				vender();
+			}
+		});
+		
+		
 		comboFabrica = new Combo(groupJugador, SWT.NONE);
+		/*
+		 * Fabrica 0: Tamanio 100, Costo Compra 1000, Costo Alquiler 150, Cantidad Lineas 1.
+		 * Fabrica 1: Tamanio 200, Costo Compra 2000, Costo Alquiler 300, Cantidad Lineas 2.
+		 * Fabrica 2: Tamanio 300, Costo Compra 3000, Costo Alquiler 450, Cantidad Lineas 3.
+		 * Fabrica 3: Tamanio 400, Costo Compra 4000, Costo Alquiler 600, Cantidad Lineas 4.
+		 * Fabrica 4: Tamanio 500, Costo Compra 5000, Costo Alquiler 750, Cantidad Lineas 5.
+		 */
+		fabricas = new HashMap<String,Fabrica>();
+		Fabrica fabrica = null;
+		for(i=0;i<5;i++){
+			fabrica = new Fabrica((i+1)*100,(i+1)*1000, (i+1)*150, (i+1));
+			fabricas.put(fabrica.toString(),fabrica);
+			fab[i]=fabrica.toString();
+		}
+		comboFabrica.setItems(fab);
+		comboFabrica.setText(comboFabrica.getItem(0));
 		comboFabrica.setLayoutData(gridData6);
 	}
-
+	
+	
 	/**
 	 * This method initializes canvasFabrica
 	 *
@@ -340,19 +403,109 @@ public class NuevoMenu implements Sincronizado, Observer {
 		return jugador;
 	}
     
+	/**
+	 * Actualiza los datos de un jugador en la pantalla.
+	 */
     private void actualizarDatosJugador() {
     	textJugador.setText(getJugador().getNombre());
 		textDineroAcum.setText(Float.toString(getJugador().getDineroActual()));
 	}
     
+    
+    /**
+	 * Actualiza los datos del tiempo en la pantalla.
+	 */
     private void actualizarDatosTiempo(){
     	this.textTime.setText(Calendario.instancia().getFechaActual().toString());
     	notificarActualizacion();
     }
-
+    
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		actualizarDatosJugador();
 	}
+	
+	/**
+	 * Vende la fábrica del jugador.
+	 * */
+	private void vender(){
+		this.getJugador().getFabrica().vender();
+		habilitarCompraOAlquiler();
+	}
+	
+	/**
+	 * Compra la fábrica seleccionada.
+	 * */
+	private void comprar(){
+		Fabrica fabrica = fabricas.get(comboFabrica.getText());
+		try {
+			fabrica.comprar(this.getJugador());
+			habilitarVenta();
+		} 
+		catch (DineroInsuficienteException e) {
+			JOptionPane.showMessageDialog(null,
+					"No se tiene dinero suficiente.",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		catch (FabricaOcupadaException e) {
+			JOptionPane.showMessageDialog(null,
+					"La fábrica ya se encuentra comprada por otro jugador.",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
+		} 
+		catch (JugadorConFabricaException e) {
+			JOptionPane.showMessageDialog(null,
+					"El jugador ya tiene una fábrica.",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+	
+	/**
+	 * Alquila la fábrica seleccionada.
+	 * */
+	public void alquilar(){
+		Fabrica fabrica = fabricas.get(comboFabrica.getText());
+		try {
+			fabrica.alquilar(this.getJugador());
+			habilitarVenta();
+		} 
+		catch (FabricaOcupadaException e) {
+			JOptionPane.showMessageDialog(null,
+					"La fábrica ya se encuentra comprada por otro jugador.",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
+		} 
+		catch (JugadorConFabricaException e) {
+			JOptionPane.showMessageDialog(null,
+					"El jugador ya tiene una fábrica.",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+	
+	/**
+	 * Habilita el botón de venta y deshabilita los de compra y alquiler.*/
+	private void habilitarVenta(){
+		buttonAlquilar.setEnabled(false);
+		buttonComprar.setEnabled(false);
+		buttonVender.setEnabled(true);
+		comboFabrica.setEnabled(false);
+	}
+	
+	/**
+	 * Habilita los botones de compra y alquiler y deshabilita el de venta.*/
+	private void habilitarCompraOAlquiler(){
+		buttonAlquilar.setEnabled(true);
+		buttonComprar.setEnabled(true);
+		buttonVender.setEnabled(false);
+		comboFabrica.setEnabled(true);
+	}
+	
+	
+	
 }
 
