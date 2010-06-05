@@ -29,10 +29,14 @@ public class MainWindow implements Sincronizado {
 	private Menu EditItem = null;
 	private ScrolledComposite scAreaTrabajo = null;
 	private CTabFolder tabWorkingControls = null;
-	private ScrolledComposite scControl = null;
-	private Tree tree1 = null;
 	private Composite composite = null;
-	private Button[][] botones = null;
+	private Group gUserProperties = null;
+	private Label lJugador = null;
+	private Text tJugador = null;
+	private Button checkInvertirLab = null;
+	private Canvas canvasFabrica = null;
+	private Button bFabrica = null;
+	private Combo comboFabrica = null;
     private ToolBar toolbarCalendario = null;
     private ToolItem botonControlDeTiempo;
     private Label labelFecha;
@@ -46,15 +50,19 @@ public class MainWindow implements Sincronizado {
 	private void createScAreaTrabajo() {
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.BEGINNING;
+		gridData.grabExcessVerticalSpace = false;
+		gridData.grabExcessHorizontalSpace = false;
 		gridData.verticalAlignment = GridData.CENTER;
 		scAreaTrabajo = new ScrolledComposite(sShell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scAreaTrabajo.setAlwaysShowScrollBars(true);
 		scAreaTrabajo.setExpandHorizontal(true);
 		scAreaTrabajo.setExpandVertical(true);
-		scAreaTrabajo.setMinSize(new Point(320, 240));
+		scAreaTrabajo.setMinSize(new Point(280, 210));
 		scAreaTrabajo.setLayoutData(gridData);
 		createTabWorkingControls();
 		scAreaTrabajo.setLayout(new FillLayout());
+		createCanvasFabrica();
+		scAreaTrabajo.setContent(canvasFabrica);
 	}
 
 	/**
@@ -67,31 +75,15 @@ public class MainWindow implements Sincronizado {
 		tabWorkingControls.setMaximizeVisible(true);
 		createComposite();
 		tabWorkingControls.setMaximized(true);
-		CTabItem tabItem1 = new CTabItem(tabWorkingControls, SWT.NONE);
-		tabItem1.setText("Mapa");
 		CTabItem tabItem2 = new CTabItem(tabWorkingControls, SWT.NONE);
 		tabItem2.setText("Fabrica");
 		CTabItem tabItem3 = new CTabItem(tabWorkingControls, SWT.NONE);
 		tabItem3.setText("Laboratorio");
 
-		tabItem1.setControl(composite);
+		tabItem2.setControl(composite);
 		tabWorkingControls.setEnabled(true);
 		tabWorkingControls.setVisible(true);
 		tabWorkingControls.pack();
-	}
-
-	/**
-	 * This method initializes scControl
-	 *
-	 */
-	private void createScControl() {
-		scControl = new ScrolledComposite(sShell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scControl.setAlwaysShowScrollBars(true);
-		scControl.setMinSize(new Point(20, 60));
-		scControl.setExpandHorizontal(true);
-		tree1 = new Tree(scControl, SWT.BORDER);
-		tree1.setHeaderVisible(true);
-		scControl.setContent(tree1);
 	}
 
 	/**
@@ -99,24 +91,64 @@ public class MainWindow implements Sincronizado {
 	 *
 	 */
 	private void createComposite() {
-		GridLayout gridLayout1 = new GridLayout(32, true);
+		GridLayout gridLayout1 = new GridLayout();
 		gridLayout1.numColumns = 32;
 		gridLayout1.verticalSpacing = 0;
 		gridLayout1.horizontalSpacing = 0;
 		composite = new Composite(tabWorkingControls, SWT.BORDER);
 		composite.setLayout(gridLayout1);
-
-		botones = new Button[32][24];
-		for (int i = 0 ; i < 32; i++) {
-			for (int j = 0 ; j < 24; j++) {
-				this.botones[i][j] = new Button(composite, SWT.PUSH );
-				this.botones[i][j].setText("1");
-				this.botones[i][j].setEnabled(true);
-				this.botones[i][j].setVisible(true);
-			}
-		}
 	}
 
+	/**
+	 * This method initializes gUserProperties
+	 *
+	 */
+	private void createGUserProperties() {
+		GridData gridData2 = new GridData();
+		gridData2.verticalSpan = 3;
+		GridData gridData1 = new GridData();
+		gridData1.horizontalSpan = 2;
+		GridLayout gridLayout2 = new GridLayout();
+		gridLayout2.numColumns = 2;
+		gUserProperties = new Group(sShell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		gUserProperties.setText("Propiedades del Jugador");
+		gUserProperties.setLayout(gridLayout2);
+		lJugador = new Label(gUserProperties, SWT.NONE);
+		lJugador.setText("Jugador");
+		tJugador = new Text(gUserProperties, SWT.BORDER);
+		tJugador.setEditable(false);
+		tJugador.setText("Nombre Jugador");
+		checkInvertirLab = new Button(gUserProperties, SWT.CHECK);
+		checkInvertirLab.setText("Invertir en Laboratorio");
+		checkInvertirLab.setLayoutData(gridData1);
+		createComboFabrica();
+		bFabrica = new Button(gUserProperties, SWT.NONE);
+		bFabrica.setText("Fabrica");
+		bFabrica.setLayoutData(gridData2);
+		checkInvertirLab
+				.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+					public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+						System.out.println("widgetSelected()"); // TODO Auto-generated Event stub widgetSelected()
+					}
+				});
+	}
+
+	/**
+	 * This method initializes canvasFabrica
+	 *
+	 */
+	private void createCanvasFabrica() {
+		canvasFabrica = new Canvas(scAreaTrabajo, SWT.BORDER);
+		canvasFabrica.setLayout(null);
+	}
+
+	/**
+	 * This method initializes comboFabrica
+	 *
+	 */
+	private void createComboFabrica() {
+		comboFabrica = new Combo(gUserProperties, SWT.NONE);
+	}
 
 	/**
      * Crea la barra de herramientas del tiempo y su contenido
@@ -181,7 +213,6 @@ public class MainWindow implements Sincronizado {
 		sShell.setVisible(true);
 		sShell.setLayout(gridLayout);
         crearToolbarCalendario();
-		createScControl();
 		createScAreaTrabajo();
 		sShell.setSize(new Point(481, 382));
 		menuBar = new Menu(sShell, SWT.BAR);
