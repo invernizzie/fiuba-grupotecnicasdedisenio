@@ -1,5 +1,9 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
+import java.util.Observable;
+import java.util.Observer;
+
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
@@ -28,7 +32,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.graphics.Rectangle;
 
-public class NuevoMenu implements Sincronizado {
+public class NuevoMenu implements Sincronizado, Observer {
 
 	private boolean actualizado = false;
 	private Shell shellPrincipal = null;  //  @jve:decl-index=0:visual-constraint="79,7"
@@ -49,6 +53,8 @@ public class NuevoMenu implements Sincronizado {
 	private Button buttonFabrica = null;
 	private Canvas canvasFabrica = null;
 	private Menu submenuFabrica = null;
+	private Jugador jugador = null;
+	
 	/**
 	 * This method initializes shellPrincipal
 	 *
@@ -153,6 +159,7 @@ public class NuevoMenu implements Sincronizado {
 		textTime = new Text(groupTiempo, SWT.BORDER);
 		textTime.setEditable(false);
 		textTime.setLayoutData(gridData3);
+		textTime.setText(Calendario.instancia().getFechaActual().toString());
 		buttonTimer.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent selectionEvent) {
@@ -198,11 +205,9 @@ public class NuevoMenu implements Sincronizado {
 		labelJugador.setText("Jugador");
 		textJugador = new Text(groupJugador, SWT.BORDER);
 		textJugador.setEditable(false);
-		textJugador.setText("Nombre Jugador");
 		labelDineroAcum = new Label(groupJugador, SWT.NONE);
 		labelDineroAcum.setText("Dinero Acumulado");
 		textDineroAcum = new Text(groupJugador, SWT.BORDER);
-		textDineroAcum.setText("99999999");
 		textDineroAcum.setLayoutData(gridData4);
 		textDineroAcum.setEditable(false);
 		checkBoxInvertirLabo = new Button(groupJugador, SWT.CHECK);
@@ -258,9 +263,6 @@ public class NuevoMenu implements Sincronizado {
 		canvasFabrica = new Canvas(tabFolderFabrica, SWT.NONE);
 	}
 
-
-
-
     private synchronized boolean necesitaActualizacion() {
         return !actualizado;
     }
@@ -273,13 +275,8 @@ public class NuevoMenu implements Sincronizado {
         actualizado = false;
     }
 
-    private void actualizar() {
-    	textTime.setText(Calendario.instancia().getFechaActual().toString());
-        notificarActualizacion();
-    }
-	
 	public void juegoNuevo(){
-		CrearPartida partida= new CrearPartida();
+		CrearPartida partida= new CrearPartida(this);
 		partida.hacerVisible();
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
@@ -299,14 +296,13 @@ public class NuevoMenu implements Sincronizado {
             	buttonTimer.setEnabled(false);
                 break;
             case COMIENZO_DE_DIA:
-                forzarActualizacion();
+            	forzarActualizacion();
                 break;
         }
 
         if (textoControlDeTiempo != null)
         	buttonTimer.setText(textoControlDeTiempo);
-    }
-	
+    }    
 	
     /**
 	 * @param args
@@ -331,9 +327,32 @@ public class NuevoMenu implements Sincronizado {
 			if (!display.readAndDispatch())
 				display.sleep();
             if (thisClass.necesitaActualizacion())
-                thisClass.actualizar();
+                thisClass.actualizarDatosTiempo();
 		}
 		display.dispose();
+	}
+
+	public void setJugador(Jugador jugador) {
+		this.jugador = jugador;
+	}
+
+	public Jugador getJugador() {
+		return jugador;
+	}
+    
+    private void actualizarDatosJugador() {
+    	textJugador.setText(getJugador().getNombre());
+		textDineroAcum.setText(Float.toString(getJugador().getDineroActual()));
+	}
+    
+    private void actualizarDatosTiempo(){
+    	this.textTime.setText(Calendario.instancia().getFechaActual().toString());
+    	notificarActualizacion();
+    }
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		actualizarDatosJugador();
 	}
 }
 

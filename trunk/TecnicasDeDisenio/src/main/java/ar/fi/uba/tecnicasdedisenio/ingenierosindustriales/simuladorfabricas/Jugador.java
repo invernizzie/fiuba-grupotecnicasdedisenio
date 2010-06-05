@@ -1,12 +1,15 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
 
+import java.util.Observable;
+
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 
-public class Jugador implements Sincronizado {
+public class Jugador extends Observable implements Sincronizado {
 	
 	
 	private float dineroActual;
@@ -20,10 +23,13 @@ public class Jugador implements Sincronizado {
 	public Jugador(String nombre, float dineroActual){
 		this.setDineroActual(dineroActual);
 		this.setNombre(nombre);
+		Calendario.instancia().registrar(this);
 	}
 	
 	public void setLaboratorio(Laboratorio laboratorio){
 		this.laboratorio = laboratorio;
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	public Laboratorio getLaboratorio() {
@@ -32,6 +38,8 @@ public class Jugador implements Sincronizado {
 
 	public void setDineroActual(float dineroActual) {
 		this.dineroActual = dineroActual;
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	public float getDineroActual() {
@@ -69,6 +77,8 @@ public class Jugador implements Sincronizado {
 
 	public void setFabrica(Fabrica fabrica) {
 		this.fabrica = fabrica;
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	public Fabrica getFabrica() {
@@ -76,13 +86,13 @@ public class Jugador implements Sincronizado {
 	}
 	
 	public void comprarFabrica(Fabrica fabrica){
-		
 		this.disminuirDinero(fabrica.getCostoCompra());
 		this.setFabrica(fabrica);
 	}
 	
 	public void alquilarFabrica(Fabrica fabrica){
 		this.setFabrica(fabrica);
+		this.setChanged();
 	}
 	
 	/**
@@ -127,6 +137,7 @@ public class Jugador implements Sincronizado {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+		this.setChanged();
 	}
 
 	public String getNombre() {

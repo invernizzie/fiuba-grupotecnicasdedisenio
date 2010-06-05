@@ -30,11 +30,12 @@ public class CrearPartida {
 	private Label lCompra = null;
 	private Button rButtonCompra = null;
 	private Button rButtonAlquiler = null;
-	private Jugador jugador;
 	private HashMap<String,Laboratorio> hashLaboratorios = null;
+	private NuevoMenu menu;
 
-	public CrearPartida(){
+	public CrearPartida(NuevoMenu menu){
 		this.createShellPartida();
+		this.menu = menu;
 	}
 
 	/**
@@ -129,11 +130,11 @@ public class CrearPartida {
 	 */
 	
 	public void CrearJuego(){
-	System.out.println("widgetSelected()");
-	jugador = new Jugador(tUsuario.getText(),new Float(sDineroInicial.getText()));
-	jugador.setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
-	System.out.println(jugador.getLaboratorio().getTipo());
-	System.out.println("Ahora se deben cargar los valores para iniciar la partida");
+	Jugador jug = new Jugador(tUsuario.getText(),new Float(sDineroInicial.getText()));
+	menu.setJugador(jug);
+	menu.getJugador().addObserver(menu);
+	menu.getJugador().setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
+	
 	shellPartida.close();
 	}
 	/**
