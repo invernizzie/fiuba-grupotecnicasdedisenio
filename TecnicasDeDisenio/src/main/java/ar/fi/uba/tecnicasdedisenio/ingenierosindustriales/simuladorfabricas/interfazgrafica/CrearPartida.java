@@ -21,14 +21,15 @@ public class CrearPartida {
 	private Shell shellPartida = null;  //  @jve:decl-index=0:visual-constraint="126,20"
 	private Label lUsuario = null;
 	private Text tUsuario = null;
-	private Label lfabrica = null;
-	private Text tFabrica = null;
 	private Button bCreate = null;
 	private Button bCancel = null;
 	private Label lDineroInicial = null;
 	private Spinner sDineroInicial = null;
 	private Label lTipoLaboratorio = null;
 	private Combo cTipoLaboratorio = null;
+	private Label lCompra = null;
+	private Button rButtonCompra = null;
+	private Button rButtonAlquiler = null;
 	private Jugador jugador;
 	private HashMap<String,Laboratorio> hashLaboratorios = null;
 
@@ -41,50 +42,99 @@ public class CrearPartida {
 	 *
 	 */
 	private void createShellPartida() {
+		GridData gridData7 = new GridData();
+		gridData7.horizontalAlignment = GridData.FILL;
+		gridData7.verticalAlignment = GridData.CENTER;
+		GridData gridData6 = new GridData();
+		gridData6.horizontalAlignment = GridData.FILL;
+		gridData6.verticalAlignment = GridData.CENTER;
+		GridData gridData5 = new GridData();
+		gridData5.grabExcessHorizontalSpace = true;
+		gridData5.verticalAlignment = GridData.CENTER;
+		gridData5.horizontalAlignment = GridData.FILL;
+		GridData gridData4 = new GridData();
+		gridData4.horizontalAlignment = GridData.FILL;
+		gridData4.grabExcessHorizontalSpace = true;
+		gridData4.verticalAlignment = GridData.CENTER;
+		GridData gridData31 = new GridData();
+		gridData31.horizontalAlignment = GridData.FILL;
+		gridData31.grabExcessHorizontalSpace = true;
+		gridData31.verticalAlignment = GridData.CENTER;
+		GridData gridData21 = new GridData();
+		gridData21.grabExcessHorizontalSpace = true;
+		gridData21.verticalAlignment = GridData.CENTER;
+		gridData21.horizontalAlignment = GridData.FILL;
+		GridData gridData2 = new GridData();
+		gridData2.horizontalAlignment = GridData.FILL;
+		gridData2.verticalAlignment = GridData.CENTER;
+		GridData gridData1 = new GridData();
+		gridData1.verticalSpan = 2;
+		gridData1.verticalAlignment = GridData.CENTER;
+		gridData1.horizontalAlignment = GridData.FILL;
 		GridData gridData = new GridData();
+		gridData.horizontalAlignment = GridData.FILL;
+		gridData.verticalAlignment = GridData.CENTER;
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
 		shellPartida = new Shell();
 		shellPartida.setText("Crear Partida");
 		shellPartida.setLayout(gridLayout);
-		shellPartida.setSize(new Point(209, 157));
+		shellPartida.setSize(new Point(210, 178));
 		lUsuario = new Label(shellPartida, SWT.HORIZONTAL);
 		lUsuario.setText("Nombre de Usuario");
+		lUsuario.setLayoutData(gridData7);
 		tUsuario = new Text(shellPartida, SWT.BORDER);
 		tUsuario.setLayoutData(gridData);
-		//lfabrica = new Label(shellPartida, SWT.HORIZONTAL);
-		//lfabrica.setText("Nombre Fabrica");
-		//tFabrica = new Text(shellPartida, SWT.BORDER);
 		lDineroInicial = new Label(shellPartida, SWT.HORIZONTAL);
 		lDineroInicial.setText("Monto Inicial");
-		sDineroInicial = new Spinner(shellPartida, SWT.NONE);
-		sDineroInicial.setMaximum(10000000);
+		lDineroInicial.setLayoutData(gridData6);
+		sDineroInicial = new Spinner(shellPartida, SWT.BORDER);
 		sDineroInicial.setSelection(500000);
 		sDineroInicial.setEnabled(true);
 		sDineroInicial.setPageIncrement(10000);
+		sDineroInicial.setLayoutData(gridData4);
+		sDineroInicial.setMaximum(10000000);
+		lCompra = new Label(shellPartida, SWT.NONE);
+		lCompra.setText("Compra/Aquiler");
+		lCompra.setLayoutData(gridData1);
+		rButtonAlquiler = new Button(shellPartida, SWT.RADIO);
+		rButtonAlquiler.setText("Alquiler");
+		rButtonAlquiler.setLayoutData(gridData5);
+		rButtonCompra = new Button(shellPartida, SWT.RADIO);
+		rButtonCompra.setText("Compra");
+		rButtonCompra.setLayoutData(gridData2);
 		lTipoLaboratorio = new Label(shellPartida, SWT.NONE);
 		lTipoLaboratorio.setText("Tipo de Laboratorio");
 		createCTipoLaboratorio();
 		bCreate = new Button(shellPartida, SWT.NONE);
 		bCreate.setText("Crear Partida");
+		bCreate.setLayoutData(gridData21);
 		bCreate.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				System.out.println("widgetSelected()");
-				// TODO Auto-generated Event stub widgetSelected()
-				jugador = new Jugador(tUsuario.getText(),new Float(sDineroInicial.getText()));
-				jugador.setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
-				System.out.println(jugador.getLaboratorio().getTipo());
-				System.out.println("Ahora se deben cargar los valores para iniciar la partida");
-				shellPartida.close();
+				CrearJuego();
 			}
 		});
 		bCancel = new Button(shellPartida, SWT.NONE);
 		bCancel.setText("Cancelar");
+		bCancel.setLayoutData(gridData31);
 		bCancel.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				shellPartida.close();
 			}
 		});
+	}
+	/**
+	 * This method initializes shellPartida
+	 *
+	 */
+	
+	public void CrearJuego(){
+	System.out.println("widgetSelected()");
+	jugador = new Jugador(tUsuario.getText(),new Float(sDineroInicial.getText()));
+	jugador.setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
+	System.out.println(jugador.getLaboratorio().getTipo());
+	System.out.println("Ahora se deben cargar los valores para iniciar la partida");
+	shellPartida.close();
 	}
 	/**
 	 * This method initializes cTipoFabrica
