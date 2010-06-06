@@ -1,4 +1,4 @@
-package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
+package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.interfazgrafica;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -7,12 +7,12 @@ import org.junit.Test;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.*;
 
-public class TestMainWindow {
-	private MainWindow ventana;
+public class TestNuevoMenu {
+	private NuevoMenu ventana;
 	
 	@Before
 	public void setUp() throws Exception {
-		this.ventana = new MainWindow();
+		this.ventana = new NuevoMenu();
 	}
 
 	@After
@@ -23,5 +23,4 @@ public class TestMainWindow {
 	public void testPantalla() {
 		this.ventana.run();
 		}
-
 }
