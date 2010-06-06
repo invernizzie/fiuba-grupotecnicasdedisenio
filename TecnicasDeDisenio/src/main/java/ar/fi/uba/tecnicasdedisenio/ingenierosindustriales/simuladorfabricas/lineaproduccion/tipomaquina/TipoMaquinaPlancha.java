@@ -13,7 +13,7 @@ public class TipoMaquinaPlancha extends TipoMaquina {
 	public TipoMaquinaPlancha(ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
-		plancha = new Plancha();
+		plancha = new Plancha(0.3F, 0.01F);
 		
 	}
 

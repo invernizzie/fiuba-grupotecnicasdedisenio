@@ -11,7 +11,7 @@ public class TipoMaquinaPrensa extends TipoMaquina {
 	public TipoMaquinaPrensa(ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
-		prensa = new Prensa(0F, 0F);
+		prensa = new Prensa(0.2F, 0.01F);
 	}
 	
 	public TipoMaquinaPrensa() {

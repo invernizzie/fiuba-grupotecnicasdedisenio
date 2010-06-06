@@ -10,6 +10,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.LineaProduccion;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.ProcesamientoException;
 
 public class Fabrica implements Sincronizado{
 
@@ -43,7 +44,7 @@ public class Fabrica implements Sincronizado{
 		this.maquinas.add(maquina);
 	}
 
-	public void conectarMaquina(Fuente fuente, Maquina maquina) {
+	public void conectarMaquina(Fuente fuente, Maquina maquina) throws CantidadLineasMaximaException {
 		if(!maquinas.contains(maquina)){
 			this.agregarMaquina(maquina);
 		}
@@ -61,12 +62,19 @@ public class Fabrica implements Sincronizado{
 		if(!maquinaEnLinea){
 			LineaProduccion linea = new LineaProduccion(this.jugador.getLaboratorio());
 			linea.agregarMaquina(maquina);
-			lineas.add(linea);
+			agregarLinea(linea);
 		}
 		
 	}
 
-	public void conectarMaquina(Maquina origen, Maquina destino) {
+	/**
+	 * Conecta dos máquinas dadas, verifica si alguna de las dos pertenece a una linea
+	 * de producción existente, en caso negativo crea una nueva linea que las contenga.
+	 * @param origen
+	 * @param destino
+	 * @throws CantidadLineasMaximaException
+	 */
+	public void conectarMaquina(Maquina origen, Maquina destino) throws CantidadLineasMaximaException {
 		if(!maquinas.contains(origen)){
 			this.agregarMaquina(origen);
 		}
@@ -78,6 +86,9 @@ public class Fabrica implements Sincronizado{
 		CintaTransportadora cinta = new CintaTransportadora();
 		cinta.conectar(origen, destino);
 		
+		/*
+		 * Si una linea contiene alguna de las máquinas agrego la otra a esa linea.
+		 */
 		boolean maquinasEnLinea = true;
 		for (LineaProduccion linea : lineas) {
 			if(!linea.contieneMaquina(origen)
@@ -98,7 +109,7 @@ public class Fabrica implements Sincronizado{
 			LineaProduccion linea = new LineaProduccion(this.jugador.getLaboratorio());
 			linea.agregarMaquina(origen);
 			linea.agregarMaquina(destino);
-			lineas.add(linea);
+			agregarLinea(linea);
 		}
 		
 	}
@@ -251,8 +262,18 @@ public class Fabrica implements Sincronizado{
 
 	@Override
 	public void notificar(Evento evento) {
-		if(evento==Evento.COMIENZO_DE_MES)
+		if(evento.equals(Evento.COMIENZO_DE_MES)){
 			this.asignarCostoJugador();
+		}else if(evento.equals(Evento.COMIENZO_DE_DIA)){
+			try {
+				for (LineaProduccion linea : lineas) {
+						linea.procesar();
+				}
+			} catch (ProcesamientoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void asignarCostoJugador(){

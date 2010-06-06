@@ -11,6 +11,11 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  */
 public class Plancha extends Maquina {
 
+	public Plancha(Float tasaDeFallos, Float tasaRotura) {
+		super(tasaDeFallos, tasaRotura);
+		this.setCostoMaquina(100F);
+	}
+	
 	@Override
 	protected Producto realizarProceso() {
 		return new Producto(ValidadorProductos.instancia(),"Planchado",this.getTasaDeFallos());
@@ -27,7 +32,7 @@ public class Plancha extends Maquina {
 	
 	@Override
 	public Plancha clone(){
-		return new Plancha();
+		return new Plancha(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
 }

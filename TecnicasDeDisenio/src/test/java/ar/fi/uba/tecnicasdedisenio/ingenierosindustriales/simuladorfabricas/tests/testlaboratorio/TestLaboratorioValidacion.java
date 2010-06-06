@@ -5,7 +5,6 @@ import org.junit.Test;
 import junit.framework.Assert;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.*;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Proceso;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
@@ -61,12 +60,12 @@ public class TestLaboratorioValidacion {
 		
 		maquina = new Prensa(0F, 0F);
 		maquina.addPrecedente(new Prensa(0F, 0F));
-		maquina.addPrecedente(new Plancha());
+		maquina.addPrecedente(new Plancha(0F, 0F));
 		maquina.getPrecedentes().get(1).addPrecedente(new Prensa(0F, 0F));
 		maquina.getPrecedentes().get(1).addMateriaPrima(new Producto(val, "agua", 0));
 		maquina.getPrecedentes().get(1).addMateriaPrima(new Producto(val, "pan", 0));
-		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha());
-		maquina.getPrecedentes().get(1).addPrecedente(new Plancha());
+		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha(0F, 0F));
+		maquina.getPrecedentes().get(1).addPrecedente(new Plancha(0F, 0F));
 		maquina.addMateriaPrima(new Producto(val, "trigo", 0));
 		maquina.addMateriaPrima(new Producto(val, "agua", 0));
 
@@ -75,11 +74,11 @@ public class TestLaboratorioValidacion {
 
 		maquina = new Prensa(0F, 0F);
 		maquina.addPrecedente(new Prensa(0F, 0F));
-		maquina.addPrecedente(new Plancha());
+		maquina.addPrecedente(new Plancha(0F, 0F));
 		maquina.getPrecedentes().get(1).addPrecedente(new Prensa(0F, 0F));
-		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha());
-		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha());
-		maquina.getPrecedentes().get(1).addPrecedente(new Plancha());
+		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha(0F, 0F));
+		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha(0F, 0F));
+		maquina.getPrecedentes().get(1).addPrecedente(new Plancha(0F, 0F));
 		maquina.getPrecedentes().get(1).addMateriaPrima(new Producto(val, "agua", 0));
 		
 		Assert.assertFalse("No debería haber un proceso valido",laboratorio.existeProcesoValido(maquina));
@@ -101,7 +100,7 @@ public class TestLaboratorioValidacion {
 		
 		
 		maquina = new Prensa(0F, 0F);
-		maquina.addPrecedente(new Plancha());
+		maquina.addPrecedente(new Plancha(0F, 0F));
 		
 		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));
 		

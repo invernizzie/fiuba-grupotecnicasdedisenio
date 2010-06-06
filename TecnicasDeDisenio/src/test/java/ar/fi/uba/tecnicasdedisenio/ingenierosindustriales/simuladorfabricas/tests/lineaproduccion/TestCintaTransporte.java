@@ -82,7 +82,7 @@ public class TestCintaTransporte {
 	@Test
 	public void testConectarMaquina(){
 		Maquina prensa = new Prensa(0F, 0F);
-		Maquina plancha = new Plancha();
+		Maquina plancha = new Plancha(0F, 0F);
 		Producto testProduct = new Producto(val, "Pan", 0F);
 		
 		this.cintaTransportadora.conectar(prensa, plancha);
@@ -101,8 +101,8 @@ public class TestCintaTransporte {
 	@Test
 	public void testConectarMaquinas(){
 		Maquina prensa = new Prensa(0F, 0F);
-		Maquina plancha = new Plancha();
-		Maquina plancha2 = new Plancha();
+		Maquina plancha = new Plancha(0F, 0F);
+		Maquina plancha2 = new Plancha(0F, 0F);
 		
 		this.cintaTransportadora.conectar(prensa, plancha);
 		this.cintaTransportadora.conectar(plancha2, plancha);
@@ -121,7 +121,7 @@ public class TestCintaTransporte {
 	@Test
 	public void testPrecedente(){
 		Maquina prensa = new Prensa(0F, 0F);
-		Maquina plancha = new Plancha();
+		Maquina plancha = new Plancha(0F, 0F);
 		
 		this.cintaTransportadora.conectar(prensa, plancha);
 		
@@ -135,7 +135,7 @@ public class TestCintaTransporte {
 	@Test
 	public void testDesconectar(){
 		Maquina prensa = new Prensa(0F, 0F);
-		Maquina plancha = new Plancha();
+		Maquina plancha = new Plancha(0F, 0F);
 		
 		this.cintaTransportadora.conectar(prensa, plancha);
 		

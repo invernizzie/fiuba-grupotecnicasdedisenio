@@ -32,6 +32,8 @@ public abstract class Maquina implements Cloneable  {
 	private CintaTransportadora cintaSalida;
 	private Boolean estaRota;
 	private Float tasaRotura;
+	
+	private Float costoMaquina;
 
 	/** 
 	 * Usar Maquina(Float)
@@ -190,9 +192,11 @@ public abstract class Maquina implements Cloneable  {
 	
 	/**
 	 * Repara la fábrica.
+	 * @return 
 	 */
-	public void reparar(){
+	public float reparar(){
 		this.estaRota = false;
+		return this.costoMaquina/4;
 	}
 	
 	/**
@@ -228,6 +232,14 @@ public abstract class Maquina implements Cloneable  {
 
 	public Float getTasaRotura() {
 		return tasaRotura;
+	}
+
+	public void setCostoMaquina(Float costoMaquina) {
+		this.costoMaquina = costoMaquina;
+	}
+
+	public Float getCostoMaquina() {
+		return costoMaquina;
 	}
 	
 }
