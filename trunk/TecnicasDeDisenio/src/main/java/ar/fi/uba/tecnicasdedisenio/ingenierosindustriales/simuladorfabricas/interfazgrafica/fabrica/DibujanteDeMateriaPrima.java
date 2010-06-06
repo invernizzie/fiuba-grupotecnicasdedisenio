@@ -1,5 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
@@ -12,6 +13,13 @@ import org.eclipse.swt.widgets.Display;
  */
 public class DibujanteDeMateriaPrima extends Dibujante {
 
+    private Producto materiaPrima;
+
+    /*public DibujanteDeMateriaPrima(EspacioFabril espacioFabril, Producto materiaPrima) {
+        super(espacioFabril);
+        this.materiaPrima = materiaPrima;
+    }*/
+
     public DibujanteDeMateriaPrima(Canvas canvas) {
         super(canvas);
     }
@@ -21,6 +29,7 @@ public class DibujanteDeMateriaPrima extends Dibujante {
 
     @Override
     public void mouseDown(int x, int y) {
+        //getEspacioFabril().crearMateriaPrima(x, y, materiaPrima);
         GC gc = new GC(getCanvas());
         Color colorAnterior = gc.getBackground();
         // TODO Cambiar el color segun el tipo de materia prima

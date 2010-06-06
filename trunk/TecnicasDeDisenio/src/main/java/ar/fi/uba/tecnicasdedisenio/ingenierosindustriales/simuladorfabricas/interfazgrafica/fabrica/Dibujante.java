@@ -8,17 +8,24 @@ import org.eclipse.swt.widgets.Canvas;
  */
 public abstract class Dibujante {
 
-    /* TODO Cambiar por un canvas cuadriculado
-     * que resuelva el dibujo y las colisiones,
-     * sabiendo que hay en cada posicion de la
-     * cuadricula.     */
+    /*
+    private EspacioFabril espacioFabril;
+
+    public Dibujante(EspacioFabril espacioFabril) {
+        this.espacioFabril = espacioFabril;
+    }
+
+    protected EspacioFabril getEspacioFabril() {
+        return espacioFabril;
+    }*/
+
     private Canvas canvas;
 
     public Dibujante(Canvas canvas) {
         this.canvas = canvas;
     }
 
-    protected Canvas getCanvas() {
+    public Canvas getCanvas() {
         return canvas;
     }
 

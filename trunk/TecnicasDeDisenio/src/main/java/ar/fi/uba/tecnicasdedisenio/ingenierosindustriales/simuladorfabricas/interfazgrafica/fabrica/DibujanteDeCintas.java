@@ -13,6 +13,10 @@ public class DibujanteDeCintas extends Dibujante {
     private int primerX, primerY;
     
 
+    /*public DibujanteDeCintas(EspacioFabril espacioFabril) {
+        super(espacioFabril);
+    }*/
+
     public DibujanteDeCintas(Canvas canvas) {
         super(canvas);
     }
@@ -22,12 +26,21 @@ public class DibujanteDeCintas extends Dibujante {
 
     @Override
     public void mouseDown(int x, int y) {
+        /*if (getEspacioFabril().puedeComenzarCintaEn(x, y)) {
+            dibujando = true;
+            primerX = x;
+            primerY = y;
+        }*/
         primerX = x;
         primerY = y;
     }
 
     @Override
     public void mouseUp(int x, int y) {
+
+        dibujando = false;
+        //getEspacioFabril().crearCinta(primerX, primerY, x, y);
+
         GC gc = new GC(getCanvas());
         gc.drawLine (primerX, primerY, x, y);
         gc.dispose ();
