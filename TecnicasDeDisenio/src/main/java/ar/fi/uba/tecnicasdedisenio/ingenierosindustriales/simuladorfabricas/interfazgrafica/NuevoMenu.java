@@ -166,12 +166,28 @@ public class NuevoMenu implements Sincronizado, Observer {
             public void widgetSelected(SelectionEvent selectionEvent) {
                 if (!Calendario.instancia().estaIniciado()) {
                     Calendario.instancia().iniciar();
+                    cambiarHabilitacionBotonesDePartida(false);
+                    /*Se hace porque sino quedan habilitados algunos botones.*/
+                    buttonTimer.setEnabled(true);
+                    buttonVender.setEnabled(false);
+                    buttonComprar.setEnabled(false);
+                    buttonAlquilar.setEnabled(false);
                 }
-                else
-                    if (Calendario.instancia().estaPausado())
+                else{
+                    if (Calendario.instancia().estaPausado()){
                         Calendario.instancia().reanudar();
-                    else
+                		cambiarHabilitacionBotonesDePartida(false);
+                		/*Se hace porque sino quedan habilitados algunos botones.*/
+                        buttonTimer.setEnabled(true);
+                        buttonVender.setEnabled(false);
+                        buttonComprar.setEnabled(false);
+                        buttonAlquilar.setEnabled(false);
+                    }
+                    else{
                         Calendario.instancia().pausar();
+                        cambiarHabilitacionBotonesDePartida(true);
+                    }
+                }
             }
 
             @Override
@@ -263,8 +279,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 	 *
 	 */
 	private void createComboFabrica() {
-		int i;
-		String[] fab = new String[5];
+		
 		GridData gridData6 = new GridData();
 		gridData6.grabExcessHorizontalSpace = false;
 		gridData6.verticalAlignment = GridData.BEGINNING;
@@ -296,7 +311,23 @@ public class NuevoMenu implements Sincronizado, Observer {
 			}
 		});
 		
+		cargarComboFabrica();
 		
+		comboFabrica.setLayoutData(gridData6);
+		
+        //botonesPartida.add(buttonFabrica);
+        botonesPartida.add(buttonAlquilar);
+        botonesPartida.add(buttonComprar);
+        botonesPartida.add(buttonVender);
+        botonesPartida.add(comboFabrica);
+	}
+	
+	/**
+	 * Carga las distintas fabricas standard.
+	 */
+	public void cargarComboFabrica(){
+		int i;
+		String[] fab = new String[5];
 		comboFabrica = new Combo(groupJugador, SWT.NONE);
 		/*
 		 * Fabrica 0: Tamanio 100, Costo Compra 1000, Costo Alquiler 150, Cantidad Lineas 1.
@@ -314,15 +345,8 @@ public class NuevoMenu implements Sincronizado, Observer {
 		}
 		comboFabrica.setItems(fab);
 		comboFabrica.setText(comboFabrica.getItem(0));
-		comboFabrica.setLayoutData(gridData6);
-
-        //botonesPartida.add(buttonFabrica);
-        botonesPartida.add(buttonAlquilar);
-        botonesPartida.add(buttonComprar);
-        botonesPartida.add(buttonVender);
-        botonesPartida.add(comboFabrica);
 	}
-	
+
 	
 	/**
 	 * This method initializes canvasFabrica
@@ -344,9 +368,13 @@ public class NuevoMenu implements Sincronizado, Observer {
         actualizado = false;
     }
 
+    /**
+     * Crea un juego nuevo.
+     */
 	public void juegoNuevo(){
 		DialogoNuevaPartida partida= new DialogoNuevaPartida(this);
 		partida.hacerVisible();
+		cargarComboFabrica();
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
 
@@ -407,16 +435,17 @@ public class NuevoMenu implements Sincronizado, Observer {
     private void cambiarHabilitacionBotonesDePartida(boolean habilitados) {
         for (Widget boton: botonesPartida)
             ((Control) boton).setEnabled(habilitados);
+        
+        if(this.getJugador()!=null){
+        	this.buttonAlquilar.setEnabled(!this.getJugador().hasFabrica());
+        	this.buttonComprar.setEnabled(!this.getJugador().hasFabrica());
+        	this.buttonVender.setEnabled(this.getJugador().hasFabrica());
+        }
     }
 
     public void setJugador(Jugador jugador) {
-    	/*Si ya tiene un jugador asignado trata de vender su fabrica.*/
-    	if(this.getJugador()!= null){
-    		this.vender();
-    	}
     	this.jugador = jugador;
         cambiarHabilitacionBotonesDePartida(jugador != null);
-        this.buttonVender.setEnabled(false);
         
 	}
 
@@ -457,8 +486,8 @@ public class NuevoMenu implements Sincronizado, Observer {
 		} 
 		catch (JugadorConFabricaException e) {
 			this.getJugador().getFabrica().vender();
+			cambiarHabilitacionBotonesDePartida(true);
 		}
-		habilitarCompraOAlquiler();
 	}
 	
 	/**
@@ -468,7 +497,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());
 		try {
 			fabrica.comprar(this.getJugador());
-			habilitarVenta();
+			cambiarHabilitacionBotonesDePartida(true);
 		} 
 		catch (DineroInsuficienteException e) {
 			 MessageBox messageBox =
@@ -499,7 +528,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());
 		try {
 			fabrica.alquilar(this.getJugador());
-			habilitarVenta();
+			cambiarHabilitacionBotonesDePartida(true);
 		}
 		catch (FabricaOcupadaException e) {
 			 MessageBox messageBox =
@@ -517,23 +546,6 @@ public class NuevoMenu implements Sincronizado, Observer {
 		
 	}
 	
-	/**
-	 * Habilita el botón de venta y deshabilita los de compra y alquiler.*/
-	private void habilitarVenta(){
-		buttonAlquilar.setEnabled(false);
-		buttonComprar.setEnabled(false);
-		buttonVender.setEnabled(true);
-		comboFabrica.setEnabled(false);
-	}
-	
-	/**
-	 * Habilita los botones de compra y alquiler y deshabilita el de venta.*/
-	private void habilitarCompraOAlquiler(){
-		buttonAlquilar.setEnabled(true);
-		buttonComprar.setEnabled(true);
-		buttonVender.setEnabled(false);
-		comboFabrica.setEnabled(true);
-	}
 
 	public static void main(String [ ] args){
 		NuevoMenu ventana = new NuevoMenu();

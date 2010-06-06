@@ -46,6 +46,10 @@ public class Jugador extends Observable implements Sincronizado {
 		return dineroActual;
 	}
 	
+	public boolean hasFabrica(){
+		return (this.getFabrica()!=null);
+	}
+	
 	public void habilitarLaboratorio(){
 		this.getLaboratorio().setHabilitado(true);
 	}
@@ -120,7 +124,7 @@ public class Jugador extends Observable implements Sincronizado {
 			this.verificarFabricaAsignada();
 		}
 		catch(JugadorConFabricaException e){
-			this.aumentarDinero(ganancia); 
+			this.aumentarDinero(ganancia);
 			this.setFabrica(null);
 		}
 	}
