@@ -177,6 +177,8 @@ public class NuevoMenu implements Sincronizado, Observer {
             @Override
             public void widgetDefaultSelected(SelectionEvent selectionEvent) {}
         });
+		
+		botonesPartida.add(buttonTimer);
 	}
 
 	/**
@@ -344,7 +346,6 @@ public class NuevoMenu implements Sincronizado, Observer {
 	public void juegoNuevo(){
 		DialogoNuevaPartida partida= new DialogoNuevaPartida(this);
 		partida.hacerVisible();
-		buttonTimer.setEnabled(true);
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
 
