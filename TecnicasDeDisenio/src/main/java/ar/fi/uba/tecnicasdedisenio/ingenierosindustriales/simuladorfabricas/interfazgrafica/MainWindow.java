@@ -15,8 +15,6 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -276,7 +274,7 @@ public class MainWindow implements Sincronizado {
 	}
 
 	public void juegoNuevo(){
-		CrearPartida partida= new CrearPartida(null);
+		DialogoNuevaPartida partida= new DialogoNuevaPartida(null);
 		partida.hacerVisible();
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
@@ -304,9 +302,6 @@ public class MainWindow implements Sincronizado {
             botonControlDeTiempo.setText(textoControlDeTiempo);
     }
 
-    /**
-	 * @param args
-	 */
 	public void run() {
 		// TODO Auto-generated method stub
 		/* Before this is run, be sure to set up the launch configuration (Arguments->VM Arguments)

@@ -1,10 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.JOptionPane;
+import java.text.NumberFormat;
+import java.util.*;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.DineroInsuficienteException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Fabrica;
@@ -15,7 +12,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.cale
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
 
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -23,21 +20,11 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.TabItem;
 
 public class NuevoMenu implements Sincronizado, Observer {
+
+    public static final int SEGUNDOS_POR_DIA = 1;
 
 	private boolean actualizado = false;
 	private Shell shellPrincipal = null;  //  @jve:decl-index=0:visual-constraint="79,7"
@@ -63,8 +50,12 @@ public class NuevoMenu implements Sincronizado, Observer {
 	private Button buttonAlquilar = null;
 	private Button buttonVender = null;
 	private HashMap<String, Fabrica> fabricas;
-	
-	/**
+
+    private NumberFormat formateador = NumberFormat.getInstance();
+
+    private Set<Button> botonesPartida = new HashSet<Button>();
+
+    /**
 	 * This method initializes shellPrincipal
 	 *
 	 */
@@ -169,7 +160,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		textTime = new Text(groupTiempo, SWT.BORDER);
 		textTime.setEditable(false);
 		textTime.setLayoutData(gridData3);
-		textTime.setText(Calendario.instancia().getFechaActual().toString());
+		textTime.setText(Calendario.instancia().fechaAsString());
 		buttonTimer.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent selectionEvent) {
@@ -224,11 +215,11 @@ public class NuevoMenu implements Sincronizado, Observer {
 		checkBoxInvertirLabo.setText("Invertir en Laboratorio");
 		checkBoxInvertirLabo.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				if(!jugador.getLaboratorio().isHabilitado())
-					jugador.habilitarLaboratorio();
+				if(!getJugador().getLaboratorio().isHabilitado())
+					getJugador().habilitarLaboratorio();
 					
 				else
-					jugador.deshabilitarLaboratorio();
+					getJugador().deshabilitarLaboratorio();
 				
 			}
 		});
@@ -238,6 +229,9 @@ public class NuevoMenu implements Sincronizado, Observer {
 		buttonFabrica = new Button(groupJugador, SWT.NONE);
 		buttonFabrica.setText("Fabrica");
 		buttonFabrica.setLayoutData(gridData5);
+
+        botonesPartida.add(checkBoxInvertirLabo);
+        botonesPartida.add(buttonFabrica);
 	}
 
 	/**
@@ -319,6 +313,11 @@ public class NuevoMenu implements Sincronizado, Observer {
 		comboFabrica.setItems(fab);
 		comboFabrica.setText(comboFabrica.getItem(0));
 		comboFabrica.setLayoutData(gridData6);
+
+        //botonesPartida.add(buttonFabrica);
+        botonesPartida.add(buttonAlquilar);
+        botonesPartida.add(buttonComprar);
+        botonesPartida.add(buttonVender);
 	}
 	
 	
@@ -343,7 +342,7 @@ public class NuevoMenu implements Sincronizado, Observer {
     }
 
 	public void juegoNuevo(){
-		CrearPartida partida= new CrearPartida(this);
+		DialogoNuevaPartida partida= new DialogoNuevaPartida(this);
 		partida.hacerVisible();
 		buttonTimer.setEnabled(true);
 		System.out.println("Se Invoca la pantalla de Creacion");
@@ -372,9 +371,6 @@ public class NuevoMenu implements Sincronizado, Observer {
         	buttonTimer.setText(textoControlDeTiempo);
     }    
 	
-    /**
-	 * @param args
-	 */
 	public void run() {
 		// TODO Auto-generated method stub
 		/* Before this is run, be sure to set up the launch configuration (Arguments->VM Arguments)
@@ -384,24 +380,36 @@ public class NuevoMenu implements Sincronizado, Observer {
 		 *       installation_directory\plugins\org.eclipse.swt.win32_3.1.0.jar
 		 */
 		Display display = Display.getDefault();
-		NuevoMenu thisClass = new NuevoMenu();
-		thisClass.createShellPrincipal();
-		thisClass.shellPrincipal.open();
+		//NuevoMenu thisClass = new NuevoMenu();
+		this.createShellPrincipal();
+		this.shellPrincipal.open();
+        this.cambiarHabilitacionBotonesDePartida(false);
 
-        Calendario.instancia().registrar(thisClass);
-        Calendario.instancia().setSegundosPorDia(1);
+        Calendario.instancia().registrar(this);
+        Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
 
-		while (!thisClass.shellPrincipal.isDisposed()) {
+        formateador.setMaximumFractionDigits(2);
+        formateador.setMinimumFractionDigits(2);
+
+		while (!this.shellPrincipal.isDisposed()) {
 			if (!display.readAndDispatch())
 				display.sleep();
-            if (thisClass.necesitaActualizacion())
-                thisClass.actualizarDatosTiempo();
+            if (this.necesitaActualizacion()) {
+                this.actualizarDatosTiempo();
+                actualizarDatosJugador();
+            }
 		}
 		display.dispose();
 	}
 
-	public void setJugador(Jugador jugador) {
+    private void cambiarHabilitacionBotonesDePartida(boolean habilitados) {
+        for (Button boton: botonesPartida)
+            boton.setEnabled(habilitados);
+    }
+
+    public void setJugador(Jugador jugador) {
 		this.jugador = jugador;
+        cambiarHabilitacionBotonesDePartida(jugador != null);
 	}
 
 	public Jugador getJugador() {
@@ -412,8 +420,10 @@ public class NuevoMenu implements Sincronizado, Observer {
 	 * Actualiza los datos de un jugador en la pantalla.
 	 */
     private void actualizarDatosJugador() {
+        if (getJugador() == null)
+            return;
     	textJugador.setText(getJugador().getNombre());
-		textDineroAcum.setText(Float.toString(getJugador().getDineroActual()));
+		textDineroAcum.setText(formateador.format(getJugador().getDineroActual()));
 	}
     
     
@@ -421,13 +431,13 @@ public class NuevoMenu implements Sincronizado, Observer {
 	 * Actualiza los datos del tiempo en la pantalla.
 	 */
     private void actualizarDatosTiempo(){
-    	this.textTime.setText(Calendario.instancia().getFechaActual().toString());
+    	this.textTime.setText(Calendario.instancia().fechaAsString());
     	notificarActualizacion();
     }
     
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		actualizarDatosJugador();
+		forzarActualizacion();
 	}
 	
 	/**
@@ -511,8 +521,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		buttonVender.setEnabled(false);
 		comboFabrica.setEnabled(true);
 	}
-	
-	
-	
+
+
 }
 

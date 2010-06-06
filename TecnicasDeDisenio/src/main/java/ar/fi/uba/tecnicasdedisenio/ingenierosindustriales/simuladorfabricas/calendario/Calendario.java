@@ -1,10 +1,8 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Representa el Calendario virtual. Determina el paso del tiempo,
@@ -29,9 +27,9 @@ import java.util.List;
  */
 public class Calendario {
 
-    public static final int ANIO_INICIAL = 2000;
-    public static final int MES_INICIAL = 0;
-    public static final int DIA_INICIAL = 1;
+    public static final int ANIO_INICIAL = 1999;
+    public static final int MES_INICIAL = 11;
+    public static final int DIA_INICIAL = 31;
     public static final int DEFAULT_SEGUNDOS_POR_DIA = 5;
 
     private static Calendario instancia = new Calendario();
@@ -80,6 +78,11 @@ public class Calendario {
      */
     public Date getFechaActual() {
         return virtualCalendar.getTime();
+    }
+
+    public String fechaAsString() {
+        return new SimpleDateFormat("d 'de' MMMM 'de' yyyy ", Locale.getDefault())
+                .format(getFechaActual());
     }
 
     /**
