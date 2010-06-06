@@ -14,6 +14,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Fabr
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.JugadorConFabricaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 
 public class TestCompraVentaCalendario {
 	
@@ -42,6 +43,7 @@ public class TestCompraVentaCalendario {
 		Jugador jugador, jugador2;
 
 		jugador = new Jugador("Gustavo",3000);
+		jugador.setLaboratorio(new Laboratorio("Cocina"));
 		float plata = jugador.getDineroActual();
 		try {
 			fabricas.get(2).alquilar(jugador);
@@ -54,6 +56,7 @@ public class TestCompraVentaCalendario {
 		}
 		
 		jugador2 = new Jugador("Gustavo",2000);
+		jugador2.setLaboratorio(new Laboratorio("Cocina"));
 		float plata2 = jugador2.getDineroActual();
 		try {
 			fabricas.get(1).comprar(jugador2);

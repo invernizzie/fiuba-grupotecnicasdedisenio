@@ -12,7 +12,7 @@ public class TestValidadorProductos {
 	
 	@Before
 	public void setUp() throws Exception {
-		val = new ValidadorProductos();
+		val = ValidadorProductos.instancia();
 		val.Cargar();
 	}
 

@@ -11,11 +11,13 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  */
 public class Prensa extends Maquina {
 
+	public Prensa(Float tasaDeFallos, Float tasaRotura) {
+		super(tasaDeFallos, tasaRotura);
+	}
+
 	@Override
 	protected Producto realizarProceso() {
-		ValidadorProductos val = new ValidadorProductos();
-		val.Cargar();
-		return new Producto(val,"prensado",this.getTasaDeFallos());
+		return new Producto(ValidadorProductos.instancia(),"prensado",this.getTasaDeFallos());
 	}
 
 	/**
@@ -29,7 +31,7 @@ public class Prensa extends Maquina {
 	
 	@Override
 	public Prensa clone(){
-		return new Prensa();
+		return new Prensa(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
 }

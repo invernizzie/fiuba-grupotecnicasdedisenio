@@ -39,8 +39,7 @@ public class Laboratorio {
 	public void cargarProcesos(){
 		TipoMaquina maq = null;
 		Proceso proceso = null;
-		ValidadorProductos val = new ValidadorProductos();
-		val.Cargar();
+		ValidadorProductos val = ValidadorProductos.instancia();
 		
 		proceso = new Proceso(1000);
 		maq = new TipoMaquinaPrensa();

@@ -12,6 +12,8 @@ public class ValidadorProductos {
 	
 	private HashMap<String,String> MapProductos;
 	private XMLParser parser;
+	
+	private final static ValidadorProductos instancia = new ValidadorProductos();
 
 	public HashMap<String, String> getMapProductos() {
 		return MapProductos;
@@ -28,11 +30,14 @@ public class ValidadorProductos {
 	public void setParser(XMLParser parser) {
 		this.parser = parser;
 	}
+
+	public static ValidadorProductos instancia(){
+		return instancia;
+	}
 	
-	
-	public ValidadorProductos() {
-		super();
+	private ValidadorProductos() {
 		this.MapProductos = new HashMap<String,String>();
+		this.Cargar();
 	}
 
 	// TODO Aca se debería hacer la carga con el parser XML

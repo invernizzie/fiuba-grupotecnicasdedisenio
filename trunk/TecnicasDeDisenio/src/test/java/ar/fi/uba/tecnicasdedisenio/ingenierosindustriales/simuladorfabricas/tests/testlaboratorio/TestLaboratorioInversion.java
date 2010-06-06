@@ -39,14 +39,14 @@ public class TestLaboratorioInversion {
 	
 	@Test
 	public void testJugadorConLaboratorio() {
-		Assert.assertNotNull("No tiene laboratorio creado, cuando deberÃ­a tenerlo",jugador.getLaboratorio());
+		Assert.assertNotNull("No tiene laboratorio creado, cuando deberí­a tenerlo",jugador.getLaboratorio());
 	}
 	
 	@Test
 	public void testInvertirEnLaboratorioInhabilitado(){
 		jugador.invertirDineroLaboratorio(porcentaje);
 		
-		Assert.assertTrue("No deberÃ­a tener dinero acumulado el laboratorio", jugador.getLaboratorio().getDineroAcumulado()==0);	
+		Assert.assertTrue("No debería tener dinero acumulado el laboratorio", jugador.getLaboratorio().getDineroAcumulado()==0);	
 	}
 	
 	@Test
