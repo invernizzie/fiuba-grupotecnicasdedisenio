@@ -2,21 +2,17 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 
 import java.util.HashMap;
 
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.*;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Combo;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 
-public class CrearPartida {
+public class DialogoNuevaPartida {
 
 	private Shell shellPartida = null;  //  @jve:decl-index=0:visual-constraint="126,20"
 	private Label lUsuario = null;
@@ -30,12 +26,12 @@ public class CrearPartida {
 	private HashMap<String,Laboratorio> hashLaboratorios = null;
 	private NuevoMenu menu;
 
-	public CrearPartida(NuevoMenu menu){
+	public DialogoNuevaPartida(NuevoMenu menu){
 		this.createShellPartida();
 		this.menu = menu;
 	}
 
-	/**
+    /**
 	 * This method initializes shellPartida
 	 *
 	 */
@@ -100,7 +96,16 @@ public class CrearPartida {
 		bCreate.setLayoutData(gridData21);
 		bCreate.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				CrearJuego();
+                String mensaje = "";
+                if (tUsuario.getText().length() < 1)
+                    mensaje += "Debe ingresar su nombre\n";
+                if (new Float(sDineroInicial.getText()) < 100)
+                    mensaje += "El dinero inicial debe ser al menos 100\n";
+
+                if (mensaje.length() > 0)
+                    new DialogoMensaje(mensaje);
+                else
+				    crearJuego();
 			}
 		});
 		bCancel = new Button(shellPartida, SWT.NONE);
@@ -112,12 +117,13 @@ public class CrearPartida {
 			}
 		});
 	}
-	/**
+
+    /**
 	 * This method initializes shellPartida
 	 *
 	 */
 	
-	public void CrearJuego(){
+	public void crearJuego(){
 	Jugador jug = new Jugador(tUsuario.getText(),new Float(sDineroInicial.getText()));
 	menu.setJugador(jug);
 	menu.getJugador().addObserver(menu);
@@ -159,6 +165,5 @@ public class CrearPartida {
 	public void hacerVisible(){
 		this.shellPartida.setVisible(true);
 	}
-
 }
 
