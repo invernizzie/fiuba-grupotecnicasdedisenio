@@ -1,14 +1,15 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.calendario;
 
+import java.util.GregorianCalendar;
+
+import junit.framework.Assert;
+
+import org.junit.After;
+import org.junit.Test;
+
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
-import org.junit.After;
-import junit.framework.Assert;
-import org.junit.Test;
-
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * @author Esteban I. Invernizzi (invernizzie@gmail.com)
@@ -220,23 +221,15 @@ public class TestCalendario {
     }
 
     private void esperar(int segundos) {
-        // El siguiente bloque comentado se reemplaza por
-        // el ciclo vacio de mas abajo, pues no funciona
-        /*
-        try {
-            Thread.currentThread().wait(1000 * segundos);
-        } catch (InterruptedException e) {}
-        */
 
-        Date inicio = new Date();
-        long diferencia = 0;
-        /* Se agrega un offset de 250ms para evitar el problema
-         * de terminar la espera antes de concluir la actividad
-         * de los suscriptores al calendario. Eso probablemente
-         * sucede porque este thread es muy activo y se prioriza
-         * ante el del calendario. */
-        while (diferencia < 1000 * segundos + 250) {
-            diferencia = new Date().getTime() - inicio.getTime();
-        }
+    	try {
+        	/* Se agrega un offset de 250ms para evitar el problema
+        	 * de terminar la espera antes de concluir la actividad
+        	 * de los suscriptores al calendario. Eso probablemente
+        	 * sucede porque este thread es muy activo y se prioriza
+        	 * ante el del calendario. */
+            Thread.sleep((1000 * segundos) + 250);
+        } catch (InterruptedException e) {}
+
     }
 }
