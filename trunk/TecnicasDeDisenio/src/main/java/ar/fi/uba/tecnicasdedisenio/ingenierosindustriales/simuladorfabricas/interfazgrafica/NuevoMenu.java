@@ -53,7 +53,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 
     private NumberFormat formateador = NumberFormat.getInstance();
 
-    private Set<Button> botonesPartida = new HashSet<Button>();
+    private Set<Widget> botonesPartida = new HashSet<Widget>();
 
     /**
 	 * This method initializes shellPrincipal
@@ -320,6 +320,7 @@ public class NuevoMenu implements Sincronizado, Observer {
         botonesPartida.add(buttonAlquilar);
         botonesPartida.add(buttonComprar);
         botonesPartida.add(buttonVender);
+        botonesPartida.add(comboFabrica);
 	}
 	
 	
@@ -404,13 +405,19 @@ public class NuevoMenu implements Sincronizado, Observer {
 	}
 
     private void cambiarHabilitacionBotonesDePartida(boolean habilitados) {
-        for (Button boton: botonesPartida)
-            boton.setEnabled(habilitados);
+        for (Widget boton: botonesPartida)
+            ((Control) boton).setEnabled(habilitados);
     }
 
     public void setJugador(Jugador jugador) {
-		this.jugador = jugador;
+    	/*Si ya tiene un jugador asignado trata de vender su fabrica.*/
+    	if(this.getJugador()!= null){
+    		this.vender();
+    	}
+    	this.jugador = jugador;
         cambiarHabilitacionBotonesDePartida(jugador != null);
+        this.buttonVender.setEnabled(false);
+        
 	}
 
 	public Jugador getJugador() {
@@ -445,7 +452,12 @@ public class NuevoMenu implements Sincronizado, Observer {
 	 * Vende la fábrica del jugador.
 	 * */
 	private void vender(){
-		this.getJugador().getFabrica().vender();
+		try {
+			this.getJugador().verificarFabricaAsignada();
+		} 
+		catch (JugadorConFabricaException e) {
+			this.getJugador().getFabrica().vender();
+		}
 		habilitarCompraOAlquiler();
 	}
 	
@@ -523,6 +535,9 @@ public class NuevoMenu implements Sincronizado, Observer {
 		comboFabrica.setEnabled(true);
 	}
 
-
+	public static void main(String [ ] args){
+		NuevoMenu ventana = new NuevoMenu();
+		ventana.run();
+	}
 }
 
