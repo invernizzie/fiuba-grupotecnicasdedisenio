@@ -49,19 +49,31 @@ public class CintaTransportadora{
 	public void conectar(Maquina origen, Maquina destino){
 		this.extremoInicial = origen.getSalida();
 		this.extremoFinal = destino.getEntrada();
+		
+		origen.setCintaSalida(this);
+		destino.addCintaEntrada(this);
+		
+		origen.setSiguiente(destino);
 		destino.addPrecedente(origen);
 	}
 
 	public void conectar(Fuente origen, Maquina destino){
 		this.extremoInicial = origen.getSalida();
 		this.extremoFinal = destino.getEntrada();
+		
 		origen.agregarCinta(this);
+		destino.addCintaEntrada(this);
+		
 		destino.addMateriaPrima(origen.getTipoProducto());
 	}
 	
 	public void desconectar(Maquina origen, Maquina destino){
 		this.extremoInicial = null;
 		this.extremoFinal = null;
+		
+		origen.setCintaSalida(null);
+		destino.removeCintaEntrada(this);
+		
 		destino.removePrecedente(origen);
 	}
 

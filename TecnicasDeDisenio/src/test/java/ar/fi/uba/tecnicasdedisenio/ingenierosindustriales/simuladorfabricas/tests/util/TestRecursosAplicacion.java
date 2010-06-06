@@ -1,6 +1,5 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.util;
 
-import static org.junit.Assert.fail;
 import junit.framework.Assert;
 
 import org.junit.After;

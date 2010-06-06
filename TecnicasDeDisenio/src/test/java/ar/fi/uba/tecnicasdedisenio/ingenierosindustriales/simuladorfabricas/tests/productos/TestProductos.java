@@ -15,7 +15,7 @@ public class TestProductos {
 	@Before
 	public void setUp() throws Exception {
 		posibleEstado="pan";
-		val = new ValidadorProductos();
+		val = ValidadorProductos.instancia();
 		val.Cargar();
 		producto = new Producto(val, posibleEstado, 0.2);
 	}

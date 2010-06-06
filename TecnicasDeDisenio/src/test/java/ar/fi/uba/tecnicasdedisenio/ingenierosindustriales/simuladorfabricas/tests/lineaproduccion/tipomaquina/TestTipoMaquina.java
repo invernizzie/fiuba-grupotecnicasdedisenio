@@ -35,9 +35,9 @@ public class TestTipoMaquina {
 
 	@Test
 	public void testVerificarTipo() {
-		Maquina prensa = new Prensa();
+		Maquina prensa = new Prensa(0F, 0F);
 		boolean verificacion = tipoMaquina.verificarTipo(prensa);
-		Assert.assertTrue("La verificaci√≥n del tipo de m√°quina no fue satisfactoria", verificacion);
+		Assert.assertTrue("La verificaciÛn del tipo de m·quina no fue satisfactoria", verificacion);
 	}
 
 }

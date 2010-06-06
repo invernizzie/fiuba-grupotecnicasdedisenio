@@ -35,7 +35,7 @@ public class TestLaboratorioValidacion {
 	public void testExisteProcesoValido(){
 		TipoMaquina maq = null;
 		Maquina maquina = null;
-		ValidadorProductos val = new ValidadorProductos();
+		ValidadorProductos val = ValidadorProductos.instancia();
 		val.Cargar();
 		
 		proceso = new Proceso(1500);
@@ -59,10 +59,10 @@ public class TestLaboratorioValidacion {
 		laboratorio.getProcesosHabilitados().add(proceso);
 		
 		
-		maquina = new Prensa();
-		maquina.addPrecedente(new Prensa());
+		maquina = new Prensa(0F, 0F);
+		maquina.addPrecedente(new Prensa(0F, 0F));
 		maquina.addPrecedente(new Plancha());
-		maquina.getPrecedentes().get(1).addPrecedente(new Prensa());
+		maquina.getPrecedentes().get(1).addPrecedente(new Prensa(0F, 0F));
 		maquina.getPrecedentes().get(1).addMateriaPrima(new Producto(val, "agua", 0));
 		maquina.getPrecedentes().get(1).addMateriaPrima(new Producto(val, "pan", 0));
 		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha());
@@ -73,10 +73,10 @@ public class TestLaboratorioValidacion {
 		
 		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));		
 
-		maquina = new Prensa();
-		maquina.addPrecedente(new Prensa());
+		maquina = new Prensa(0F, 0F);
+		maquina.addPrecedente(new Prensa(0F, 0F));
 		maquina.addPrecedente(new Plancha());
-		maquina.getPrecedentes().get(1).addPrecedente(new Prensa());
+		maquina.getPrecedentes().get(1).addPrecedente(new Prensa(0F, 0F));
 		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha());
 		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha());
 		maquina.getPrecedentes().get(1).addPrecedente(new Plancha());
@@ -100,7 +100,7 @@ public class TestLaboratorioValidacion {
 		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));
 		
 		
-		maquina = new Prensa();
+		maquina = new Prensa(0F, 0F);
 		maquina.addPrecedente(new Plancha());
 		
 		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));

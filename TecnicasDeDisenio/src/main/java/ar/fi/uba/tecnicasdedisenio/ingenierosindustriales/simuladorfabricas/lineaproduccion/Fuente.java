@@ -26,6 +26,7 @@ public class Fuente {
 		this.cantidad = cantidad;
 		this.cintas = new LinkedList<CintaTransportadora>();
 		this.salida = new Salida();
+		this.salida.asignarProducto(producto);
 	}
 	
 	public void agregarCinta(CintaTransportadora cinta){

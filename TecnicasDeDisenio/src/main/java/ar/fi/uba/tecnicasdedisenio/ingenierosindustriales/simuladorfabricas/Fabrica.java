@@ -59,7 +59,7 @@ public class Fabrica implements Sincronizado{
 		}
 		
 		if(!maquinaEnLinea){
-			LineaProduccion linea = new LineaProduccion();
+			LineaProduccion linea = new LineaProduccion(this.jugador.getLaboratorio());
 			linea.agregarMaquina(maquina);
 			lineas.add(linea);
 		}
@@ -95,7 +95,7 @@ public class Fabrica implements Sincronizado{
 		 * nueva linea que las contenga.
 		 */
 		if(!maquinasEnLinea){
-			LineaProduccion linea = new LineaProduccion();
+			LineaProduccion linea = new LineaProduccion(this.jugador.getLaboratorio());
 			linea.agregarMaquina(origen);
 			linea.agregarMaquina(destino);
 			lineas.add(linea);

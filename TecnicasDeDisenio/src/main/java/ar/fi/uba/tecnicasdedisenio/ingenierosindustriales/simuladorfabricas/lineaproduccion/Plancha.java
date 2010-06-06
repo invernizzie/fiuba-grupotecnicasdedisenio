@@ -13,9 +13,7 @@ public class Plancha extends Maquina {
 
 	@Override
 	protected Producto realizarProceso() {
-		ValidadorProductos val = new ValidadorProductos();
-		val.Cargar();
-		return new Producto(val,"Planchado",this.getTasaDeFallos());
+		return new Producto(ValidadorProductos.instancia(),"Planchado",this.getTasaDeFallos());
 	}
 
 	/**

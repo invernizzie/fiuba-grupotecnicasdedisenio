@@ -7,9 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Entrada;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.IEntrada;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.ISalida;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Salida;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.CintaTransportadora;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Prensa;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
@@ -23,15 +21,10 @@ public class TestMaquinaPrensa {
 
 	@Before
 	public void setUp() throws Exception {
-		val = new ValidadorProductos();
+		val = ValidadorProductos.instancia();
 		val.Cargar();
-		prensa = new Prensa();
-		IEntrada entrada = new Entrada();
-		ISalida salida = new Salida();
-		
-		prensa.setEntrada(entrada);
-		prensa.setSalida(salida);
-		
+		prensa = new Prensa(0F, 0F);
+		prensa.setCintaSalida(new CintaTransportadora(prensa.getSalida(), new Entrada()));
 	}
 
 	@After
@@ -44,7 +37,7 @@ public class TestMaquinaPrensa {
 		this.prensa.getEntrada().agregarProducto(productoAPrensar);
 		
 		try {
-			this.prensa.procesar();
+			this.prensa.procesar(true);
 		} catch (EntradaInvalidaException e) {
 			Assert.fail("La entrada a la prensa es inválida");
 		}
@@ -63,11 +56,28 @@ public class TestMaquinaPrensa {
 		this.prensa.getEntrada().agregarProducto(productoAPrensar2);
 		
 		try {
-			this.prensa.procesar();
+			this.prensa.procesar(true);
 			Assert.fail("Se esperaba una excepción pero no se produjo");
 		} catch (Exception e) {
 			Assert.assertEquals("Se esperaba una excepción de tipo EntradaInvalidaException", 
 					EntradaInvalidaException.class , e.getClass());
+		}
+	}
+	
+	@Test
+	public void testCrearProductoInvalido() {
+		Producto productoAPrensar = new Producto(val, "Pan", 0F);
+		Producto productoTest = new Producto(val, "Desecho", 0F);
+		this.prensa.getEntrada().agregarProducto(productoAPrensar);
+		
+		try {
+			this.prensa.procesar(false);
+			Producto obtenido = this.prensa.getSalida().obtenerProducto();
+			Assert.assertEquals("Se esperaba un desecho", 
+					productoTest, obtenido);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail("No se esperaba una excepción");
 		}
 	}
 
