@@ -13,6 +13,7 @@ public class Prensa extends Maquina {
 
 	public Prensa(Float tasaDeFallos, Float tasaRotura) {
 		super(tasaDeFallos, tasaRotura);
+		this.setCostoMaquina(150F);
 	}
 
 	@Override

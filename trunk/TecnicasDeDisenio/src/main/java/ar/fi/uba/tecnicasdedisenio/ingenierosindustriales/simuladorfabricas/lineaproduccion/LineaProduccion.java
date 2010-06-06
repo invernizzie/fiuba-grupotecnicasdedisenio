@@ -12,6 +12,7 @@ public class LineaProduccion {
 	private Set<Maquina> maquinasActuales;
 	private Maquina ultimaMaquina;
 	private Laboratorio laboratorio;
+	private Float costoLinea = 0F;
 	
 	public LineaProduccion(Laboratorio laboratorio){
 		this.maquinas = new HashSet<Maquina>();
@@ -20,6 +21,8 @@ public class LineaProduccion {
 	}
 	
 	public void agregarMaquina(Maquina maquina) {
+		
+		this.setCostoLinea(costoLinea + maquina.getCostoMaquina());
 		
 		if(esPrimeraMaquina(maquina)){
 			this.primerasMaquinas.add(maquina);
@@ -50,16 +53,13 @@ public class LineaProduccion {
 	 */
 	private boolean esUltimaMaquina(Maquina maquinaAVerificar){
 		
-		boolean esUltima = false;
-		
-		if(maquinas.isEmpty()){
-			esUltima = true;
-		}
+		boolean esUltima = true;
 		
 		for (Maquina maquina : maquinas) {
-			if(!maquina.getPrecedentes().isEmpty() && 
-					!maquina.getPrecedentes().contains(maquinaAVerificar)){
-				esUltima = true;
+			if(!maquina.equals(maquinaAVerificar) &&
+					!maquina.getPrecedentes().isEmpty() && 
+					maquina.getPrecedentes().contains(maquinaAVerificar)){
+				esUltima = false;
 			}
 		}
 		
@@ -121,6 +121,14 @@ public class LineaProduccion {
 		
 		this.maquinasActuales = siguientes;
 			
+	}
+
+	public void setCostoLinea(Float costoLinea) {
+		this.costoLinea = costoLinea;
+	}
+
+	public Float getCostoLinea() {
+		return costoLinea;
 	}
 
 }
