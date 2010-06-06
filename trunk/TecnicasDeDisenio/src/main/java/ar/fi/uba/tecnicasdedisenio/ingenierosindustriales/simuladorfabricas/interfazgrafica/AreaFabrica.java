@@ -1,25 +1,24 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.ConstructorDeFabricas;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeCintas;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeMaquinas;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeMateriaPrima;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Label;
 
 public class AreaFabrica {
 
-	private Shell sShellAreaDibujo = null;  //  @jve:decl-index=0:visual-constraint="109,17"
+	private Shell shellAreaDibujo = null;  //  @jve:decl-index=0:visual-constraint="109,17"
 	private Canvas canvas = null;  //  @jve:decl-index=0:visual-constraint="263,47"
 	private Group groupControl = null;
 	private Button buttonCinta = null;
@@ -29,31 +28,32 @@ public class AreaFabrica {
 	private Composite compositeControles = null;
 	private Boolean dibujar = false;
 	private Button buttonMateriaPrima = null;
+    private ConstructorDeFabricas constructorDeFabricas;
 
-	public void run() {
-		AreaFabrica area = new AreaFabrica();
-		area.createSShellAreaDibujo();
+    public void run() {
+		createShellAreaDibujo();
 	}
 
 	/**
-	 * This method initializes sShellAreaDibujo
+	 * This method initializes shellAreaDibujo
 	 *
 	 */
-	private void createSShellAreaDibujo() {
-		Display display = Display.getDefault();
+	private void createShellAreaDibujo() {
+
+        Display display = Display.getDefault();
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
-		sShellAreaDibujo = new Shell(display);
+		shellAreaDibujo = new Shell(display);
 		createCompositeControles();
 		createCanvas(this);
-		sShellAreaDibujo.setLayout(gridLayout);
-		sShellAreaDibujo.setSize(new Point(399, 316));
-		this.sShellAreaDibujo.setVisible(true);
+		shellAreaDibujo.setLayout(gridLayout);
+		shellAreaDibujo.setSize(new Point(399, 316));
+		shellAreaDibujo.setVisible(true);
 
 
 
 
-		while (!sShellAreaDibujo.isDisposed()) {
+		while (!shellAreaDibujo.isDisposed()) {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
@@ -70,43 +70,15 @@ public class AreaFabrica {
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.grabExcessVerticalSpace = true;
 		gridData.verticalAlignment = GridData.FILL;
-		canvas = new Canvas(sShellAreaDibujo, SWT.BORDER);
+		canvas = new Canvas(shellAreaDibujo, SWT.BORDER);
 		canvas.setLayout(new FillLayout());
 		canvas.setSize(new Point(268, 259));
 		canvas.setLayoutData(gridData);
 
-		Listener listener = new Listener () {
-//			AreaFabrica area = theArea;
-			int lastX = 0, lastY = 0;
-
-			public void handleEvent (Event event) {
-				switch (event.type) {
-					case SWT.MouseMove:
-						if (((event.stateMask & SWT.BUTTON1) == 0)
-								|| !theArea.getDibujar()){
-							break;
-						}
-					case SWT.MouseDown:
-						lastX = event.x;
-						lastY = event.y;
-						break;
-
-					case SWT.MouseUp:
-						// Ahora uno las líneas pero no queda como quiero
-						// No tiene PREVIEW, asique no sabés como queda :(
-						GC gc = new GC (canvas);
-						// TODO discriminar de quien viene el evento para dibujar linea o rect.
-						gc.drawLine (lastX, lastY, event.x, event.y);
-						gc.dispose ();
-						// TODO validar que no haya colisiones y meterlas en contenedor para que Santi lo pueda crear
-
-						break;
-				}
-			}
-		};
-		canvas.addListener (SWT.MouseDown, listener);
-		canvas.addListener (SWT.MouseUp, listener);
-		canvas.addListener (SWT.MouseMove, listener);
+        constructorDeFabricas = new ConstructorDeFabricas(new DibujanteDeCintas(canvas));
+		canvas.addListener (SWT.MouseDown, constructorDeFabricas);
+		canvas.addListener (SWT.MouseUp, constructorDeFabricas);
+		canvas.addListener (SWT.MouseMove, constructorDeFabricas);
 
 	}
 
@@ -140,7 +112,8 @@ public class AreaFabrica {
 		buttonMateriaPrima
 				.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 					public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-						System.out.println("widgetSelected()"); // TODO Auto-generated Event stub widgetSelected()
+						System.out.println("Paso a dibujar materia prima");
+                        constructorDeFabricas.setDibujante(new DibujanteDeMateriaPrima(canvas));
 					}
 				});
 		buttonMaq1 = new Button(groupControl, SWT.TOGGLE);
@@ -148,13 +121,15 @@ public class AreaFabrica {
 		buttonMaq1.setLayoutData(gridData2);
 		buttonCinta.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				System.out.println("widgetSelected()"); // TODO Auto-generated Event stub widgetSelected()
+				System.out.println("Paso dibujar cintas"); // TODO Auto-generated Event stub widgetSelected()
+                constructorDeFabricas.setDibujante(new DibujanteDeCintas(canvas));
 				//DibujarLinea();
 			}
 		});
 		buttonMaq1.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				System.out.println("widgetSelected()"); // TODO Auto-generated Event stub widgetSelected()
+				System.out.println("Paso a dibujar maquina 1"); // TODO Auto-generated Event stub widgetSelected()
+                constructorDeFabricas.setDibujante(new DibujanteDeMaquinas(canvas));
 			}
 		});
 		buttonMaq2 = new Button(groupControl, SWT.TOGGLE);
@@ -162,7 +137,7 @@ public class AreaFabrica {
 		buttonMaq2.setLayoutData(gridData3);
 		buttonMaq2.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				System.out.println("widgetSelected()"); // TODO Auto-generated Event stub widgetSelected()
+				System.out.println("Paso a dibujar maquina 2"); // TODO Auto-generated Event stub widgetSelected()
 			}
 		});
 		buttonMaq3 = new Button(groupControl, SWT.TOGGLE);
@@ -170,7 +145,7 @@ public class AreaFabrica {
 		buttonMaq3.setLayoutData(gridData4);
 		buttonMaq3.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				System.out.println("widgetSelected()"); // TODO Auto-generated Event stub widgetSelected()
+				System.out.println("Paso a dibujar maquina 3"); // TODO Auto-generated Event stub widgetSelected()
 			}
 		});
 	}
@@ -184,7 +159,7 @@ public class AreaFabrica {
 	 *
 	 */
 	private void createCompositeControles() {
-		compositeControles = new Composite(sShellAreaDibujo, SWT.NONE);
+		compositeControles = new Composite(shellAreaDibujo, SWT.NONE);
 		compositeControles.setLayout(new GridLayout());
 		createGroupControl();
 	}
@@ -197,5 +172,8 @@ public class AreaFabrica {
 		return dibujar;
 	}
 
+    public Canvas getCanvas() {
+        return canvas;
+    }
 }
 
