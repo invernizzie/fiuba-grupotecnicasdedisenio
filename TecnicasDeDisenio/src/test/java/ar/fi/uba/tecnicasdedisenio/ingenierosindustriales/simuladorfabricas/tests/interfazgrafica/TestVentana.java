@@ -1,4 +1,4 @@
-package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
+package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.interfazgrafica;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +14,7 @@ public class TestVentana {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.ventanaPPAL = new Ventana(800, 600, "TP Tecnicas de Diseño");
+		this.ventanaPPAL = new Ventana(800, 600, "TP Tecnicas de Diseï¿½o");
 	}
 
 	@After
