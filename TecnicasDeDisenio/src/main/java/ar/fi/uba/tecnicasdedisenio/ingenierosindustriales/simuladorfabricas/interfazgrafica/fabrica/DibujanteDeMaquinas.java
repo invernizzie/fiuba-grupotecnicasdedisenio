@@ -1,5 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
@@ -12,6 +13,13 @@ import org.eclipse.swt.widgets.Display;
  */
 public class DibujanteDeMaquinas extends Dibujante {
 
+    private TipoMaquina tipoMaquina;
+
+    /*public DibujanteDeMaquinas(EspacioFabril espacioFabril, TipoMaquina tipoMaquina) {
+        super(espacioFabril);
+        this.tipoMaquina = tipoMaquina;
+    }*/
+
     public DibujanteDeMaquinas(Canvas canvas) {
         super(canvas);
     }
@@ -21,6 +29,8 @@ public class DibujanteDeMaquinas extends Dibujante {
 
     @Override
     public void mouseDown(int x, int y) {
+        //getEspacioFabril().crearMaquina(x, y, tipoMaquina);
+
         GC gc = new GC(getCanvas());
         Color colorAnterior = gc.getBackground();
         // TODO Cambiar el color segun el tipo de maquina

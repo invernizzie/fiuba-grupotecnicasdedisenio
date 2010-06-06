@@ -5,6 +5,7 @@ import java.util.Observable;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.CantidadLineasMaximaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
@@ -79,7 +80,7 @@ public class Jugador extends Observable implements Sincronizado {
 		this.getFabrica().conectarMaquina(fuente, maquina);
 	}
 	
-	public void conectarMaquina(Maquina origen, Maquina destino) throws CantidadLineasMaximaException{
+	public void conectarMaquina(Maquina origen, Maquina destino) throws CantidadLineasMaximaException {
 		this.getFabrica().conectarMaquina(origen, destino);
 	}
 
