@@ -10,6 +10,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -22,14 +23,50 @@ public class AreaFabrica {
 	private Group groupControl = null;
 	private Button buttonCinta = null;
 	private Button buttonMaquina = null;
-	private Button buttonMaq2 = null;
-	private Button buttonMaq3 = null;
 	private Composite compositeControles = null;
 	private Boolean dibujar = false;
 	private Button buttonMateriaPrima = null;
+	private Combo comboMP = null;
+	private Combo comboMaquina = null;
     private ConstructorDeFabricas constructorDeFabricas;
     private EspacioFabril espacioFabril;
 
+	/**
+	 * This method initializes comboMP
+	 *
+	 */
+	private void createComboMP() {
+		comboMP = new Combo(groupControl, SWT.NONE);
+		CargarComboMateriaPrimas();
+		comboMP.setEnabled(false);
+	}
+
+	protected void CargarComboMateriaPrimas() {
+		// TODO Auto-generated method stub
+		for(int i=0; i<10; i++){
+			comboMP.add(new String("Materia Prima  " + i));
+		}
+		comboMP.setText(comboMP.getItem(0));
+	}
+
+	/**
+	 * This method initializes comboMaquina
+	 *
+	 */
+	private void createComboMaquina() {
+		comboMaquina = new Combo(groupControl, SWT.NONE);
+		CargarMaquinas();
+		comboMaquina.setEnabled(false);
+	}
+
+	private void CargarMaquinas() {
+		// TODO Auto-generated method stub
+		for(int i=0; i<10; i++){
+			comboMaquina.add(new String("Maquina " + i));
+		}
+		comboMaquina.setText(comboMP.getItem(0));
+	}
+    
     public void run() {
 		createShellAreaDibujo();
 	}
@@ -88,6 +125,9 @@ public class AreaFabrica {
 	 *
 	 */
 	private void createGroupControl() {
+		GridData gridData3 = new GridData();
+		gridData3.horizontalAlignment = GridData.FILL;
+		gridData3.verticalAlignment = GridData.CENTER;
 		GridData gridData2 = new GridData();
 		gridData2.horizontalAlignment = GridData.FILL;
 		gridData2.verticalAlignment = GridData.CENTER;
@@ -102,43 +142,49 @@ public class AreaFabrica {
 		buttonCinta = new Button(groupControl, SWT.TOGGLE);
 		buttonCinta.setText("Linea");
 		buttonCinta.setLayoutData(gridData1);
+		buttonMateriaPrima = new Button(groupControl, SWT.TOGGLE);
+		buttonMateriaPrima.setText("Materia Prima");
+		buttonMateriaPrima.setLayoutData(gridData3);
+		createComboMP();
+		buttonMaquina = new Button(groupControl, SWT.TOGGLE);
+		buttonMaquina.setText("Maquina");
+		buttonMaquina.setLayoutData(gridData2);
+		createComboMaquina();
         buttonCinta.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("Paso dibujar cintas"); // TODO Auto-generated Event stub widgetSelected()
                 constructorDeFabricas.setDibujante(new DibujanteDeCintas(espacioFabril));
-                
                 System.out.println("De-selecciono los otros botones");
-                buttonMateriaPrima.setSelection(false);
 				buttonMaquina.setSelection(false);
+				buttonMateriaPrima.setSelection(false);
+				comboMaquina.setEnabled(false);
+				comboMP.setEnabled(false);
 				//DibujarLinea();
 			}
 		});
-		buttonMateriaPrima = new Button(groupControl, SWT.TOGGLE);
-		buttonMateriaPrima.setText("Materia Prima");
         buttonMateriaPrima
 				.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 					public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 						System.out.println("Paso a dibujar materia prima");
                         // TODO Pasarle una materia prima
+						comboMP.setEnabled(true);
                         constructorDeFabricas.setDibujante(new DibujanteDeMateriaPrima(espacioFabril, new Producto()));
-
                         System.out.println("De-selecciono los otros botones");
-                        buttonCinta.setSelection(false);
-                        buttonMaquina.setSelection(false);
+						buttonMaquina.setSelection(false);
+						buttonCinta.setSelection(false);
+						comboMaquina.setEnabled(false);
+						comboMP.setEnabled(true);
 					}
 				});
-
-		buttonMaquina = new Button(groupControl, SWT.TOGGLE);
-		buttonMaquina.setText("Prensa");
-		buttonMaquina.setLayoutData(gridData2);
         buttonMaquina.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("Paso a dibujar prensas"); // TODO Auto-generated Event stub widgetSelected()
+				comboMaquina.setEnabled(true);
                 constructorDeFabricas.setDibujante(new DibujanteDeMaquinas(espacioFabril, new TipoMaquinaPlancha()));
-
                 System.out.println("De-selecciono los otros botones");
-                buttonMateriaPrima.setSelection(false);
+				buttonMateriaPrima.setSelection(false);
 				buttonCinta.setSelection(false);
+				comboMP.setEnabled(false);
 			}
 		});
 

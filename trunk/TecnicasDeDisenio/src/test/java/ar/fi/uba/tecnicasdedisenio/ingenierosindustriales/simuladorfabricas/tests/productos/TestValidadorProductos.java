@@ -36,4 +36,10 @@ public class TestValidadorProductos {
 	public void testEsValidoProductoInexistente() {
 		Assert.assertEquals(false, val.esValido("auto"));
 	}	
+	
+	@Test
+	public void testEsValidoToString() {
+		System.out.println(val.toString());
+		Assert.assertNotNull(val.toString());
+	}	
 }

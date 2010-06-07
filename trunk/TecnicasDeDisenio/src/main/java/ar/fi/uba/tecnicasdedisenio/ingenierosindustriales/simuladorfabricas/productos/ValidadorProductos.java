@@ -69,5 +69,7 @@ public class ValidadorProductos {
 				return true;
 		return false;
 		}
-	
+	public String toString(){
+		return MapProductos.toString();
+	}
 }
