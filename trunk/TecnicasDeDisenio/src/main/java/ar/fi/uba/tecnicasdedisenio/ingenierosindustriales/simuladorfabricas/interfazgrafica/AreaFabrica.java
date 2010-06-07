@@ -1,9 +1,8 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.ConstructorDeFabricas;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeCintas;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeMaquinas;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeMateriaPrima;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.*;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPlancha;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
@@ -29,6 +28,7 @@ public class AreaFabrica {
 	private Boolean dibujar = false;
 	private Button buttonMateriaPrima = null;
     private ConstructorDeFabricas constructorDeFabricas;
+    private EspacioFabril espacioFabril;
 
     public void run() {
 		createShellAreaDibujo();
@@ -75,7 +75,8 @@ public class AreaFabrica {
 		canvas.setSize(new Point(268, 259));
 		canvas.setLayoutData(gridData);
 
-        constructorDeFabricas = new ConstructorDeFabricas(new DibujanteDeCintas(canvas));
+        espacioFabril = new EspacioFabril(canvas);
+        constructorDeFabricas = new ConstructorDeFabricas(new DibujanteDeCintas(espacioFabril));
 		canvas.addListener (SWT.MouseDown, constructorDeFabricas);
 		canvas.addListener (SWT.MouseUp, constructorDeFabricas);
 		canvas.addListener (SWT.MouseMove, constructorDeFabricas);
@@ -101,41 +102,47 @@ public class AreaFabrica {
 		buttonCinta = new Button(groupControl, SWT.TOGGLE);
 		buttonCinta.setText("Linea");
 		buttonCinta.setLayoutData(gridData1);
-		buttonMateriaPrima = new Button(groupControl, SWT.TOGGLE);
-		buttonMateriaPrima.setText("Materia Prima");
-		buttonMaquina = new Button(groupControl, SWT.TOGGLE);
-		buttonMaquina.setText("Maquina1");
-		buttonMaquina.setLayoutData(gridData2);
-		buttonMateriaPrima
-				.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-					public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-						System.out.println("Paso a dibujar materia prima");
-						buttonCinta.setSelection(false);
-						buttonMaquina.setSelection(false);
-						System.out.println("De-selecciono los otros botones");
-                        constructorDeFabricas.setDibujante(new DibujanteDeMateriaPrima(canvas));
-					}
-				});
-		
-		buttonCinta.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+        buttonCinta.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("Paso dibujar cintas"); // TODO Auto-generated Event stub widgetSelected()
-				buttonMateriaPrima.setSelection(false);
+                constructorDeFabricas.setDibujante(new DibujanteDeCintas(espacioFabril));
+                
+                System.out.println("De-selecciono los otros botones");
+                buttonMateriaPrima.setSelection(false);
 				buttonMaquina.setSelection(false);
-				System.out.println("De-selecciono los otros botones");
-				constructorDeFabricas.setDibujante(new DibujanteDeCintas(canvas));
 				//DibujarLinea();
 			}
 		});
-		buttonMaquina.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+		buttonMateriaPrima = new Button(groupControl, SWT.TOGGLE);
+		buttonMateriaPrima.setText("Materia Prima");
+        buttonMateriaPrima
+				.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
+					public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+						System.out.println("Paso a dibujar materia prima");
+                        // TODO Pasarle una materia prima
+                        constructorDeFabricas.setDibujante(new DibujanteDeMateriaPrima(espacioFabril, new Producto()));
+
+                        System.out.println("De-selecciono los otros botones");
+                        buttonCinta.setSelection(false);
+                        buttonMaquina.setSelection(false);
+					}
+				});
+
+		buttonMaquina = new Button(groupControl, SWT.TOGGLE);
+		buttonMaquina.setText("Prensa");
+		buttonMaquina.setLayoutData(gridData2);
+        buttonMaquina.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				System.out.println("Paso a dibujar maquina 1"); // TODO Auto-generated Event stub widgetSelected()
-				buttonMateriaPrima.setSelection(false);
+				System.out.println("Paso a dibujar prensas"); // TODO Auto-generated Event stub widgetSelected()
+                constructorDeFabricas.setDibujante(new DibujanteDeMaquinas(espacioFabril, new TipoMaquinaPlancha()));
+
+                System.out.println("De-selecciono los otros botones");
+                buttonMateriaPrima.setSelection(false);
 				buttonCinta.setSelection(false);
-				System.out.println("De-selecciono los otros botones");
-				constructorDeFabricas.setDibujante(new DibujanteDeMaquinas(canvas));
 			}
 		});
+
+
 	}
 
 	public void DibujarLinea(){

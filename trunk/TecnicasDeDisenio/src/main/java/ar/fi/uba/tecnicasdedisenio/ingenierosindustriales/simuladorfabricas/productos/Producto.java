@@ -33,8 +33,10 @@ public class Producto implements Cloneable {
 		else {
 			this.estado= "Desecho";
 		}
-			
 	}
+
+    @Deprecated
+    public Producto() {}
 	
 	@Override
 	public int hashCode() {

@@ -59,8 +59,14 @@ public class CubiculoFabril {
         return cinta;
     }
 
-    private boolean puedeSerComienzoDeCinta() {
-        return estaOcupado();
+    public boolean puedeSerComienzoDeCinta() {
+        if (materiaPrima != null)
+            return true;
+        if (maquina == null)
+            return false;
+        if (maquina.getSalida().obtenerProducto() != null)
+            return false;
+        return true;
     }
 
     private boolean puedeSerFinDeCinta() {
