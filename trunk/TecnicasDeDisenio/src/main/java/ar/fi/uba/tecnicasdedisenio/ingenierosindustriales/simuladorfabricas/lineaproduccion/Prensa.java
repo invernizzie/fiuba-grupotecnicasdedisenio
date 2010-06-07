@@ -1,11 +1,10 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Elemento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 /**
- * Maquina ({@link Maquina}) encargada de prensar un elemento ({@link Elemento}).
+ * Maquina ({@link Maquina}) encargada de prensar.
  * @author santiago
  *
  */
