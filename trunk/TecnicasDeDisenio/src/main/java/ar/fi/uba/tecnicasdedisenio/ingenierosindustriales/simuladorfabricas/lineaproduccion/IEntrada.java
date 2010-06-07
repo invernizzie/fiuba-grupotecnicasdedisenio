@@ -1,4 +1,4 @@
-package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
+package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
 import java.util.List;
 

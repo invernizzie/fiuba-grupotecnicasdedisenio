@@ -3,11 +3,8 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 import java.text.NumberFormat;
 import java.util.*;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.DineroInsuficienteException;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Fabrica;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.FabricaOcupadaException;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Jugador;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.JugadorConFabricaException;
+
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;

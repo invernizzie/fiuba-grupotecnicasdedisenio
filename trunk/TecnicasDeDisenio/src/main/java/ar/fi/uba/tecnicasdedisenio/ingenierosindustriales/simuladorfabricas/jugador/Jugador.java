@@ -1,11 +1,11 @@
-package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas;
+package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador;
 
 import java.util.Observable;
+
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.CantidadLineasMaximaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;

@@ -8,12 +8,12 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.DineroInsuficienteException;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Fabrica;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.FabricaOcupadaException;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Jugador;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.JugadorConFabricaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.DineroInsuficienteException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Fabrica;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.FabricaOcupadaException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.JugadorConFabricaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 
 public class TestCompraVentaCalendario {
