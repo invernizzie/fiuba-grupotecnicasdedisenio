@@ -40,6 +40,11 @@ public class TestValidadorProductos {
 	@Test
 	public void testEsValidoToString() {
 		System.out.println(val.toString());
-		Assert.assertNotNull(val.toString());
+		Assert.assertNotNull(val);
+	}
+	@Test
+	public void testGetAll() {
+		System.out.println(val.getAll().toString());
+		Assert.assertNotNull(val);
 	}	
 }

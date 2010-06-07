@@ -72,4 +72,13 @@ public class ValidadorProductos {
 	public String toString(){
 		return MapProductos.toString();
 	}
+	public String[] getAll(){
+		int cantidad = MapProductos.size();
+		String productos[] = new String[cantidad]; 
+		productos = MapProductos.toString().substring(1).split(",", 0); 
+		for(int i=0; i<cantidad; i++){
+			productos[i] = productos[i].substring(0, productos[i].indexOf('='));
+		}
+		return productos;
+	}
 }

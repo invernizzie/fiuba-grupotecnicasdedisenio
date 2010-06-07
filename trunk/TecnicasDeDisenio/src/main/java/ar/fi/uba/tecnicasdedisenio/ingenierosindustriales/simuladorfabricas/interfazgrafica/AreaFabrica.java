@@ -3,6 +3,8 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPlancha;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,6 +32,7 @@ public class AreaFabrica {
 	private Combo comboMaquina = null;
     private ConstructorDeFabricas constructorDeFabricas;
     private EspacioFabril espacioFabril;
+    private ValidadorProductos validadorProd = ValidadorProductos.instancia();
 
 	/**
 	 * This method initializes comboMP
@@ -39,14 +42,26 @@ public class AreaFabrica {
 		comboMP = new Combo(groupControl, SWT.NONE);
 		CargarComboMateriaPrimas();
 		comboMP.setEnabled(false);
+		comboMP.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
+			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+				System.out.println("widgetSelected()"); // TODO Auto-generated Event stub widgetSelected()
+				System.out.println("Materia Prima Seleccionada= "+ comboMP.getText());
+				constructorDeFabricas.setDibujante(new DibujanteDeMateriaPrima(espacioFabril, new Producto(validadorProd,comboMP.getText(),0F)));
+			}
+			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
+			}
+		});
+		
 	}
 
 	protected void CargarComboMateriaPrimas() {
 		// TODO Auto-generated method stub
-		for(int i=0; i<10; i++){
-			comboMP.add(new String("Materia Prima  " + i));
-		}
-		comboMP.setText(comboMP.getItem(0));
+		//for(int i=0; i<10; i++){
+		//	comboMP.add(new String("Materia Prima  " + i));
+		//}
+		//comboMP.setItems(validadorProd.toString().split(",", 0));
+		comboMP.setItems(validadorProd.getAll());
+		//comboMP.setText(comboMP.getItem(0));
 	}
 
 	/**
@@ -57,6 +72,15 @@ public class AreaFabrica {
 		comboMaquina = new Combo(groupControl, SWT.NONE);
 		CargarMaquinas();
 		comboMaquina.setEnabled(false);
+		comboMaquina.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
+			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+				System.out.println("widgetSelected()"); // TODO Auto-generated Event stub widgetSelected()
+				System.out.println("Maquina Seleccionada= "+ comboMaquina.getText());
+				constructorDeFabricas.setDibujante(new DibujanteDeMaquinas(espacioFabril, new TipoMaquinaPlancha()));
+			}
+			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
+			}
+		});
 	}
 
 	private void CargarMaquinas() {
@@ -64,7 +88,7 @@ public class AreaFabrica {
 		for(int i=0; i<10; i++){
 			comboMaquina.add(new String("Maquina " + i));
 		}
-		comboMaquina.setText(comboMP.getItem(0));
+		//comboMaquina.setText(comboMaquina.getItem(0));
 	}
     
     public void run() {
@@ -168,7 +192,7 @@ public class AreaFabrica {
 						System.out.println("Paso a dibujar materia prima");
                         // TODO Pasarle una materia prima
 						comboMP.setEnabled(true);
-                        constructorDeFabricas.setDibujante(new DibujanteDeMateriaPrima(espacioFabril, new Producto()));
+                        //constructorDeFabricas.setDibujante(new DibujanteDeMateriaPrima(espacioFabril, new Producto()));
                         System.out.println("De-selecciono los otros botones");
 						buttonMaquina.setSelection(false);
 						buttonCinta.setSelection(false);
@@ -180,7 +204,7 @@ public class AreaFabrica {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("Paso a dibujar prensas"); // TODO Auto-generated Event stub widgetSelected()
 				comboMaquina.setEnabled(true);
-                constructorDeFabricas.setDibujante(new DibujanteDeMaquinas(espacioFabril, new TipoMaquinaPlancha()));
+                //constructorDeFabricas.setDibujante(new DibujanteDeMaquinas(espacioFabril, new TipoMaquinaPlancha()));
                 System.out.println("De-selecciono los otros botones");
 				buttonMateriaPrima.setSelection(false);
 				buttonCinta.setSelection(false);
