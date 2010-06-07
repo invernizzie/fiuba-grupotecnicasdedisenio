@@ -16,11 +16,6 @@ public class TipoMaquinaPlancha extends TipoMaquina {
 		plancha = new Plancha(0.3F, 0.01F);
 		
 	}
-
-	/*public TipoMaquinaPlancha(IEntrada entrada, ISalida salida) {
-		this(new ComparadorDeMaquinasSimple());
-		
-	}*/
 	
 	public TipoMaquinaPlancha(){
 		this(new ComparadorDeMaquinasSimple());
@@ -28,8 +23,8 @@ public class TipoMaquinaPlancha extends TipoMaquina {
 
 	@Override
 	public Maquina getInstancia() {
-		Plancha nuevaPrensa = plancha.clone();
-		return nuevaPrensa;
+		Plancha nuevaPlancha = plancha.clone();
+		return nuevaPlancha;
 	}
 
 	@Override

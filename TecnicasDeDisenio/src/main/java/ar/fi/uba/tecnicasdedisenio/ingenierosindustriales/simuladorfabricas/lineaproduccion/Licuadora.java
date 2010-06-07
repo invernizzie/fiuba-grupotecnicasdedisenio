@@ -4,24 +4,25 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 /**
- * Maquina ({@link Maquina}) encargada de planchar.
+ * Maquina ({@link Maquina}) encargada de licuar.
  * @author santiago
  *
  */
-public class Plancha extends Maquina {
 
-	public Plancha(Float tasaDeFallos, Float tasaRotura) {
+public class Licuadora extends Maquina {
+
+	public Licuadora(Float tasaDeFallos, Float tasaRotura) {
 		super(tasaDeFallos, tasaRotura);
 		this.setCostoMaquina(100F);
 	}
 	
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(),"Planchado",this.getTasaDeFallos());
+		return new Producto(ValidadorProductos.instancia(),"Licuado",this.getTasaDeFallos());
 	}
 
 	/**
-	 * Una plancha puede operar con cualquier tipo de elemento, pero solo con uno por vez.
+	 * Una licuadora puede operar con cualquier tipo de elemento, pero solo con uno por vez.
 	 * @see ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina#validarEntrada()
 	 */
 	@Override
@@ -30,8 +31,9 @@ public class Plancha extends Maquina {
 	}
 	
 	@Override
-	public Plancha clone(){
-		return new Plancha(this.getTasaDeFallos(), this.getTasaRotura());
+	public Licuadora clone(){
+		return new Licuadora(this.getTasaDeFallos(), this.getTasaRotura());
 	}
+
 
 }
