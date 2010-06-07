@@ -8,7 +8,6 @@ import org.eclipse.swt.widgets.Canvas;
  */
 public abstract class Dibujante {
 
-    /*
     private EspacioFabril espacioFabril;
 
     public Dibujante(EspacioFabril espacioFabril) {
@@ -17,16 +16,6 @@ public abstract class Dibujante {
 
     protected EspacioFabril getEspacioFabril() {
         return espacioFabril;
-    }*/
-
-    private Canvas canvas;
-
-    public Dibujante(Canvas canvas) {
-        this.canvas = canvas;
-    }
-
-    public Canvas getCanvas() {
-        return canvas;
     }
 
     public abstract void mouseMove(int x, int y) ;
