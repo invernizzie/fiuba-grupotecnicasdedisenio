@@ -35,5 +35,10 @@ public class Mezcladora extends Maquina {
 		return new Mezcladora(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
+	@Override
+	public Producto getTipoProducto() {
+		return new Producto(ValidadorProductos.instancia(),"Mezclado",0);
+	}
+
 
 }

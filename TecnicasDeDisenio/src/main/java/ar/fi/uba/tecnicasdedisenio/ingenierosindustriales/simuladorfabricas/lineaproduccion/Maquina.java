@@ -76,8 +76,9 @@ public abstract class Maquina implements Cloneable  {
 	 * resultado en la salida.
 	 * @param construirProductoValido 
 	 */
-	public final void procesar(Boolean construirProductoValido) throws EntradaInvalidaException{
-		this.setProductos(getEntrada().getProdcutos());
+	public final Producto procesar(Boolean construirProductoValido) throws EntradaInvalidaException{
+		obtenerProductosEntrada();
+		
 		Boolean isEntradaValida = this.validarEntrada();
 		
 		if(isEntradaValida){
@@ -90,12 +91,21 @@ public abstract class Maquina implements Cloneable  {
 			this.getSalida().asignarProducto(elementoProcesado);
 			this.cintaSalida.trasladarElementos();
 			this.verificarRotura();
+			return elementoProcesado;
 		}else{
 			throw new EntradaInvalidaException("Los elementos que ingresaron" +
 												" no se corresponden con los necesarios " +
 												"para que esta máquina opere");
 		}
 		
+	}
+
+	private void obtenerProductosEntrada() {
+		this.setProductos(getEntrada().getProdcutos());
+		
+		for (Producto producto : materiasPrimas) {
+			this.productos.add(producto);
+		}
 	}
 
 	public void setProductos(List<Producto> productos) {
@@ -106,17 +116,9 @@ public abstract class Maquina implements Cloneable  {
 		return productos;
 	}
 
-//	public void setEntrada(IEntrada entrada) {
-//		this.entrada = entrada;
-//	}
-
 	public IEntrada getEntrada() {
 		return entrada;
 	}
-
-//	public void setSalida(ISalida salida) {
-//		this.salida = salida;
-//	}
 
 	public ISalida getSalida() {
 		return salida;
@@ -236,5 +238,10 @@ public abstract class Maquina implements Cloneable  {
 	public Float getCostoMaquina() {
 		return costoMaquina;
 	}
-	
+
+	/**
+	 * Devuelve un tipo de producto que modela lo que produce esta linea.
+	 * @return
+	 */
+	public abstract Producto getTipoProducto();
 }

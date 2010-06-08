@@ -35,5 +35,10 @@ public class Licuadora extends Maquina {
 		return new Licuadora(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
+	@Override
+	public Producto getTipoProducto() {
+		return new Producto(ValidadorProductos.instancia(),"Licuado",0);
+	}
+
 
 }

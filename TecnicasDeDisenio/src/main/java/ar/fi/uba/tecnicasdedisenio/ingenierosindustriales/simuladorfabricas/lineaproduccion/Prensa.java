@@ -34,4 +34,9 @@ public class Prensa extends Maquina {
 		return new Prensa(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
+	@Override
+	public Producto getTipoProducto() {
+		return new Producto(ValidadorProductos.instancia(),"prensado",0);
+	}
+
 }

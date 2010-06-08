@@ -34,4 +34,9 @@ public class Plancha extends Maquina {
 		return new Plancha(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
+	@Override
+	public Producto getTipoProducto() {
+		return new Producto(ValidadorProductos.instancia(),"Planchado",0);
+	}
+
 }
