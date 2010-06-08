@@ -5,12 +5,14 @@ import java.util.Set;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 public class LineaProduccion {
 	private Set<Maquina> maquinas;
 	private Set<Maquina> primerasMaquinas;
 	private Set<Maquina> maquinasActuales;
 	private Maquina ultimaMaquina;
+	private Contenedor contenedor;
 	private Laboratorio laboratorio;
 	private Float costoLinea = 0F;
 	
@@ -30,6 +32,10 @@ public class LineaProduccion {
 		
 		if(esUltimaMaquina(maquina)){
 			ultimaMaquina = maquina;
+			this.contenedor = new Contenedor(maquina.getTipoProducto());
+			CintaTransportadora cinta = new CintaTransportadora(new Salida(), new Entrada());
+			this.contenedor.agregarCinta(cinta);
+			ultimaMaquina.setCintaSalida(cinta);
 		}
 		
 		this.maquinas.add(maquina);
@@ -46,8 +52,6 @@ public class LineaProduccion {
 	/**
 	 * Una máquina es la última de la linea si no figura en la lista de precedentes
 	 * de otra máquina.
-	 * TODO, si se implementa un contenedor de productos terminados la última será 
-	 * aquella que se conecte al contenedor.
 	 * @param maquinaAVerificar
 	 * @return
 	 */
@@ -108,10 +112,18 @@ public class LineaProduccion {
 					productoValido = true;
 				}
 				
-				maquina.procesar(productoValido);
+				Producto productoObtenido = maquina.procesar(productoValido);
+				
 				
 				if(maquina.getSiguiente() != null){
 					siguientes.add(maquina.getSiguiente());
+				}
+
+				if(this.esUltimaMaquina(maquina)){
+					// Si se terminó la linea guardamos el producto en el contenedor
+					this.getContenedor().recibirProducto(productoObtenido);
+					// Y seteamos la siguiente máquina en null para que vuelva a procesar desde el principio
+					siguientes = null;
 				}
 				
 			} catch (EntradaInvalidaException e) {
@@ -129,6 +141,10 @@ public class LineaProduccion {
 
 	public Float getCostoLinea() {
 		return costoLinea;
+	}
+
+	public Contenedor getContenedor() {
+		return contenedor;
 	}
 
 }
