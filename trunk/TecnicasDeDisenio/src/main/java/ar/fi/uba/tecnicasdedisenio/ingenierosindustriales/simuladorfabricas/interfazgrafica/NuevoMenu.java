@@ -22,7 +22,8 @@ import org.eclipse.swt.layout.GridData;
 
 public class NuevoMenu implements Sincronizado, Observer {
 
-    public static final int SEGUNDOS_POR_DIA = 1;
+	private static final String dirImagenes = new String("..\\TecnicasDeDisenio\\src\\main\\resources\\images\\");
+	public static final int SEGUNDOS_POR_DIA = 1;
 
 	private boolean actualizado = false;
 	private Shell shellPrincipal = null;  //  @jve:decl-index=0:visual-constraint="79,7"
@@ -40,7 +41,6 @@ public class NuevoMenu implements Sincronizado, Observer {
 	private Text textDineroAcum = null;
 	private Button checkBoxInvertirLabo = null;
 	private Combo comboFabrica = null;
-	private Button buttonFabrica = null;
 	private Canvas canvasFabrica = null;
 	private Menu submenuFabrica = null;
 	private Jugador jugador = null;
@@ -51,11 +51,11 @@ public class NuevoMenu implements Sincronizado, Observer {
     private NumberFormat formateador = NumberFormat.getInstance();
     private Set<Widget> botonesPartida = new HashSet<Widget>();
 	private Composite compositeLaboratorio = null;
-	private Label labelTipoLaboratorio = null;
-	private Text textTipoLaboratorio = null;
-	private Label labelDineroAcumulado = null;
-	private Text textDineroAcumulado = null;
-	private Button buttonImagenLaboratorio = null;
+	private Label labelTipoLabo = null;
+	private Text textTipoLabo = null;
+	private Label labelDineroAcumLabo = null;
+	private Text textDineroAcumLabo = null;
+	private Button buttonImagenLabo = null;
 	private Image imagenLaboratorio = null;
 	private Display display = null;
 
@@ -264,12 +264,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		
 		Label filler = new Label(groupJugador, SWT.NONE);
 		createComboFabrica();
-		buttonFabrica = new Button(groupJugador, SWT.NONE);
-		buttonFabrica.setText("Fabrica");
-		buttonFabrica.setLayoutData(gridData5);
-
         botonesPartida.add(checkBoxInvertirLabo);
-        botonesPartida.add(buttonFabrica);
 	}
 
 	/**
@@ -447,14 +442,14 @@ public class NuevoMenu implements Sincronizado, Observer {
 				display.sleep();
             if (this.necesitaActualizacion()) {
                 this.actualizarDatosTiempo();
-                actualizarDatosJugador();
+                this.actualizarDatosJugador();
+                this.actualizarDatosLaboratorio();
             }
 		}
 		display.dispose();
 	}
 
 	private void createCompositeLaboratorio() {
-		imagenLaboratorio = new Image(display, "C:/diego.jpg");
 		GridData gridData5 = new GridData();
 		gridData5.grabExcessHorizontalSpace = true;
 		gridData5.verticalAlignment = GridData.CENTER;
@@ -481,27 +476,26 @@ public class NuevoMenu implements Sincronizado, Observer {
 		gridLayout1.numColumns = 2;
 		compositeLaboratorio  = new Composite(tabFolderFabrica, SWT.NONE);
 		compositeLaboratorio.setLayout(gridLayout1);
-		labelTipoLaboratorio = new Label(compositeLaboratorio, SWT.NONE);
-		labelTipoLaboratorio.setText("Tipo Laboratorio");
-		labelTipoLaboratorio.setVisible(true);
-		labelTipoLaboratorio.setLayoutData(gridData2);
-		textTipoLaboratorio = new Text(compositeLaboratorio, SWT.BORDER | SWT.READ_ONLY);
-		textTipoLaboratorio.setVisible(true);
-		textTipoLaboratorio.setText("<Tipo Laboratorio>");
-		textTipoLaboratorio.setLayoutData(gridData5);
-		labelDineroAcumulado = new Label(compositeLaboratorio, SWT.NONE);
-		labelDineroAcumulado.setText("Dinero Acumulado");
-		labelDineroAcumulado.setEnabled(true);
-		labelDineroAcumulado.setLayoutData(gridData3);
-		textDineroAcumulado = new Text(compositeLaboratorio, SWT.BORDER);
-		textDineroAcumulado.setEditable(false);
-		textDineroAcumulado.setText("<Dinero Acumulado>");
-		textDineroAcumulado.setLayoutData(gridData4);
-		buttonImagenLaboratorio = new Button(compositeLaboratorio, SWT.PUSH);
-		buttonImagenLaboratorio.setImage(imagenLaboratorio);
-		buttonImagenLaboratorio.setSelection(true);
-		buttonImagenLaboratorio.setVisible(true);
-		buttonImagenLaboratorio.setLayoutData(gridData1);
+		labelTipoLabo = new Label(compositeLaboratorio, SWT.NONE);
+		labelTipoLabo.setText("Tipo Laboratorio");
+		labelTipoLabo.setVisible(true);
+		labelTipoLabo.setLayoutData(gridData2);
+		textTipoLabo = new Text(compositeLaboratorio, SWT.BORDER | SWT.READ_ONLY);
+		textTipoLabo.setVisible(true);
+		textTipoLabo.setText("<Tipo Laboratorio>");
+		textTipoLabo.setLayoutData(gridData5);
+		labelDineroAcumLabo = new Label(compositeLaboratorio, SWT.NONE);
+		labelDineroAcumLabo.setText("Dinero Acumulado");
+		labelDineroAcumLabo.setEnabled(true);
+		labelDineroAcumLabo.setLayoutData(gridData3);
+		textDineroAcumLabo = new Text(compositeLaboratorio, SWT.BORDER);
+		textDineroAcumLabo.setEditable(false);
+		textDineroAcumLabo.setText("<Dinero Acumulado>");
+		textDineroAcumLabo.setLayoutData(gridData4);
+		buttonImagenLabo = new Button(compositeLaboratorio, SWT.PUSH);
+		buttonImagenLabo.setSelection(true);
+		buttonImagenLabo.setVisible(true);
+		buttonImagenLabo.setLayoutData(gridData1);
 	}
 	
     private void cambiarHabilitacionBotonesDePartida(boolean habilitados) {
@@ -535,6 +529,15 @@ public class NuevoMenu implements Sincronizado, Observer {
 		textDineroAcum.setText(formateador.format(getJugador().getDineroActual()));
 	}
     
+    private void actualizarDatosLaboratorio(){
+    	if (getJugador() == null)
+    		return;
+    	textTipoLabo.setText(getJugador().getLaboratorio().getTipo());
+    	textDineroAcumLabo.setText(Float.toString(getJugador().getLaboratorio().getDineroAcumulado()));
+    	imagenLaboratorio = new Image(display, dirImagenes+getJugador().getLaboratorio().getNombreImagen());
+    	buttonImagenLabo.setImage(imagenLaboratorio);
+    	
+    }
     
     /**
 	 * Actualiza los datos del tiempo en la pantalla.

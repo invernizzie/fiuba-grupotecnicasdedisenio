@@ -3,28 +3,30 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lab
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPlancha;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPrensa;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
-public class Laboratorio {
+public class Laboratorio{
 	
 	private float dineroAcumulado;
 	private boolean habilitado;
 	private ArrayList<Proceso> procesosHabilitados;
 	private ArrayList<Proceso> procesosInhabilitados;
 	private String tipo;
+	private String nombreImagen;
 	
-	public Laboratorio(String tipo){
+	public Laboratorio(String tipo, String nombreImagen){
 		this.setProcesosHabilitados(new ArrayList<Proceso>());
 		this.setProcesosInhabilitados(new ArrayList<Proceso>());
 		this.setDineroAcumulado(0);
 		this.setHabilitado(false);
 		this.setTipo(tipo);
+		this.setNombreImagen(nombreImagen);
+		this.cargarProcesos();
 	}
 	
 	public void setProcesosHabilitados(ArrayList<Proceso> procesosHabilitados) {
@@ -64,6 +66,32 @@ public class Laboratorio {
 		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
 		proceso.setMaquinaFinal(maq);
 		this.getProcesosHabilitados().add(proceso);
+		
+		proceso = new Proceso(500);
+		maq = new TipoMaquinaPrensa();
+		maq.addPrecedente(new TipoMaquinaMezcladora());
+		maq.addPrecedente(new TipoMaquinaHorno());
+		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
+		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "azucar", 0));
+		proceso.setMaquinaFinal(maq);
+		this.getProcesosInhabilitados().add(proceso);
+		
+		proceso = new Proceso(500);
+		maq = new TipoMaquinaPrensa();
+		maq.addPrecedente(new TipoMaquinaMezcladora());
+		maq.addPrecedente(new TipoMaquinaHorno());
+		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
+		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
+		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "azucar", 0));
+		proceso.setMaquinaFinal(maq);
+		this.getProcesosInhabilitados().add(proceso);
+		
 	}
 	
 
@@ -143,6 +171,14 @@ public class Laboratorio {
 
 	public String getTipo() {
 		return tipo;
+	}
+
+	public void setNombreImagen(String nombreImagen) {
+		this.nombreImagen = nombreImagen;
+	}
+
+	public String getNombreImagen() {
+		return nombreImagen;
 	}
 
 	public class IteradorProcesos implements Iterator<Proceso>{

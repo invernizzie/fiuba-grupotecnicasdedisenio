@@ -27,7 +27,7 @@ public class TestLineaProduccion {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.linea = new LineaProduccion(new Laboratorio("Cocina"));
+		this.linea = new LineaProduccion(new Laboratorio("Cocina",""));
 		this.fuenteTrigo = new Fuente("trigo", 100, 
 				new Producto(ValidadorProductos.instancia(), "trigo", 0));
 		this.fuenteAgua = new Fuente("agua", 100, 

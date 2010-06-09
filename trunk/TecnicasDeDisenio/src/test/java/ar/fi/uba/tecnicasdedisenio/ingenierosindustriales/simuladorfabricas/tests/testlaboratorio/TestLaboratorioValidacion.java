@@ -11,7 +11,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class TestLaboratorioValidacion {
-	private Laboratorio laboratorio = new Laboratorio("Comida");
+	private Laboratorio laboratorio = new Laboratorio("Comida","");
 	private Proceso proceso = new Proceso(1000);
 	
 	@Test
@@ -79,7 +79,7 @@ public class TestLaboratorioValidacion {
 		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha(0F, 0F));
 		maquina.getPrecedentes().get(1).getPrecedentes().get(0).addPrecedente(new Plancha(0F, 0F));
 		maquina.getPrecedentes().get(1).addPrecedente(new Plancha(0F, 0F));
-		maquina.getPrecedentes().get(1).addMateriaPrima(new Producto(val, "agua", 0));
+		maquina.getPrecedentes().get(1).addMateriaPrima(new Producto(val, "harina", 0));
 		
 		Assert.assertFalse("No debería haber un proceso valido",laboratorio.existeProcesoValido(maquina));
 		
@@ -92,7 +92,7 @@ public class TestLaboratorioValidacion {
 		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
 		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
 		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
-		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
+		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "harina", 0));
 		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
 		

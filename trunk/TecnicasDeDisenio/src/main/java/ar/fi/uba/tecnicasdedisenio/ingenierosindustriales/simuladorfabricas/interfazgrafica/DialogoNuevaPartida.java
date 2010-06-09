@@ -129,6 +129,7 @@ public class DialogoNuevaPartida {
 	menu.setJugador(jug);
 	menu.getJugador().addObserver(menu);
 	menu.getJugador().setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
+	//menu.getJugador().getLaboratorio().addObserver(menu);
 	
 	shellPartida.close();
 	}
@@ -140,19 +141,19 @@ public class DialogoNuevaPartida {
 		hashLaboratorios = new HashMap<String,Laboratorio>();
 		Laboratorio labo = null;
 		
-		labo = new Laboratorio("Comidas");
+		labo = new Laboratorio("Comidas","comida.jpg");
 		hashLaboratorios.put("Comidas", labo);
 		
-		labo = new Laboratorio("Bebidas");
+		labo = new Laboratorio("Bebidas","bebida.jpg");
 		hashLaboratorios.put("Bebidas", labo);
 		
-		labo = new Laboratorio("Ropa");
+		labo = new Laboratorio("Ropa","ropa.jpg");
 		hashLaboratorios.put("Ropa", labo);
 		
-		labo = new Laboratorio("Videojuegos");
+		labo = new Laboratorio("Videojuegos","videojuegos.jpg");
 		hashLaboratorios.put("Videojuegos", labo);
 		
-		labo = new Laboratorio("Electrodomesticos");
+		labo = new Laboratorio("Electrodomesticos","electrodomesticos.jpg");
 		hashLaboratorios.put("Electrodomesticos", labo);
 		
 		

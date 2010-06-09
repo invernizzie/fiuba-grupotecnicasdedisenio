@@ -47,7 +47,7 @@ public class TestFabricaLineas {
 		this.fabrica.agregarFuente(fuenteSal);
 		
 		Jugador jugador = new Jugador("Gustavo",1000);
-		jugador.setLaboratorio(new Laboratorio("Cocina"));
+		jugador.setLaboratorio(new Laboratorio("Cocina",""));
 		this.fabrica.comprar(jugador);
 	}
 
