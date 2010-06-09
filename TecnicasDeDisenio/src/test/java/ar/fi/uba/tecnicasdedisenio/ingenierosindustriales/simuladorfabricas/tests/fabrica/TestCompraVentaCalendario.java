@@ -43,7 +43,7 @@ public class TestCompraVentaCalendario {
 		Jugador jugador, jugador2;
 
 		jugador = new Jugador("Gustavo",3000);
-		jugador.setLaboratorio(new Laboratorio("Cocina"));
+		jugador.setLaboratorio(new Laboratorio("Cocina",""));
 		float plata = jugador.getDineroActual();
 		try {
 			fabricas.get(2).alquilar(jugador);
@@ -56,7 +56,7 @@ public class TestCompraVentaCalendario {
 		}
 		
 		jugador2 = new Jugador("Gustavo",2000);
-		jugador2.setLaboratorio(new Laboratorio("Cocina"));
+		jugador2.setLaboratorio(new Laboratorio("Cocina",""));
 		float plata2 = jugador2.getDineroActual();
 		try {
 			fabricas.get(1).comprar(jugador2);
@@ -74,7 +74,7 @@ public class TestCompraVentaCalendario {
 		/*Pasa un mes.*/
 		Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
 		Calendario.instancia().iniciar();
-		esperar(SEGUNDOS_POR_DIA * 31);
+		esperar(SEGUNDOS_POR_DIA * 1);
 		Calendario.instancia().pausar();
 	   
 		Assert.assertEquals("Deberia debitarse del jugador el costo por mes de alquiler", jugador.getDineroActual(),(float)(plata-jugador.getFabrica().getCostoAlquiler()));
@@ -85,7 +85,7 @@ public class TestCompraVentaCalendario {
 	    
 	    /*Pasa un mes.*/
 	    Calendario.instancia().reanudar();
-	    esperar(SEGUNDOS_POR_DIA * 30);
+	    esperar(SEGUNDOS_POR_DIA * 31);
 	    Calendario.instancia().pausar();
 	    
 	    Assert.assertEquals("No deberia debitarse de la plata el costo por mes", jugador.getDineroActual(),plata);
