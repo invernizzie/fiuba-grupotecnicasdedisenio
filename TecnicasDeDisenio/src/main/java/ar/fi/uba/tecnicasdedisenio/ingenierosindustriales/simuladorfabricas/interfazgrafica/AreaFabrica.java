@@ -55,7 +55,6 @@ public class AreaFabrica {
 	}
 
 	protected void cargarComboMateriaPrimas() {
-		// TODO Auto-generated method stub
 		//for(int i=0; i<10; i++){
 		//	comboMP.add(new String("Materia Prima  " + i));
 		//}
@@ -95,7 +94,7 @@ public class AreaFabrica {
         constructorDeFabricas.setDibujante(
                 new DibujanteDeMateriaPrima(
                         espacioFabril,
-                        new Producto(validadorProd, comboMP.getText(), 0F)));
+                        new Producto(validadorProd, comboMP.getText(), 0F), comboMP.getText()));
     }
 
     private void elegirMaquina() {
