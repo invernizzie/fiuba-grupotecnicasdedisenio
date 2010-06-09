@@ -10,7 +10,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 
 /**
  * Abstracción que representa una entidad encargada de realizar un procesamiento sobre 
- * una serie de materiales ({@link Elemento}).
+ * una serie de materiales ({@link Producto}).
  * @author santiago
  *
  */
@@ -181,6 +181,10 @@ public abstract class Maquina implements Cloneable  {
 	public void setCintaSalida(CintaTransportadora cintaTransportadora) {
 		this.cintaSalida = cintaTransportadora;
 	}
+
+    public CintaTransportadora getCintaSalida() {
+        return cintaSalida;
+    }
 
 	public void removeCintaEntrada(CintaTransportadora cintaTransportadora) {
 		this.cintasEntrada.remove(cintaTransportadora);
