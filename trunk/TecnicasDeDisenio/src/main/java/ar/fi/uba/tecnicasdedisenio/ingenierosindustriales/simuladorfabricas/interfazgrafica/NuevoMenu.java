@@ -15,6 +15,7 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -47,10 +48,16 @@ public class NuevoMenu implements Sincronizado, Observer {
 	private Button buttonAlquilar = null;
 	private Button buttonVender = null;
 	private HashMap<String, Fabrica> fabricas;
-
     private NumberFormat formateador = NumberFormat.getInstance();
-
     private Set<Widget> botonesPartida = new HashSet<Widget>();
+	private Composite compositeLaboratorio = null;
+	private Label labelTipoLaboratorio = null;
+	private Text textTipoLaboratorio = null;
+	private Label labelDineroAcumulado = null;
+	private Text textDineroAcumulado = null;
+	private Button buttonImagenLaboratorio = null;
+	private Image imagenLaboratorio = null;
+	private Display display = null;
 
     /**
 	 * This method initializes shellPrincipal
@@ -66,6 +73,11 @@ public class NuevoMenu implements Sincronizado, Observer {
 		createGroupJugador();
 		shellPrincipal.setLayout(gridLayout);
 		shellPrincipal.setSize(new Point(792, 459));
+		CreateMenuBar();
+		shellPrincipal.setMenuBar(menuBar);
+	}
+	
+	private void CreateMenuBar(){
 		menuBar = new Menu(shellPrincipal, SWT.BAR);
 		menuBar.setEnabled(true);
 		MenuItem submenuItemJuego = new MenuItem(menuBar, SWT.CASCADE);
@@ -104,9 +116,6 @@ public class NuevoMenu implements Sincronizado, Observer {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("widgetDefaultSelected()");
 				juegoNuevo();
-				//openItem.setEnabled(true);
-				//saveItem.setEnabled(true);
-				//saveAllItem.setEnabled(true);
 			}
 		});
 		MenuItem pushAbrir = new MenuItem(submenuJuego, SWT.PUSH);
@@ -128,7 +137,21 @@ public class NuevoMenu implements Sincronizado, Observer {
 			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
 			}
 		});
-		shellPrincipal.setMenuBar(menuBar);
+		pushAcercaDe.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
+			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+				 MessageBox messageBox = new MessageBox(shellPrincipal, SWT.OK|SWT.ICON_INFORMATION);	 
+				 String mensaje = new String ("Creditos:\n");
+				 mensaje += "Esteban Invernizzi\n"; 
+				 mensaje += "Gustavo Meller\n"; 
+				 mensaje += "Santiago Risaro\n"; 
+				 mensaje += "Diego Garcia Jaime\n"; 
+				 messageBox.setMessage(mensaje);
+				 messageBox.open();
+			}
+			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
+			}
+		});
+
 	}
 
 	/**
@@ -267,8 +290,9 @@ public class NuevoMenu implements Sincronizado, Observer {
 		tabItemFabrica.setText("Fabrica");
 		CTabItem tabItemLaboratorio = new CTabItem(tabFolderFabrica, SWT.NONE);
 		tabItemLaboratorio.setText("Laboratorio");
-
 		tabItemFabrica.setControl(canvasFabrica);
+		createCompositeLaboratorio();
+		tabItemLaboratorio.setControl(compositeLaboratorio);
 	}
 
 	/**
@@ -406,7 +430,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		 * For example, on Windows the Eclipse SWT 3.1 plugin jar is:
 		 *       installation_directory\plugins\org.eclipse.swt.win32_3.1.0.jar
 		 */
-		Display display = Display.getDefault();
+		display  = Display.getDefault();
 		//NuevoMenu thisClass = new NuevoMenu();
 		this.createShellPrincipal();
 		this.shellPrincipal.open();
@@ -429,6 +453,57 @@ public class NuevoMenu implements Sincronizado, Observer {
 		display.dispose();
 	}
 
+	private void createCompositeLaboratorio() {
+		imagenLaboratorio = new Image(display, "C:/diego.jpg");
+		GridData gridData5 = new GridData();
+		gridData5.grabExcessHorizontalSpace = true;
+		gridData5.verticalAlignment = GridData.CENTER;
+		gridData5.horizontalAlignment = GridData.FILL;
+		GridData gridData4 = new GridData();
+		gridData4.horizontalAlignment = GridData.FILL;
+		gridData4.grabExcessHorizontalSpace = true;
+		gridData4.verticalAlignment = GridData.CENTER;
+		GridData gridData3 = new GridData();
+		gridData3.horizontalAlignment = GridData.FILL;
+		gridData3.grabExcessHorizontalSpace = true;
+		gridData3.verticalAlignment = GridData.CENTER;
+		GridData gridData2 = new GridData();
+		gridData2.horizontalAlignment = GridData.FILL;
+		gridData2.grabExcessHorizontalSpace = true;
+		gridData2.verticalAlignment = GridData.CENTER;
+		GridData gridData1 = new GridData();
+		gridData1.horizontalSpan = 2;
+		gridData1.grabExcessVerticalSpace = true;
+		gridData1.horizontalAlignment = GridData.FILL;
+		gridData1.verticalAlignment = GridData.FILL;
+		gridData1.grabExcessHorizontalSpace = true;
+		GridLayout gridLayout1 = new GridLayout();
+		gridLayout1.numColumns = 2;
+		compositeLaboratorio  = new Composite(tabFolderFabrica, SWT.NONE);
+		compositeLaboratorio.setLayout(gridLayout1);
+		labelTipoLaboratorio = new Label(compositeLaboratorio, SWT.NONE);
+		labelTipoLaboratorio.setText("Tipo Laboratorio");
+		labelTipoLaboratorio.setVisible(true);
+		labelTipoLaboratorio.setLayoutData(gridData2);
+		textTipoLaboratorio = new Text(compositeLaboratorio, SWT.BORDER | SWT.READ_ONLY);
+		textTipoLaboratorio.setVisible(true);
+		textTipoLaboratorio.setText("<Tipo Laboratorio>");
+		textTipoLaboratorio.setLayoutData(gridData5);
+		labelDineroAcumulado = new Label(compositeLaboratorio, SWT.NONE);
+		labelDineroAcumulado.setText("Dinero Acumulado");
+		labelDineroAcumulado.setEnabled(true);
+		labelDineroAcumulado.setLayoutData(gridData3);
+		textDineroAcumulado = new Text(compositeLaboratorio, SWT.BORDER);
+		textDineroAcumulado.setEditable(false);
+		textDineroAcumulado.setText("<Dinero Acumulado>");
+		textDineroAcumulado.setLayoutData(gridData4);
+		buttonImagenLaboratorio = new Button(compositeLaboratorio, SWT.PUSH);
+		buttonImagenLaboratorio.setImage(imagenLaboratorio);
+		buttonImagenLaboratorio.setSelection(true);
+		buttonImagenLaboratorio.setVisible(true);
+		buttonImagenLaboratorio.setLayoutData(gridData1);
+	}
+	
     private void cambiarHabilitacionBotonesDePartida(boolean habilitados) {
         for (Widget boton: botonesPartida)
             ((Control) boton).setEnabled(habilitados);
