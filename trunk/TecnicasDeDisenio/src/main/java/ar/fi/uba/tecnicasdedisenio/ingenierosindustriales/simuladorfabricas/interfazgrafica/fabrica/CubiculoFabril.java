@@ -53,7 +53,12 @@ public class CubiculoFabril {
             extremoInicial.asignarProducto(materiaPrima);
         }
 
+        /**** Esto podria encapsularse como servicio del modelo ****/
         CintaTransportadora cinta = new CintaTransportadora(extremoInicial, cubiculoFinal.finDeCinta());
+        if (maquina != null)
+            maquina.setCintaSalida(cinta);
+        cubiculoFinal.maquina.addCintaEntrada(cinta);
+        /***********************************************************/
         this.cintasSalientes.add(cinta);
         cubiculoFinal.cintasEntrantes.add(cinta);
         return cinta;
@@ -64,7 +69,7 @@ public class CubiculoFabril {
             return true;
         if (maquina == null)
             return false;
-        if (maquina.getSalida().obtenerProducto() != null)
+        if (maquina.getCintaSalida() != null)
             return false;
         return true;
     }
