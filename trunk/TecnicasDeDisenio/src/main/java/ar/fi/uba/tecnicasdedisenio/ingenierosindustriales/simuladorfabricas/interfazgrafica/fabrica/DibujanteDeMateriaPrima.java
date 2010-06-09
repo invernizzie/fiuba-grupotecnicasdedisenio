@@ -15,10 +15,12 @@ import org.eclipse.swt.widgets.Display;
 public class DibujanteDeMateriaPrima extends Dibujante {
 
     private Producto materiaPrima;
+    private String nombre;
 
-    public DibujanteDeMateriaPrima(EspacioFabril espacioFabril, Producto materiaPrima) {
+    public DibujanteDeMateriaPrima(EspacioFabril espacioFabril, Producto materiaPrima, String nombre) {
         super(espacioFabril);
         this.materiaPrima = materiaPrima;
+        this.nombre = nombre; 
     }
 
     @Override
@@ -27,7 +29,7 @@ public class DibujanteDeMateriaPrima extends Dibujante {
     @Override
     public void mouseDown(int x, int y) {
         try {
-            getEspacioFabril().crearMateriaPrima(x, y, materiaPrima);
+            getEspacioFabril().crearMateriaPrima(x, y, materiaPrima, nombre);
         } catch (EspacioOcupadoException e)
         {
             // Simplemente no se crea la materia prima

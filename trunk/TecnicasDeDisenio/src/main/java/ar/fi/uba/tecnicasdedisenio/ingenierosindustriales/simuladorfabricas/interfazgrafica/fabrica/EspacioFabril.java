@@ -1,5 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.GeneradorDeColores;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CintaImposibleException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CubiculoOcupadoExcetion;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.EspacioOcupadoException;
@@ -40,13 +41,13 @@ public class EspacioFabril {
         superficieFabril = new CubiculoFabril[ancho][alto];
     }
 
-    public void crearMateriaPrima(int _x, int _y, Producto materiaPrima) throws EspacioOcupadoException {
+    public void crearMateriaPrima(int _x, int _y, Producto materiaPrima, String nombre) throws EspacioOcupadoException {
         if (!estaDentroDelEspacio(_x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA)
                 || estaOcupado(_x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA))
             throw new EspacioOcupadoException();
         try {
             ocupar(materiaPrima, _x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA);
-            dibujarMateriaPrima(materiaPrima, _x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA);
+            dibujarMateriaPrima(materiaPrima, nombre, _x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA);
         } catch (CubiculoOcupadoExcetion cubiculoOcupadoExcetion) {
             throw new EspacioOcupadoException();
         }
@@ -103,14 +104,13 @@ public class EspacioFabril {
 
     }
 
-    private void dibujarMateriaPrima(Producto materiaPrima, int _x, int _y, int _ancho, int _alto) {
+    private void dibujarMateriaPrima(Producto materiaPrima, String nombre, int _x, int _y, int _ancho, int _alto) {
         int x = convertirCoordenada(_x) * LONGITUD_DEL_LADO;
         int y = convertirCoordenada(_y) * LONGITUD_DEL_LADO;
 
         GC gc = new GC(canvas);
         Color colorAnterior = gc.getBackground();
-        // TODO Cambiar el color segun el tipo de materia prima
-        gc.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+        gc.setBackground(GeneradorDeColores.porString(nombre));
         int ancho = LONGITUD_DEL_LADO * _ancho;
         int alto = LONGITUD_DEL_LADO * _alto;
         gc.fillOval(x, y, ancho, alto);
@@ -124,8 +124,7 @@ public class EspacioFabril {
 
         GC gc = new GC(canvas);
         Color colorAnterior = gc.getBackground();
-        // TODO Cambiar el color segun el tipo de materia prima
-        gc.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE));
+        gc.setBackground(GeneradorDeColores.porClass(tipoMaquina.getClass()));
         int ancho = LONGITUD_DEL_LADO * _ancho;
         int alto = LONGITUD_DEL_LADO * _alto;
         gc.fillRectangle(x, y, ancho, alto);
