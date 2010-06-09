@@ -99,7 +99,6 @@ public class AreaLaboratorio {
 		GridLayout gridLayout1 = new GridLayout();
 		gridLayout1.numColumns = 2;
 		compositeLaboratorio = new Composite(cTabFolderLaboratorio, SWT.NONE);
-		//compositeLaboratorio = new Composite(sShellLaboratorio, SWT.NONE);
 		compositeLaboratorio.setLayout(gridLayout1);
 		labelTipoLaboratorio = new Label(compositeLaboratorio, SWT.NONE);
 		labelTipoLaboratorio.setText("Tipo Laboratorio");
