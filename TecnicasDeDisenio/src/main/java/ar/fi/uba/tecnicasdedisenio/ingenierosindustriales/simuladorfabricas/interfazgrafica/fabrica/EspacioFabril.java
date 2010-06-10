@@ -2,6 +2,7 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.GeneradorDeColores;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CintaImposibleException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CoordenadasNoPertenecenAlEspacioException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CubiculoOcupadoExcetion;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.EspacioOcupadoException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.CintaTransportadora;
@@ -37,7 +38,8 @@ public class EspacioFabril {
     public EspacioFabril(Canvas canvas) {
         this.canvas = canvas;
         Rectangle limites = canvas.getBounds();
-        ancho = alto = convertirCoordenada(limites.width);
+        ancho = convertirCoordenada(limites.width);
+        alto = convertirCoordenada(limites.height);
         superficieFabril = new CubiculoFabril[ancho][alto];
     }
 
@@ -69,22 +71,22 @@ public class EspacioFabril {
 
     }
 
-    public boolean puedeComenzarCintaEn(int _x, int _y) {
+    public boolean puedeComenzarCintaEn(int _x, int _y) throws CoordenadasNoPertenecenAlEspacioException {
         int x = convertirCoordenada(_x);
         int y = convertirCoordenada(_y);
-        if ((x < 0) || (y < 0) || (x > ancho) || (y > alto))
-            return false;
+        testEsAdentro(x, y);
 
-        if (superficieFabril[x][y] == null)
-            return false;
-        return superficieFabril[x][y].puedeSerComienzoDeCinta();
+        return superficieFabril[x][y] != null
+                && superficieFabril[x][y].puedeSerComienzoDeCinta();
     }
 
-    public CintaTransportadora crearCinta(int _x1, int _y1, int _x2, int _y2) throws CintaImposibleException {
+    public CintaTransportadora crearCinta(int _x1, int _y1, int _x2, int _y2) throws CintaImposibleException, CoordenadasNoPertenecenAlEspacioException {
         int x1 = convertirCoordenada(_x1);
         int y1 = convertirCoordenada(_y1);
         int x2 = convertirCoordenada(_x2);
         int y2 = convertirCoordenada(_y2);
+        testEsAdentro(x1, y1);
+        testEsAdentro(x2, y2);
 
         CubiculoFabril cubiculoInicial = superficieFabril[x1][y1];
         CubiculoFabril cubiculoFinal = superficieFabril[x2][y2];
@@ -97,14 +99,19 @@ public class EspacioFabril {
         return cinta;
     }
 
+    private void testEsAdentro(int x, int y) throws CoordenadasNoPertenecenAlEspacioException {
+        if ((x < 0) || (y < 0) || (x >= ancho) || (y >= alto))
+            throw new CoordenadasNoPertenecenAlEspacioException();
+    }
+
+    public void borrar(int x, int y) {
+        // TODO
+    }
+
     private void dibujarCinta(int _x1, int _y1, int _x2, int _y2) {
         GC gc = new GC(canvas);
         gc.drawLine (_x1, _y1, _x2, _y2);
         gc.dispose ();
-    }
-
-    public void borrar(int x, int y) {
-
     }
 
     private void dibujarMateriaPrima(Producto materiaPrima, String nombre, int _x, int _y, int _ancho, int _alto) {
@@ -138,8 +145,8 @@ public class EspacioFabril {
     private boolean estaDentroDelEspacio(int x, int y, int ancho, int alto) {
         if ((x < 0) || (y < 0))
             return false;
-        if ((convertirCoordenada(x + ancho * LONGITUD_DEL_LADO) > this.ancho - 1)
-            || (convertirCoordenada(y + alto * LONGITUD_DEL_LADO) > this.alto - 1))
+        if ((convertirCoordenada(x + ancho * LONGITUD_DEL_LADO) >= this.ancho)
+            || (convertirCoordenada(y + alto * LONGITUD_DEL_LADO) >= this.alto))
             return false;
         return true;
     }
