@@ -266,7 +266,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		});
 		
 		Label filler = new Label(groupJugador, SWT.NONE);
-		createComboFabrica();
+		createOpcionesFabrica();
         botonesPartida.add(checkBoxInvertirLabo);
 	}
 
@@ -297,7 +297,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 	 * This method initializes comboFabrica
 	 *
 	 */
-	private void createComboFabrica() {
+	private void createOpcionesFabrica() {
 		
 		GridData gridData6 = new GridData();
 		gridData6.grabExcessHorizontalSpace = false;
@@ -447,6 +447,7 @@ public class NuevoMenu implements Sincronizado, Observer {
             if (this.necesitaActualizacion()) {
                 this.actualizarDatosTiempo();
                 this.actualizarDatosJugador();
+                this.verificarFinalJuego();
             }
 		}
 		display.dispose();
@@ -533,9 +534,19 @@ public class NuevoMenu implements Sincronizado, Observer {
     	textJugador.setText(getJugador().getNombre());
 		textDineroAcum.setText(formateador.format(getJugador().getDineroActual()));
 		actualizarDatosLaboratorio();
-		if (getJugador().getDineroActual()<0)
-        	this.finalizarJuego(" PERDIO al quedarse sin dinero.");
 	}
+    
+    /**
+     * Verifica si termina el juego.
+     */
+    private void verificarFinalJuego(){
+    	if (getJugador()==null)
+    		return;
+    	if (getJugador().getDineroActual()<0)
+        	this.finalizarJuego(" PERDIO al quedarse sin dinero.");
+		if (getJugador().getDineroActual()>=DINERO_PARA_GANAR)
+			this.finalizarJuego(" GANO al cumplir el objetivo monetario.");
+    }
     
     /**
      * Indica el final de un juego.

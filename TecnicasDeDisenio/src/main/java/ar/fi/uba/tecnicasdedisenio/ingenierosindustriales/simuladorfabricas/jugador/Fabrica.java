@@ -217,7 +217,15 @@ public class Fabrica implements Sincronizado{
 		catch(FabricaOcupadaException e){
 			if(this.isAlquilada())
 				this.getJugador().venderFabrica(0);
-			this.getJugador().venderFabrica((float) (this.getCostoCompra()*0.8));
+			else
+				this.getJugador().venderFabrica((float) (this.getCostoCompra()*0.8));
+			
+			//Aca hay que devolverle al jugador un porcentaje el costo de cada maquina que no este rota
+			
+			/*Borra todo lo que tiene seteado, hay que empezar de nuevo. Verificar si esta bien esto.*/
+			this.maquinas = new ArrayList<Maquina>();
+			this.lineas = new ArrayList<LineaProduccion>();
+			this.fuentes = new ArrayList<Fuente>();
 		}
 		this.setCostoFabricaXMes(0);
 		this.setJugador(null);

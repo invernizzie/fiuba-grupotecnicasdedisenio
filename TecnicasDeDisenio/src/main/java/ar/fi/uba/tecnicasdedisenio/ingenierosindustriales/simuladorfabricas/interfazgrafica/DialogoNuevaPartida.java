@@ -75,7 +75,7 @@ public class DialogoNuevaPartida {
 		shellPartida = new Shell();
 		shellPartida.setText("Crear Partida");
 		shellPartida.setLayout(gridLayout);
-		shellPartida.setSize(new Point(224, 185));
+		shellPartida.setSize(new Point(300, 200));
 		lUsuario = new Label(shellPartida, SWT.HORIZONTAL);
 		lUsuario.setText("Nombre de Usuario");
 		lUsuario.setLayoutData(gridData7);
