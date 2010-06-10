@@ -21,18 +21,16 @@ public class Fabrica implements Sincronizado{
 	private float costoCompra;
 	private float costoAlquiler;
 	private int metrosCuadrados;
-	private int cantMaximaLineas;
 	private Jugador jugador;
 	private float costoFabricaXMes;
 
-	public Fabrica(int metrosCuadrados, float costoCompra, float costoAlquiler, int cantMaximaLineas) {
+	public Fabrica(int metrosCuadrados, float costoCompra, float costoAlquiler) {
 		this.maquinas = new ArrayList<Maquina>();
 		this.lineas = new ArrayList<LineaProduccion>();
 		this.fuentes = new ArrayList<Fuente>();
 		this.setMetrosCuadrados(metrosCuadrados);
 		this.setCostoCompra(costoCompra);
 		this.setCostoAlquiler(costoAlquiler);
-		this.setCantMaximaLineas(cantMaximaLineas);
 		this.setCostoFabricaXMes(0);
 		Calendario.instancia().registrar(this);
 	}
@@ -45,7 +43,7 @@ public class Fabrica implements Sincronizado{
 		this.maquinas.add(maquina);
 	}
 
-	public void conectarMaquina(Fuente fuente, Maquina maquina) throws CantidadLineasMaximaException {
+	public void conectarMaquina(Fuente fuente, Maquina maquina){
 		if(!maquinas.contains(maquina)){
 			this.agregarMaquina(maquina);
 		}
@@ -75,7 +73,7 @@ public class Fabrica implements Sincronizado{
 	 * @param destino
 	 * @throws CantidadLineasMaximaException
 	 */
-	public void conectarMaquina(Maquina origen, Maquina destino) throws CantidadLineasMaximaException {
+	public void conectarMaquina(Maquina origen, Maquina destino){
 		if(!maquinas.contains(origen)){
 			this.agregarMaquina(origen);
 		}
@@ -115,15 +113,8 @@ public class Fabrica implements Sincronizado{
 		
 	}
 	
-	public void agregarLinea(LineaProduccion linea) throws CantidadLineasMaximaException {
-		this.verificarCantidadLineas();
+	public void agregarLinea(LineaProduccion linea){
 		this.lineas.add(linea);
-	}
-	
-	public void verificarCantidadLineas() throws CantidadLineasMaximaException{
-		if(this.lineas.size()==this.getCantMaximaLineas())
-			throw new CantidadLineasMaximaException();
-		
 	}
 	
 	public void setCostoCompra(float costoCompra) {
@@ -148,14 +139,6 @@ public class Fabrica implements Sincronizado{
 
 	public int getMetrosCuadrados() {
 		return metrosCuadrados;
-	}
-
-	public void setCantMaximaLineas(int cantMaximaLineas) {
-		this.cantMaximaLineas = cantMaximaLineas;
-	}
-
-	public int getCantMaximaLineas() {
-		return cantMaximaLineas;
 	}
 
 	public void setJugador(Jugador jugador) {
@@ -291,7 +274,7 @@ public class Fabrica implements Sincronizado{
 	}
 	
 	public String toString(){
-		return "Mts2: " + this.getMetrosCuadrados() + "-Compra: " + this.getCostoCompra() + "-Alquiler: " + this.getCostoAlquiler() + "-Max LP: " + this.getCantMaximaLineas();
+		return "Mts2: " + this.getMetrosCuadrados() + "-Compra: " + this.getCostoCompra() + "-Alquiler: " + this.getCostoAlquiler();
 	}
 
 	public List<LineaProduccion> getLineas() {
