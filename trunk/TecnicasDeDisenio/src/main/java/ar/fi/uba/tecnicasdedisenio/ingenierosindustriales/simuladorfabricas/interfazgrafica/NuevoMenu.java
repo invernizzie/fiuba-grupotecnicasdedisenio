@@ -23,6 +23,7 @@ import org.eclipse.swt.layout.GridData;
 public class NuevoMenu implements Sincronizado, Observer {
 
 	private static final String dirImagenes = new String("..\\TecnicasDeDisenio\\src\\main\\resources\\images\\");
+	private static final int DINERO_PARA_GANAR = 50000;
 	public static final int SEGUNDOS_POR_DIA = 1;
 
 	private boolean actualizado = false;
@@ -132,6 +133,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		pushSalir.setText("Salir");
 		pushSalir.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+				Calendario.instancia().detener();
 				shellPrincipal.close();
 			}
 			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -176,7 +178,6 @@ public class NuevoMenu implements Sincronizado, Observer {
 		groupTiempo.setLayout(gridLayout1);
 		buttonTimer = new Button(groupTiempo, SWT.NONE);
 		buttonTimer.setText("Comenzar");
-		buttonTimer.setEnabled(false);
 		textTime = new Text(groupTiempo, SWT.BORDER);
 		textTime.setEditable(false);
 		textTime.setLayoutData(gridData3);
@@ -256,9 +257,8 @@ public class NuevoMenu implements Sincronizado, Observer {
 		checkBoxInvertirLabo.setText("Invertir en Laboratorio");
 		checkBoxInvertirLabo.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				if(!getJugador().getLaboratorio().isHabilitado())
+				if(checkBoxInvertirLabo.getSelection())
 					getJugador().habilitarLaboratorio();
-					
 				else
 					getJugador().deshabilitarLaboratorio();
 				
@@ -343,7 +343,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 	/**
 	 * Carga las distintas fabricas standard.
 	 */
-	public void cargarComboFabrica(){
+	public void cargarOpcionesFabrica(){
 		int i;
 		String[] fab = new String[5];
 		
@@ -365,6 +365,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		comboFabrica.removeAll();
 		comboFabrica.setItems(fab);
 		comboFabrica.setText(comboFabrica.getItem(0));
+		checkBoxInvertirLabo.setSelection(false);
 	}
 
 	
@@ -391,7 +392,7 @@ public class NuevoMenu implements Sincronizado, Observer {
     /**
      * Crea un juego nuevo.
      */
-	public void juegoNuevo(){
+	private void juegoNuevo(){
 		DialogoNuevaPartida partida= new DialogoNuevaPartida(this);
 		partida.hacerVisible();
 		System.out.println("Se Invoca la pantalla de Creacion");
@@ -434,8 +435,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		this.shellPrincipal.open();
         this.cambiarHabilitacionBotonesDePartida(false);
 
-        Calendario.instancia().registrar(this);
-        Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
+        resetearCalendario();
 
         formateador.setMaximumFractionDigits(2);
         formateador.setMinimumFractionDigits(2);
@@ -446,7 +446,6 @@ public class NuevoMenu implements Sincronizado, Observer {
             if (this.necesitaActualizacion()) {
                 this.actualizarDatosTiempo();
                 this.actualizarDatosJugador();
-                this.actualizarDatosLaboratorio();
             }
 		}
 		display.dispose();
@@ -504,12 +503,13 @@ public class NuevoMenu implements Sincronizado, Observer {
     private void cambiarHabilitacionBotonesDePartida(boolean habilitados) {
         for (Widget boton: botonesPartida)
             ((Control) boton).setEnabled(habilitados);
-        
+   
         if(this.getJugador()!=null){
         	this.buttonAlquilar.setEnabled(!this.getJugador().hasFabrica());
         	this.buttonComprar.setEnabled(!this.getJugador().hasFabrica());
-        	this.buttonVender.setEnabled(this.getJugador().hasFabrica());
         	this.comboFabrica.setEnabled(!this.getJugador().hasFabrica());
+        	this.buttonVender.setEnabled(this.getJugador().hasFabrica());
+        	this.buttonTimer.setEnabled(this.getJugador().hasFabrica());
         }
     }
 
@@ -531,16 +531,35 @@ public class NuevoMenu implements Sincronizado, Observer {
             return;
     	textJugador.setText(getJugador().getNombre());
 		textDineroAcum.setText(formateador.format(getJugador().getDineroActual()));
+		actualizarDatosLaboratorio();
+		if (getJugador().getDineroActual()<0)
+        	this.finalizarJuego(" PERDIO al quedarse sin dinero.");
 	}
     
+    /**
+     * Indica el final de un juego.
+     * @param mensaje
+     */
+    private void finalizarJuego(String mensaje){
+    	 MessageBox messageBox =
+			   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+			 messageBox.setMessage("El jugador "+this.getJugador().getNombre() + mensaje);
+			 messageBox.open();
+		cambiarHabilitacionBotonesDePartida(false);
+		Calendario.instancia().detener();
+        buttonTimer.setEnabled(false);
+        buttonVender.setEnabled(false);
+        buttonComprar.setEnabled(false);
+        buttonAlquilar.setEnabled(false);
+        comboFabrica.setEnabled(false);
+		this.notificarActualizacion();
+    }
+    
     private void actualizarDatosLaboratorio(){
-    	if (getJugador() == null)
-    		return;
     	textTipoLabo.setText(getJugador().getLaboratorio().getTipo());
     	textDineroAcumLabo.setText(Float.toString(getJugador().getLaboratorio().getDineroAcumulado()));
     	imagenLaboratorio = new Image(display, dirImagenes+getJugador().getLaboratorio().getNombreImagen());
-    	buttonImagenLabo.setImage(imagenLaboratorio);
-    	
+    	buttonImagenLabo.setImage(imagenLaboratorio);	
     }
     
     /**
@@ -603,9 +622,8 @@ public class NuevoMenu implements Sincronizado, Observer {
 	/**
 	 * Alquila la fábrica seleccionada.
 	 * */
-	public void alquilar(){
+	private void alquilar(){
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());
-		System.out.println(comboFabrica.getText());
 		try {
 			fabrica.alquilar(this.getJugador());
 			cambiarHabilitacionBotonesDePartida(true);
@@ -625,6 +643,16 @@ public class NuevoMenu implements Sincronizado, Observer {
 		}
 		
 	}
+	
+	 /**
+     * Resetea el calendario para que vuelva a empezar.
+     */
+    public void resetearCalendario(){
+    	Calendario.instancia().inicializar();
+    	Calendario.instancia().registrar(this);
+        Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
+        buttonTimer.setText("Comenzar");
+    }
 	
 
 	public static void main(String [ ] args){

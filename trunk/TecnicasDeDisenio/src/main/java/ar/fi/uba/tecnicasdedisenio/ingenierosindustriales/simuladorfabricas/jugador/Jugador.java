@@ -18,7 +18,6 @@ public class Jugador extends Observable implements Sincronizado {
 	private Fabrica fabrica;
 	private String nombre;
 	
-	private static float DINERO_PARA_GANAR = 1000000;
 	private static final float PORCENTAJE_INVERSION_LABORATORIO = 10;
 	
 	public Jugador(String nombre, float dineroActual){
@@ -132,16 +131,10 @@ public class Jugador extends Observable implements Sincronizado {
 	
 	public void aumentarDinero(float dinero){
 		this.setDineroActual(this.getDineroActual()+dinero);
-		if(this.getDineroActual()>=Jugador.DINERO_PARA_GANAR)
-			System.out.println("GANO");
-			//GANO!!!
 	}
 	
 	public void disminuirDinero(float dinero){
 		this.setDineroActual(this.getDineroActual()-dinero);
-		if(this.getDineroActual()<0)
-			System.out.println("PERDIO");
-			//PERDIO!!!
 	}
 
 	public void setNombre(String nombre) {
