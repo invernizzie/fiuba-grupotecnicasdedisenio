@@ -42,7 +42,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 	private Text textDineroAcum = null;
 	private Button checkBoxInvertirLabo = null;
 	private Combo comboFabrica = null;
-	private Canvas canvasFabrica = null;
+	private AreaFabricaAEmbeber canvasFabrica = null;
 	private Menu submenuFabrica = null;
 	private Jugador jugador = null;
 	private Button buttonComprar = null;
@@ -288,7 +288,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		tabItemFabrica.setText("Fabrica");
 		CTabItem tabItemLaboratorio = new CTabItem(tabFolderFabrica, SWT.NONE);
 		tabItemLaboratorio.setText("Laboratorio");
-		tabItemFabrica.setControl(canvasFabrica);
+		tabItemFabrica.setControl(canvasFabrica.getCompositeControles());
 		createCompositeLaboratorio();
 		tabItemLaboratorio.setControl(compositeLaboratorio);
 	}
@@ -374,7 +374,8 @@ public class NuevoMenu implements Sincronizado, Observer {
 	 *
 	 */
 	private void createCanvasFabrica() {
-		canvasFabrica = new Canvas(tabFolderFabrica, SWT.NONE);
+		canvasFabrica = new AreaFabricaAEmbeber();
+		canvasFabrica.load(tabFolderFabrica);
 	}
 
     private synchronized boolean necesitaActualizacion() {
