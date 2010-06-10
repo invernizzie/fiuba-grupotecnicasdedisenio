@@ -1,5 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
+import java.util.HashMap;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -23,7 +25,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.inte
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeMaquinas;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeMateriaPrima;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.EspacioFabril;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPlancha;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
@@ -42,6 +44,7 @@ public class AreaFabricaAEmbeber {
 	private ConstructorDeFabricas constructorDeFabricas;
 	private EspacioFabril espacioFabril;
 	private ValidadorProductos validadorProd = ValidadorProductos.instancia();
+	private HashMap<String,TipoMaquina> hashTipoMaquinas = null;
 
 	/**
 	 * This method initializes comboMP
@@ -77,6 +80,7 @@ public class AreaFabricaAEmbeber {
 	 *
 	 */
 	private void createComboMaquina() {
+		hashTipoMaquinas = new HashMap<String,TipoMaquina>();
 		comboMaquina = new Combo(groupControl, SWT.NONE);
 		cargarMaquinas();
 		comboMaquina.select(0);
@@ -93,9 +97,23 @@ public class AreaFabricaAEmbeber {
 
 	private void cargarMaquinas() {
 		// TODO Auto-generated method stub
-		for(int i=0; i<10; i++){
+		/*for(int i=0; i<10; i++){
 			comboMaquina.add("Maquina " + i);
-		}
+		}*/
+		
+		comboMaquina.add("Horno");
+		hashTipoMaquinas.put("Horno", new TipoMaquinaHorno());
+		comboMaquina.add("Plancha");
+		hashTipoMaquinas.put("Plancha", new TipoMaquinaPlancha());
+		comboMaquina.add("Prensa");
+		hashTipoMaquinas.put("Prensa", new TipoMaquinaPrensa());
+		comboMaquina.add("Licuadora");
+		hashTipoMaquinas.put("Licuadora", new TipoMaquinaLicuadora());
+		comboMaquina.add("Mezcladora");
+		hashTipoMaquinas.put("Mezcladora", new TipoMaquinaMezcladora());
+		comboMaquina.add("ControlCalidad");
+		hashTipoMaquinas.put("ControlCalidad", new TipoMaquinaControlCalidad());
+		
 		comboMaquina.setText(comboMaquina.getItem(0));
 	}
 
@@ -108,7 +126,7 @@ public class AreaFabricaAEmbeber {
 
 	private void elegirMaquina() {
 		constructorDeFabricas.setDibujante(
-				new DibujanteDeMaquinas(espacioFabril, new TipoMaquinaPlancha()));
+				new DibujanteDeMaquinas(espacioFabril, hashTipoMaquinas.get(comboMaquina.getText())));
 	}
 	
 	public void load(CTabFolder cTabFolder) {
