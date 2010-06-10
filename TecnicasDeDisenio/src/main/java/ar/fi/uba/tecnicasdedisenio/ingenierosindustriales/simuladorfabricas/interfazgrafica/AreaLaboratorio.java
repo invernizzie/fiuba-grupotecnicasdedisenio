@@ -2,6 +2,7 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 
 import java.awt.Toolkit;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.RecursosAplicacion;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.graphics.Image;
@@ -36,7 +37,7 @@ public class AreaLaboratorio {
 	private void createSShellLaboratorio() {
 		display = new Display();
 		sShellLaboratorio = new Shell(display);
-		imagenLaboratorio = new Image(display, "C:/diego.jpg");
+		imagenLaboratorio = new Image(display, RecursosAplicacion.instance().getResourceAsStream("lab.jpg"));
 		sShellLaboratorio.setVisible(true);
 		sShellLaboratorio.setLayout(new GridLayout());
 		sShellLaboratorio.setMaximized(false);

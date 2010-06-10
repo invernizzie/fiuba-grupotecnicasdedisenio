@@ -72,6 +72,9 @@ public class EspacioFabril {
     public boolean puedeComenzarCintaEn(int _x, int _y) {
         int x = convertirCoordenada(_x);
         int y = convertirCoordenada(_y);
+        if ((x < 0) || (y < 0) || (x > ancho) || (y > alto))
+            return false;
+
         if (superficieFabril[x][y] == null)
             return false;
         return superficieFabril[x][y].puedeSerComienzoDeCinta();

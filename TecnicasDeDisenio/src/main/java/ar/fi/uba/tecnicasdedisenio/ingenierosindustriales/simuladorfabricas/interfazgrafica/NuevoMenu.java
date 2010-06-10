@@ -9,6 +9,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.cale
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.RecursosAplicacion;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.custom.CTabFolder;
@@ -570,8 +571,10 @@ public class NuevoMenu implements Sincronizado, Observer {
     private void actualizarDatosLaboratorio(){
     	textTipoLabo.setText(getJugador().getLaboratorio().getTipo());
     	textDineroAcumLabo.setText(Float.toString(getJugador().getLaboratorio().getDineroAcumulado()));
-    	imagenLaboratorio = new Image(display, dirImagenes+getJugador().getLaboratorio().getNombreImagen());
-    	buttonImagenLabo.setImage(imagenLaboratorio);	
+    	//imagenLaboratorio = new Image(display, dirImagenes+getJugador().getLaboratorio().getNombreImagen());
+    	imagenLaboratorio = new Image(display, RecursosAplicacion.instance()
+                .getResourceAsStream("images/" + getJugador().getLaboratorio().getNombreImagen()));
+    	buttonImagenLabo.setImage(imagenLaboratorio);
     }
     
     /**

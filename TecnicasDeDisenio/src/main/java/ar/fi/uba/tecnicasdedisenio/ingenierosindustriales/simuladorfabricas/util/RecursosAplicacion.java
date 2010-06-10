@@ -65,6 +65,9 @@ public class RecursosAplicacion {
         
         return Integer.parseInt(this.getProperty(key));
     }
-    
+
+    public InputStream getResourceAsStream(String classpathRelativePath) {
+        return this.getClass().getClassLoader().getResourceAsStream(classpathRelativePath);
+    }
 }
 
