@@ -32,7 +32,6 @@ public class Fabrica implements Sincronizado{
 		this.setCostoCompra(costoCompra);
 		this.setCostoAlquiler(costoAlquiler);
 		this.setCostoFabricaXMes(0);
-		Calendario.instancia().registrar(this);
 	}
 
 	public void agregarFuente(Fuente fuente) {
@@ -205,6 +204,7 @@ public class Fabrica implements Sincronizado{
 		this.lineas = new ArrayList<LineaProduccion>();
 		this.setJugador(jugador);
 		this.setCostoFabricaXMes(costoXMes);
+		Calendario.instancia().registrar(this);
 	}
 
 	/**
@@ -225,6 +225,7 @@ public class Fabrica implements Sincronizado{
 		/*Antes de borrar todas sus lineas de produccion y tambien pasarle el 50%
 		 * del valor de cada maquina que no este rota al jugador.*/
 		this.lineas = null;
+		Calendario.instancia().desregistrar(this);
 		
 	}
 	
@@ -248,7 +249,8 @@ public class Fabrica implements Sincronizado{
 	public void notificar(Evento evento) {
 		if(evento.equals(Evento.COMIENZO_DE_MES)){
 			this.asignarCostoJugador();
-		}else if(evento.equals(Evento.COMIENZO_DE_DIA)){
+		}
+		if(evento.equals(Evento.COMIENZO_DE_DIA)){
 			try {
 				for (LineaProduccion linea : lineas) {
 						linea.procesar();

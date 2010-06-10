@@ -129,6 +129,7 @@ public class DialogoNuevaPartida {
 	menu.setJugador(jug);
 	menu.getJugador().addObserver(menu);
 	menu.getJugador().setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
+	menu.cargarComboFabrica();
 	//menu.getJugador().getLaboratorio().addObserver(menu);
 	
 	shellPartida.close();

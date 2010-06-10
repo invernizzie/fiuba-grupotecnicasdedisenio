@@ -192,6 +192,7 @@ public class NuevoMenu implements Sincronizado, Observer {
                     buttonVender.setEnabled(false);
                     buttonComprar.setEnabled(false);
                     buttonAlquilar.setEnabled(false);
+                    comboFabrica.setEnabled(false);
                 }
                 else{
                     if (Calendario.instancia().estaPausado()){
@@ -202,6 +203,8 @@ public class NuevoMenu implements Sincronizado, Observer {
                         buttonVender.setEnabled(false);
                         buttonComprar.setEnabled(false);
                         buttonAlquilar.setEnabled(false);
+                        comboFabrica.setEnabled(false);
+                        
                     }
                     else{
                         Calendario.instancia().pausar();
@@ -327,8 +330,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 			}
 		});
 		
-		cargarComboFabrica();
-		
+		comboFabrica = new Combo(groupJugador, SWT.NONE);
 		comboFabrica.setLayoutData(gridData6);
 		
         //botonesPartida.add(buttonFabrica);
@@ -344,7 +346,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 	public void cargarComboFabrica(){
 		int i;
 		String[] fab = new String[5];
-		comboFabrica = new Combo(groupJugador, SWT.NONE);
+		
 		/*
 		 * Fabrica 0: Tamanio 100, Costo Compra 1000, Costo Alquiler 150, Cantidad Lineas 1.
 		 * Fabrica 1: Tamanio 200, Costo Compra 2000, Costo Alquiler 300, Cantidad Lineas 2.
@@ -359,6 +361,8 @@ public class NuevoMenu implements Sincronizado, Observer {
 			fabricas.put(fabrica.toString(),fabrica);
 			fab[i]=fabrica.toString();
 		}
+		//comboFabrica = new Combo(groupJugador, SWT.NONE);
+		comboFabrica.removeAll();
 		comboFabrica.setItems(fab);
 		comboFabrica.setText(comboFabrica.getItem(0));
 	}
@@ -390,7 +394,6 @@ public class NuevoMenu implements Sincronizado, Observer {
 	public void juegoNuevo(){
 		DialogoNuevaPartida partida= new DialogoNuevaPartida(this);
 		partida.hacerVisible();
-		cargarComboFabrica();
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
 
@@ -506,6 +509,7 @@ public class NuevoMenu implements Sincronizado, Observer {
         	this.buttonAlquilar.setEnabled(!this.getJugador().hasFabrica());
         	this.buttonComprar.setEnabled(!this.getJugador().hasFabrica());
         	this.buttonVender.setEnabled(this.getJugador().hasFabrica());
+        	this.comboFabrica.setEnabled(!this.getJugador().hasFabrica());
         }
     }
 
@@ -601,6 +605,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 	 * */
 	public void alquilar(){
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());
+		System.out.println(comboFabrica.getText());
 		try {
 			fabrica.alquilar(this.getJugador());
 			cambiarHabilitacionBotonesDePartida(true);
