@@ -1,6 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CintaImposibleException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CoordenadasNoPertenecenAlEspacioException;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Canvas;
 
@@ -22,10 +23,14 @@ public class DibujanteDeCintas extends Dibujante {
 
     @Override
     public void mouseDown(int x, int y) {
-        if (getEspacioFabril().puedeComenzarCintaEn(x, y)) {
-            dibujando = true;
-            primerX = x;
-            primerY = y;
+        try {
+            if (getEspacioFabril().puedeComenzarCintaEn(x, y)) {
+                dibujando = true;
+                primerX = x;
+                primerY = y;
+            }
+        } catch (CoordenadasNoPertenecenAlEspacioException e) {
+            // No se hace nada
         }
     }
 
@@ -36,6 +41,8 @@ public class DibujanteDeCintas extends Dibujante {
         try {
             getEspacioFabril().crearCinta(primerX, primerY, x, y);
         } catch (CintaImposibleException e) {
+            // Simplemente no se crea la cinta
+        } catch (CoordenadasNoPertenecenAlEspacioException e) {
             // Simplemente no se crea la cinta
         }
 
