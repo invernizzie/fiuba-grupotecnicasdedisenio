@@ -34,7 +34,7 @@ public class TestCompraVentaCalendario {
 		 */
 		fabricas = new ArrayList<Fabrica>();
 		for(i=0;i<5;i++){
-			fabricas.add(new Fabrica((i+1)*100,(i+1)*1000, (i+1)*150, (i+1)));
+			fabricas.add(new Fabrica((i+1)*100,(i+1)*1000, (i+1)*150));
 		}
 	}
 	

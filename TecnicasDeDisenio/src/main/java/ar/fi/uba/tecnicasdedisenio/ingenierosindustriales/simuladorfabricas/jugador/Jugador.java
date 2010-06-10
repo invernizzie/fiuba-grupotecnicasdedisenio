@@ -76,11 +76,11 @@ public class Jugador extends Observable implements Sincronizado {
 		this.getFabrica().agregarFuente(fuente);
 	}
 	
-	public void conectarMaquina(Fuente fuente, Maquina maquina) throws CantidadLineasMaximaException{
+	public void conectarMaquina(Fuente fuente, Maquina maquina){
 		this.getFabrica().conectarMaquina(fuente, maquina);
 	}
 	
-	public void conectarMaquina(Maquina origen, Maquina destino) throws CantidadLineasMaximaException {
+	public void conectarMaquina(Maquina origen, Maquina destino){
 		this.getFabrica().conectarMaquina(origen, destino);
 	}
 

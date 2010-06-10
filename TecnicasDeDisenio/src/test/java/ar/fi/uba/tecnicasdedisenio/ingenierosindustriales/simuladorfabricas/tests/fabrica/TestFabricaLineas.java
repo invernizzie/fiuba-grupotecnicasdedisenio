@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.CantidadLineasMaximaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Fabrica;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
@@ -34,7 +33,7 @@ public class TestFabricaLineas {
 
 	@Before
 	public void setUp() throws Exception {
-		this.fabrica = new Fabrica(1, 1, 1, 10);
+		this.fabrica = new Fabrica(1, 1, 1);
 		this.fuenteTrigo = new Fuente("trigo", 100, 
 				new Producto(ValidadorProductos.instancia(), "trigo", 0));
 		this.fuenteAgua = new Fuente("agua", 100, 
@@ -61,12 +60,9 @@ public class TestFabricaLineas {
 		fabrica.agregarMaquina(licuadora);
 		fabrica.agregarMaquina(plancha);
 		
-		try {
-			fabrica.conectarMaquina(fuenteTrigo, horno);
-			fabrica.conectarMaquina(horno, licuadora);
-		} catch (CantidadLineasMaximaException e) {
-			e.printStackTrace();
-		}
+		fabrica.conectarMaquina(fuenteTrigo, horno);
+		fabrica.conectarMaquina(horno, licuadora);
+		
 		
 		List<LineaProduccion> lineas = fabrica.getLineas();
 		Assert.assertEquals("Se esperaba una sola linea", 1, lineas.size());
