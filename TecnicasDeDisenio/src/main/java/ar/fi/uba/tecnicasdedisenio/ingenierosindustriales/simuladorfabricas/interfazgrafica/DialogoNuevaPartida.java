@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.SWT;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 
@@ -125,13 +126,12 @@ public class DialogoNuevaPartida {
 	 */
 	
 	public void crearJuego(){
+	menu.resetearCalendario();
 	Jugador jug = new Jugador(tUsuario.getText(),new Float(sDineroInicial.getText()));
 	menu.setJugador(jug);
 	menu.getJugador().addObserver(menu);
 	menu.getJugador().setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
-	menu.cargarComboFabrica();
-	//menu.getJugador().getLaboratorio().addObserver(menu);
-	
+	menu.cargarOpcionesFabrica();
 	shellPartida.close();
 	}
 	/**
