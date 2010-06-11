@@ -5,6 +5,7 @@ import java.util.Set;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.ProcesamientoException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 public class LineaProduccion {
@@ -15,6 +16,28 @@ public class LineaProduccion {
 	private Contenedor contenedor;
 	private Laboratorio laboratorio;
 	private Float costoLinea = 0F;
+	
+	/**
+	 * Una máquina es la última de la linea si no figura en la lista de precedentes
+	 * de otra máquina.
+	 * @param maquinaAVerificar
+	 * @return
+	 */
+	private boolean esUltimaMaquina(Maquina maquinaAVerificar){
+		
+		boolean esUltima = true;
+		
+		for (Maquina maquina : maquinas) {
+			if(!maquina.equals(maquinaAVerificar) &&
+					!maquina.getPrecedentes().isEmpty() && 
+					maquina.getPrecedentes().contains(maquinaAVerificar)){
+				esUltima = false;
+			}
+		}
+		
+		return esUltima;
+		
+	}
 	
 	public LineaProduccion(Laboratorio laboratorio){
 		this.maquinas = new HashSet<Maquina>();
@@ -47,28 +70,6 @@ public class LineaProduccion {
 	
 	public Maquina obtenerUltimaMaquina(){
 		return this.ultimaMaquina;
-	}
-	
-	/**
-	 * Una máquina es la última de la linea si no figura en la lista de precedentes
-	 * de otra máquina.
-	 * @param maquinaAVerificar
-	 * @return
-	 */
-	private boolean esUltimaMaquina(Maquina maquinaAVerificar){
-		
-		boolean esUltima = true;
-		
-		for (Maquina maquina : maquinas) {
-			if(!maquina.equals(maquinaAVerificar) &&
-					!maquina.getPrecedentes().isEmpty() && 
-					maquina.getPrecedentes().contains(maquinaAVerificar)){
-				esUltima = false;
-			}
-		}
-		
-		return esUltima;
-		
 	}
 	
 	public boolean esPrimeraMaquina(Maquina maquinaAVerificar){

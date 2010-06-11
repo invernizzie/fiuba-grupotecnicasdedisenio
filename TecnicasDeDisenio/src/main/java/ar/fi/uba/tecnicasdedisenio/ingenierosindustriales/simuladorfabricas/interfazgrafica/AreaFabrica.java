@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.FillLayout;
-
+@Deprecated
 public class AreaFabrica {
 
 	private Shell shellAreaDibujo = null;  //  @jve:decl-index=0:visual-constraint="109,17"

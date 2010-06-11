@@ -1,6 +1,5 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -26,25 +25,20 @@ import java.util.*;
  * @created 24/05/2010
  */
 public class Calendario {
-
+	
+	private static Calendario instancia = new Calendario();
+	
     public static final int ANIO_INICIAL = 1999;
     public static final int MES_INICIAL = 11;
     public static final int DIA_INICIAL = 31;
     public static final int DEFAULT_SEGUNDOS_POR_DIA = 5;
 
-    private static Calendario instancia = new Calendario();
-
     private int segundosPorDia = DEFAULT_SEGUNDOS_POR_DIA;
     private List<Sincronizado> sincronizados = new ArrayList<Sincronizado>();
-
     private boolean iniciado = false;
-
     private boolean detenido = false;
-
     private boolean pausado = false;
-
     private Calendar virtualCalendar = new GregorianCalendar(ANIO_INICIAL, MES_INICIAL, DIA_INICIAL);
-
     private Thread threadCalendario = new ThreadCalendario(this);
 
     /**
@@ -54,7 +48,16 @@ public class Calendario {
     public static Calendario instancia() {
         return instancia;
     }
-
+    
+    /**
+     * Constructor privado para evitar instanciacion externa.
+     */
+    private Calendario() {}
+    
+    private synchronized List<Sincronizado> getSincronizados() {
+        return sincronizados;
+    }
+    
     /**
      * Restaura el calendario virtual a la fecha inicial.
      * Luego debe ser iniciado para comenzar el paso del tiempo.
@@ -185,10 +188,6 @@ public class Calendario {
         this.segundosPorDia = segundosPorDia;
     }
 
-    private synchronized List<Sincronizado> getSincronizados() {
-        return sincronizados;
-    }
-
     // Acceso de paquete
     synchronized Calendar getVirtualCalendar() {
         return virtualCalendar;
@@ -200,8 +199,5 @@ public class Calendario {
             sincronizado.notificar(evento);
     }
 
-    /**
-     * Constructor privado para evitar instanciacion externa.
-     */
-    private Calendario() {}
+    
 }

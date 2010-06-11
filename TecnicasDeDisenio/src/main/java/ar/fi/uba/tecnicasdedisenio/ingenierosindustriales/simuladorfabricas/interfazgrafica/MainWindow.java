@@ -20,6 +20,7 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
+@Deprecated
 public class MainWindow implements Sincronizado {
 
 	private Shell sShell = null;  //  @jve:decl-index=0:visual-constraint="106,8"
@@ -36,11 +37,11 @@ public class MainWindow implements Sincronizado {
 	private Button checkInvertirLab = null;
 	private Canvas canvasFabrica = null;
 	private Button bFabrica = null;
-	private Combo comboFabrica = null;
     private ToolBar toolbarCalendario = null;
     private ToolItem botonControlDeTiempo;
     private Label labelFecha;
     private boolean actualizado = false;
+    private Combo comboFabrica = null;
     private Jugador jugador = null;
 
 

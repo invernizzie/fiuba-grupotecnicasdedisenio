@@ -98,5 +98,4 @@ public class Contenedor {
 		this.cintas.remove(cintaTransportadora);
 		
 	}
-
 }

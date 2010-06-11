@@ -10,11 +10,16 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util
  */
 public class ValidadorProductos {
 	
+	private final static ValidadorProductos instancia = new ValidadorProductos();
+	
 	private HashMap<String,String> MapProductos;
 	private XMLParser parser;
 	
-	private final static ValidadorProductos instancia = new ValidadorProductos();
-
+	private ValidadorProductos() {
+		this.MapProductos = new HashMap<String,String>();
+		this.Cargar();
+	}
+	
 	public HashMap<String, String> getMapProductos() {
 		return MapProductos;
 	}
@@ -33,11 +38,6 @@ public class ValidadorProductos {
 
 	public static ValidadorProductos instancia(){
 		return instancia;
-	}
-	
-	private ValidadorProductos() {
-		this.MapProductos = new HashMap<String,String>();
-		this.Cargar();
 	}
 
 	// TODO Aca se debería hacer la carga con el parser XML
@@ -68,10 +68,12 @@ public class ValidadorProductos {
 		if(this.MapProductos.get(producto).equals("habilitado"))
 				return true;
 		return false;
-		}
+	}
+	
 	public String toString(){
 		return MapProductos.toString();
 	}
+	
 	public String[] getAll(){
 		int cantidad = MapProductos.size();
 		String productos[] = new String[cantidad]; 

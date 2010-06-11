@@ -42,5 +42,4 @@ public class ControlCalidad extends Maquina {
 		// producto es el de esta última
 		return this.getPrecedentes().get(0).getTipoProducto();
 	}
-
 }

@@ -5,6 +5,9 @@ import java.util.*;
 
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.*;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.excepciones.DineroInsuficienteException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.excepciones.FabricaOcupadaException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.excepciones.JugadorConFabricaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
@@ -21,7 +24,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 
-public class NuevoMenu implements Sincronizado, Observer {
+public class VistaPrincipal implements Sincronizado, Observer {
 
 	private static final String dirImagenes = new String("..\\TecnicasDeDisenio\\src\\main\\resources\\images\\");
 	private static final int DINERO_PARA_GANAR = 50000;
@@ -342,35 +345,6 @@ public class NuevoMenu implements Sincronizado, Observer {
 	}
 	
 	/**
-	 * Carga las distintas fabricas standard.
-	 */
-	public void cargarOpcionesFabrica(){
-		int i;
-		String[] fab = new String[5];
-		
-		/*
-		 * Fabrica 0: Tamanio 100, Costo Compra 1000, Costo Alquiler 150, Cantidad Lineas 1.
-		 * Fabrica 1: Tamanio 200, Costo Compra 2000, Costo Alquiler 300, Cantidad Lineas 2.
-		 * Fabrica 2: Tamanio 300, Costo Compra 3000, Costo Alquiler 450, Cantidad Lineas 3.
-		 * Fabrica 3: Tamanio 400, Costo Compra 4000, Costo Alquiler 600, Cantidad Lineas 4.
-		 * Fabrica 4: Tamanio 500, Costo Compra 5000, Costo Alquiler 750, Cantidad Lineas 5.
-		 */
-		fabricas = new HashMap<String,Fabrica>();
-		Fabrica fabrica = null;
-		for(i=0;i<5;i++){
-			fabrica = new Fabrica((i+1)*100,(i+1)*1000, (i+1)*150);
-			fabricas.put(fabrica.toString(),fabrica);
-			fab[i]=fabrica.toString();
-		}
-		//comboFabrica = new Combo(groupJugador, SWT.NONE);
-		comboFabrica.removeAll();
-		comboFabrica.setItems(fab);
-		comboFabrica.setText(comboFabrica.getItem(0));
-		checkBoxInvertirLabo.setSelection(false);
-	}
-
-	
-	/**
 	 * This method initializes canvasFabrica
 	 *
 	 */
@@ -399,61 +373,7 @@ public class NuevoMenu implements Sincronizado, Observer {
 		partida.hacerVisible();
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
-
-    @Override
-    public void notificar(Evento evento) {
-        String textoControlDeTiempo = null;
-        switch (evento) {
-            case INICIO_TIEMPO:
-            case FIN_PAUSA:
-                textoControlDeTiempo = "Pausar";
-                break;
-            case INICIO_PAUSA:
-                textoControlDeTiempo = "Reanudar";
-                break;
-            case FIN_TIEMPO:
-            	buttonTimer.setEnabled(false);
-                break;
-            case COMIENZO_DE_DIA:
-            	forzarActualizacion();
-                break;
-        }
-
-        if (textoControlDeTiempo != null)
-        	buttonTimer.setText(textoControlDeTiempo);
-    }    
 	
-	public void run() {
-		// TODO Auto-generated method stub
-		/* Before this is run, be sure to set up the launch configuration (Arguments->VM Arguments)
-		 * for the correct SWT library path in order to run with the SWT dlls.
-		 * The dlls are located in the SWT plugin jar.
-		 * For example, on Windows the Eclipse SWT 3.1 plugin jar is:
-		 *       installation_directory\plugins\org.eclipse.swt.win32_3.1.0.jar
-		 */
-		display  = Display.getDefault();
-		//NuevoMenu thisClass = new NuevoMenu();
-		this.createShellPrincipal();
-		this.shellPrincipal.open();
-        this.cambiarHabilitacionBotonesDePartida(false);
-
-        resetearCalendario();
-
-        formateador.setMaximumFractionDigits(2);
-        formateador.setMinimumFractionDigits(2);
-
-		while (!this.shellPrincipal.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-            if (this.necesitaActualizacion()) {
-                this.actualizarDatosTiempo();
-                this.actualizarDatosJugador();
-                this.verificarFinalJuego();
-            }
-		}
-		display.dispose();
-	}
-
 	private void createCompositeLaboratorio() {
 		GridData gridData5 = new GridData();
 		gridData5.grabExcessHorizontalSpace = true;
@@ -515,18 +435,8 @@ public class NuevoMenu implements Sincronizado, Observer {
         	this.buttonTimer.setEnabled(this.getJugador().hasFabrica());
         }
     }
-
-    public void setJugador(Jugador jugador) {
-    	this.jugador = jugador;
-        cambiarHabilitacionBotonesDePartida(jugador != null);
-        
-	}
-
-	public Jugador getJugador() {
-		return jugador;
-	}
-    
-	/**
+	
+    /**
 	 * Actualiza los datos de un jugador en la pantalla.
 	 */
     private void actualizarDatosJugador() {
@@ -585,12 +495,7 @@ public class NuevoMenu implements Sincronizado, Observer {
     	notificarActualizacion();
     }
     
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		forzarActualizacion();
-	}
-	
-	/**
+    /**
 	 * Vende la fábrica del jugador.
 	 * */
 	private void vender(){
@@ -658,20 +563,118 @@ public class NuevoMenu implements Sincronizado, Observer {
 		}
 		
 	}
+    
+	/**
+	 * Carga las distintas fabricas standard.
+	 */
+	public void cargarOpcionesFabrica(){
+		int i;
+		String[] fab = new String[5];
+		
+		/*
+		 * Fabrica 0: Tamanio 100, Costo Compra 1000, Costo Alquiler 150, Cantidad Lineas 1.
+		 * Fabrica 1: Tamanio 200, Costo Compra 2000, Costo Alquiler 300, Cantidad Lineas 2.
+		 * Fabrica 2: Tamanio 300, Costo Compra 3000, Costo Alquiler 450, Cantidad Lineas 3.
+		 * Fabrica 3: Tamanio 400, Costo Compra 4000, Costo Alquiler 600, Cantidad Lineas 4.
+		 * Fabrica 4: Tamanio 500, Costo Compra 5000, Costo Alquiler 750, Cantidad Lineas 5.
+		 */
+		fabricas = new HashMap<String,Fabrica>();
+		Fabrica fabrica = null;
+		for(i=0;i<5;i++){
+			fabrica = new Fabrica((i+1)*100,(i+1)*1000, (i+1)*150);
+			fabricas.put(fabrica.toString(),fabrica);
+			fab[i]=fabrica.toString();
+		}
+		//comboFabrica = new Combo(groupJugador, SWT.NONE);
+		comboFabrica.removeAll();
+		comboFabrica.setItems(fab);
+		comboFabrica.setText(comboFabrica.getItem(0));
+		checkBoxInvertirLabo.setSelection(false);
+	}
+
 	
-	 /**
-     * Resetea el calendario para que vuelva a empezar.
-     */
+    @Override
+    public void notificar(Evento evento) {
+        String textoControlDeTiempo = null;
+        switch (evento) {
+            case INICIO_TIEMPO:
+            case FIN_PAUSA:
+                textoControlDeTiempo = "Pausar";
+                break;
+            case INICIO_PAUSA:
+                textoControlDeTiempo = "Reanudar";
+                break;
+            case FIN_TIEMPO:
+            	buttonTimer.setEnabled(false);
+                break;
+            case COMIENZO_DE_DIA:
+            	forzarActualizacion();
+                break;
+        }
+
+        if (textoControlDeTiempo != null)
+        	buttonTimer.setText(textoControlDeTiempo);
+    }    
+	
+	public void run() {
+		// TODO Auto-generated method stub
+		/* Before this is run, be sure to set up the launch configuration (Arguments->VM Arguments)
+		 * for the correct SWT library path in order to run with the SWT dlls.
+		 * The dlls are located in the SWT plugin jar.
+		 * For example, on Windows the Eclipse SWT 3.1 plugin jar is:
+		 *       installation_directory\plugins\org.eclipse.swt.win32_3.1.0.jar
+		 */
+		display  = Display.getDefault();
+		//NuevoMenu thisClass = new NuevoMenu();
+		this.createShellPrincipal();
+		this.shellPrincipal.open();
+        this.cambiarHabilitacionBotonesDePartida(false);
+
+        resetearCalendario();
+
+        formateador.setMaximumFractionDigits(2);
+        formateador.setMinimumFractionDigits(2);
+
+		while (!this.shellPrincipal.isDisposed()) {
+			if (!display.readAndDispatch())
+				display.sleep();
+            if (this.necesitaActualizacion()) {
+                this.actualizarDatosTiempo();
+                this.actualizarDatosJugador();
+                this.verificarFinalJuego();
+            }
+		}
+		display.dispose();
+	}
+
+    public void setJugador(Jugador jugador) {
+    	this.jugador = jugador;
+        cambiarHabilitacionBotonesDePartida(jugador != null);
+        
+	}
+
+	public Jugador getJugador() {
+		return jugador;
+	}
+    
+	
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		forzarActualizacion();
+	}
+	
+	/**
+    * Resetea el calendario para que vuelva a empezar.
+    */
     public void resetearCalendario(){
     	Calendario.instancia().inicializar();
     	Calendario.instancia().registrar(this);
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         buttonTimer.setText("Comenzar");
     }
-	
 
 	public static void main(String [ ] args){
-		NuevoMenu ventana = new NuevoMenu();
+		VistaPrincipal ventana = new VistaPrincipal();
 		ventana.run();
 	}
 }
