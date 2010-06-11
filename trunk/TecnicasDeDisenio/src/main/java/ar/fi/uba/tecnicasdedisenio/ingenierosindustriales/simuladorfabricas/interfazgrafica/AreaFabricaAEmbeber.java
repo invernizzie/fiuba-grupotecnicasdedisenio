@@ -5,7 +5,6 @@ import java.util.HashMap;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -15,9 +14,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.ConstructorDeFabricas;
@@ -65,16 +62,7 @@ public class AreaFabricaAEmbeber {
 		});
 
 	}
-
-	protected void cargarComboMateriaPrimas() {
-		for(int i=0; i<10; i++){
-			comboMP.add(new String("Materia Prima  " + i));
-		}
-		comboMP.setItems(validadorProd.toString().split(",", 0));
-		comboMP.setItems(validadorProd.getAll());
-		comboMP.setText(comboMP.getItem(0));
-	}
-
+	
 	/**
 	 * This method initializes comboMaquina
 	 *
@@ -129,39 +117,6 @@ public class AreaFabricaAEmbeber {
 				new DibujanteDeMaquinas(espacioFabril, hashTipoMaquinas.get(comboMaquina.getText())));
 	}
 	
-	public void load(CTabFolder cTabFolder) {
-		// TODO Auto-generated method stub
-		createShellAreaDibujo(cTabFolder);
-	}
-	
-	public void run() {
-		Display display =new Display();
-		Shell shell = new Shell(display);
-		GridData gridData = new GridData();
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		gridData.grabExcessHorizontalSpace = true;
-		gridData.horizontalAlignment = GridData.FILL;
-		gridData.verticalAlignment = GridData.FILL;
-		gridData.grabExcessVerticalSpace = true;
-		CTabFolder cTabFolder = new CTabFolder(shell, SWT.NONE);
-		cTabFolder.setLayoutData(gridData);
-		CTabItem cTabItem = new CTabItem(cTabFolder, SWT.NONE);
-		cTabItem.setText("Fabrica");
-		createShellAreaDibujo(cTabFolder);
-		cTabItem.setControl(compositeControles);
-
-		shell.setLayout(gridLayout);
-		shell.setSize(new Point(399, 316));
-		shell.setVisible(true);
-
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
-
 	/**
 	 * This method initializes shellAreaDibujo
 	 * @param shellAreaDibujo
@@ -255,11 +210,7 @@ public class AreaFabricaAEmbeber {
 
 
 	}
-
-	public void DibujarLinea(){
-		this.setDibujar(!this.getDibujar());
-	}
-
+	
 	/**
 	 * This method initializes compositeControles
 	 * @param shellAreaDibujo
@@ -269,6 +220,61 @@ public class AreaFabricaAEmbeber {
 		compositeControles = new Composite(cTabFolder, SWT.NONE);
 		compositeControles.setLayout(new GridLayout());
 		createGroupControl();
+	}
+	
+	private void deseleccionarControles() {
+		buttonCinta.setSelection(false);
+		buttonMaquina.setSelection(false);
+		buttonMateriaPrima.setSelection(false);
+		comboMP.setEnabled(false);
+		comboMaquina.setEnabled(false);
+	}
+	
+	protected void cargarComboMateriaPrimas() {
+		for(int i=0; i<10; i++){
+			comboMP.add(new String("Materia Prima  " + i));
+		}
+		comboMP.setItems(validadorProd.toString().split(",", 0));
+		comboMP.setItems(validadorProd.getAll());
+		comboMP.setText(comboMP.getItem(0));
+	}
+	
+	public void load(CTabFolder cTabFolder) {
+		// TODO Auto-generated method stub
+		createShellAreaDibujo(cTabFolder);
+	}
+	
+	public void run() {
+		Display display =new Display();
+		Shell shell = new Shell(display);
+		GridData gridData = new GridData();
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		gridData.grabExcessHorizontalSpace = true;
+		gridData.horizontalAlignment = GridData.FILL;
+		gridData.verticalAlignment = GridData.FILL;
+		gridData.grabExcessVerticalSpace = true;
+		CTabFolder cTabFolder = new CTabFolder(shell, SWT.NONE);
+		cTabFolder.setLayoutData(gridData);
+		CTabItem cTabItem = new CTabItem(cTabFolder, SWT.NONE);
+		cTabItem.setText("Fabrica");
+		createShellAreaDibujo(cTabFolder);
+		cTabItem.setControl(compositeControles);
+
+		shell.setLayout(gridLayout);
+		shell.setSize(new Point(399, 316));
+		shell.setVisible(true);
+
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch())
+				display.sleep();
+		}
+		display.dispose();
+	}
+
+	
+	public void DibujarLinea(){
+		this.setDibujar(!this.getDibujar());
 	}
 
 	public void setDibujar(Boolean dibujar) {
@@ -281,14 +287,6 @@ public class AreaFabricaAEmbeber {
 
 	public Canvas getCanvas() {
 		return canvas;
-	}
-
-	private void deseleccionarControles() {
-		buttonCinta.setSelection(false);
-		buttonMaquina.setSelection(false);
-		buttonMateriaPrima.setSelection(false);
-		comboMP.setEnabled(false);
-		comboMaquina.setEnabled(false);
 	}
 
 	public Composite getCompositeControles() {

@@ -6,19 +6,21 @@ import java.util.Observable;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.excepciones.DineroInsuficienteException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.excepciones.JugadorConFabricaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.*;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.excepciones.LaboratorioInhabilitadoException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 
 public class Jugador extends Observable implements Sincronizado {
 	
+	private static final float PORCENTAJE_INVERSION_LABORATORIO = 10;
 	
 	private float dineroActual;
 	private Laboratorio laboratorio;
 	private Fabrica fabrica;
 	private String nombre;
-	
-	private static final float PORCENTAJE_INVERSION_LABORATORIO = 10;
 	
 	public Jugador(String nombre, float dineroActual){
 		this.setDineroActual(dineroActual);
@@ -152,7 +154,4 @@ public class Jugador extends Observable implements Sincronizado {
 			this.invertirDineroLaboratorio(PORCENTAJE_INVERSION_LABORATORIO);
 		
 	}
-
-	
-	
 }

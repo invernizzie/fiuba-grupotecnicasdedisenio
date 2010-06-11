@@ -99,7 +99,18 @@ public abstract class Maquina implements Cloneable  {
 		}
 		
 	}
-
+	
+	/**
+	 * Verifica si la máquina se rompió luego de haber sido utilizada y cambia su 
+	 * estado de manera acorde.
+	 */
+	protected void verificarRotura(){
+		double proba= Math.random();
+		if(getTasaRotura() >= proba) {
+			this.estaRota = true;
+		} 
+	}
+	
 	private void obtenerProductosEntrada() {
 		this.setProductos(getEntrada().getProdcutos());
 		
@@ -107,7 +118,7 @@ public abstract class Maquina implements Cloneable  {
 			this.productos.add(producto);
 		}
 	}
-
+	
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
@@ -208,17 +219,6 @@ public abstract class Maquina implements Cloneable  {
 		return estaRota;
 	}
 	
-	/**
-	 * Verifica si la máquina se rompió luego de haber sido utilizada y cambia su 
-	 * estado de manera acorde.
-	 */
-	protected void verificarRotura(){
-		double proba= Math.random();
-		if(getTasaRotura() >= proba) {
-			this.estaRota = true;
-		} 
-	}
-
 	public void setSiguiente(Maquina siguiente) {
 		this.siguiente = siguiente;
 	}

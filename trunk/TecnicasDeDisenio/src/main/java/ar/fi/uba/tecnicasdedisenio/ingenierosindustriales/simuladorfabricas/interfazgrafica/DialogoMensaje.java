@@ -16,7 +16,8 @@ import org.eclipse.swt.widgets.Shell;
  *         Date: 05/06/2010
  */
 public class DialogoMensaje {
-    public DialogoMensaje(String mensaje) {
+   
+	public DialogoMensaje(String mensaje) {
         Display display = Display.getCurrent();
         final Shell dialog = new Shell (SWT.DIALOG_TRIM);
         Label label = new Label (dialog, SWT.NONE);

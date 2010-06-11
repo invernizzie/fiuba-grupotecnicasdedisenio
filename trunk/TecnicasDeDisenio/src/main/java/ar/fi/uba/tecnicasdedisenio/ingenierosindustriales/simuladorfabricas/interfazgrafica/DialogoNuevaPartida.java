@@ -3,14 +3,11 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 import java.util.HashMap;
 
 
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.SWT;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 
@@ -26,12 +23,7 @@ public class DialogoNuevaPartida {
 	private Label lTipoLaboratorio = null;
 	private Combo cTipoLaboratorio = null;
 	private HashMap<String,Laboratorio> hashLaboratorios = null;
-	private NuevoMenu menu;
-
-	public DialogoNuevaPartida(NuevoMenu menu){
-		this.createShellPartida();
-		this.menu = menu;
-	}
+	private VistaPrincipal menu;
 
     /**
 	 * This method initializes shellPartida
@@ -119,21 +111,7 @@ public class DialogoNuevaPartida {
 			}
 		});
 	}
-
-    /**
-	 * This method initializes shellPartida
-	 *
-	 */
 	
-	public void crearJuego(){
-	menu.resetearCalendario();
-	Jugador jug = new Jugador(tUsuario.getText(),new Float(sDineroInicial.getText()));
-	menu.setJugador(jug);
-	menu.getJugador().addObserver(menu);
-	menu.getJugador().setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
-	menu.cargarOpcionesFabrica();
-	shellPartida.close();
-	}
 	/**
 	 * This method initializes cTipoFabrica
 	 *
@@ -165,6 +143,26 @@ public class DialogoNuevaPartida {
 		cTipoLaboratorio.setText(cTipoLaboratorio.getItem(0));
 	}
 
+    /**
+	 * This method initializes shellPartida
+	 *
+	 */
+	
+	public DialogoNuevaPartida(VistaPrincipal menu){
+		this.createShellPartida();
+		this.menu = menu;
+	}
+	
+	public void crearJuego(){
+		menu.resetearCalendario();
+		Jugador jug = new Jugador(tUsuario.getText(),new Float(sDineroInicial.getText()));
+		menu.setJugador(jug);
+		menu.getJugador().addObserver(menu);
+		menu.getJugador().setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
+		menu.cargarOpcionesFabrica();
+		shellPartida.close();
+	}
+	
 	public void hacerVisible(){
 		this.shellPartida.setVisible(true);
 	}

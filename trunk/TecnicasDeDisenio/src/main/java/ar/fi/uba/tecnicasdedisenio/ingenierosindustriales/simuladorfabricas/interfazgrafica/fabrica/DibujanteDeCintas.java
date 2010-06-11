@@ -2,8 +2,6 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CintaImposibleException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CoordenadasNoPertenecenAlEspacioException;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.widgets.Canvas;
 
 /**
  * @author Esteban I. Invernizzi (invernizzie@gmail.com)

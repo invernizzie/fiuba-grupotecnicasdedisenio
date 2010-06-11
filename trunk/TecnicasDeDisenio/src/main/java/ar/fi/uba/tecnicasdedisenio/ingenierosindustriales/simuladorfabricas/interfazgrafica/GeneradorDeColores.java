@@ -19,6 +19,7 @@ public class GeneradorDeColores {
 
     private static List<Color> colores = new ArrayList<Color>();
     private static int cantidad;
+    private static int indice = 0;
     static {
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE));
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE));
@@ -40,7 +41,13 @@ public class GeneradorDeColores {
 
     private static Map<String, Color> claveString = new HashMap<String, Color>();
     private static Map<Class, Color> claveClass = new HashMap<Class, Color>();
-
+    
+    
+    private static Color siguienteColor() {
+        indice %= cantidad;
+        return colores.get(indice++);
+    }
+    
     public static Color porString(String clave) {
         if (!claveString.containsKey(clave))
             claveString.put(clave, siguienteColor());
@@ -53,11 +60,5 @@ public class GeneradorDeColores {
             claveClass.put(clave, siguienteColor());
 
         return claveClass.get(clave);
-    }
-
-    private static int indice = 0;
-    private static Color siguienteColor() {
-        indice %= cantidad;
-        return colores.get(indice++);
     }
 }

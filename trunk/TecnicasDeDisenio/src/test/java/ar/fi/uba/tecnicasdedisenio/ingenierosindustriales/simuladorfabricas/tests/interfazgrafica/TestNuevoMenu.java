@@ -8,11 +8,11 @@ import org.junit.Test;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.*;
 
 public class TestNuevoMenu {
-	private NuevoMenu ventana;
+	private VistaPrincipal ventana;
 	
 	@Before
 	public void setUp() throws Exception {
-		this.ventana = new NuevoMenu();
+		this.ventana = new VistaPrincipal();
 	}
 
 	@After

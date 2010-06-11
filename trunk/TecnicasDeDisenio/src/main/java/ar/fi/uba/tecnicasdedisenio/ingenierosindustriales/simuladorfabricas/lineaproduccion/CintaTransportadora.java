@@ -34,12 +34,15 @@ public class CintaTransportadora{
 	public void setExtremoInicial(ISalida extremoInicial) {
 		this.extremoInicial = extremoInicial;
 	}
+	
 	public ISalida getExtremoInicial() {
 		return extremoInicial;
 	}
+	
 	public void setExtremoFinal(IEntrada extremoFinal) {
 		this.extremoFinal = extremoFinal;
 	}
+	
 	public IEntrada getExtremoFinal() {
 		return extremoFinal;
 	}

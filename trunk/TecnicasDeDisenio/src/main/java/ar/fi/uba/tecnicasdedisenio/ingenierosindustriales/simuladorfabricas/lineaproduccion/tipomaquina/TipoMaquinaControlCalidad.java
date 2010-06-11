@@ -5,7 +5,6 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 
 public class TipoMaquinaControlCalidad extends TipoMaquina {
 
-
 	private ControlCalidad controlCalidad;
 	
 	public TipoMaquinaControlCalidad(ComparadorDeMaquinas comparador) {

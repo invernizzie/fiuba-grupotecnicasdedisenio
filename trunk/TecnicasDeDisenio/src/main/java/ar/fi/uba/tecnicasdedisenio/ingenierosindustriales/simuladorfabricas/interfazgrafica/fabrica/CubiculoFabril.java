@@ -23,7 +23,22 @@ public class CubiculoFabril {
     private Producto materiaPrima = null;
     private List<CintaTransportadora> cintasSalientes = new ArrayList<CintaTransportadora>();
     private List<CintaTransportadora> cintasEntrantes = new ArrayList<CintaTransportadora>();
+    
+    private boolean puedeSerFinDeCinta() {
+        return (maquina != null);
+    }
 
+    private IEntrada finDeCinta() {
+        if (maquina != null)
+            return maquina.getEntrada();
+        if (materiaPrima != null) {
+            IEntrada entrada = new Entrada();
+            entrada.agregarProducto(materiaPrima);
+            return entrada;
+        }
+        return null;
+    }
+    
     public boolean estaOcupado() {
         return (maquina != null) || (materiaPrima != null);
     }
@@ -72,20 +87,5 @@ public class CubiculoFabril {
         if (maquina.getCintaSalida() != null)
             return false;
         return true;
-    }
-
-    private boolean puedeSerFinDeCinta() {
-        return (maquina != null);
-    }
-
-    private IEntrada finDeCinta() {
-        if (maquina != null)
-            return maquina.getEntrada();
-        if (materiaPrima != null) {
-            IEntrada entrada = new Entrada();
-            entrada.agregarProducto(materiaPrima);
-            return entrada;
-        }
-        return null;
     }
 }

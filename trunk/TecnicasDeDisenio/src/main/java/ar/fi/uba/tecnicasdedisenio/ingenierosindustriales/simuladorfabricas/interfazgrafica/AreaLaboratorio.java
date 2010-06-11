@@ -1,7 +1,5 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
-import java.awt.Toolkit;
-
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.RecursosAplicacion;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,6 +28,7 @@ public class AreaLaboratorio {
 	private Button buttonImagenLaboratorio = null;
 	private Display display = null;
 	private Image imagenLaboratorio = null;
+	
 	/**
 	 * This method initializes sShellLaboratorio
 	 *
@@ -52,6 +51,7 @@ public class AreaLaboratorio {
 		imagenLaboratorio.dispose();
 		display.dispose();
 	}
+	
 	/**
 	 * This method initializes cTabFolderLaboratorio
 	 *
@@ -70,6 +70,7 @@ public class AreaLaboratorio {
 		cTabItem.setControl(compositeLaboratorio);
 		
 	}
+	
 	/**
 	 * This method initializes compositeLaboratorio
 	 *
