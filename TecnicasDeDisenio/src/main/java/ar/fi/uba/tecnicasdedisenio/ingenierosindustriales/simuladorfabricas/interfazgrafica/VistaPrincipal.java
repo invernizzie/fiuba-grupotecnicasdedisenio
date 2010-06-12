@@ -199,6 +199,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
                     buttonComprar.setEnabled(false);
                     buttonAlquilar.setEnabled(false);
                     comboFabrica.setEnabled(false);
+                    areaFabrica.cambiarHabilitacionBotones(false);
                 }
                 else{
                     if (Calendario.instancia().estaPausado()){
@@ -210,6 +211,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
                         buttonComprar.setEnabled(false);
                         buttonAlquilar.setEnabled(false);
                         comboFabrica.setEnabled(false);
+                        areaFabrica.cambiarHabilitacionBotones(false);
                         
                     }
                     else{
