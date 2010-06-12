@@ -9,10 +9,12 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Display;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -45,10 +47,11 @@ public class EspacioFabril implements Observer {
 
     public EspacioFabril(Canvas canvas) {
         this.canvas = canvas;
-
         limiteCanvas = canvas.getBounds();
+        
         ancho = convertirCoordenada(limiteCanvas.width);
         alto = convertirCoordenada(limiteCanvas.height);
+        
         superficieFabril = new CubiculoFabril[ancho][alto];
     }
 
@@ -155,6 +158,8 @@ public class EspacioFabril implements Observer {
         this.fabrica = fabrica;
         GC gc = new GC(canvas);
         gc.fillRectangle(limiteCanvas);
+        gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
+        gc.drawRectangle(limiteCanvas);
     }
 
     private void dibujarCinta(int _x1, int _y1, int _x2, int _y2) {
