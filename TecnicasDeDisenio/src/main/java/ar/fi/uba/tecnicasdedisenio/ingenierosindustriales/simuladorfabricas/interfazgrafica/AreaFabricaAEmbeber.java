@@ -305,6 +305,12 @@ public class AreaFabricaAEmbeber {
         resizeCanvas();
         espacioFabril.setFabrica(fabrica, canvas);
     }
+    
+    public void cambiarHabilitacionBotones(boolean estado){
+    	this.buttonCinta.setEnabled(estado);
+    	this.buttonMaquina.setEnabled(estado);
+    	this.buttonMateriaPrima.setEnabled(estado);
+    }
 }
 
 
