@@ -229,12 +229,18 @@ public class Fabrica implements Sincronizado{
 			this.verificarJugadorAsignado();
 		}
 		catch(FabricaOcupadaException e){
-			if(this.isAlquilada())
+			if(this.isAlquilada()){
 				this.getJugador().venderFabrica(0);
-			else
+			}else{
 				this.getJugador().venderFabrica((float) (this.getCostoCompra()*0.8));
+			}
 			
-			//Aca hay que devolverle al jugador un porcentaje el costo de cada maquina que no este rota
+			Float costoMaquinas = 0F;
+			for (Maquina maquina : maquinas) {
+				costoMaquinas += maquina.obtenerCostoVenta();
+			}
+			
+			this.getJugador().aumentarDinero(costoMaquinas);
 			
 			/*Borra todo lo que tiene seteado, hay que empezar de nuevo. Verificar si esta bien esto.*/
 			this.maquinas = new ArrayList<Maquina>();
@@ -243,9 +249,7 @@ public class Fabrica implements Sincronizado{
 		}
 		this.setCostoFabricaXMes(0);
 		this.setJugador(null);
-		
-		/*Antes de borrar todas sus lineas de produccion y tambien pasarle el 50%
-		 * del valor de cada maquina que no este rota al jugador.*/
+
 		this.lineas = null;
 		Calendario.instancia().desregistrar(this);
 		
@@ -278,7 +282,7 @@ public class Fabrica implements Sincronizado{
 						linea.procesar();
 				}
 			} catch (ProcesamientoException e) {
-				// TODO Auto-generated catch block
+				// TODO ¿Qué hacemos en este caso? ¿cómo informamos al jugador?
 				e.printStackTrace();
 			}
 		}
@@ -290,7 +294,7 @@ public class Fabrica implements Sincronizado{
 			this.verificarJugadorAsignado();
 		} 
 		catch (FabricaOcupadaException e) {
-			//Habria que sumarle el costo de las lineas de produccion.
+			//TODO Habria que sumarle el costo de las lineas de produccion.
 			this.getJugador().disminuirDinero(this.getCostoFabricaXMes());
 		}
 		

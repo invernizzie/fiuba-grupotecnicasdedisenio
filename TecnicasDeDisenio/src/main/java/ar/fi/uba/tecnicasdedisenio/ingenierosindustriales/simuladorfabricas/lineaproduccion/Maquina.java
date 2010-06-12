@@ -244,6 +244,19 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 
 	/**
+	 * Devuelve el costo de venta de la máquina. Un 50% del costo si la máquina 
+	 * no se encuentra rota, 0 en caso contrario.
+	 * @return
+	 */
+	public Float obtenerCostoVenta(){
+		Float costoVenta = 0F;
+		if(!this.estaRota()){
+			costoVenta = this.getCostoMaquina()/2;
+		}
+		return costoVenta;
+	}
+	
+	/**
 	 * Devuelve un tipo de producto que modela lo que produce esta linea.
 	 * @return
 	 */
