@@ -3,7 +3,6 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jug
 import java.util.ArrayList;
 import java.util.List;
 
-
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
@@ -15,6 +14,14 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.LineaProduccion;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.ProcesamientoException;
+
+/**
+ * Representa a una fábrica en particular.
+ * La misma tiene unos metros cuadrados, un costo de compra y un costo de alquiler.
+ * Puede ser comprada, alquilada o vendida por un jugador.
+ *
+ * @author Gustavo A. Meller (gmeller@gmail.com)
+ */
 
 public class Fabrica implements Sincronizado{
 

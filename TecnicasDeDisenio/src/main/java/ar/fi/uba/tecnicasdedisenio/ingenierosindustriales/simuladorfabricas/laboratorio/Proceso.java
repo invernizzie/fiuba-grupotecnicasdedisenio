@@ -3,6 +3,15 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lab
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
 
+/**
+ * Representa a un proceso en particular.
+ * Un un conjunto ordenado de tipos de máquinas y materias primas, simboliza
+ * a un proceso de producción, una receta para producir un producto.
+ * Tiene un costo de descubrimiento.
+ *
+ * @author Gustavo A. Meller (gmeller@gmail.com)
+ */
+
 public class Proceso {
 	
 	TipoMaquina tipoMaquinaFinal;
