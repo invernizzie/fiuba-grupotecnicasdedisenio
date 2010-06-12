@@ -46,7 +46,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	private Text textDineroAcum = null;
 	private Button checkBoxInvertirLabo = null;
 	private Combo comboFabrica = null;
-	private AreaFabricaAEmbeber canvasFabrica = null;
+	private AreaFabricaAEmbeber areaFabrica = null;
 	private Menu submenuFabrica = null;
 	private Jugador jugador = null;
 	private Button buttonComprar = null;
@@ -81,7 +81,8 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		CreateMenuBar();
 		shellPrincipal.setMenuBar(menuBar);
 	}
-	
+
+    // TODO Eliminar repeticion de codigo en la creacion de controles
 	private void CreateMenuBar(){
 		menuBar = new Menu(shellPrincipal, SWT.BAR);
 		menuBar.setEnabled(true);
@@ -292,7 +293,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		tabItemFabrica.setText("Fabrica");
 		CTabItem tabItemLaboratorio = new CTabItem(tabFolderFabrica, SWT.NONE);
 		tabItemLaboratorio.setText("Laboratorio");
-		tabItemFabrica.setControl(canvasFabrica.getCompositeControles());
+		tabItemFabrica.setControl(areaFabrica.getCompositeControles());
 		createCompositeLaboratorio();
 		tabItemLaboratorio.setControl(compositeLaboratorio);
 	}
@@ -345,12 +346,12 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	}
 	
 	/**
-	 * This method initializes canvasFabrica
+	 * This method initializes areaFabrica
 	 *
 	 */
 	private void createCanvasFabrica() {
-		canvasFabrica = new AreaFabricaAEmbeber();
-		canvasFabrica.load(tabFolderFabrica);
+		areaFabrica = new AreaFabricaAEmbeber();
+		areaFabrica.load(tabFolderFabrica);
 	}
 
     private synchronized boolean necesitaActualizacion() {
@@ -369,7 +370,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
      * Crea un juego nuevo.
      */
 	private void juegoNuevo(){
-		DialogoNuevaPartida partida= new DialogoNuevaPartida(this);
+		DialogoNuevaPartida partida = new DialogoNuevaPartida(this);
 		partida.hacerVisible();
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
@@ -636,12 +637,16 @@ public class VistaPrincipal implements Sincronizado, Observer {
         formateador.setMinimumFractionDigits(2);
 
 		while (!this.shellPrincipal.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-            if (this.necesitaActualizacion()) {
-                this.actualizarDatosTiempo();
-                this.actualizarDatosJugador();
-                this.verificarFinalJuego();
+			try {
+                if (!display.readAndDispatch())
+                    display.sleep();
+                if (this.necesitaActualizacion()) {
+                    this.actualizarDatosTiempo();
+                    this.actualizarDatosJugador();
+                    this.verificarFinalJuego();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 		}
 		display.dispose();
@@ -649,6 +654,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 
     public void setJugador(Jugador jugador) {
     	this.jugador = jugador;
+        areaFabrica.setJugador(jugador);
         cambiarHabilitacionBotonesDePartida(jugador != null);
         
 	}

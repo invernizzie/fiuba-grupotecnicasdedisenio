@@ -9,10 +9,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.cale
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.excepciones.DineroInsuficienteException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.excepciones.FabricaOcupadaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.excepciones.JugadorConFabricaException;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.CintaTransportadora;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.LineaProduccion;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.ProcesamientoException;
 
 /**
@@ -52,7 +49,14 @@ public class Fabrica implements Sincronizado{
 		this.maquinas.add(maquina);
 	}
 
-	public void conectarMaquina(Fuente fuente, Maquina maquina){
+    public CintaTransportadora conectarMaquina(IFuente fuente, Maquina maquina) {
+        if (fuente instanceof Fuente)
+            return conectarMaquina((Fuente)fuente, maquina);
+        return conectarMaquina((Maquina)fuente, maquina);
+    }
+
+    // TODO Eliminar repeticion de codigo con su sobrecarga para (Maquina, Maquina)
+	public CintaTransportadora conectarMaquina(Fuente fuente, Maquina maquina){
 		if(!maquinas.contains(maquina)){
 			this.agregarMaquina(maquina);
 		}
@@ -72,7 +76,7 @@ public class Fabrica implements Sincronizado{
 			linea.agregarMaquina(maquina);
 			agregarLinea(linea);
 		}
-		
+		return cinta;
 	}
 
 	/**
@@ -80,9 +84,9 @@ public class Fabrica implements Sincronizado{
 	 * de producción existente, en caso negativo crea una nueva linea que las contenga.
 	 * @param origen
 	 * @param destino
-	 * @throws CantidadLineasMaximaException
 	 */
-	public void conectarMaquina(Maquina origen, Maquina destino){
+    // TODO Dividir en metodos mas cohesivos
+	public CintaTransportadora conectarMaquina(Maquina origen, Maquina destino){
 		if(!maquinas.contains(origen)){
 			this.agregarMaquina(origen);
 		}
@@ -119,7 +123,7 @@ public class Fabrica implements Sincronizado{
 			linea.agregarMaquina(destino);
 			agregarLinea(linea);
 		}
-		
+		return cinta;
 	}
 	
 	public void agregarLinea(LineaProduccion linea){

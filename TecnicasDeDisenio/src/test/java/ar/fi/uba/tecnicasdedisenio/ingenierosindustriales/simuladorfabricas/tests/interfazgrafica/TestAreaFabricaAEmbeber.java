@@ -3,6 +3,7 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tes
 
 import static org.junit.Assert.*;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ public class TestAreaFabricaAEmbeber {
 		@Before
 		public void setUp() throws Exception {
 			this.ventana = new AreaFabricaAEmbeber();
+            ventana.setJugador(new Jugador("Jugador1", 10));
 		}
 
 		@After
