@@ -29,14 +29,6 @@ public class DibujanteDeMateriaPrima extends Dibujante {
         {
             // Simplemente no se crea la materia prima
         }
-
-        /*GC gc = new GC(getCanvas());
-        Color colorAnterior = gc.getBackground();
-        // TODO Cambiar el color segun el tipo de materia prima
-        gc.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE)); 
-        gc.fillOval(x, y, 10, 10);
-        gc.setBackground(colorAnterior);
-        gc.dispose(); */
     }
 
     @Override
