@@ -1,14 +1,13 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.interfazgrafica;
 
 
-import static org.junit.Assert.*;
-
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
+import org.eclipse.swt.SWTException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.*;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.AreaFabricaAEmbeber;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 
 public class TestAreaFabricaAEmbeber {
 
@@ -18,7 +17,6 @@ public class TestAreaFabricaAEmbeber {
 		@Before
 		public void setUp() throws Exception {
 			this.ventana = new AreaFabricaAEmbeber();
-            ventana.setJugador(new Jugador("Jugador1", 10));
 		}
 
 		@After
@@ -27,6 +25,11 @@ public class TestAreaFabricaAEmbeber {
 
 		@Test
 		public void testPantalla() {
-			this.ventana.run();
+			try{
+				this.ventana.run();
+				this.ventana.setJugador(new Jugador("Jugador1", 10));
+			}catch(SWTException e){
+				
 			}
+		}
 }
