@@ -2,9 +2,7 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 
 import java.util.HashMap;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.excepciones.JugadorAusenteException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Fabrica;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -45,7 +43,7 @@ public class AreaFabricaAEmbeber {
 	private EspacioFabril espacioFabril;
 	private ValidadorProductos validadorProd = ValidadorProductos.instancia();
 	private HashMap<String,TipoMaquina> hashTipoMaquinas = null;
-    private Jugador jugador;
+    private Fabrica fabrica;
 
 	/**
 	 * This method initializes comboMP
@@ -144,9 +142,9 @@ public class AreaFabricaAEmbeber {
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.grabExcessVerticalSpace = true;
 		gridData.verticalAlignment = GridData.FILL;
-		canvas = new Canvas(shellAreaDibujo, SWT.BORDER);
+        canvas = new Canvas(shellAreaDibujo, SWT.BORDER);
+        resizeCanvas();
 		canvas.setLayout(new FillLayout());
-		canvas.setSize(new Point(268, 259));
 		canvas.setLayoutData(gridData);
 		espacioFabril = new EspacioFabril(canvas);
 		constructorDeFabricas = new ConstructorDeFabricas(new DibujanteDeCintas(espacioFabril));
@@ -155,7 +153,15 @@ public class AreaFabricaAEmbeber {
 		canvas.addListener (SWT.MouseMove, constructorDeFabricas);
 	}
 
-	/**
+    private void resizeCanvas() {
+        int longLadoCanvas = 240;
+        if (fabrica != null)
+            longLadoCanvas = (int) Math.sqrt(fabrica.getMetrosCuadrados());
+
+        canvas.setSize(new Point(longLadoCanvas, longLadoCanvas));
+    }
+
+    /**
 	 * This method initializes groupControl
 	 *
 	 */
@@ -234,7 +240,7 @@ public class AreaFabricaAEmbeber {
 	
 	protected void cargarComboMateriaPrimas() {
 		for(int i=0; i<10; i++){
-			comboMP.add(new String("Materia Prima  " + i));
+			comboMP.add("Materia Prima  " + i);
 		}
 		comboMP.setItems(validadorProd.toString().split(",", 0));
 		comboMP.setItems(validadorProd.getAll());
@@ -294,15 +300,10 @@ public class AreaFabricaAEmbeber {
 		return compositeControles;
 	}
 
-    public void setJugador(Jugador jugador) {
-        this.jugador = jugador;
-        espacioFabril.setJugador(jugador);
-    }
-
-    public Jugador getJugador() {
-        if (jugador == null)
-            throw new JugadorAusenteException();
-        return jugador;
+    public void setFabrica(Fabrica fabrica) {
+        this.fabrica = fabrica;
+        resizeCanvas();
+        espacioFabril.setFabrica(fabrica, canvas);
     }
 }
 

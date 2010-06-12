@@ -27,7 +27,7 @@ import java.util.Observer;
  * @author Esteban I. Invernizzi (invernizzie@gmail.com)
  *         Date: 06/06/2010
  */
-public class EspacioFabril implements Observer {
+public class EspacioFabril {
 
     public static final int LONGITUD_DEL_LADO = 10;
 
@@ -42,15 +42,10 @@ public class EspacioFabril implements Observer {
     private Canvas canvas;
     private CubiculoFabril[][] superficieFabril;
     private Fabrica fabrica;
-    private Jugador jugador;
     private Rectangle limiteCanvas;
 
     public EspacioFabril(Canvas canvas) {
-        this.canvas = canvas;
-        limiteCanvas = canvas.getBounds();
-        
-        ancho = convertirCoordenada(limiteCanvas.width);
-        alto = convertirCoordenada(limiteCanvas.height);
+        setCanvas(canvas);
         
         superficieFabril = new CubiculoFabril[ancho][alto];
     }
@@ -83,7 +78,6 @@ public class EspacioFabril implements Observer {
         } catch (CubiculoOcupadoExcetion cubiculoOcupadoExcetion) {
             throw new EspacioOcupadoException();
         }
-
     }
 
     public boolean puedeComenzarCintaEn(int _x, int _y) throws CoordenadasNoPertenecenAlEspacioException {
@@ -124,46 +118,31 @@ public class EspacioFabril implements Observer {
         // TODO
     }
 
-    public void setJugador(final Jugador jugador) {
-        if (this.jugador != null)
-            this.jugador.deleteObserver(this);
-        this.jugador = jugador;
-        setFabrica(jugador.getFabrica());
-        jugador.addObserver(this);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (!(o instanceof Jugador))
-            return;
-        Jugador jugador = (Jugador)o;
-        if (jugador != this.jugador)
-            return;
-
-        if (jugador.getFabrica() != this.fabrica)
-            setFabrica(jugador.getFabrica());
-    }
-
     protected Fabrica getFabrica() {
         if (fabrica == null)
             throw new FabricaAusenteException();
         return fabrica;
     }
 
+    public void setFabrica(Fabrica fabrica, Canvas canvas) {
+        this.fabrica = fabrica;
+        setCanvas(canvas);
+        GC gc = new GC(canvas);
+        gc.fillRectangle(0, 0, limiteCanvas.width, limiteCanvas.height);
+
+        superficieFabril = new CubiculoFabril[ancho][alto];
+    }
+
+    private void setCanvas(final Canvas canvas) {
+        this.canvas = canvas;
+        limiteCanvas = canvas.getBounds();
+        ancho = convertirCoordenada(limiteCanvas.width);
+        alto = convertirCoordenada(limiteCanvas.height);
+    }
+
     private void testearQueEsteAdentro(int x, int y) throws CoordenadasNoPertenecenAlEspacioException {
         if ((x < 0) || (y < 0) || (x >= ancho) || (y >= alto))
             throw new CoordenadasNoPertenecenAlEspacioException();
-    }
-
-    // TODO Setear también un canvas del tamaño adecuado
-    private void setFabrica(Fabrica fabrica) {
-        this.fabrica = fabrica;
-        GC gc = new GC(canvas);
-        gc.fillRectangle(limiteCanvas);
-        gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
-        gc.drawRectangle(limiteCanvas);
-
-        superficieFabril = new CubiculoFabril[ancho][alto];
     }
 
     private void dibujarCinta(int _x1, int _y1, int _x2, int _y2) {

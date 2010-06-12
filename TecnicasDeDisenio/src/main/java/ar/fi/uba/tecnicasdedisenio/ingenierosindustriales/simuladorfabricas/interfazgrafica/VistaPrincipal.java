@@ -506,6 +506,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		catch (JugadorConFabricaException e) {
 			this.getJugador().getFabrica().vender();
 			cambiarHabilitacionBotonesDePartida(true);
+            areaFabrica.setFabrica(null);
 		}
 	}
 	
@@ -517,6 +518,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		try {
 			fabrica.comprar(this.getJugador());
 			cambiarHabilitacionBotonesDePartida(true);
+            areaFabrica.setFabrica(fabrica);
 		} 
 		catch (DineroInsuficienteException e) {
 			 MessageBox messageBox =
@@ -548,6 +550,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		try {
 			fabrica.alquilar(this.getJugador());
 			cambiarHabilitacionBotonesDePartida(true);
+            areaFabrica.setFabrica(fabrica);
 		}
 		catch (FabricaOcupadaException e) {
 			 MessageBox messageBox =
@@ -582,7 +585,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		fabricas = new HashMap<String,Fabrica>();
 		Fabrica fabrica = null;
 		for(i=0;i<5;i++){
-			fabrica = new Fabrica((i+1)*100,(i+1)*1000, (i+1)*150);
+			fabrica = new Fabrica((i+1)*15000,(i+1)*1000, (i+1)*150);
 			fabricas.put(fabrica.toString(),fabrica);
 			fab[i]=fabrica.toString();
 		}
@@ -654,7 +657,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 
     public void setJugador(Jugador jugador) {
     	this.jugador = jugador;
-        areaFabrica.setJugador(jugador);
+        areaFabrica.setFabrica(jugador.getFabrica());
         cambiarHabilitacionBotonesDePartida(jugador != null);
         
 	}
