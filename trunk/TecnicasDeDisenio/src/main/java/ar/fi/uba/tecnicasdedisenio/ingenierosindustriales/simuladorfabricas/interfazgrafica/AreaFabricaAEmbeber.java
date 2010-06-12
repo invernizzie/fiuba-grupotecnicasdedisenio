@@ -191,6 +191,7 @@ public class AreaFabricaAEmbeber {
 		buttonMaquina.setText("Maquina");
 		buttonMaquina.setLayoutData(gridData2);
 		createComboMaquina();
+		cambiarHabilitacionBotones(false);
 		buttonCinta.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("Paso dibujar cintas");
