@@ -10,6 +10,15 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
+/**
+ * Representa a un laboratorio.
+ * Tiene un tipo y un nombre de una imagen que lo caracteriza.
+ * Tiene una lista de procesos habilitados y otros inhabilitados los cuales
+ * puede ir habilitandolos a medida de que acumule dinero.
+ *
+ * @author Gustavo A. Meller (gmeller@gmail.com)
+ */
+
 public class Laboratorio{
 	
 	private float dineroAcumulado;
