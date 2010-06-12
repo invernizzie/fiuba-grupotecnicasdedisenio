@@ -140,7 +140,8 @@ public class EspacioFabril implements Observer {
         if (jugador != this.jugador)
             return;
 
-        setFabrica(jugador.getFabrica());
+        if (jugador.getFabrica() != this.fabrica)
+            setFabrica(jugador.getFabrica());
     }
 
     protected Fabrica getFabrica() {
@@ -154,12 +155,15 @@ public class EspacioFabril implements Observer {
             throw new CoordenadasNoPertenecenAlEspacioException();
     }
 
+    // TODO Setear también un canvas del tamaño adecuado
     private void setFabrica(Fabrica fabrica) {
         this.fabrica = fabrica;
         GC gc = new GC(canvas);
         gc.fillRectangle(limiteCanvas);
         gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
         gc.drawRectangle(limiteCanvas);
+
+        superficieFabril = new CubiculoFabril[ancho][alto];
     }
 
     private void dibujarCinta(int _x1, int _y1, int _x2, int _y2) {
