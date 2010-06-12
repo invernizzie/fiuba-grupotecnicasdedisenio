@@ -46,6 +46,7 @@ public class Fabrica implements Sincronizado{
 	}
 	
 	public void agregarMaquina(Maquina maquina) {
+		this.getJugador().disminuirDinero(maquina.getCostoMaquina());
 		this.maquinas.add(maquina);
 	}
 

@@ -290,7 +290,8 @@ public class TestCompraVenta {
 								"principio menos el 20% del costo de la fábrica",
 								this.jugador.getDineroActual(),
 								(float)(plata - this.fabricas.get(1).getCostoCompra()*0.2 
-										+ maquina1.obtenerCostoVenta()));	
+										+ maquina1.obtenerCostoVenta() - 
+										maquina1.getCostoMaquina()));	
 	}
 	
 	@Test
