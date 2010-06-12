@@ -2,6 +2,9 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 
 import java.util.HashMap;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.excepciones.JugadorAusenteException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Fabrica;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -28,7 +31,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 
 public class AreaFabricaAEmbeber {
 
-	//private Shell shellAreaDibujo = null;  //  @jve:decl-index=0:visual-constraint="109,17"
+    //private Shell shellAreaDibujo = null;  //  @jve:decl-index=0:visual-constraint="109,17"
 	private Canvas canvas = null;  //  @jve:decl-index=0:visual-constraint="263,47"
 	private Group groupControl = null;
 	private Button buttonCinta = null;
@@ -42,6 +45,7 @@ public class AreaFabricaAEmbeber {
 	private EspacioFabril espacioFabril;
 	private ValidadorProductos validadorProd = ValidadorProductos.instancia();
 	private HashMap<String,TipoMaquina> hashTipoMaquinas = null;
+    private Jugador jugador;
 
 	/**
 	 * This method initializes comboMP
@@ -119,10 +123,8 @@ public class AreaFabricaAEmbeber {
 	
 	/**
 	 * This method initializes shellAreaDibujo
-	 * @param shellAreaDibujo
-	 * @param display
-	 * @param cTabItem
-	 *
+     * 
+	 * @param cTabFolder
 	 */
 	private void createShellAreaDibujo(CTabFolder cTabFolder) {
 		//GridLayout gridLayout = new GridLayout();
@@ -213,7 +215,7 @@ public class AreaFabricaAEmbeber {
 	
 	/**
 	 * This method initializes compositeControles
-	 * @param shellAreaDibujo
+	 * @param cTabFolder
 	 *
 	 */
 	private void createCompositeControles(CTabFolder cTabFolder) {
@@ -238,9 +240,8 @@ public class AreaFabricaAEmbeber {
 		comboMP.setItems(validadorProd.getAll());
 		comboMP.setText(comboMP.getItem(0));
 	}
-	
-	public void load(CTabFolder cTabFolder) {
-		// TODO Auto-generated method stub
+
+    public void load(CTabFolder cTabFolder) {
 		createShellAreaDibujo(cTabFolder);
 	}
 	
@@ -293,8 +294,16 @@ public class AreaFabricaAEmbeber {
 		return compositeControles;
 	}
 
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
+        espacioFabril.setJugador(jugador);
+    }
 
-
+    public Jugador getJugador() {
+        if (jugador == null)
+            throw new JugadorAusenteException();
+        return jugador;
+    }
 }
 
 

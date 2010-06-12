@@ -14,7 +14,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  * @author santiago
  *
  */
-public abstract class Maquina implements Cloneable  {
+public abstract class Maquina implements Cloneable, IFuente  {
 	
 	private IEntrada entrada;
 	private ISalida salida;

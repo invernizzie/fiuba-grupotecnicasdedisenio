@@ -2,12 +2,9 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CintaImposibleException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CubiculoOcupadoExcetion;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.CintaTransportadora;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Entrada;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.IEntrada;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.ISalida;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Salida;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CubiculoVacioException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Fabrica;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 import java.util.ArrayList;
@@ -20,7 +17,7 @@ import java.util.List;
 public class CubiculoFabril {
 
     private Maquina maquina = null;
-    private Producto materiaPrima = null;
+    private Fuente fuente = null;
     private List<CintaTransportadora> cintasSalientes = new ArrayList<CintaTransportadora>();
     private List<CintaTransportadora> cintasEntrantes = new ArrayList<CintaTransportadora>();
     
@@ -28,19 +25,16 @@ public class CubiculoFabril {
         return (maquina != null);
     }
 
-    private IEntrada finDeCinta() {
+    private IEntrada finDeCinta() throws CubiculoVacioException {
+        if (!estaOcupado())
+            throw new CubiculoVacioException();
         if (maquina != null)
             return maquina.getEntrada();
-        if (materiaPrima != null) {
-            IEntrada entrada = new Entrada();
-            entrada.agregarProducto(materiaPrima);
-            return entrada;
-        }
         return null;
     }
     
     public boolean estaOcupado() {
-        return (maquina != null) || (materiaPrima != null);
+        return (maquina != null) || (fuente != null);
     }
 
     public void ubicarMaquina(Maquina maquina) throws CubiculoOcupadoExcetion {
@@ -49,43 +43,34 @@ public class CubiculoFabril {
         this.maquina = maquina;
     }
 
-    public void ubicarMateriaPrima(Producto materiaPrima) throws CubiculoOcupadoExcetion {
+    public void ubicarMateriaPrima(Fuente fuente) throws CubiculoOcupadoExcetion {
         if (estaOcupado())
             throw new CubiculoOcupadoExcetion();
-        this.materiaPrima = materiaPrima;
+        this.fuente = fuente;
     }
 
-    public CintaTransportadora conectarConCintaHacia(CubiculoFabril cubiculoFinal) throws CintaImposibleException {
-        if (!this.puedeSerComienzoDeCinta()
-                || !cubiculoFinal.puedeSerFinDeCinta())
-            throw new CintaImposibleException();
-
-        ISalida extremoInicial;
-        if (maquina != null)
-            extremoInicial = maquina.getSalida();
-        else {
-            extremoInicial = new Salida();
-            extremoInicial.asignarProducto(materiaPrima);
-        }
-
-        /**** Esto podria encapsularse como servicio del modelo ****/
-        CintaTransportadora cinta = new CintaTransportadora(extremoInicial, cubiculoFinal.finDeCinta());
-        if (maquina != null)
-            maquina.setCintaSalida(cinta);
-        cubiculoFinal.maquina.addCintaEntrada(cinta);
-        /***********************************************************/
+    public void conectarConCintaHacia(CubiculoFabril cubiculoFinal, CintaTransportadora cinta) throws CintaImposibleException {
         this.cintasSalientes.add(cinta);
         cubiculoFinal.cintasEntrantes.add(cinta);
-        return cinta;
     }
 
     public boolean puedeSerComienzoDeCinta() {
-        if (materiaPrima != null)
-            return true;
+        return fuente != null || (maquina != null && maquina.getCintaSalida() == null);
+    }
+
+    public IFuente getFuenteConectable() throws CubiculoVacioException {
+        if (fuente != null)
+            return fuente;
         if (maquina == null)
-            return false;
-        if (maquina.getCintaSalida() != null)
-            return false;
-        return true;
+            throw new CubiculoVacioException();
+        if (maquina.getCintaSalida() == null)
+            return maquina;
+        throw new CubiculoVacioException();
+    }
+
+    public Maquina getMaquina() throws CubiculoVacioException {
+        if (!puedeSerFinDeCinta())
+            throw new CubiculoVacioException();
+        return maquina;
     }
 }

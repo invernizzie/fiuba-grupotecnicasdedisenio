@@ -28,24 +28,24 @@ public class DibujanteDeCintas extends Dibujante {
                 primerY = y;
             }
         } catch (CoordenadasNoPertenecenAlEspacioException e) {
-            // No se hace nada
+            dibujando = false;
         }
     }
 
     @Override
     public void mouseUp(int x, int y) {
 
-        dibujando = false;
+        if (!dibujando)
+            return;
+
         try {
             getEspacioFabril().crearCinta(primerX, primerY, x, y);
         } catch (CintaImposibleException e) {
             // Simplemente no se crea la cinta
         } catch (CoordenadasNoPertenecenAlEspacioException e) {
             // Simplemente no se crea la cinta
+        } finally {
+            dibujando = false;
         }
-
-        /*GC gc = new GC(getCanvas());
-        gc.drawLine (primerX, primerY, x, y);
-        gc.dispose ();*/
     }
 }

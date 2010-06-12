@@ -12,7 +12,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  * @author santiago
  *
  */
-public class Fuente {
+public class Fuente implements IFuente {
 	
 	private Producto producto;
 	private int cantidad;

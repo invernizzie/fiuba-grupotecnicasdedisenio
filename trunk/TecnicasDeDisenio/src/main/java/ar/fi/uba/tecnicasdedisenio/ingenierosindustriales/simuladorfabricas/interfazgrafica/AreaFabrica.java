@@ -1,6 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.*;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPlancha;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
@@ -33,8 +34,9 @@ public class AreaFabrica {
     private ConstructorDeFabricas constructorDeFabricas;
     private EspacioFabril espacioFabril;
     private ValidadorProductos validadorProd = ValidadorProductos.instancia();
+    private Jugador jugador;
 
-	/**
+    /**
 	 * This method initializes comboMP
 	 *
 	 */
@@ -239,6 +241,10 @@ public class AreaFabrica {
         return canvas;
     }
 
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
+    }
+
     private void deseleccionarControles() {
         buttonCinta.setSelection(false);
         buttonMaquina.setSelection(false);
@@ -246,5 +252,6 @@ public class AreaFabrica {
         comboMP.setEnabled(false);
         comboMaquina.setEnabled(false);
     }
+
 }
 
