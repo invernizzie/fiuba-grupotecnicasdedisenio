@@ -434,6 +434,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
         	this.comboFabrica.setEnabled(!this.getJugador().hasFabrica());
         	this.buttonVender.setEnabled(this.getJugador().hasFabrica());
         	this.buttonTimer.setEnabled(this.getJugador().hasFabrica());
+        	this.areaFabrica.cambiarHabilitacionBotones(this.getJugador().hasFabrica());
         }
     }
 	
