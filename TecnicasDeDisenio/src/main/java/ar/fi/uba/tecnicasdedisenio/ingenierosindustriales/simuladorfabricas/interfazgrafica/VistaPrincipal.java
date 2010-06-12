@@ -82,40 +82,29 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		shellPrincipal.setMenuBar(menuBar);
 	}
 
-    // TODO Eliminar repeticion de codigo en la creacion de controles
 	private void CreateMenuBar(){
 		menuBar = new Menu(shellPrincipal, SWT.BAR);
 		menuBar.setEnabled(true);
-		MenuItem submenuItemJuego = new MenuItem(menuBar, SWT.CASCADE);
-		submenuItemJuego.setText("Juego");
-		MenuItem submenuItemFabrica = new MenuItem(menuBar, SWT.CASCADE);
-		submenuItemFabrica.setText("Fabrica");
-		MenuItem submenuItemAyuda = new MenuItem(menuBar, SWT.CASCADE);
-		submenuItemAyuda.setText("Ayuda");
+        MenuItem submenuItemJuego = crearSubmenu(menuBar, "Juego");
+        MenuItem submenuItemFabrica = crearSubmenu(menuBar, "Fabrica");
+        MenuItem submenuItemAyuda = crearSubmenu(menuBar, "Ayuda");
 		submenuFabrica = new Menu(submenuItemFabrica);
-		MenuItem pushVender = new MenuItem(submenuFabrica, SWT.PUSH);
-		pushVender.setText("Vender");
-		MenuItem pushComprar = new MenuItem(submenuFabrica, SWT.PUSH);
-		pushComprar.setText("Comprar");
-		MenuItem pushAlquilar = new MenuItem(submenuFabrica, SWT.PUSH);
-		pushAlquilar.setText("Alquilar");
+        MenuItem pushVender = crearItemDeMenu(submenuFabrica, "Vender");
+        MenuItem pushComprar = crearItemDeMenu(submenuFabrica, "Comprar");
+        MenuItem pushAlquilar = crearItemDeMenu(submenuFabrica, "Alquilar");
 		MenuItem separatorFabrica = new MenuItem(submenuFabrica, SWT.SEPARATOR);
-		MenuItem pushLaboratorio = new MenuItem(submenuFabrica, SWT.PUSH);
-		pushLaboratorio.setText("Laboratorio");
+        MenuItem pushLaboratorio = crearItemDeMenu(submenuFabrica, "Laboratorio");
 		submenuItemFabrica.setMenu(submenuFabrica);
 		submenuAyuda = new Menu(submenuItemAyuda);
-		MenuItem pushContenido = new MenuItem(submenuAyuda, SWT.PUSH);
-		pushContenido.setText("Contenido");
+        MenuItem pushContenido = crearItemDeMenu(submenuAyuda, "Contenido");
 		MenuItem separatorAyuda = new MenuItem(submenuAyuda, SWT.SEPARATOR);
-		MenuItem pushAcercaDe = new MenuItem(submenuAyuda, SWT.PUSH);
-		pushAcercaDe.setText("Acerca de...");
+        MenuItem pushAcercaDe = crearItemDeMenu(submenuAyuda, "Acerca de...");
 		submenuItemAyuda.setMenu(submenuAyuda);
 		submenuJuego = new Menu(submenuItemJuego);
 		submenuJuego.setVisible(true);
 		submenuJuego.setEnabled(true);
 		submenuItemJuego.setMenu(submenuJuego);
-		MenuItem pushJuegoNuevo = new MenuItem(submenuJuego, SWT.PUSH);
-		pushJuegoNuevo.setText("Juego Nuevo");
+        MenuItem pushJuegoNuevo = crearItemDeMenu(submenuJuego, "Juego Nuevo");
 		pushJuegoNuevo.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
 			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
 			}
@@ -124,18 +113,14 @@ public class VistaPrincipal implements Sincronizado, Observer {
 				juegoNuevo();
 			}
 		});
-		MenuItem pushAbrir = new MenuItem(submenuJuego, SWT.PUSH);
-		pushAbrir.setText("Abrir");
+        MenuItem pushAbrir = crearItemDeMenu(submenuJuego, "Abrir");
 		pushAbrir.setEnabled(false);
-		MenuItem pushGuardar = new MenuItem(submenuJuego, SWT.PUSH);
-		pushGuardar.setText("Guardar");
+        MenuItem pushGuardar = crearItemDeMenu(submenuJuego, "Guardar");
 		pushGuardar.setEnabled(false);
-		MenuItem pushGuardarComo = new MenuItem(submenuJuego, SWT.PUSH);
-		pushGuardarComo.setText("Guardar Como");
+        MenuItem pushGuardarComo = crearItemDeMenu(submenuJuego, "Guardar Como");
 		pushGuardarComo.setEnabled(false);
-		MenuItem pushSeparador = new MenuItem(submenuJuego, SWT.SEPARATOR);
-		MenuItem pushSalir = new MenuItem(submenuJuego, SWT.PUSH);
-		pushSalir.setText("Salir");
+		new MenuItem(submenuJuego, SWT.SEPARATOR);
+        MenuItem pushSalir = crearItemDeMenu(submenuJuego, "Salir");
 		pushSalir.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				Calendario.instancia().detener();
@@ -160,6 +145,18 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		});
 
 	}
+
+    private MenuItem crearItemDeMenu(Menu padre, String texto) {
+        MenuItem itemDeMenu = new MenuItem(padre, SWT.PUSH);
+        itemDeMenu.setText(texto);
+        return itemDeMenu;
+    }
+
+    private MenuItem crearSubmenu(Menu padre, String texto) {
+        MenuItem submenu = new MenuItem(padre, SWT.CASCADE);
+        submenu.setText(texto);
+        return submenu;
+    }
 
 	/**
 	 * This method initializes groupTiempo
@@ -195,10 +192,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
                     cambiarHabilitacionBotonesDePartida(false);
                     /*Se hace porque sino quedan habilitados algunos botones.*/
                     buttonTimer.setEnabled(true);
-                    buttonVender.setEnabled(false);
-                    buttonComprar.setEnabled(false);
-                    buttonAlquilar.setEnabled(false);
-                    comboFabrica.setEnabled(false);
+                    cambiarHabilitacionControlesDeFabrica(false);
                     areaFabrica.cambiarHabilitacionBotones(false);
                 }
                 else{
@@ -207,12 +201,8 @@ public class VistaPrincipal implements Sincronizado, Observer {
                 		cambiarHabilitacionBotonesDePartida(false);
                 		/*Se hace porque sino quedan habilitados algunos botones.*/
                         buttonTimer.setEnabled(true);
-                        buttonVender.setEnabled(false);
-                        buttonComprar.setEnabled(false);
-                        buttonAlquilar.setEnabled(false);
-                        comboFabrica.setEnabled(false);
+                        cambiarHabilitacionControlesDeFabrica(false);
                         areaFabrica.cambiarHabilitacionBotones(false);
-                        
                     }
                     else{
                         Calendario.instancia().pausar();
@@ -228,7 +218,14 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		botonesPartida.add(buttonTimer);
 	}
 
-	/**
+    private void cambiarHabilitacionControlesDeFabrica(boolean habilitados) {
+        buttonVender.setEnabled(habilitados);
+        buttonComprar.setEnabled(habilitados);
+        buttonAlquilar.setEnabled(habilitados);
+        comboFabrica.setEnabled(habilitados);
+    }
+
+    /**
 	 * This method initializes groupJugador
 	 *
 	 */
@@ -475,10 +472,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		cambiarHabilitacionBotonesDePartida(false);
 		Calendario.instancia().detener();
         buttonTimer.setEnabled(false);
-        buttonVender.setEnabled(false);
-        buttonComprar.setEnabled(false);
-        buttonAlquilar.setEnabled(false);
-        comboFabrica.setEnabled(false);
+        cambiarHabilitacionControlesDeFabrica(false);
 		this.notificarActualizacion();
     }
     
@@ -624,15 +618,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
     }    
 	
 	public void run() {
-		// TODO Auto-generated method stub
-		/* Before this is run, be sure to set up the launch configuration (Arguments->VM Arguments)
-		 * for the correct SWT library path in order to run with the SWT dlls.
-		 * The dlls are located in the SWT plugin jar.
-		 * For example, on Windows the Eclipse SWT 3.1 plugin jar is:
-		 *       installation_directory\plugins\org.eclipse.swt.win32_3.1.0.jar
-		 */
 		display  = Display.getDefault();
-		//NuevoMenu thisClass = new NuevoMenu();
 		this.createShellPrincipal();
 		this.shellPrincipal.open();
         this.cambiarHabilitacionBotonesDePartida(false);

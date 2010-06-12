@@ -86,10 +86,6 @@ public class AreaFabricaAEmbeber {
 	}
 
 	private void cargarMaquinas() {
-		// TODO Auto-generated method stub
-		/*for(int i=0; i<10; i++){
-			comboMaquina.add("Maquina " + i);
-		}*/
 		
 		comboMaquina.add("Horno");
 		hashTipoMaquinas.put("Horno", new TipoMaquinaHorno());
@@ -125,8 +121,6 @@ public class AreaFabricaAEmbeber {
 	 * @param cTabFolder
 	 */
 	private void createShellAreaDibujo(CTabFolder cTabFolder) {
-		//GridLayout gridLayout = new GridLayout();
-		//gridLayout.numColumns = 2;
 		createCompositeControles(cTabFolder);
 		createCanvas(compositeControles);
 	}
@@ -308,9 +302,9 @@ public class AreaFabricaAEmbeber {
     }
     
     public void cambiarHabilitacionBotones(boolean estado){
-    	this.buttonCinta.setEnabled(estado);
-    	this.buttonMaquina.setEnabled(estado);
-    	this.buttonMateriaPrima.setEnabled(estado);
+    	buttonCinta.setEnabled(estado);
+    	buttonMaquina.setEnabled(estado);
+    	buttonMateriaPrima.setEnabled(estado);
     }
 }
 

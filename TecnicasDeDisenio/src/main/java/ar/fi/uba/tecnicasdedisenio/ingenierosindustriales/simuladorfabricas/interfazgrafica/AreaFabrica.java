@@ -85,7 +85,6 @@ public class AreaFabrica {
 	}
 
 	private void cargarMaquinas() {
-		// TODO Auto-generated method stub
 		for(int i=0; i<10; i++){
 			comboMaquina.add("Maquina " + i);
 		}

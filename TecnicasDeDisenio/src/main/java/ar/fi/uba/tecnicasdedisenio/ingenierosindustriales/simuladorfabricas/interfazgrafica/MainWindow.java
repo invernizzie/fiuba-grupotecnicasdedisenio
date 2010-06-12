@@ -130,7 +130,7 @@ public class MainWindow implements Sincronizado {
 		checkInvertirLab
 				.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 					public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-						System.out.println("widgetSelected()"); // TODO Auto-generated Event stub widgetSelected()
+						System.out.println("widgetSelected()");
 					}
 				});
 	}

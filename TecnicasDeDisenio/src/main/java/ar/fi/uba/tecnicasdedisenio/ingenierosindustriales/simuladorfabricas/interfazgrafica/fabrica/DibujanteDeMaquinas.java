@@ -25,14 +25,6 @@ public class DibujanteDeMaquinas extends Dibujante {
         } catch (EspacioOcupadoException e) {
             // Simplemente no creo la maquina
         }
-
-        /*GC gc = new GC(getCanvas());
-        Color colorAnterior = gc.getBackground();
-        // TODO Cambiar el color segun el tipo de maquina
-        gc.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE)); 
-        gc.fillRectangle(x, y, 10, 10);
-        gc.setBackground(colorAnterior);
-        gc.dispose();*/
     }
 
     @Override
