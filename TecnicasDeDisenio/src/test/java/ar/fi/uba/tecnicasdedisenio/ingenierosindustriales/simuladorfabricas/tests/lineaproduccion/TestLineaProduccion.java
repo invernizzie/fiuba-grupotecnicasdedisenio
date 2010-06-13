@@ -115,7 +115,6 @@ public class TestLineaProduccion {
 		
 	}
 	
-	
 	@Test
 	public void testAgregarCuatroMaquinas(){
 		CintaTransportadora cintaMaquinas = new CintaTransportadora();
@@ -141,6 +140,59 @@ public class TestLineaProduccion {
 		linea.agregarMaquina(maquina2);
 		linea.agregarMaquina(maquina3);
 		linea.agregarMaquina(maquina4);
+		
+		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
+							this.linea.contieneMaquina(maquina));
+		
+		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
+							this.linea.contieneMaquina(maquina2));
+
+		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
+							this.linea.contieneMaquina(maquina3));
+		
+		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
+							this.linea.contieneMaquina(maquina4));
+		
+		Assert.assertTrue("La máquina insertada no es la primera", 
+							linea.esPrimeraMaquina(maquina));
+
+		Assert.assertTrue("La máquina insertada no es la primera", 
+							linea.esPrimeraMaquina(maquina3));
+		
+		Assert.assertFalse("La máquina insertada es la primera", 
+							linea.esPrimeraMaquina(maquina4));
+		
+		Assert.assertEquals("La máquina insertada no es la última", maquina4, 
+								linea.obtenerUltimaMaquina());
+		
+	}
+	
+	
+	@Test
+	public void testAgregarCuatroMaquinasDesordenadas(){
+		CintaTransportadora cintaMaquinas = new CintaTransportadora();
+		CintaTransportadora cintaPrensaAgua = new CintaTransportadora();
+		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora();
+		CintaTransportadora cintaMaquina2Maquina4 = new CintaTransportadora();
+		CintaTransportadora cintaSalMaquina4 = new CintaTransportadora();
+		
+		Maquina maquina = new Prensa(0F, 0F);
+		cinta.conectar(fuenteTrigo, maquina);
+		Maquina maquina2 = new Plancha(0F, 0F);
+		cintaMaquinas.conectar(maquina, maquina2);
+		Maquina maquina3 = new Prensa(0F, 0F);
+		cintaPrensaAgua.conectar(fuenteAgua, maquina3);
+		
+		cintaMaquina2Maquina3.conectar(maquina3, maquina2);
+		
+		Maquina maquina4 = new Prensa(0F, 0F);
+		cintaSalMaquina4.conectar(fuenteSal, maquina4);
+		cintaMaquina2Maquina4.conectar(maquina2, maquina4);
+		
+		linea.agregarMaquina(maquina4);
+		linea.agregarMaquina(maquina3);
+		linea.agregarMaquina(maquina2);
+		linea.agregarMaquina(maquina);
 		
 		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
 							this.linea.contieneMaquina(maquina));

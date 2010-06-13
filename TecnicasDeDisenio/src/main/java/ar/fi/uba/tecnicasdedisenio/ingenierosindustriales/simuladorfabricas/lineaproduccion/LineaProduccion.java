@@ -30,20 +30,27 @@ public class LineaProduccion {
 	public void agregarMaquina(Maquina maquina) {
 		
 		this.setCostoLinea(costoLinea + maquina.getCostoMaquina());
-		
-		if(esPrimeraMaquina(maquina)){
-			this.primerasMaquinas.add(maquina);
-		}
-		
-		if(esUltimaMaquina(maquina)){
-			ultimaMaquina = maquina;
-			this.contenedor = new Contenedor(maquina.getTipoProducto());
-			CintaTransportadora cinta = new CintaTransportadora(new Salida(), new Entrada());
-			this.contenedor.agregarCinta(cinta);
-			ultimaMaquina.setCintaSalida(cinta);
-		}
-		
 		this.maquinas.add(maquina);
+		
+		this.actualizarLinea();
+	}
+
+	public void actualizarLinea() {
+		
+		for (Maquina maquina : maquinas) {
+		
+			if(esPrimeraMaquina(maquina)){
+				this.primerasMaquinas.add(maquina);
+			}
+			
+			if(esUltimaMaquina(maquina)){
+				ultimaMaquina = maquina;
+				this.contenedor = new Contenedor(maquina.getTipoProducto());
+				CintaTransportadora cinta = new CintaTransportadora(new Salida(), new Entrada());
+				this.contenedor.agregarCinta(cinta);
+				ultimaMaquina.setCintaSalida(cinta);
+			}
+		}
 	}
 
 	public boolean contieneMaquina(Maquina maquina) {
