@@ -287,4 +287,14 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		this.estaRota = true;
 		
 	}
+
+    public boolean tieneCintaDeSalida() {
+        if (getCintaSalida() == null)
+            return false;
+        /* TODO
+         * Ver si esta conectada al contenedor de la fabrica,
+         * si es asi devolver false
+         */
+        return true;
+    }
 }

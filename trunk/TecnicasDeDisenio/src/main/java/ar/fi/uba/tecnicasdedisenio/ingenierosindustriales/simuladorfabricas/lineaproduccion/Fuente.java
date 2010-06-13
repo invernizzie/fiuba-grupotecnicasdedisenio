@@ -18,13 +18,15 @@ public class Fuente implements IFuente {
 	private int cantidad;
 	private List<CintaTransportadora> cintas;
 	private ISalida salida;
-	
-	public Fuente(String tipoMateria, int cantidad, Producto producto){
+    private String nombreProducto;
+
+    public Fuente(String nombre, int cantidad, Producto producto){
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.cintas = new LinkedList<CintaTransportadora>();
 		this.salida = new Salida();
 		this.salida.asignarProducto(producto);
+        this.nombreProducto = nombre;
 	}
 	
 	public void agregarCinta(CintaTransportadora cinta){
@@ -66,4 +68,7 @@ public class Fuente implements IFuente {
 		
 	}
 
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
 }
