@@ -119,7 +119,7 @@ public class EspacioFabril {
 
         CintaTransportadora nuevaCinta = null;
         try {
-            nuevaCinta = getFabrica().conectarMaquina(cubiculoInicial.getFuenteConectable(), cubiculoFinal.getMaquina());
+            nuevaCinta = getFabrica().conectarMaquina(cubiculoInicial.getFuenteConectable(), cubiculoFinal.getMaquina(),new Float(10));
             cintas.put(nuevaCinta, new Integer[][] {{_x1, _y1}, {_x2, _y2}});
         } catch (CubiculoVacioException e) {
             throw new CintaImposibleException();

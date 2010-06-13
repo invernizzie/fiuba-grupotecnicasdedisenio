@@ -65,8 +65,8 @@ public class TestFabricaLineas {
 		fabrica.agregarMaquina(licuadora);
 		fabrica.agregarMaquina(plancha);
 		
-		fabrica.conectarMaquina(fuenteTrigo, horno);
-		fabrica.conectarMaquina(horno, licuadora);
+		fabrica.conectarMaquina(fuenteTrigo, horno,0);
+		fabrica.conectarMaquina(horno, licuadora,0);
 		
 		
 		List<LineaProduccion> lineas = fabrica.getLineas();
@@ -86,14 +86,14 @@ public class TestFabricaLineas {
 		fabrica.agregarMaquina(plancha);
 		fabrica.agregarMaquina(prensa);
 		
-		fabrica.conectarMaquina(fuenteTrigo, horno);
-		fabrica.conectarMaquina(horno, licuadora);
+		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
+		fabrica.conectarMaquina(horno, licuadora, 0);
 		
 		List<LineaProduccion> lineas = fabrica.getLineas();
 		Assert.assertEquals("Se esperaba una sola linea", 1, lineas.size());
 
-		fabrica.conectarMaquina(fuenteAgua, plancha);
-		fabrica.conectarMaquina(plancha, prensa);
+		fabrica.conectarMaquina(fuenteAgua, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
 		
 		lineas = fabrica.getLineas();
 		Assert.assertEquals("Se esperaban 2 lineas", 2, lineas.size());
@@ -101,8 +101,8 @@ public class TestFabricaLineas {
 		plancha = new Plancha(0F, 0F);
 		prensa = new Prensa(0F, 0F);
 		
-		fabrica.conectarMaquina(fuenteAgua, plancha);
-		fabrica.conectarMaquina(plancha, prensa);
+		fabrica.conectarMaquina(fuenteAgua, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
 		
 		lineas = fabrica.getLineas();
 		Assert.assertEquals("Se esperaban 3 lineas", 3, lineas.size());
@@ -128,8 +128,8 @@ public class TestFabricaLineas {
 		fabrica.agregarMaquina(prensa);
 		fabrica.agregarMaquina(plancha);
 		
-		fabrica.conectarMaquina(fuenteTrigo, plancha);
-		fabrica.conectarMaquina(plancha, prensa);
+		fabrica.conectarMaquina(fuenteTrigo, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
 		
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
@@ -162,8 +162,8 @@ public class TestFabricaLineas {
 		fabrica.agregarMaquina(prensa);
 		fabrica.agregarMaquina(plancha);
 		
-		fabrica.conectarMaquina(fuenteTrigo, plancha);
-		fabrica.conectarMaquina(plancha, prensa);
+		fabrica.conectarMaquina(fuenteTrigo, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
 		
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
@@ -197,14 +197,14 @@ public class TestFabricaLineas {
 		fabrica.agregarMaquina(plancha);
 		fabrica.agregarMaquina(prensa);
 		
-		fabrica.conectarMaquina(fuenteTrigo, horno);
-		fabrica.conectarMaquina(horno, licuadora);
+		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
+		fabrica.conectarMaquina(horno, licuadora, 0);
 		
 		List<LineaProduccion> lineas = fabrica.getLineas();
 		Assert.assertEquals("Se esperaba una sola linea", 1, lineas.size());
 
-		fabrica.conectarMaquina(fuenteAgua, plancha);
-		fabrica.conectarMaquina(plancha, prensa);
+		fabrica.conectarMaquina(fuenteAgua, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
 		
 		lineas = fabrica.getLineas();
 		Assert.assertEquals("Se esperaban 2 lineas", 2, lineas.size());
@@ -243,8 +243,8 @@ public class TestFabricaLineas {
 		fabrica.agregarMaquina(prensa);
 		fabrica.agregarMaquina(plancha);
 		
-		fabrica.conectarMaquina(fuenteTrigo, plancha);
-		fabrica.conectarMaquina(plancha, prensa);
+		fabrica.conectarMaquina(fuenteTrigo, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
 		
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
@@ -290,9 +290,9 @@ public class TestFabricaLineas {
 		fabrica.agregarMaquina(plancha);
 		fabrica.agregarMaquina(controlCalidad);
 		
-		fabrica.conectarMaquina(fuenteTrigo, plancha);
-		fabrica.conectarMaquina(plancha, prensa);
-		fabrica.conectarMaquina(prensa, controlCalidad);
+		fabrica.conectarMaquina(fuenteTrigo, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
+		fabrica.conectarMaquina(prensa, controlCalidad, 0);
 		
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);

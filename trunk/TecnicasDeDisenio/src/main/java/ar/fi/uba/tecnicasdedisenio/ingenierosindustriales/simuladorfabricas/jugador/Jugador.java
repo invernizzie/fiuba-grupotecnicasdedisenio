@@ -86,12 +86,12 @@ public class Jugador extends Observable implements Sincronizado {
 		this.getFabrica().agregarFuente(fuente);
 	}
 	
-	public void conectarMaquina(Fuente fuente, Maquina maquina){
-		this.getFabrica().conectarMaquina(fuente, maquina);
+	public void conectarMaquina(Fuente fuente, Maquina maquina, float longitud){
+		this.getFabrica().conectarMaquina(fuente, maquina, longitud);
 	}
 	
-	public void conectarMaquina(Maquina origen, Maquina destino){
-		this.getFabrica().conectarMaquina(origen, destino);
+	public void conectarMaquina(Maquina origen, Maquina destino, float longitud){
+		this.getFabrica().conectarMaquina(origen, destino, longitud);
 	}
 
 	public void setFabrica(Fabrica fabrica) {
