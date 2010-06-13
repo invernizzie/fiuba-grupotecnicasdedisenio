@@ -48,7 +48,7 @@ public class LineaProduccion {
 	public void actualizarLinea() {
 		
 		for (Maquina maquina : maquinas) {
-		
+			maquina.setConectadaAContenedor(false);
 			if(esPrimeraMaquina(maquina)){
 				this.primerasMaquinas.add(maquina);
 			}
@@ -59,6 +59,7 @@ public class LineaProduccion {
 				CintaTransportadora cinta = new CintaTransportadora(new Salida(), new Entrada());
 				this.contenedor.agregarCinta(cinta);
 				ultimaMaquina.setCintaSalida(cinta);
+				maquina.setConectadaAContenedor(true);
 			}
 		}
 		System.out.println(ultimaMaquina.toString());
@@ -150,7 +151,6 @@ public class LineaProduccion {
 		}
 		
 		this.maquinasActuales = siguientes;
-			
 	}
 
 	public void setCostoLinea(Float costoLinea) {
