@@ -49,7 +49,7 @@ public class CubiculoFabril {
         this.fuente = fuente;
     }
 
-    public void conectarConCintaHacia(CubiculoFabril cubiculoFinal, CintaTransportadora cinta) throws CintaImposibleException {
+    public void conectarConCintaHacia(CubiculoFabril cubiculoFinal, CintaTransportadora cinta) {
         this.cintasSalientes.add(cinta);
         cubiculoFinal.cintasEntrantes.add(cinta);
     }
