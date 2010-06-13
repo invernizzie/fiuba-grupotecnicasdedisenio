@@ -37,7 +37,7 @@ public class TestLineaProduccion {
 				new Producto(ValidadorProductos.instancia(), "agua", 0));	
 		this.fuenteSal = new Fuente("agua", 100, 
 				new Producto(ValidadorProductos.instancia(), "sal", 0));
-		this.cinta = new CintaTransportadora();
+		this.cinta = new CintaTransportadora(0);
 	}
 
 	@Test
@@ -60,7 +60,7 @@ public class TestLineaProduccion {
 		Maquina maquina = new Prensa(0F, 0F);
 		cinta.conectar(fuenteTrigo, maquina);
 		Maquina maquina2 = new Plancha(0F, 0F);
-		CintaTransportadora cintaMaquinas = new CintaTransportadora();
+		CintaTransportadora cintaMaquinas = new CintaTransportadora(0);
 		cintaMaquinas.conectar(maquina, maquina2);
 		
 		linea.agregarMaquina(maquina);
@@ -80,9 +80,9 @@ public class TestLineaProduccion {
 	
 	@Test
 	public void testAgregarTresMaquinas(){
-		CintaTransportadora cintaMaquinas = new CintaTransportadora();
-		CintaTransportadora cintaPrensaAgua = new CintaTransportadora();
-		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora();
+		CintaTransportadora cintaMaquinas = new CintaTransportadora(0);
+		CintaTransportadora cintaPrensaAgua = new CintaTransportadora(0);
+		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora(0);
 		Maquina maquina = new Prensa(0F, 0F);
 		cinta.conectar(fuenteTrigo, maquina);
 		Maquina maquina2 = new Plancha(0F, 0F);
@@ -117,11 +117,11 @@ public class TestLineaProduccion {
 	
 	@Test
 	public void testAgregarCuatroMaquinas(){
-		CintaTransportadora cintaMaquinas = new CintaTransportadora();
-		CintaTransportadora cintaPrensaAgua = new CintaTransportadora();
-		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora();
-		CintaTransportadora cintaMaquina2Maquina4 = new CintaTransportadora();
-		CintaTransportadora cintaSalMaquina4 = new CintaTransportadora();
+		CintaTransportadora cintaMaquinas = new CintaTransportadora(0);
+		CintaTransportadora cintaPrensaAgua = new CintaTransportadora(0);
+		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora(0);
+		CintaTransportadora cintaMaquina2Maquina4 = new CintaTransportadora(0);
+		CintaTransportadora cintaSalMaquina4 = new CintaTransportadora(0);
 		
 		Maquina maquina = new Prensa(0F, 0F);
 		cinta.conectar(fuenteTrigo, maquina);
@@ -170,11 +170,11 @@ public class TestLineaProduccion {
 	
 	@Test
 	public void testAgregarCuatroMaquinasDesordenadas(){
-		CintaTransportadora cintaMaquinas = new CintaTransportadora();
-		CintaTransportadora cintaPrensaAgua = new CintaTransportadora();
-		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora();
-		CintaTransportadora cintaMaquina2Maquina4 = new CintaTransportadora();
-		CintaTransportadora cintaSalMaquina4 = new CintaTransportadora();
+		CintaTransportadora cintaMaquinas = new CintaTransportadora(0);
+		CintaTransportadora cintaPrensaAgua = new CintaTransportadora(0);
+		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora(0);
+		CintaTransportadora cintaMaquina2Maquina4 = new CintaTransportadora(0);
+		CintaTransportadora cintaSalMaquina4 = new CintaTransportadora(0);
 		
 		Maquina maquina = new Prensa(0F, 0F);
 		cinta.conectar(fuenteTrigo, maquina);

@@ -11,10 +11,14 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  */
 public class CintaTransportadora{
 	
+	private static float COSTOXMETRO = 1;
+	
 	private ISalida extremoInicial;
 	private IEntrada extremoFinal;
+	private float longitud;
 	
-	public CintaTransportadora() {
+	public CintaTransportadora(float longitud) {
+		this.longitud = longitud;
 	}
 	
 	public CintaTransportadora(ISalida extremoInicial,
@@ -56,6 +60,7 @@ public class CintaTransportadora{
 		
 		origen.setSiguiente(destino);
 		destino.addPrecedente(origen);
+		
 	}
 
 	public void conectar(Fuente origen, Maquina destino){
@@ -86,4 +91,9 @@ public class CintaTransportadora{
 		destino.removeMateriaPrima(origen.getTipoProducto());
 		destino.removeFuente(origen);
 	}
+	
+	public float getCostoConectar(){
+		return COSTOXMETRO*longitud;
+	}
+	
 }

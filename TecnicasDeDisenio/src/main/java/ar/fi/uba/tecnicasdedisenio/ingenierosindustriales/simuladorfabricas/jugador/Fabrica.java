@@ -70,19 +70,19 @@ public class Fabrica implements Sincronizado{
 		this.maquinas.remove(maquina);
 	}
 
-    public CintaTransportadora conectarMaquina(IFuente fuente, Maquina maquina) {
+    public CintaTransportadora conectarMaquina(IFuente fuente, Maquina maquina, float longitud) {
         if (fuente instanceof Fuente)
-            return conectarMaquina((Fuente)fuente, maquina);
-        return conectarMaquina((Maquina)fuente, maquina);
+            return conectarMaquina((Fuente)fuente, maquina, longitud);
+        return conectarMaquina((Maquina)fuente, maquina, longitud);
     }
 
     // TODO Eliminar repeticion de codigo con su sobrecarga para (Maquina, Maquina)
-	public CintaTransportadora conectarMaquina(Fuente fuente, Maquina maquina){
+	public CintaTransportadora conectarMaquina(Fuente fuente, Maquina maquina, float longitud){
 		if(!maquinas.contains(maquina)){
 			this.agregarMaquina(maquina);
 		}
 		
-		CintaTransportadora cinta = new CintaTransportadora();
+		CintaTransportadora cinta = new CintaTransportadora(longitud);
 		cinta.conectar(fuente, maquina);
 		
 		boolean maquinaEnLinea = false;
@@ -97,6 +97,7 @@ public class Fabrica implements Sincronizado{
 			linea.agregarMaquina(maquina);
 			agregarLinea(linea);
 		}
+		this.getJugador().disminuirDinero(cinta.getCostoConectar());
 		return cinta;
 	}
 
@@ -107,7 +108,7 @@ public class Fabrica implements Sincronizado{
 	 * @param destino
 	 */
     // TODO Dividir en metodos mas cohesivos
-	public CintaTransportadora conectarMaquina(Maquina origen, Maquina destino){
+	public CintaTransportadora conectarMaquina(Maquina origen, Maquina destino, float longitud){
 		if(!maquinas.contains(origen)){
 			this.agregarMaquina(origen);
 		}
@@ -116,7 +117,7 @@ public class Fabrica implements Sincronizado{
 			this.agregarMaquina(destino);
 		}
 		
-		CintaTransportadora cinta = new CintaTransportadora();
+		CintaTransportadora cinta = new CintaTransportadora(longitud);
 		cinta.conectar(origen, destino);
 		
 		/*
@@ -146,6 +147,7 @@ public class Fabrica implements Sincronizado{
 			linea.agregarMaquina(destino);
 			agregarLinea(linea);
 		}
+		this.getJugador().disminuirDinero(cinta.getCostoConectar());
 		return cinta;
 	}
 	
