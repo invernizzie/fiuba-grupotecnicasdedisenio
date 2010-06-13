@@ -13,7 +13,7 @@ public class TestValidadorProductos {
 	@Before
 	public void setUp() throws Exception {
 		val = ValidadorProductos.instancia();
-		val.Cargar();
+		val.cargar();
 	}
 
 	@After
@@ -22,20 +22,15 @@ public class TestValidadorProductos {
 	
 	@Test
 	public void testEncontrarProducto() {
-		Assert.assertEquals(true, val.Existe("pan"));
+		Assert.assertEquals(true, val.existe("pan"));
 		//System.out.print("Se encontro el producto buscado\n");
 	}
 	
 	@Test
-	public void testEsValidoProducto() {
-		Assert.assertEquals(false, val.esValido("miel"));
-		//System.out.print("No es válido el producto buscado\n");
+	public void testNoEncontrarProducto() {
+		Assert.assertEquals(false, val.existe("remera"));
+		//System.out.print("Se encontro el producto buscado\n");
 	}
-	
-	@Test
-	public void testEsValidoProductoInexistente() {
-		Assert.assertEquals(false, val.esValido("auto"));
-	}	
 	
 	@Test
 	public void testEsValidoToString() {
@@ -44,7 +39,7 @@ public class TestValidadorProductos {
 	}
 	@Test
 	public void testGetAll() {
-		System.out.println(val.getAll().toString());
+		System.out.println(val.getMateriasPrimas().toString());
 		Assert.assertNotNull(val);
 	}	
 }

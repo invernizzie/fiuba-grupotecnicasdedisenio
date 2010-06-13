@@ -1,5 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.XMLParser;
@@ -13,21 +15,21 @@ public class ValidadorProductos {
 	
 	private final static ValidadorProductos instancia = new ValidadorProductos();
 	
-	private HashMap<String,String> mapProductos;
+	private HashMap<String,Boolean> mapProductos;
 	private HashMap<String,Float> mapProductosPrecio;
 	private XMLParser parser;
 	
 	private ValidadorProductos() {
-		this.mapProductos = new HashMap<String,String>();
+		this.mapProductos = new HashMap<String,Boolean>();
 		this.mapProductosPrecio = new HashMap<String,Float>();
-		this.Cargar();
+		this.cargar();
 	}
 	
-	public HashMap<String, String> getMapProductos() {
+	public HashMap<String, Boolean> getMapProductos() {
 		return mapProductos;
 	}
 
-	public void setMapProductos(HashMap<String, String> mapProductos) {
+	public void setMapProductos(HashMap<String, Boolean> mapProductos) {
 		this.mapProductos = mapProductos;
 	}
 
@@ -44,20 +46,20 @@ public class ValidadorProductos {
 	}
 
 	// TODO Aca se debería hacer la carga con el parser XML
-	public void Cargar(){
-		this.mapProductos.put("harina", "habilitado");
-		this.mapProductos.put("agua", "habilitado");
-		this.mapProductos.put("trigo", "habilitado");
-		this.mapProductos.put("pan", "habilitado");
-		this.mapProductos.put("centeno", "habilitado");
-		this.mapProductos.put("maiz", "habilitado");
-		this.mapProductos.put("sal", "habilitado");
-		this.mapProductos.put("azucar", "habilitado");
-		this.mapProductos.put("vainilla", "habilitado");
-		this.mapProductos.put("edulcorante", "habilitado");
-		this.mapProductos.put("prensado", "habilitado");
-		this.mapProductos.put("planchado", "habilitado");
-		this.mapProductos.put("miel", "no habilitado");
+	public void cargar(){
+		this.mapProductos.put("harina", true);
+		this.mapProductos.put("agua", true);
+		this.mapProductos.put("trigo", true);
+		this.mapProductos.put("pan", true);
+		this.mapProductos.put("centeno", true);
+		this.mapProductos.put("maiz", true);
+		this.mapProductos.put("sal", true);
+		this.mapProductos.put("azucar", true);
+		this.mapProductos.put("vainilla", true);
+		this.mapProductos.put("edulcorante", true);
+		this.mapProductos.put("miel", true);
+		this.mapProductos.put("prensado", false);
+		this.mapProductos.put("planchado", false);
 		
 		this.mapProductosPrecio.put("harina", 1F);
 		this.mapProductosPrecio.put("agua", 2F);
@@ -74,17 +76,9 @@ public class ValidadorProductos {
 		this.mapProductosPrecio.put("miel", 15F);
 	}
 	
-	public boolean Existe(String producto){ 
+	public boolean existe(String producto){ 
 		return this.mapProductos.containsKey(producto);
 		}
-
-	public boolean esValido(String producto){ 
-		if(!this.mapProductos.containsKey(producto))
-			return false;		
-		if(this.mapProductos.get(producto).equals("habilitado"))
-				return true;
-		return false;
-	}
 	
 	public Float obtenerPrecioMercado(String producto){
 		Float precio = this.mapProductosPrecio.get(producto);
@@ -98,8 +92,16 @@ public class ValidadorProductos {
 		return mapProductos.toString();
 	}
 	
-	public String[] getAll(){
-        Set<String> productosSet = mapProductos.keySet();
+	public String[] getMateriasPrimas(){
+		Iterator<Map.Entry<String,Boolean>> it = mapProductos.entrySet().iterator();
+		HashMap<String,Boolean> mapMateriasPrimas = new HashMap<String,Boolean>();
+		while (it.hasNext()) {
+		Map.Entry<String,Boolean> e = (Map.Entry<String,Boolean>)it.next();
+			if((Boolean)e.getValue()){
+				mapMateriasPrimas.put((String)e.getKey(), (Boolean)e.getValue());
+			}	
+		}
+		Set<String> productosSet = mapMateriasPrimas.keySet();
         return productosSet.toArray(new String[productosSet.size()]);
 	}
 

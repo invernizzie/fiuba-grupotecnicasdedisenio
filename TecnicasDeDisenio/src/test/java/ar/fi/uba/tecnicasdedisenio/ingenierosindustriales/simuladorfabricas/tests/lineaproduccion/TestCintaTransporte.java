@@ -27,7 +27,7 @@ public class TestCintaTransporte {
 	@Before
 	public void setUp() throws Exception {
 		val = ValidadorProductos.instancia();
-		val.Cargar();
+		val.cargar();
 		ISalida extremoInicial = new Salida();
 		IEntrada extremoFinal = new Entrada();
 		this.cintaTransportadora = new CintaTransportadora(extremoInicial, extremoFinal);
