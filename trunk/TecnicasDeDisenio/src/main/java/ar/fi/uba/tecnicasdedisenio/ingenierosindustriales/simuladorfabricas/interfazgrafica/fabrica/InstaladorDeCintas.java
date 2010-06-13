@@ -1,18 +1,18 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CintaImposibleException;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CoordenadasNoPertenecenAlEspacioException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CoordenadasIncorrectasException;
 
 /**
  * @author Esteban I. Invernizzi (invernizzie@gmail.com)
  *         Date: 06/06/2010
  */
-public class DibujanteDeCintas extends Dibujante {
+public class InstaladorDeCintas extends Instalador {
 
     private boolean dibujando = false;
     private int primerX, primerY;
 
-    public DibujanteDeCintas(EspacioFabril espacioFabril) {
+    public InstaladorDeCintas(EspacioFabril espacioFabril) {
         super(espacioFabril);
     }
 
@@ -27,7 +27,7 @@ public class DibujanteDeCintas extends Dibujante {
                 primerX = x;
                 primerY = y;
             }
-        } catch (CoordenadasNoPertenecenAlEspacioException e) {
+        } catch (CoordenadasIncorrectasException e) {
             dibujando = false;
         }
     }
@@ -42,7 +42,7 @@ public class DibujanteDeCintas extends Dibujante {
             getEspacioFabril().crearCinta(primerX, primerY, x, y);
         } catch (CintaImposibleException e) {
             // Simplemente no se crea la cinta
-        } catch (CoordenadasNoPertenecenAlEspacioException e) {
+        } catch (CoordenadasIncorrectasException e) {
             // Simplemente no se crea la cinta
         } finally {
             dibujando = false;

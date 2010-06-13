@@ -4,5 +4,5 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
  * @author Esteban I. Invernizzi
  *         Date 10/06/2010
  */
-public class CoordenadasNoPertenecenAlEspacioException extends Throwable {
+public class CoordenadasIncorrectasException extends Throwable {
 }
