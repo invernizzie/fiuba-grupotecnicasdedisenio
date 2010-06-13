@@ -20,6 +20,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	private ISalida salida;
 	private List<Producto> productos;
 	private List<Producto> materiasPrimas;
+	private List<Fuente> fuentes;
 	private List<Maquina> precedentes;
 	private Maquina siguiente;
 	private Float tasaDeFallos;
@@ -43,6 +44,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		this.entrada = new Entrada();
 		this.salida = new Salida();
 		this.setMateriasPrimas(new ArrayList<Producto>());
+		this.fuentes = new ArrayList<Fuente>();
 		this.setPrecedentes(new ArrayList<Maquina>());
 		this.setTasaDeFallos(tasaDeFallos);
 		this.estaRota = false;
@@ -265,4 +267,16 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	 * @return
 	 */
 	public abstract Producto getTipoProducto();
+
+	public void addFuente(Fuente fuente) {
+		this.fuentes.add(fuente);
+	}
+	
+	public void removeFuente(Fuente fuente) {
+		this.fuentes.remove(fuente);
+	}
+
+	public List<Fuente> getFuentes() {
+		return this.fuentes;
+	}
 }

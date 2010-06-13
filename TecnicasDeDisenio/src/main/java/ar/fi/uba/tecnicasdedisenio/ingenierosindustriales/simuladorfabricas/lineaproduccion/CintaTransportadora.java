@@ -66,6 +66,7 @@ public class CintaTransportadora{
 		destino.addCintaEntrada(this);
 		
 		destino.addMateriaPrima(origen.getTipoProducto());
+		destino.addFuente(origen);
 	}
 	
 	public void desconectar(Maquina origen, Maquina destino){
@@ -83,5 +84,6 @@ public class CintaTransportadora{
 		this.extremoFinal = null;
 		origen.removerCinta(this);
 		destino.removeMateriaPrima(origen.getTipoProducto());
+		destino.removeFuente(origen);
 	}
 }
