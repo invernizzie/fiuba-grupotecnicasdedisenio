@@ -63,7 +63,7 @@ public class CubiculoFabril {
             return fuente;
         if (maquina == null)
             throw new CubiculoVacioException();
-        if (maquina.getCintaSalida() == null)
+        if (!maquina.tieneCintaDeSalida())
             return maquina;
         throw new CubiculoVacioException();
     }
@@ -72,5 +72,13 @@ public class CubiculoFabril {
         if (!puedeSerFinDeCinta())
             throw new CubiculoVacioException();
         return maquina;
+    }
+
+    public IFuente getFuente() throws CubiculoVacioException {
+        if (fuente != null)
+            return fuente;
+        if (maquina != null)
+            return maquina;
+        throw new CubiculoVacioException();
     }
 }

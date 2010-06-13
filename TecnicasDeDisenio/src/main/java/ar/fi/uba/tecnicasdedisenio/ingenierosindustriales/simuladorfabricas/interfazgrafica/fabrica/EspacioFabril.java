@@ -3,21 +3,19 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.GeneradorDeColores;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Fabrica;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.CintaTransportadora;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.IFuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Display;
 
-import java.util.Observable;
-import java.util.Observer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Espacio de dibujo de una fabrica cuadriculado.
@@ -58,7 +56,7 @@ public class EspacioFabril {
             Fuente nuevaFuente = new Fuente(nombre, CANTIDAD_MATERIAPRIMA_DEFAULT, materiaPrima);
             getFabrica().agregarFuente(nuevaFuente);
             ocupar(nuevaFuente, _x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA);
-            dibujarMateriaPrima(materiaPrima, nombre, _x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA);
+            dibujarMateriaPrima(nombre, _x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA);
         } catch (CubiculoOcupadoExcetion cubiculoOcupadoExcetion) {
             throw new EspacioOcupadoException();
         }
@@ -73,7 +71,7 @@ public class EspacioFabril {
         getFabrica().agregarMaquina(maquina);
         try {
             ocupar(maquina, _x, _y, ANCHO_MAQUINA, ANCHO_MAQUINA);
-            dibujarMaquina(tipoMaquina, _x, _y, ANCHO_MAQUINA, ANCHO_MAQUINA);
+            dibujarMaquina(maquina, _x, _y, ANCHO_MAQUINA, ANCHO_MAQUINA);
             return maquina;
         } catch (CubiculoOcupadoExcetion cubiculoOcupadoExcetion) {
             throw new EspacioOcupadoException();
@@ -118,6 +116,28 @@ public class EspacioFabril {
         // TODO
     }
 
+    public void redibujar() {
+        List<IFuente> dibujados = new ArrayList<IFuente>();
+        GC gc = new GC(canvas);
+        borrarCanvas(gc);
+
+        for (int x = 0; x < ancho; x++)
+            for (int y = 0; y < alto; y++) {
+                try {
+                    if (superficieFabril[x][y] == null)
+                        continue;
+                    IFuente fuente = superficieFabril[x][y].getFuente();
+                    if (!dibujados.contains(fuente)) {
+                        dibujados.add(fuente);
+                        dibujarFuente(fuente, x * LONGITUD_DEL_LADO, y * LONGITUD_DEL_LADO, ANCHO_MAQUINA, ANCHO_MAQUINA);
+                    }
+                }
+                catch (CubiculoVacioException e) {}
+            }
+
+        // TODO Dibujar las cintas
+    }
+
     protected Fabrica getFabrica() {
         if (fabrica == null)
             throw new FabricaAusenteException();
@@ -128,7 +148,7 @@ public class EspacioFabril {
         this.fabrica = fabrica;
         setCanvas(canvas);
         GC gc = new GC(canvas);
-        gc.fillRectangle(0, 0, limiteCanvas.width, limiteCanvas.height);
+        borrarCanvas(gc);
 
         superficieFabril = new CubiculoFabril[ancho][alto];
     }
@@ -138,6 +158,10 @@ public class EspacioFabril {
         limiteCanvas = canvas.getBounds();
         ancho = convertirCoordenada(limiteCanvas.width);
         alto = convertirCoordenada(limiteCanvas.height);
+    }
+
+    private void borrarCanvas(GC gc) {
+        gc.fillRectangle(0, 0, limiteCanvas.width, limiteCanvas.height);
     }
 
     private void testearQueEsteAdentro(int x, int y) throws CoordenadasNoPertenecenAlEspacioException {
@@ -151,7 +175,17 @@ public class EspacioFabril {
         gc.dispose ();
     }
 
-    private void dibujarMateriaPrima(Producto materiaPrima, String nombre, int _x, int _y, int _ancho, int _alto) {
+    private void dibujarFuente(IFuente _fuente, int _x, int _y, int ancho, int alto) {
+        if (_fuente instanceof Maquina) {
+            Maquina maquina = (Maquina)_fuente;
+            dibujarMaquina(maquina, _x, _y, ancho, alto);
+        } else if (_fuente instanceof Fuente) {
+            Fuente fuente = (Fuente)_fuente;
+            dibujarMateriaPrima(fuente.getNombreProducto(), _x, _y, ancho, alto);
+        }
+    }
+
+    private void dibujarMateriaPrima(String nombre, int _x, int _y, int _ancho, int _alto) {
         int x = convertirCoordenada(_x) * LONGITUD_DEL_LADO;
         int y = convertirCoordenada(_y) * LONGITUD_DEL_LADO;
 
@@ -165,13 +199,13 @@ public class EspacioFabril {
         gc.dispose();
     }
 
-    private void dibujarMaquina(TipoMaquina tipoMaquina, int _x, int _y, int _ancho, int _alto) {
+    private void dibujarMaquina(Maquina maquina, int _x, int _y, int _ancho, int _alto) {
         int x = convertirCoordenada(_x) * LONGITUD_DEL_LADO;
         int y = convertirCoordenada(_y) * LONGITUD_DEL_LADO;
 
         GC gc = new GC(canvas);
         Color colorAnterior = gc.getBackground();
-        gc.setBackground(GeneradorDeColores.porClass(tipoMaquina.getClass()));
+        gc.setBackground(GeneradorDeColores.porClass(maquina.getClass()));
         int ancho = LONGITUD_DEL_LADO * _ancho;
         int alto = LONGITUD_DEL_LADO * _alto;
         gc.fillRectangle(x, y, ancho, alto);
