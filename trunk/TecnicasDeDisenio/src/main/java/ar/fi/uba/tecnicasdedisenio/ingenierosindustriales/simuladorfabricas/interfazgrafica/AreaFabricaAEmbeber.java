@@ -238,7 +238,7 @@ public class AreaFabricaAEmbeber {
 			comboMP.add("Materia Prima  " + i);
 		}
 		comboMP.setItems(validadorProd.toString().split(",", 0));
-		comboMP.setItems(validadorProd.getAll());
+		comboMP.setItems(validadorProd.getMateriasPrimas());
 		comboMP.setText(comboMP.getItem(0));
 	}
 

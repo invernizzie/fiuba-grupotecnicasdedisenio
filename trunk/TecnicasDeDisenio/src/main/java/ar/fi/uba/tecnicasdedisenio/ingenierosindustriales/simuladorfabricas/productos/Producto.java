@@ -22,7 +22,7 @@ public class Producto implements Cloneable {
 	public Producto(ValidadorProductos val, String estado, double tasa_falla) {
 		super();
 		this.validador = val;
-		if(val.esValido(estado)){
+		if(val.existe(estado)){
 			double proba= Math.random();
 			if(tasa_falla < proba) {
 				this.estado = estado;
