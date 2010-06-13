@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.CintaTransportadora;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
@@ -27,7 +28,9 @@ public class TestLineaProduccion {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.linea = new LineaProduccion(new Laboratorio("Cocina",""));
+		Jugador jugador = new Jugador("Santiago", 3000);
+		jugador.setLaboratorio(new Laboratorio("Cocina",""));
+		this.linea = new LineaProduccion(jugador);
 		this.fuenteTrigo = new Fuente("trigo", 100, 
 				new Producto(ValidadorProductos.instancia(), "trigo", 0));
 		this.fuenteAgua = new Fuente("agua", 100, 

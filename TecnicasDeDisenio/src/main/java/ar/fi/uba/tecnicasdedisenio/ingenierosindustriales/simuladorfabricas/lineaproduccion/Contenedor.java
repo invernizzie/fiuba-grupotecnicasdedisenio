@@ -1,5 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,9 +30,10 @@ public class Contenedor {
 		this.cintas.add(cinta);
 	}
 	
-	public void recibirProducto(Producto productoRecibido) {
-		this.cantidad++;
-		this.productosRecibidos.add(productoRecibido);
+	public void recibirProducto(Producto productoRecibido, int cantidad) {
+		this.cantidad += cantidad;
+		List<Producto> recibidos = Collections.nCopies(cantidad, productoRecibido);
+		this.productosRecibidos.addAll(recibidos);
 	}
 
 	public int getCantidadProductos(){
@@ -97,5 +99,45 @@ public class Contenedor {
 	public void removerCinta(CintaTransportadora cintaTransportadora) {
 		this.cintas.remove(cintaTransportadora);
 		
+	}
+	
+	/**
+	 * Calcula cuanto se ganó con la producción teniendo en cuenta la siguiente fórmula
+	 * 
+	 * (1 - [% de piezas defectuosas])2 X [Precio del producto en el mercado] = [Precio por pieza producida].
+	 * @return
+	 */
+	public Float calcularGanancia(){
+		
+		Float ganancia = 0F;
+		Float precioMercado = this.producto.getPrecioMercado();
+		Float porcentajeDefectuosas = this.calcularPorcentajePiezasDefectuosas();
+		
+		Float precioProduccion = (1 - porcentajeDefectuosas) * 2;
+		precioProduccion *= precioMercado;
+		
+		ganancia = precioProduccion * this.getCantidadProductosValidos();
+		
+		return ganancia ;
+	}
+
+	/**
+	 * Devuelve el porcentaje de piezas defectuosas producidas por la linea.
+	 * @return
+	 */
+	private Float calcularPorcentajePiezasDefectuosas() {
+		int cantidadValidos = this.getCantidadProductosValidos();
+		int cantidadDefectuosos = this.getCantidadProductosDefectuoso();
+		int totalProduccion = cantidadValidos + cantidadDefectuosos;
+		
+		Float porcentajeDefectuosos = cantidadDefectuosos * 100F;
+		porcentajeDefectuosos /= totalProduccion;
+		
+		return porcentajeDefectuosos;
+	}
+
+	public void vaciar() {
+		this.productosRecibidos = new LinkedList<Producto>();
+		this.cantidad = 0;		
 	}
 }

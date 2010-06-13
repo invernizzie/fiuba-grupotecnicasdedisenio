@@ -88,6 +88,8 @@ public abstract class Maquina implements Cloneable, IFuente  {
 			}else{
 				elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
 			}
+			this.getProductos().clear();
+			this.getEntrada().getProdcutos().clear();
 			this.getSalida().asignarProducto(elementoProcesado);
 			this.cintaSalida.trasladarElementos();
 			this.verificarRotura();
@@ -115,7 +117,9 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		this.setProductos(getEntrada().getProdcutos());
 		
 		for (Producto producto : materiasPrimas) {
-			this.productos.add(producto);
+			if(!this.productos.contains(producto)){
+				this.productos.add(producto);
+			}
 		}
 	}
 	
