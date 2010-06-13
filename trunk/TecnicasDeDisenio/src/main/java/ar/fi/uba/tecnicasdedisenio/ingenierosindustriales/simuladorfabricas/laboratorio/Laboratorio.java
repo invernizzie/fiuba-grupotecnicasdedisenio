@@ -54,24 +54,21 @@ public class Laboratorio{
 		
 		proceso = new Proceso(1000);
 		maq = new TipoMaquinaPrensa();
+		maq.getPrecedentes().add(new TipoMaquinaHorno());
 		maq.getPrecedentes().add(new TipoMaquinaPlancha());
-		maq.getPrecedentes().add(new TipoMaquinaPrensa());
-		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
+		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaMezcladora());
 		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "azucar", 0));
-		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
+		maq.getPrecedentes().get(1).addMateriaPrima(new Producto(val, "agua", 0));
 		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
 		maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto(val, "edulcorante", 0));
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto(val, "centeno", 0));
 		proceso.setMaquinaFinal(maq);
 		this.getProcesosHabilitados().add(proceso);
 		
 		proceso = new Proceso(1500);
 		maq = new TipoMaquinaPrensa();
+		maq.addMateriaPrima(new Producto(val, "agua", 0));
 		maq.addPrecedente(new TipoMaquinaPlancha());
-		maq.addPrecedente(new TipoMaquinaPrensa());
-		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
-		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
-		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
-		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
 		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
 		proceso.setMaquinaFinal(maq);
 		this.getProcesosHabilitados().add(proceso);
@@ -81,11 +78,9 @@ public class Laboratorio{
 		maq.addPrecedente(new TipoMaquinaMezcladora());
 		maq.addPrecedente(new TipoMaquinaHorno());
 		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
-		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
-		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
-		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
 		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
 		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "azucar", 0));
+		maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
 		proceso.setMaquinaFinal(maq);
 		this.getProcesosInhabilitados().add(proceso);
 		
@@ -95,7 +90,6 @@ public class Laboratorio{
 		maq.addPrecedente(new TipoMaquinaHorno());
 		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
-		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPlancha());
 		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
 		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "azucar", 0));
 		proceso.setMaquinaFinal(maq);
