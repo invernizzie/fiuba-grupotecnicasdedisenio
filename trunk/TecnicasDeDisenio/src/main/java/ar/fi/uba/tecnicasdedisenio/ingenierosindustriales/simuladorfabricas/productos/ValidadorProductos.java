@@ -1,5 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos;
 import java.util.HashMap;
+import java.util.Set;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.XMLParser;
 
@@ -98,16 +99,11 @@ public class ValidadorProductos {
 	}
 	
 	public String[] getAll(){
-		int cantidad = mapProductos.size();
-		String productos[] = new String[cantidad]; 
-		productos = mapProductos.toString().substring(1).split(",", 0); 
-		for(int i=0; i<cantidad; i++){
-			productos[i] = productos[i].substring(0, productos[i].indexOf('='));
-		}
-		return productos;
+        Set<String> productosSet = mapProductos.keySet();
+        return productosSet.toArray(new String[productosSet.size()]);
 	}
 
-	public Float obtenerPrecioCompra(String producto) {
+	public Float obtenerPrecioCompra(String producto) {	
 		Float precio = this.mapProductosPrecio.get(producto);
 		if(precio == null){
 			precio = 0F;
