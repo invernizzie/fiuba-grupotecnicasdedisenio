@@ -34,7 +34,6 @@ public class LineaProduccion {
 		
 		this.setCostoLinea(costoLinea + maquina.getCostoMaquina());
 		this.maquinas.add(maquina);
-		
 		this.actualizarLinea();
 	}
 
@@ -62,6 +61,7 @@ public class LineaProduccion {
 				ultimaMaquina.setCintaSalida(cinta);
 			}
 		}
+		System.out.println(ultimaMaquina.toString());
 	}
 
 	public boolean contieneMaquina(Maquina maquina) {
