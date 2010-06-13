@@ -131,7 +131,11 @@ public class Contenedor {
 		int totalProduccion = cantidadValidos + cantidadDefectuosos;
 		
 		Float porcentajeDefectuosos = cantidadDefectuosos * 100F;
-		porcentajeDefectuosos /= totalProduccion;
+		if(totalProduccion > 0){
+			porcentajeDefectuosos /= totalProduccion;
+		}else{
+			porcentajeDefectuosos = 0F;
+		}
 		
 		return porcentajeDefectuosos;
 	}

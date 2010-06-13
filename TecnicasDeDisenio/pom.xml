@@ -41,7 +41,7 @@
 				<version>2.0.16</version>
 				<configuration>
 					<name>SimuladorDeFabricas</name>
-					<mainClass>ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.Simulador</mainClass>
+					<mainClass>ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.VistaPrincipal</mainClass>
 					<os>${japplication.os.name}</os>
 					<icon>${project.basedir}/src/main/resources/images/iconoDesktop.ico</icon>
 				</configuration>

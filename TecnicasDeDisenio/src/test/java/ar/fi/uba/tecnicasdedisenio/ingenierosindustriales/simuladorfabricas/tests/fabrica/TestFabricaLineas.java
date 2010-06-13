@@ -152,6 +152,76 @@ public class TestFabricaLineas {
 		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
 	}
 	
+	@Test
+	public void testCostosProcesoInvalido(){
+
+		Maquina prensa = new Prensa(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		
+		fabrica.agregarMaquina(prensa);
+		fabrica.agregarMaquina(plancha);
+		
+		fabrica.conectarMaquina(fuenteTrigo, plancha);
+		fabrica.conectarMaquina(plancha, prensa);
+		
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		
+		float dineroJugador = jugador.getDineroActual();
+		float dineroEsperado = 1000 - fabrica.getCostoCompra();
+		dineroEsperado -= prensa.getCostoMaquina();
+		dineroEsperado -= plancha.getCostoMaquina();
+		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
+		
+		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
+		
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		
+		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
+		
+		dineroJugador = jugador.getDineroActual();
+		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
+	}
+	
+	@Test
+	public void testCrearLineasEliminarMaquinas(){
+		Maquina horno = new Horno(0F, 0F);
+		Maquina licuadora = new Licuadora(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		Maquina prensa = new Prensa(0F, 0F);
+		
+		fabrica.agregarMaquina(horno);
+		fabrica.agregarMaquina(licuadora);
+		fabrica.agregarMaquina(plancha);
+		fabrica.agregarMaquina(prensa);
+		
+		fabrica.conectarMaquina(fuenteTrigo, horno);
+		fabrica.conectarMaquina(horno, licuadora);
+		
+		List<LineaProduccion> lineas = fabrica.getLineas();
+		Assert.assertEquals("Se esperaba una sola linea", 1, lineas.size());
+
+		fabrica.conectarMaquina(fuenteAgua, plancha);
+		fabrica.conectarMaquina(plancha, prensa);
+		
+		lineas = fabrica.getLineas();
+		Assert.assertEquals("Se esperaban 2 lineas", 2, lineas.size());
+		
+		fabrica.eliminarMaquina(horno);
+		fabrica.eliminarMaquina(licuadora);
+		
+		lineas = fabrica.getLineas();
+		Assert.assertEquals("Se esperaba una sola linea", 1, lineas.size());
+		
+		fabrica.eliminarMaquina(plancha);
+		fabrica.eliminarMaquina(prensa);
+		
+		lineas = fabrica.getLineas();
+		Assert.assertEquals("No se esperaba una linea", 0, lineas.size());
+		
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 	}

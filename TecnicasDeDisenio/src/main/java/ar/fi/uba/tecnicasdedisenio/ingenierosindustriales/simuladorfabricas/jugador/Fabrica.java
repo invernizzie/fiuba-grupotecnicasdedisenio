@@ -49,6 +49,26 @@ public class Fabrica implements Sincronizado{
 		this.getJugador().disminuirDinero(maquina.getCostoMaquina());
 		this.maquinas.add(maquina);
 	}
+	
+	public void eliminarMaquina(Maquina maquina) {
+		List<LineaProduccion> lineasAEliminar = new ArrayList<LineaProduccion>();
+		
+		for (LineaProduccion linea : this.getLineas()) {
+			if(linea.contieneMaquina(maquina)){
+				linea.eliminarMaquina(maquina);
+				
+				if(linea.estaVacia()){
+					lineasAEliminar.add(linea);
+				}
+			}
+		}
+		
+		for (LineaProduccion lineaProduccion : lineasAEliminar) {
+			this.eliminarLinea(lineaProduccion);
+		}
+		
+		this.maquinas.remove(maquina);
+	}
 
     public CintaTransportadora conectarMaquina(IFuente fuente, Maquina maquina) {
         if (fuente instanceof Fuente)
@@ -131,6 +151,10 @@ public class Fabrica implements Sincronizado{
 	
 	public void agregarLinea(LineaProduccion linea){
 		this.lineas.add(linea);
+	}
+	
+	public void eliminarLinea(LineaProduccion linea){
+		this.lineas.remove(linea);
 	}
 	
 	public void setCostoCompra(float costoCompra) {
@@ -286,7 +310,6 @@ public class Fabrica implements Sincronizado{
 				}
 			} catch (ProcesamientoException e) {
 				// TODO ¿Qué hacemos en este caso? ¿cómo informamos al jugador?
-				e.printStackTrace();
 			}
 		}
 	}
