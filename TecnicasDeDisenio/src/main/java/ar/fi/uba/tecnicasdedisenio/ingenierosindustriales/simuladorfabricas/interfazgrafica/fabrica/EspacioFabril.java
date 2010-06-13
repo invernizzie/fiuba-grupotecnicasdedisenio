@@ -98,19 +98,18 @@ public class EspacioFabril {
     }
 
     public boolean puedeComenzarCintaEn(int _x, int _y) throws CoordenadasIncorrectasException {
-        int x = convertirCoordenada(_x);
-        int y = convertirCoordenada(_y);
-        testearQueEsteAdentro(x, y);
+        int x = transformarCoordenada(_x);
+        int y = transformarCoordenada(_y);
 
         return obtenerCubiculo(x, y) != null
                 && obtenerCubiculo(x, y).puedeSerComienzoDeCinta();
     }
 
     public CintaTransportadora crearCinta(int _x1, int _y1, int _x2, int _y2) throws CintaImposibleException, CoordenadasIncorrectasException {
-        int x1 = convertirCoordenada(_x1);
-        int y1 = convertirCoordenada(_y1);
-        int x2 = convertirCoordenada(_x2);
-        int y2 = convertirCoordenada(_y2);
+        int x1 = transformarCoordenada(_x1);
+        int y1 = transformarCoordenada(_y1);
+        int x2 = transformarCoordenada(_x2);
+        int y2 = transformarCoordenada(_y2);
 
         CubiculoFabril cubiculoInicial = obtenerCubiculo(x1, y1);
         CubiculoFabril cubiculoFinal = obtenerCubiculo(x2, y2);
@@ -137,6 +136,8 @@ public class EspacioFabril {
         List<IFuente> dibujados = new ArrayList<IFuente>();
         GC gc = new GC(canvas);
         borrarCanvas(gc);
+
+        gc.drawRectangle(0, 0, limiteCanvas.width - 1, limiteCanvas.height - 1);
 
         for (int x = 0; x < ancho; x++)
             for (int y = 0; y < alto; y++) {
@@ -181,17 +182,12 @@ public class EspacioFabril {
     private void setCanvas(final Canvas canvas) {
         this.canvas = canvas;
         limiteCanvas = canvas.getBounds();
-        ancho = convertirCoordenada(limiteCanvas.width);
-        alto = convertirCoordenada(limiteCanvas.height);
+        ancho = transformarCoordenada(limiteCanvas.width);
+        alto = transformarCoordenada(limiteCanvas.height);
     }
 
     private void borrarCanvas(GC gc) {
         gc.fillRectangle(0, 0, limiteCanvas.width, limiteCanvas.height);
-    }
-
-    private void testearQueEsteAdentro(int x, int y) throws CoordenadasIncorrectasException {
-        if ((x < 0) || (y < 0) || (x >= ancho) || (y >= alto))
-            throw new CoordenadasIncorrectasException();
     }
 
     private void dibujarCinta(int _x1, int _y1, int _x2, int _y2) {
@@ -211,8 +207,8 @@ public class EspacioFabril {
     }
 
     private void dibujarMateriaPrima(String nombre, int _x, int _y, int _ancho, int _alto) {
-        int x = convertirCoordenada(_x) * LONGITUD_DEL_LADO;
-        int y = convertirCoordenada(_y) * LONGITUD_DEL_LADO;
+        int x = transformarCoordenada(_x) * LONGITUD_DEL_LADO;
+        int y = transformarCoordenada(_y) * LONGITUD_DEL_LADO;
 
         GC gc = new GC(canvas);
         Color colorAnterior = gc.getBackground();
@@ -225,8 +221,8 @@ public class EspacioFabril {
     }
 
     private void dibujarMaquina(Maquina maquina, int _x, int _y, int _ancho, int _alto) {
-        int x = convertirCoordenada(_x) * LONGITUD_DEL_LADO;
-        int y = convertirCoordenada(_y) * LONGITUD_DEL_LADO;
+        int x = transformarCoordenada(_x) * LONGITUD_DEL_LADO;
+        int y = transformarCoordenada(_y) * LONGITUD_DEL_LADO;
 
         GC gc = new GC(canvas);
         Color colorAnterior = gc.getBackground();
@@ -241,21 +237,21 @@ public class EspacioFabril {
     private boolean estaDentroDelEspacio(int x, int y, int ancho, int alto) {
         if ((x < 0) || (y < 0))
             return false;
-        return !((convertirCoordenada(x + ancho * LONGITUD_DEL_LADO) >= this.ancho)
-                || (convertirCoordenada(y + alto * LONGITUD_DEL_LADO) >= this.alto));
+        return !((transformarCoordenada(x + ancho * LONGITUD_DEL_LADO) >= this.ancho)
+                || (transformarCoordenada(y + alto * LONGITUD_DEL_LADO) >= this.alto));
     }
 
     private void ocupar(Fuente fuente, int _x, int _y, int ancho, int alto) throws CubiculoOcupadoExcetion, CoordenadasIncorrectasException {
-        int x = convertirCoordenada(_x);
-        int y = convertirCoordenada(_y);
+        int x = transformarCoordenada(_x);
+        int y = transformarCoordenada(_y);
         for (int offsetX = 0; offsetX <= ancho; offsetX++)
             for (int offsetY = 0; offsetY <= alto; offsetY++)
                 obtenerOCrearCubiculo(x + offsetX, y + offsetY).ubicarMateriaPrima(fuente);
     }
 
     private void ocupar(Maquina maquina, int _x, int _y, int ancho, int alto) throws CubiculoOcupadoExcetion, CoordenadasIncorrectasException {
-        int x = convertirCoordenada(_x);
-        int y = convertirCoordenada(_y);
+        int x = transformarCoordenada(_x);
+        int y = transformarCoordenada(_y);
         for (int offsetX = 0; offsetX <= ancho; offsetX++)
             for (int offsetY = 0; offsetY <= alto; offsetY++)
                 obtenerOCrearCubiculo(x + offsetX, y + offsetY).ubicarMaquina(maquina);
@@ -271,13 +267,14 @@ public class EspacioFabril {
     }
 
     private CubiculoFabril obtenerCubiculo(int x, int y) throws CoordenadasIncorrectasException {
-        testearQueEsteAdentro(x, y);
+        if ((x < 0) || (y < 0) || (x >= ancho) || (y >= alto))
+            throw new CoordenadasIncorrectasException();
         return superficieFabril[x][y];
     }
 
     private boolean estaOcupado(int _x, int _y, int ancho, int alto) throws CoordenadasIncorrectasException {
-        int x = convertirCoordenada(_x);
-        int y = convertirCoordenada(_y);
+        int x = transformarCoordenada(_x);
+        int y = transformarCoordenada(_y);
 
         for (int offsetX = 0; offsetX <= ancho; offsetX++)
             for (int offsetY = 0; offsetY <= alto; offsetY++)
@@ -288,7 +285,7 @@ public class EspacioFabril {
         return false;
     }
 
-    private int convertirCoordenada(int coordenada) {
+    private int transformarCoordenada(int coordenada) {
         return coordenada / LONGITUD_DEL_LADO;
     }
 }
