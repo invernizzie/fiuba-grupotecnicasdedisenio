@@ -21,7 +21,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	private List<Producto> productos;
 	private List<Producto> materiasPrimas;
 	private List<Fuente> fuentes;
-	private List<Maquina> precedentes;
+	protected List<Maquina> precedentes;
 	private Maquina siguiente;
 	private Float tasaDeFallos;
 	private List<CintaTransportadora> cintasEntrada;
@@ -79,29 +79,32 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	 * @param construirProductoValido 
 	 */
 	public final Producto procesar(Boolean construirProductoValido) throws EntradaInvalidaException{
-		obtenerProductosEntrada();
-		
-		Boolean isEntradaValida = this.validarEntrada();
-		
-		if(isEntradaValida){
-			Producto elementoProcesado = null;
-			if(construirProductoValido){
-				elementoProcesado = this.realizarProceso();
+		Producto elementoProcesado = null;
+		if(!this.estaRota){
+			obtenerProductosEntrada();
+			
+			Boolean isEntradaValida = this.validarEntrada();
+			
+			if(isEntradaValida){
+				if(construirProductoValido){
+					elementoProcesado = this.realizarProceso();
+				}else{
+					elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
+				}
+				this.getProductos().clear();
+				this.getEntrada().getProdcutos().clear();
+				this.getSalida().asignarProducto(elementoProcesado);
+				this.cintaSalida.trasladarElementos();
+				this.verificarRotura();
 			}else{
-				elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
+				throw new EntradaInvalidaException("Los elementos que ingresaron" +
+													" no se corresponden con los necesarios " +
+													"para que esta máquina opere");
 			}
-			this.getProductos().clear();
-			this.getEntrada().getProdcutos().clear();
-			this.getSalida().asignarProducto(elementoProcesado);
-			this.cintaSalida.trasladarElementos();
-			this.verificarRotura();
-			return elementoProcesado;
 		}else{
-			throw new EntradaInvalidaException("Los elementos que ingresaron" +
-												" no se corresponden con los necesarios " +
-												"para que esta máquina opere");
+			elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
 		}
-		
+		return elementoProcesado;
 	}
 	
 	/**
@@ -278,5 +281,10 @@ public abstract class Maquina implements Cloneable, IFuente  {
 
 	public List<Fuente> getFuentes() {
 		return this.fuentes;
+	}
+
+	public void forzarRotura() {
+		this.estaRota = true;
+		
 	}
 }

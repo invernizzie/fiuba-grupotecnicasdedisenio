@@ -7,6 +7,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.juga
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.ProcesamientoException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaControlCalidad;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 public class LineaProduccion {
@@ -18,12 +19,14 @@ public class LineaProduccion {
 	private Laboratorio laboratorio;
 	private Float costoLinea = 0F;
 	private Jugador jugador;
+	private TipoMaquinaControlCalidad tipoControlDeCalidad;
 	
 	public LineaProduccion(Jugador jugador){
 		this.maquinas = new HashSet<Maquina>();
 		this.primerasMaquinas = new HashSet<Maquina>();
 		this.jugador = jugador;
 		this.laboratorio = jugador.getLaboratorio();
+		tipoControlDeCalidad = new TipoMaquinaControlCalidad();
 		
 	}
 	
@@ -88,7 +91,13 @@ public class LineaProduccion {
 	 * @return
 	 */
 	public boolean construyeProductoValido(){
-		return this.laboratorio.existeProcesoValido(this.ultimaMaquina);
+		Maquina maquinaAVerificar = ultimaMaquina;
+		if(this.tipoControlDeCalidad.verificarTipo(ultimaMaquina)){
+			// Kinda nasty, but works
+			maquinaAVerificar = ultimaMaquina.precedentes.get(0);
+		}
+		
+		return this.laboratorio.existeProcesoValido(maquinaAVerificar);
 	}
 	
 	public void procesar() throws ProcesamientoException {

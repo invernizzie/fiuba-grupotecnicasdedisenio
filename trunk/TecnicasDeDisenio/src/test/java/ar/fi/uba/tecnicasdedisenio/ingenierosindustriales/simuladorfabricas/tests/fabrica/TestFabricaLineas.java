@@ -14,6 +14,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.juga
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Proceso;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.ControlCalidad;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Horno;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Licuadora;
@@ -220,6 +221,92 @@ public class TestFabricaLineas {
 		lineas = fabrica.getLineas();
 		Assert.assertEquals("No se esperaba una linea", 0, lineas.size());
 		
+	}
+	
+	@Test
+	public void testMaquinaRota(){
+
+		/*
+		 * Creo un proceso de prueba para simplificar el test.
+		 */
+		Proceso proceso = new Proceso(1000);
+		TipoMaquina maq = new TipoMaquinaPrensa();
+		TipoMaquinaPlancha tipoPlancha = new TipoMaquinaPlancha();
+		tipoPlancha.addMateriaPrima(new Producto(ValidadorProductos.instancia(), "trigo", 0));
+		maq.addPrecedente(tipoPlancha);
+		proceso.setMaquinaFinal(maq);
+		jugador.getLaboratorio().getProcesosHabilitados().add(proceso);
+		
+		Maquina prensa = new Prensa(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		
+		fabrica.agregarMaquina(prensa);
+		fabrica.agregarMaquina(plancha);
+		
+		fabrica.conectarMaquina(fuenteTrigo, plancha);
+		fabrica.conectarMaquina(plancha, prensa);
+		
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		
+		float dineroJugador = jugador.getDineroActual();
+		float dineroEsperado = 1000 - fabrica.getCostoCompra();
+		dineroEsperado -= prensa.getCostoMaquina();
+		dineroEsperado -= plancha.getCostoMaquina();
+		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
+		dineroEsperado += 200F;
+		
+		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
+		
+		prensa.forzarRotura();
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		
+		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
+		
+		dineroJugador = jugador.getDineroActual();
+		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
+	}
+	
+	@Test
+	public void testConControlDeCalidad(){
+
+		/*
+		 * Creo un proceso de prueba para simplificar el test.
+		 */
+		Proceso proceso = new Proceso(1000);
+		TipoMaquina maq = new TipoMaquinaPrensa();
+		TipoMaquinaPlancha tipoPlancha = new TipoMaquinaPlancha();
+		tipoPlancha.addMateriaPrima(new Producto(ValidadorProductos.instancia(), "trigo", 0));
+		maq.addPrecedente(tipoPlancha);
+		proceso.setMaquinaFinal(maq);
+		jugador.getLaboratorio().getProcesosHabilitados().add(proceso);
+		
+		Maquina prensa = new Prensa(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		Maquina controlCalidad = new ControlCalidad(0F, 0F);
+		
+		fabrica.agregarMaquina(prensa);
+		fabrica.agregarMaquina(plancha);
+		fabrica.agregarMaquina(controlCalidad);
+		
+		fabrica.conectarMaquina(fuenteTrigo, plancha);
+		fabrica.conectarMaquina(plancha, prensa);
+		fabrica.conectarMaquina(prensa, controlCalidad);
+		
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		
+		float dineroJugador = jugador.getDineroActual();
+		float dineroEsperado = 1000 - fabrica.getCostoCompra();
+		dineroEsperado -= prensa.getCostoMaquina();
+		dineroEsperado -= plancha.getCostoMaquina();
+		dineroEsperado -= controlCalidad.getCostoMaquina();
+		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
+		dineroEsperado += 200F;
+		
+		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
+
 	}
 	
 	@After

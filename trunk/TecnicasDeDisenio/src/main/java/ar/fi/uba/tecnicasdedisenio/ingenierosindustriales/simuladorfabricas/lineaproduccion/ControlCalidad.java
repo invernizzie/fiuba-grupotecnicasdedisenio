@@ -1,5 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
+import java.util.List;
+
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
@@ -8,10 +10,11 @@ public class ControlCalidad extends Maquina {
 	
 	public ControlCalidad(float tasaDeFallos, float tasaRotura) {
 		super(tasaDeFallos, tasaRotura);
+		this.setCostoMaquina(200F);
 	}
 	
 	/**
-	 * Si un producto está defectuoso lo desecha, sino lo pasa a la siguiente instancia
+	 * Si un producto estÃ¡ defectuoso lo desecha, sino lo pasa a la siguiente instancia
 	 * sin modificaciones.
 	 * @see ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina#realizarProceso()
 	 */
@@ -38,8 +41,20 @@ public class ControlCalidad extends Maquina {
 
 	@Override
 	public Producto getTipoProducto() {
-		// El control de calidad se aplica sobre una única máquina y su tipo de
-		// producto es el de esta última
-		return this.getPrecedentes().get(0).getTipoProducto();
+		// El control de calidad se aplica sobre una ï¿½nica mï¿½quina y su tipo de
+		// producto es el de esta Ãºltima
+		return this.precedentes.get(0).getTipoProducto();
 	}
+
+	@Override
+	public List<Producto> getMateriasPrimas() {
+		return this.precedentes.get(0).getMateriasPrimas();
+	}
+
+	@Override
+	public List<Maquina> getPrecedentes() {
+		return this.precedentes.get(0).getPrecedentes();
+	}
+	
+	
 }
