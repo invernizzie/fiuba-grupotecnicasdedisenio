@@ -1,21 +1,18 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.EspacioOcupadoException;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
 /**
  * @author Esteban I. Invernizzi (invernizzie@gmail.com)
  *         Date: 06/06/2010
  */
-public class DibujanteDeMateriaPrima extends Dibujante {
+public class InstaladorDeMaquinas extends Instalador {
 
-    private Producto materiaPrima;
-    private String nombre;
+    private TipoMaquina tipoMaquina;
 
-    public DibujanteDeMateriaPrima(EspacioFabril espacioFabril, Producto materiaPrima, String nombre) {
+    public InstaladorDeMaquinas(EspacioFabril espacioFabril, TipoMaquina tipoMaquina) {
         super(espacioFabril);
-        this.materiaPrima = materiaPrima;
-        this.nombre = nombre; 
+        this.tipoMaquina = tipoMaquina;
     }
 
     @Override
@@ -24,10 +21,9 @@ public class DibujanteDeMateriaPrima extends Dibujante {
     @Override
     public void mouseDown(int x, int y) {
         try {
-            getEspacioFabril().crearMateriaPrima(x, y, materiaPrima, nombre);
-        } catch (EspacioOcupadoException e)
-        {
-            // Simplemente no se crea la materia prima
+            getEspacioFabril().crearMaquina(x, y, tipoMaquina);
+        } catch (EspacioOcupadoException e) {
+            // Simplemente no creo la maquina
         }
     }
 

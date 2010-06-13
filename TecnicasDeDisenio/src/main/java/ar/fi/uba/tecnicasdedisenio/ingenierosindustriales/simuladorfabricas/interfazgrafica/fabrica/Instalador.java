@@ -4,11 +4,11 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
  * @author Esteban I. Invernizzi (invernizzie@gmail.com)
  *         Date: 06/06/2010
  */
-public abstract class Dibujante {
+public abstract class Instalador {
 
     private EspacioFabril espacioFabril;
 
-    public Dibujante(EspacioFabril espacioFabril) {
+    public Instalador(EspacioFabril espacioFabril) {
         this.espacioFabril = espacioFabril;
     }
 

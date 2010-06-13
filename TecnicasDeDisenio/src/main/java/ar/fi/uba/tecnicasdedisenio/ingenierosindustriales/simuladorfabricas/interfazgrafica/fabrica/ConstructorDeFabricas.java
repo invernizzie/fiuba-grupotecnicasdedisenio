@@ -1,6 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.Dibujante;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.Instalador;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -11,31 +11,31 @@ import org.eclipse.swt.widgets.Listener;
  */
 public class ConstructorDeFabricas implements Listener {
 
-    private Dibujante dibujante;
-    
-    public ConstructorDeFabricas(Dibujante dibujanteInicial) {
-        dibujante = dibujanteInicial;
+    private Instalador instalador;
+
+    public ConstructorDeFabricas(Instalador instaladorInicial) {
+        instalador = instaladorInicial;
     }
 
-    public void setDibujante(Dibujante dibujante) {
-        this.dibujante = dibujante;
+    public void setDibujante(Instalador instalador) {
+        this.instalador = instalador;
     }
 
     public void handleEvent (Event event) {
 
         switch (event.type) {
             case SWT.MouseMove:
-                dibujante.mouseMove(event.x, event.y);
+                instalador.mouseMove(event.x, event.y);
                 break;
 
             case SWT.MouseDown:
-                dibujante.mouseDown(event.x, event.y);
+                instalador.mouseDown(event.x, event.y);
                 break;
 
             case SWT.MouseUp:
                 if ((event.stateMask & SWT.BUTTON1) == 0)
                     return;
-                dibujante.mouseUp(event.x, event.y);
+                instalador.mouseUp(event.x, event.y);
                 break;
         }
     }

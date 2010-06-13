@@ -19,9 +19,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.ConstructorDeFabricas;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeCintas;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeMaquinas;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.DibujanteDeMateriaPrima;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.InstaladorDeCintas;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.InstaladorDeMaquinas;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.InstaladorDeMateriaPrima;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.EspacioFabril;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
@@ -105,14 +105,14 @@ public class AreaFabricaAEmbeber {
 
 	private void elegirMP() {
 		constructorDeFabricas.setDibujante(
-				new DibujanteDeMateriaPrima(
+				new InstaladorDeMateriaPrima(
 						espacioFabril,
 						new Producto(validadorProd, comboMP.getText(), 0F), comboMP.getText()));
 	}
 
 	private void elegirMaquina() {
 		constructorDeFabricas.setDibujante(
-				new DibujanteDeMaquinas(espacioFabril, hashTipoMaquinas.get(comboMaquina.getText())));
+				new InstaladorDeMaquinas(espacioFabril, hashTipoMaquinas.get(comboMaquina.getText())));
 	}
 	
 	/**
@@ -141,7 +141,7 @@ public class AreaFabricaAEmbeber {
 		canvas.setLayout(new FillLayout());
 		canvas.setLayoutData(gridData);
 		espacioFabril = new EspacioFabril(canvas);
-		constructorDeFabricas = new ConstructorDeFabricas(new DibujanteDeCintas(espacioFabril));
+		constructorDeFabricas = new ConstructorDeFabricas(new InstaladorDeCintas(espacioFabril));
 		canvas.addListener (SWT.MouseDown, constructorDeFabricas);
 		canvas.addListener (SWT.MouseUp, constructorDeFabricas);
 		canvas.addListener (SWT.MouseMove, constructorDeFabricas);
@@ -189,7 +189,7 @@ public class AreaFabricaAEmbeber {
 		buttonCinta.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("Paso dibujar cintas");
-				constructorDeFabricas.setDibujante(new DibujanteDeCintas(espacioFabril));
+				constructorDeFabricas.setDibujante(new InstaladorDeCintas(espacioFabril));
 				deseleccionarControles();
 			}
 		});
