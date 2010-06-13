@@ -106,4 +106,14 @@ public class ValidadorProductos {
 		}
 		return productos;
 	}
+
+	public Float obtenerPrecioCompra(String producto) {
+		Float precio = this.mapProductosPrecio.get(producto);
+		if(precio == null){
+			precio = 0F;
+		}else{
+			precio /= 2;
+		}
+		return precio;
+	}
 }

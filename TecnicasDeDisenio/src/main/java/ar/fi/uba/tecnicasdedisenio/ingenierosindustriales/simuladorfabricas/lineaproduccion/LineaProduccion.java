@@ -96,6 +96,13 @@ public class LineaProduccion {
 		for (Maquina maquina : maquinasActuales) {
 			try {
 				
+				if(!maquina.getFuentes().isEmpty()){
+					for (Fuente fuente : maquina.getFuentes()) {
+						Float precioCompra = fuente.getTipoProducto().getPrecioCompra();
+						this.jugador.disminuirDinero(precioCompra);
+					}
+				}
+				
 				if(this.esUltimaMaquina(maquina)){
 					productoValido = this.construyeProductoValido();
 				}else{
