@@ -35,6 +35,14 @@ public class LineaProduccion {
 		this.actualizarLinea();
 	}
 
+	public void eliminarMaquina(Maquina maquina) {
+		
+		this.setCostoLinea(costoLinea - maquina.getCostoMaquina());
+		this.maquinas.remove(maquina);
+		
+		this.actualizarLinea();
+	}
+	
 	public void actualizarLinea() {
 		
 		for (Maquina maquina : maquinas) {
@@ -168,6 +176,10 @@ public class LineaProduccion {
 		
 		return esUltima;
 		
+	}
+
+	public boolean estaVacia() {
+		return this.maquinas.isEmpty();
 	}
 	
 }
