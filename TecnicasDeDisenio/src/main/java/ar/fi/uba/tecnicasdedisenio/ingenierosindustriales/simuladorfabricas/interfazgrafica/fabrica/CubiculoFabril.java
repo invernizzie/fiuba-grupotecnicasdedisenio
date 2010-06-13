@@ -18,19 +18,9 @@ public class CubiculoFabril {
 
     private Maquina maquina = null;
     private Fuente fuente = null;
-    private List<CintaTransportadora> cintasSalientes = new ArrayList<CintaTransportadora>();
-    private List<CintaTransportadora> cintasEntrantes = new ArrayList<CintaTransportadora>();
     
     private boolean puedeSerFinDeCinta() {
         return (maquina != null);
-    }
-
-    private IEntrada finDeCinta() throws CubiculoVacioException {
-        if (!estaOcupado())
-            throw new CubiculoVacioException();
-        if (maquina != null)
-            return maquina.getEntrada();
-        return null;
     }
     
     public boolean estaOcupado() {
@@ -47,11 +37,6 @@ public class CubiculoFabril {
         if (estaOcupado())
             throw new CubiculoOcupadoExcetion();
         this.fuente = fuente;
-    }
-
-    public void conectarConCintaHacia(CubiculoFabril cubiculoFinal, CintaTransportadora cinta) {
-        this.cintasSalientes.add(cinta);
-        cubiculoFinal.cintasEntrantes.add(cinta);
     }
 
     public boolean puedeSerComienzoDeCinta() {

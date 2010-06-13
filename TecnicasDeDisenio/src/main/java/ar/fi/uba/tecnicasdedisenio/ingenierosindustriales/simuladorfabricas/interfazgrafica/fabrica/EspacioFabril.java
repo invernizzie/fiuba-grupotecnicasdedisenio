@@ -65,13 +65,13 @@ public class EspacioFabril {
             Fuente nuevaFuente = new Fuente(nombre, CANTIDAD_MATERIAPRIMA_DEFAULT, materiaPrima);
             getFabrica().agregarFuente(nuevaFuente);
             ocupar(nuevaFuente, _x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA);
-            dibujarMateriaPrima(nombre, _x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA);
         } catch (CubiculoOcupadoExcetion cubiculoOcupadoExcetion) {
             throw new EspacioOcupadoException();
         } catch (CoordenadasIncorrectasException e) {
             // No deberia arrojarse nunca
             e.printStackTrace();
         }
+        redibujar();
     }
 
     public Maquina crearMaquina(int _x, int _y, TipoMaquina tipoMaquina) throws EspacioOcupadoException {
@@ -87,13 +87,13 @@ public class EspacioFabril {
         getFabrica().agregarMaquina(maquina);
         try {
             ocupar(maquina, _x, _y, ANCHO_MAQUINA, ANCHO_MAQUINA);
-            dibujarMaquina(maquina, _x, _y, ANCHO_MAQUINA, ANCHO_MAQUINA);
         } catch (CubiculoOcupadoExcetion cubiculoOcupadoExcetion) {
             throw new EspacioOcupadoException();
         } catch (CoordenadasIncorrectasException e) {
             //  No deberia arrojarse nunca
             e.printStackTrace();
         }
+        redibujar();
         return maquina;
     }
 
@@ -111,8 +111,6 @@ public class EspacioFabril {
         int y1 = convertirCoordenada(_y1);
         int x2 = convertirCoordenada(_x2);
         int y2 = convertirCoordenada(_y2);
-        testearQueEsteAdentro(x1, y1);
-        testearQueEsteAdentro(x2, y2);
 
         CubiculoFabril cubiculoInicial = obtenerCubiculo(x1, y1);
         CubiculoFabril cubiculoFinal = obtenerCubiculo(x2, y2);
@@ -123,11 +121,11 @@ public class EspacioFabril {
         CintaTransportadora nuevaCinta = null;
         try {
             nuevaCinta = getFabrica().conectarMaquina(cubiculoInicial.getFuenteConectable(), cubiculoFinal.getMaquina());
-            cubiculoInicial.conectarConCintaHacia(cubiculoFinal, nuevaCinta);
+            cintas.put(nuevaCinta, new Integer[][] {{_x1, _y1}, {_x2, _y2}});
         } catch (CubiculoVacioException e) {
             throw new CintaImposibleException();
         }
-        dibujarCinta(_x1, _y1, _x2, _y2);
+        redibujar();
         return nuevaCinta;
     }
 
@@ -158,7 +156,10 @@ public class EspacioFabril {
                 }
             }
 
-        // TODO Dibujar las cintas
+        for (CintaTransportadora cinta: cintas.keySet()) {
+            Integer[][] coordenadas = cintas.get(cinta);
+            dibujarCinta(coordenadas[0][0], coordenadas[0][1], coordenadas[1][0], coordenadas[1][1]);
+        }
     }
 
     protected Fabrica getFabrica() {
@@ -174,6 +175,7 @@ public class EspacioFabril {
         borrarCanvas(gc);
 
         superficieFabril = new CubiculoFabril[ancho][alto];
+        cintas = new HashMap<CintaTransportadora, Integer[][]>();
     }
 
     private void setCanvas(final Canvas canvas) {
