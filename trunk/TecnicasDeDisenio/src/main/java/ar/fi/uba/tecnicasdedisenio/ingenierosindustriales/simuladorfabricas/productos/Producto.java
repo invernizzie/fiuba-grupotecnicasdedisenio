@@ -67,4 +67,8 @@ public class Producto implements Cloneable {
 		return new Producto(this.validador, estado, 0F);
 	}
 
+	public Float getPrecioMercado() {
+		return this.validador.obtenerPrecioMercado(this.estado);
+	}
+
 }

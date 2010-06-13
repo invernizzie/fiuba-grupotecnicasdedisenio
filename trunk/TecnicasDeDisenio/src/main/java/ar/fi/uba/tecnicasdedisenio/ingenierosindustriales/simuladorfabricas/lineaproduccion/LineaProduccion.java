@@ -3,6 +3,7 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lin
 import java.util.HashSet;
 import java.util.Set;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.ProcesamientoException;
@@ -16,33 +17,14 @@ public class LineaProduccion {
 	private Contenedor contenedor;
 	private Laboratorio laboratorio;
 	private Float costoLinea = 0F;
+	private Jugador jugador;
 	
-	/**
-	 * Una máquina es la última de la linea si no figura en la lista de precedentes
-	 * de otra máquina.
-	 * @param maquinaAVerificar
-	 * @return
-	 */
-	private boolean esUltimaMaquina(Maquina maquinaAVerificar){
-		
-		boolean esUltima = true;
-		
-		for (Maquina maquina : maquinas) {
-			if(!maquina.equals(maquinaAVerificar) &&
-					!maquina.getPrecedentes().isEmpty() && 
-					maquina.getPrecedentes().contains(maquinaAVerificar)){
-				esUltima = false;
-			}
-		}
-		
-		return esUltima;
-		
-	}
-	
-	public LineaProduccion(Laboratorio laboratorio){
+	public LineaProduccion(Jugador jugador){
 		this.maquinas = new HashSet<Maquina>();
 		this.primerasMaquinas = new HashSet<Maquina>();
-		this.laboratorio = laboratorio;
+		this.jugador = jugador;
+		this.laboratorio = jugador.getLaboratorio();
+		
 	}
 	
 	public void agregarMaquina(Maquina maquina) {
@@ -122,9 +104,13 @@ public class LineaProduccion {
 
 				if(this.esUltimaMaquina(maquina)){
 					// Si se terminó la linea guardamos el producto en el contenedor
-					this.getContenedor().recibirProducto(productoObtenido);
+					this.getContenedor().recibirProducto(productoObtenido, 100);
 					// Y seteamos la siguiente máquina en null para que vuelva a procesar desde el principio
 					siguientes = null;
+					
+					Float ganancia = this.getContenedor().calcularGanancia();
+					this.jugador.aumentarDinero(ganancia);
+					this.contenedor.vaciar();
 				}
 				
 			} catch (EntradaInvalidaException e) {
@@ -148,4 +134,26 @@ public class LineaProduccion {
 		return contenedor;
 	}
 
+	/**
+	 * Una máquina es la última de la linea si no figura en la lista de precedentes
+	 * de otra máquina.
+	 * @param maquinaAVerificar
+	 * @return
+	 */
+	private boolean esUltimaMaquina(Maquina maquinaAVerificar){
+		
+		boolean esUltima = true;
+		
+		for (Maquina maquina : maquinas) {
+			if(!maquina.equals(maquinaAVerificar) &&
+					!maquina.getPrecedentes().isEmpty() && 
+					maquina.getPrecedentes().contains(maquinaAVerificar)){
+				esUltima = false;
+			}
+		}
+		
+		return esUltima;
+		
+	}
+	
 }

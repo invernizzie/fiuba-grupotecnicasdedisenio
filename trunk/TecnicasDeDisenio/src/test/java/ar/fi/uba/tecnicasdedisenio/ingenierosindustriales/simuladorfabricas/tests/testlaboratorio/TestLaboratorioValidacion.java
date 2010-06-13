@@ -35,7 +35,6 @@ public class TestLaboratorioValidacion {
 		TipoMaquina maq = null;
 		Maquina maquina = null;
 		ValidadorProductos val = ValidadorProductos.instancia();
-		val.Cargar();
 		
 		proceso = new Proceso(1500);
 		maq = new TipoMaquinaPrensa();

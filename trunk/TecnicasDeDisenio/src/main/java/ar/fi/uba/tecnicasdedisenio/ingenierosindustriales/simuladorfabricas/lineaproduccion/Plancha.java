@@ -17,7 +17,7 @@ public class Plancha extends Maquina {
 	
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(),"Planchado",this.getTasaDeFallos());
+		return new Producto(ValidadorProductos.instancia(),"planchado",this.getTasaDeFallos());
 	}
 
 	/**

@@ -12,20 +12,22 @@ public class ValidadorProductos {
 	
 	private final static ValidadorProductos instancia = new ValidadorProductos();
 	
-	private HashMap<String,String> MapProductos;
+	private HashMap<String,String> mapProductos;
+	private HashMap<String,Float> mapProductosPrecio;
 	private XMLParser parser;
 	
 	private ValidadorProductos() {
-		this.MapProductos = new HashMap<String,String>();
+		this.mapProductos = new HashMap<String,String>();
+		this.mapProductosPrecio = new HashMap<String,Float>();
 		this.Cargar();
 	}
 	
 	public HashMap<String, String> getMapProductos() {
-		return MapProductos;
+		return mapProductos;
 	}
 
 	public void setMapProductos(HashMap<String, String> mapProductos) {
-		MapProductos = mapProductos;
+		this.mapProductos = mapProductos;
 	}
 
 	public XMLParser getParser() {
@@ -42,42 +44,63 @@ public class ValidadorProductos {
 
 	// TODO Aca se debería hacer la carga con el parser XML
 	public void Cargar(){
-		this.MapProductos.put("harina", "habilitado");
-		this.MapProductos.put("agua", "habilitado");
-		this.MapProductos.put("trigo", "habilitado");
-		this.MapProductos.put("pan", "habilitado");
-		this.MapProductos.put("centeno", "habilitado");
-		this.MapProductos.put("maiz", "habilitado");
-		this.MapProductos.put("sal", "habilitado");
-		this.MapProductos.put("azucar", "habilitado");
-		this.MapProductos.put("vainilla", "habilitado");
-		this.MapProductos.put("edulcorante", "habilitado");
-		this.MapProductos.put("prensado", "habilitado");
-		this.MapProductos.put("azucar", "no habilitado");
-		this.MapProductos.put("miel", "no habilitado");
-		this.MapProductos.put("edulcorante", "no habilitado");
+		this.mapProductos.put("harina", "habilitado");
+		this.mapProductos.put("agua", "habilitado");
+		this.mapProductos.put("trigo", "habilitado");
+		this.mapProductos.put("pan", "habilitado");
+		this.mapProductos.put("centeno", "habilitado");
+		this.mapProductos.put("maiz", "habilitado");
+		this.mapProductos.put("sal", "habilitado");
+		this.mapProductos.put("azucar", "habilitado");
+		this.mapProductos.put("vainilla", "habilitado");
+		this.mapProductos.put("edulcorante", "habilitado");
+		this.mapProductos.put("prensado", "habilitado");
+		this.mapProductos.put("planchado", "habilitado");
+		this.mapProductos.put("miel", "no habilitado");
+		
+		this.mapProductosPrecio.put("harina", 1F);
+		this.mapProductosPrecio.put("agua", 2F);
+		this.mapProductosPrecio.put("trigo", 3F);
+		this.mapProductosPrecio.put("pan", 5F);
+		this.mapProductosPrecio.put("centeno", 3F);
+		this.mapProductosPrecio.put("maiz", 7F);
+		this.mapProductosPrecio.put("sal", 2F);
+		this.mapProductosPrecio.put("azucar", 10F);
+		this.mapProductosPrecio.put("vainilla", 9F);
+		this.mapProductosPrecio.put("edulcorante", 11F);
+		this.mapProductosPrecio.put("prensado", 1F);
+		this.mapProductosPrecio.put("planchado", 3F);
+		this.mapProductosPrecio.put("miel", 15F);
 	}
 	
 	public boolean Existe(String producto){ 
-		return this.MapProductos.containsKey(producto);
+		return this.mapProductos.containsKey(producto);
 		}
 
 	public boolean esValido(String producto){ 
-		if(!this.MapProductos.containsKey(producto))
+		if(!this.mapProductos.containsKey(producto))
 			return false;		
-		if(this.MapProductos.get(producto).equals("habilitado"))
+		if(this.mapProductos.get(producto).equals("habilitado"))
 				return true;
 		return false;
 	}
 	
+	public Float obtenerPrecioMercado(String producto){
+		Float precio = this.mapProductosPrecio.get(producto);
+		if(precio == null){
+			precio = 0F;
+		}
+		return precio;
+	}
+	
 	public String toString(){
-		return MapProductos.toString();
+		return mapProductos.toString();
 	}
 	
 	public String[] getAll(){
-		int cantidad = MapProductos.size();
+		int cantidad = mapProductos.size();
 		String productos[] = new String[cantidad]; 
-		productos = MapProductos.toString().substring(1).split(",", 0); 
+		productos = mapProductos.toString().substring(1).split(",", 0); 
 		for(int i=0; i<cantidad; i++){
 			productos[i] = productos[i].substring(0, productos[i].indexOf('='));
 		}
