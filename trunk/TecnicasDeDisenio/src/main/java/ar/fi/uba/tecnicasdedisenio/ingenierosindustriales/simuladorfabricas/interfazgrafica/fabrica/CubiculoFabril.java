@@ -55,7 +55,7 @@ public class CubiculoFabril {
     }
 
     public boolean puedeSerComienzoDeCinta() {
-        return fuente != null || (maquina != null && maquina.getCintaSalida() == null);
+        return fuente != null || (maquina != null && !maquina.tieneCintaDeSalida());
     }
 
     public IFuente getFuenteConectable() throws CubiculoVacioException {

@@ -30,6 +30,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	private Float tasaRotura;
 	
 	private Float costoMaquina;
+	private boolean conectadaAContenedor;
 
 	/** 
 	 * Usar Maquina(Float)
@@ -49,6 +50,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		this.setTasaDeFallos(tasaDeFallos);
 		this.estaRota = false;
 		this.setTasaRotura(tasaRotura);
+		this.setConectadaAContenedor(false);
 	}
 	
 	/**
@@ -295,6 +297,16 @@ public abstract class Maquina implements Cloneable, IFuente  {
          * Ver si esta conectada al contenedor de la fabrica,
          * si es asi devolver false
          */
+        if(this.isConectadaAContenedor())
+        	return false;
         return true;
     }
+
+	public void setConectadaAContenedor(Boolean conectadaAContenedor) {
+		this.conectadaAContenedor = conectadaAContenedor;
+	}
+
+	public Boolean isConectadaAContenedor() {
+		return conectadaAContenedor;
+	}
 }
