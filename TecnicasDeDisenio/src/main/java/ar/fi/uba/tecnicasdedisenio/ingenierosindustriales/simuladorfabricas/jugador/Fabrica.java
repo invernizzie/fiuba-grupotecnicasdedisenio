@@ -66,7 +66,7 @@ public class Fabrica implements Sincronizado{
 		for (LineaProduccion lineaProduccion : lineasAEliminar) {
 			this.eliminarLinea(lineaProduccion);
 		}
-		
+		this.getJugador().aumentarDinero(maquina.obtenerCostoVenta());
 		this.maquinas.remove(maquina);
 	}
 
