@@ -43,7 +43,7 @@ public class CubiculoFabril {
         return fuente != null || (maquina != null && !maquina.tieneCintaDeSalida());
     }
 
-    public IFuente getFuenteConectable() throws CubiculoVacioException {
+    public IFuente obtenerPrincipioDeCinta() throws CubiculoVacioException {
         if (fuente != null)
             return fuente;
         if (maquina == null)
@@ -53,10 +53,22 @@ public class CubiculoFabril {
         throw new CubiculoVacioException();
     }
 
-    public Maquina getMaquina() throws CubiculoVacioException {
+    public Maquina obtenerFinDeCinta() throws CubiculoVacioException {
         if (!puedeSerFinDeCinta())
             throw new CubiculoVacioException();
         return maquina;
+    }
+
+    public Maquina obtenerMaquina() throws CubiculoVacioException {
+        if (maquina == null)
+            throw new CubiculoVacioException();
+        return maquina;
+    }
+
+    public Fuente obtenerFuente() throws CubiculoVacioException {
+        if (fuente == null)
+            throw new CubiculoVacioException();
+        return fuente;
     }
 
     public IFuente getFuente() throws CubiculoVacioException {
@@ -65,5 +77,16 @@ public class CubiculoFabril {
         if (maquina != null)
             return maquina;
         throw new CubiculoVacioException();
+    }
+
+    public boolean eliminar(IFuente fuente) {
+        if (fuente == null)
+            return false;
+        if ((maquina == fuente) || this.fuente == fuente) {
+            maquina = null;
+            this.fuente = null;
+            return true;
+        }
+        return false;
     }
 }

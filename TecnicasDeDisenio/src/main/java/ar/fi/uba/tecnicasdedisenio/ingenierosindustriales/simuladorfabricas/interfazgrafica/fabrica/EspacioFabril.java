@@ -71,7 +71,6 @@ public class EspacioFabril {
             // No deberia arrojarse nunca
             e.printStackTrace();
         }
-        redibujar();
     }
 
     public Maquina crearMaquina(int _x, int _y, TipoMaquina tipoMaquina) throws EspacioOcupadoException {
@@ -93,7 +92,6 @@ public class EspacioFabril {
             //  No deberia arrojarse nunca
             e.printStackTrace();
         }
-        redibujar();
         return maquina;
     }
 
@@ -119,17 +117,25 @@ public class EspacioFabril {
 
         CintaTransportadora nuevaCinta = null;
         try {
-            nuevaCinta = getFabrica().conectarMaquina(cubiculoInicial.getFuenteConectable(), cubiculoFinal.getMaquina(),new Float(10));
+            nuevaCinta = getFabrica().conectarMaquina(cubiculoInicial.obtenerPrincipioDeCinta(), cubiculoFinal.obtenerFinDeCinta(), new Float(10)); // TODO Calcular longitud
             cintas.put(nuevaCinta, new Integer[][] {{_x1, _y1}, {_x2, _y2}});
         } catch (CubiculoVacioException e) {
             throw new CintaImposibleException();
         }
-        redibujar();
         return nuevaCinta;
     }
 
-    public void borrar(int x, int y) {
-        // TODO
+    public void borrarMaquina(int _x, int _y) throws CoordenadasIncorrectasException, CubiculoVacioException {
+        int x = transformarCoordenada(_x);
+        int y = transformarCoordenada(_y);
+
+        CubiculoFabril cubiculoClickeado = obtenerCubiculo(x, y);
+        if (cubiculoClickeado == null)
+            throw new CubiculoVacioException();
+        Maquina maquina = cubiculoClickeado.obtenerMaquina();
+        borrarAqui(maquina, x, y);
+        borrarAlrededor(maquina, x, y);
+        getFabrica().eliminarMaquina(maquina);
     }
 
     public void redibujar() {
@@ -137,7 +143,7 @@ public class EspacioFabril {
         GC gc = new GC(canvas);
         borrarCanvas(gc);
 
-        gc.drawRectangle(0, 0, limiteCanvas.width - 1, limiteCanvas.height - 1);
+        gc.drawRectangle(0, 0, limiteCanvas.width - LONGITUD_DEL_LADO, limiteCanvas.height - LONGITUD_DEL_LADO);
 
         for (int x = 0; x < ancho; x++)
             for (int y = 0; y < alto; y++) {
@@ -150,7 +156,7 @@ public class EspacioFabril {
                         dibujarFuente(fuente, x * LONGITUD_DEL_LADO, y * LONGITUD_DEL_LADO);
                     }
                 }
-                catch (CubiculoVacioException e) {}
+                catch (CubiculoVacioException ignored) {}
                 catch (CoordenadasIncorrectasException e) {
                     // No deberia arrojarse nunca
                     e.printStackTrace();
@@ -163,12 +169,6 @@ public class EspacioFabril {
         }
     }
 
-    protected Fabrica getFabrica() {
-        if (fabrica == null)
-            throw new FabricaAusenteException();
-        return fabrica;
-    }
-
     public void setFabrica(Fabrica fabrica, Canvas canvas) {
         this.fabrica = fabrica;
         setCanvas(canvas);
@@ -177,6 +177,12 @@ public class EspacioFabril {
 
         superficieFabril = new CubiculoFabril[ancho][alto];
         cintas = new HashMap<CintaTransportadora, Integer[][]>();
+    }
+
+    protected Fabrica getFabrica() {
+        if (fabrica == null)
+            throw new FabricaAusenteException();
+        return fabrica;
     }
 
     private void setCanvas(final Canvas canvas) {
@@ -232,6 +238,32 @@ public class EspacioFabril {
         gc.fillRectangle(x, y, ancho, alto);
         gc.setBackground(colorAnterior);
         gc.dispose();
+    }
+
+    private void borrarAlrededor(IFuente fuente, int x, int y) {
+        boolean borradoIzquierda = borrarAqui(fuente, x - 1, y);
+        boolean borradoDerecha = borrarAqui(fuente, x + 1, y);
+        boolean borradoArriba = borrarAqui(fuente, x, y - 1);
+        boolean borradoAbajo = borrarAqui(fuente, x, y + 1);
+
+        if (borradoIzquierda)
+            borrarAlrededor(fuente, x - 1, y);
+        if (borradoDerecha)
+            borrarAlrededor(fuente, x + 1, y);
+        if (borradoArriba)
+            borrarAlrededor(fuente, x, y - 1);
+        if (borradoAbajo)
+            borrarAlrededor(fuente, x, y + 1);
+    }
+
+    private boolean borrarAqui(IFuente fuente, int x, int y) {
+        CubiculoFabril cubiculoFabril;
+        try {
+            cubiculoFabril = obtenerCubiculo(x, y);
+        } catch (CoordenadasIncorrectasException e) {
+            return false;
+        }
+        return cubiculoFabril != null && cubiculoFabril.eliminar(fuente);
     }
 
     private boolean estaDentroDelEspacio(int x, int y, int ancho, int alto) {

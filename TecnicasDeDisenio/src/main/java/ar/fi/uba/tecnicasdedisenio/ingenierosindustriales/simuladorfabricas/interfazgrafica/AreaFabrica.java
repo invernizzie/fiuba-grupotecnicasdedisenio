@@ -92,14 +92,14 @@ public class AreaFabrica {
 	}
 
     private void elegirMP() {
-        constructorDeFabricas.setDibujante(
+        constructorDeFabricas.setInstalador(
                 new InstaladorDeMateriaPrima(
                         espacioFabril,
                         new Producto(validadorProd, comboMP.getText(), 0F), comboMP.getText()));
     }
 
     private void elegirMaquina() {
-        constructorDeFabricas.setDibujante(
+        constructorDeFabricas.setInstalador(
                 new InstaladorDeMaquinas(espacioFabril, new TipoMaquinaPlancha()));
     }
 
@@ -189,7 +189,7 @@ public class AreaFabrica {
         buttonCinta.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("Paso dibujar cintas");
-                constructorDeFabricas.setDibujante(new InstaladorDeCintas(espacioFabril));
+                constructorDeFabricas.setInstalador(new InstaladorDeCintas(espacioFabril));
                 deseleccionarControles();
 			}
 		});

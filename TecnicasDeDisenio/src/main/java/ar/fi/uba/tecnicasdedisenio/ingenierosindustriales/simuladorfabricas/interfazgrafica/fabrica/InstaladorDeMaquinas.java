@@ -16,10 +16,10 @@ public class InstaladorDeMaquinas extends Instalador {
     }
 
     @Override
-    public void mouseMove(int x, int y) {}
+    public void doMouseMove(int x, int y) {}
 
     @Override
-    public void mouseDown(int x, int y) {
+    public void doMouseDown(int x, int y) {
         try {
             getEspacioFabril().crearMaquina(x, y, tipoMaquina);
         } catch (EspacioOcupadoException e) {
@@ -28,5 +28,5 @@ public class InstaladorDeMaquinas extends Instalador {
     }
 
     @Override
-    public void mouseUp(int x, int y) {}
+    public void doMouseUp(int x, int y) {}
 }
