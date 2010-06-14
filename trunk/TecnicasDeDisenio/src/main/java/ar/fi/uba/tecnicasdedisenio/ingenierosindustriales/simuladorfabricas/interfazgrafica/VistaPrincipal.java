@@ -12,6 +12,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.cale
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.RecursosAplicacion;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.GridLayout;
@@ -623,9 +624,9 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		display  = Display.getDefault();
 		this.createShellPrincipal();
 		this.shellPrincipal.open();
+		resetearCalendario();
         this.cambiarHabilitacionBotonesDePartida(false);
-
-        resetearCalendario();
+        
 
         formateador.setMaximumFractionDigits(2);
         formateador.setMinimumFractionDigits(2);
@@ -669,6 +670,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
     public void resetearCalendario(){
     	Calendario.instancia().inicializar();
     	Calendario.instancia().registrar(this);
+    	Calendario.instancia().registrar(ValidadorProductos.instancia());
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         buttonTimer.setText("Comenzar");
     }
