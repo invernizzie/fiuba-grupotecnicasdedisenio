@@ -113,7 +113,7 @@ public class Contenedor {
 		Float precioMercado = this.producto.getPrecioMercado();
 		Float porcentajeDefectuosas = this.calcularPorcentajePiezasDefectuosas();
 		
-		Float precioProduccion = (1 - porcentajeDefectuosas) * 2;
+		Float precioProduccion = (1 - porcentajeDefectuosas) * (1 - porcentajeDefectuosas);
 		precioProduccion *= precioMercado;
 		
 		ganancia = precioProduccion * this.getCantidadProductosValidos();
