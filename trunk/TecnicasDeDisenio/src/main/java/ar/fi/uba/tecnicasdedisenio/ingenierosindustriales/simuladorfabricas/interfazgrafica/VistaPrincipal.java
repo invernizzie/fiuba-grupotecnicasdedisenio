@@ -27,7 +27,6 @@ import org.eclipse.swt.layout.GridData;
 
 public class VistaPrincipal implements Sincronizado, Observer {
 
-	private static final String dirImagenes = new String("..\\TecnicasDeDisenio\\src\\main\\resources\\images\\");
 	private static final int DINERO_PARA_GANAR = 50000;
 	public static final int SEGUNDOS_POR_DIA = 1;
 
@@ -639,6 +638,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
                     this.actualizarDatosTiempo();
                     this.actualizarDatosJugador();
                     this.verificarFinalJuego();
+                    areaFabrica.actualizar();
                 }
             } catch (Exception e) {
                 e.printStackTrace();

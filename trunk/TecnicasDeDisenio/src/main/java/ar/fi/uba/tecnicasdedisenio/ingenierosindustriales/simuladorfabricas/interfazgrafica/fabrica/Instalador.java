@@ -18,7 +18,6 @@ public abstract class Instalador {
 
     public final void mouseMove(int x, int y) {
         doMouseMove(x, y);
-        getEspacioFabril().redibujar();
     }
 
     public final void mouseDown(int x, int y) {
