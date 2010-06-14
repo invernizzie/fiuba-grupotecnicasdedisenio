@@ -47,7 +47,6 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	private Button checkBoxInvertirLabo = null;
 	private Combo comboFabrica = null;
 	private AreaFabricaAEmbeber areaFabrica = null;
-	private Menu submenuFabrica = null;
 	private Jugador jugador = null;
 	private Button buttonComprar = null;
 	private Button buttonAlquilar = null;
@@ -86,15 +85,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		menuBar = new Menu(shellPrincipal, SWT.BAR);
 		menuBar.setEnabled(true);
         MenuItem submenuItemJuego = crearSubmenu(menuBar, "Juego");
-        MenuItem submenuItemFabrica = crearSubmenu(menuBar, "Fabrica");
         MenuItem submenuItemAyuda = crearSubmenu(menuBar, "Ayuda");
-		submenuFabrica = new Menu(submenuItemFabrica);
-        MenuItem pushVender = crearItemDeMenu(submenuFabrica, "Vender");
-        MenuItem pushComprar = crearItemDeMenu(submenuFabrica, "Comprar");
-        MenuItem pushAlquilar = crearItemDeMenu(submenuFabrica, "Alquilar");
-		MenuItem separatorFabrica = new MenuItem(submenuFabrica, SWT.SEPARATOR);
-        MenuItem pushLaboratorio = crearItemDeMenu(submenuFabrica, "Laboratorio");
-		submenuItemFabrica.setMenu(submenuFabrica);
 		submenuAyuda = new Menu(submenuItemAyuda);
         MenuItem pushContenido = crearItemDeMenu(submenuAyuda, "Contenido");
 		MenuItem separatorAyuda = new MenuItem(submenuAyuda, SWT.SEPARATOR);
@@ -125,6 +116,17 @@ public class VistaPrincipal implements Sincronizado, Observer {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				Calendario.instancia().detener();
 				shellPrincipal.close();
+			}
+			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
+			}
+		});
+		pushContenido.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
+			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+				 MessageBox messageBox = new MessageBox(shellPrincipal, SWT.OK|SWT.ICON_INFORMATION);	 
+				 String mensaje = new String ("Contenido:\n");
+				 mensaje += "TP Tecnicas de Diseño 2010 - Simulador de Fábricas";  
+				 messageBox.setMessage(mensaje);
+				 messageBox.open();
 			}
 			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
 			}
@@ -465,8 +467,8 @@ public class VistaPrincipal implements Sincronizado, Observer {
      * @param mensaje
      */
     private void finalizarJuego(String mensaje){
-    	 MessageBox messageBox =
-			   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+    	MessageBox messageBox =
+			   new MessageBox(shellPrincipal, SWT.OK|SWT.ICON_INFORMATION);
 			 messageBox.setMessage("El jugador "+this.getJugador().getNombre() + mensaje);
 			 messageBox.open();
 		cambiarHabilitacionBotonesDePartida(false);
