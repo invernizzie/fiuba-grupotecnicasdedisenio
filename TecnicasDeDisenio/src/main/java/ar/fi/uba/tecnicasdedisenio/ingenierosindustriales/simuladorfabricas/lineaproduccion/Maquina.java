@@ -293,13 +293,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
     public boolean tieneCintaDeSalida() {
         if (getCintaSalida() == null)
             return false;
-        /* TODO
-         * Ver si esta conectada al contenedor de la fabrica,
-         * si es asi devolver false
-         */
-        if(this.isConectadaAContenedor())
-        	return false;
-        return true;
+        return !this.isConectadaAContenedor();
     }
 
 	public void setConectadaAContenedor(Boolean conectadaAContenedor) {

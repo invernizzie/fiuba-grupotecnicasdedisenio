@@ -117,13 +117,15 @@ public class EspacioFabril {
         if ((cubiculoInicial == null) || (cubiculoFinal == null))
             throw new CintaImposibleException();
 
-        CintaTransportadora nuevaCinta = null;
+        CintaTransportadora nuevaCinta;
         float deltaX = _x1 - _x2;
         float deltaY = _y1 - _y2;
         float longitud = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         try {
             nuevaCinta = getFabrica().conectarMaquina(cubiculoInicial.obtenerPrincipioDeCinta(), cubiculoFinal.obtenerFinDeCinta(), longitud);
             cintas.put(nuevaCinta, new Integer[][] {{_x1, _y1}, {_x2, _y2}});
+            cubiculoInicial.conectarCinta(nuevaCinta);
+            cubiculoFinal.conectarCinta(nuevaCinta);
         } catch (CubiculoVacioException e) {
             throw new CintaImposibleException();
         }
@@ -139,8 +141,8 @@ public class EspacioFabril {
             throw new CubiculoVacioException();
         Maquina maquina = cubiculoClickeado.obtenerMaquina();
         getFabrica().eliminarMaquina(maquina);
-        borrarAqui(maquina, x, y);
-        borrarAlrededor(maquina, x, y);
+        borrarFuenteEn(maquina, x, y);
+        borrarFuenteAlrededorDe(maquina, x, y);
         // TODO Eliminar cintas!
     }
 
@@ -153,8 +155,8 @@ public class EspacioFabril {
             throw new CubiculoVacioException();
         Fuente fuente = cubiculoClickeado.obtenerFuente();
         // TODO Comunicar a la Fabrica??
-        borrarAqui(fuente, x, y);
-        borrarAlrededor(fuente, x, y);
+        borrarFuenteEn(fuente, x, y);
+        borrarFuenteAlrededorDe(fuente, x, y);
         // TODO Eliminar cintas!
     }
 
@@ -281,30 +283,37 @@ public class EspacioFabril {
         gc.dispose();
     }
 
-    private void borrarAlrededor(IFuente fuente, int x, int y) {
-        boolean borradoIzquierda = borrarAqui(fuente, x - 1, y);
-        boolean borradoDerecha = borrarAqui(fuente, x + 1, y);
-        boolean borradoArriba = borrarAqui(fuente, x, y - 1);
-        boolean borradoAbajo = borrarAqui(fuente, x, y + 1);
+    private void borrarFuenteAlrededorDe(IFuente fuente, int x, int y) {
+        boolean borradoIzquierda = borrarFuenteEn(fuente, x - 1, y);
+        boolean borradoDerecha = borrarFuenteEn(fuente, x + 1, y);
+        boolean borradoArriba = borrarFuenteEn(fuente, x, y - 1);
+        boolean borradoAbajo = borrarFuenteEn(fuente, x, y + 1);
 
         if (borradoIzquierda)
-            borrarAlrededor(fuente, x - 1, y);
+            borrarFuenteAlrededorDe(fuente, x - 1, y);
         if (borradoDerecha)
-            borrarAlrededor(fuente, x + 1, y);
+            borrarFuenteAlrededorDe(fuente, x + 1, y);
         if (borradoArriba)
-            borrarAlrededor(fuente, x, y - 1);
+            borrarFuenteAlrededorDe(fuente, x, y - 1);
         if (borradoAbajo)
-            borrarAlrededor(fuente, x, y + 1);
+            borrarFuenteAlrededorDe(fuente, x, y + 1);
     }
 
-    private boolean borrarAqui(IFuente fuente, int x, int y) {
+    private boolean borrarFuenteEn(IFuente fuente, int x, int y) {
         CubiculoFabril cubiculoFabril;
         try {
             cubiculoFabril = obtenerCubiculo(x, y);
         } catch (CoordenadasIncorrectasException e) {
             return false;
         }
-        return cubiculoFabril != null && cubiculoFabril.eliminar(fuente);
+        if ((cubiculoFabril != null) && cubiculoFabril.eliminar(fuente)) {
+            for (CintaTransportadora cinta: cubiculoFabril.obtenerCintas()) {
+                cintas.remove(cinta);
+            }
+            cubiculoFabril.eliminarCintasIncidentes();
+            return true;
+        }
+        return false;
     }
 
     private boolean estaDentroDelEspacio(int x, int y, int ancho, int alto) {
