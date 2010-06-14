@@ -17,10 +17,10 @@ public class InstaladorDeCintas extends Instalador {
     }
 
     @Override
-    public void mouseMove(int x, int y) { }
+    public void doMouseMove(int x, int y) { }
 
     @Override
-    public void mouseDown(int x, int y) {
+    public void doMouseDown(int x, int y) {
         try {
             if (getEspacioFabril().puedeComenzarCintaEn(x, y)) {
                 dibujando = true;
@@ -33,7 +33,7 @@ public class InstaladorDeCintas extends Instalador {
     }
 
     @Override
-    public void mouseUp(int x, int y) {
+    public void doMouseUp(int x, int y) {
 
         if (!dibujando)
             return;

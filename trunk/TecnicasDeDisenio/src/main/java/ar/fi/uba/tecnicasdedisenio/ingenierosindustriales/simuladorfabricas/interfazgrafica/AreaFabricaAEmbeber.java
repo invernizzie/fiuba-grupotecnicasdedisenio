@@ -1,30 +1,22 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Fabrica;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.events.DragDetectEvent;
-import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.*;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.ConstructorDeFabricas;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.InstaladorDeCintas;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.InstaladorDeMaquinas;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.InstaladorDeMateriaPrima;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.EspacioFabril;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
@@ -33,26 +25,31 @@ public class AreaFabricaAEmbeber {
 
     //private Shell shellAreaDibujo = null;  //  @jve:decl-index=0:visual-constraint="109,17"
 	private Canvas canvas = null;  //  @jve:decl-index=0:visual-constraint="263,47"
-	private Group groupControl = null;
+	private Group grupoConstruccion = null;
 	private Button buttonCinta = null;
 	private Button buttonMaquina = null;
-	private Composite compositeControles = null;
-	private Boolean dibujar = false;
-	private Button buttonMateriaPrima = null;
-	private Combo comboMP = null;
-	private Combo comboMaquina = null;
-	private ConstructorDeFabricas constructorDeFabricas;
-	private EspacioFabril espacioFabril;
-	private ValidadorProductos validadorProd = ValidadorProductos.instancia();
-	private HashMap<String,TipoMaquina> hashTipoMaquinas = null;
+    private Button buttonBorrarMaquina = null;
+    private Button buttonBorrarMP = null;
+    private Button buttonBorrarCinta = null;
+    private Composite compositeControles = null;
+    private Boolean dibujar = false;
+    private Button buttonMateriaPrima = null;
+    private Combo comboMP = null;
+    private Combo comboMaquina = null;
+    private ConstructorDeFabricas constructorDeFabricas;
+    private EspacioFabril espacioFabril;
+    private ValidadorProductos validadorProd = ValidadorProductos.instancia();
+    private HashMap<String,TipoMaquina> hashTipoMaquinas = null;
+    private List<Button> botones = new ArrayList<Button>();
+    private List<Combo> combos = new ArrayList<Combo>();
     private Fabrica fabrica;
 
-	/**
+    /**
 	 * This method initializes comboMP
 	 *
 	 */
 	private void createComboMP() {
-		comboMP = new Combo(groupControl, SWT.NONE);
+		comboMP = new Combo(grupoConstruccion, SWT.NONE);
 		cargarComboMateriaPrimas();
 		comboMP.setEnabled(false);
 		comboMP.select(0);
@@ -64,7 +61,7 @@ public class AreaFabricaAEmbeber {
 			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
 			}
 		});
-
+        combos.add(comboMP);
 	}
 	
 	/**
@@ -73,7 +70,7 @@ public class AreaFabricaAEmbeber {
 	 */
 	private void createComboMaquina() {
 		hashTipoMaquinas = new HashMap<String,TipoMaquina>();
-		comboMaquina = new Combo(groupControl, SWT.NONE);
+		comboMaquina = new Combo(grupoConstruccion, SWT.NONE);
 		cargarMaquinas();
 		comboMaquina.select(0);
 		comboMaquina.setEnabled(false);
@@ -85,6 +82,7 @@ public class AreaFabricaAEmbeber {
 			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
 			}
 		});
+        combos.add(comboMaquina);
 	}
 
 	private void cargarMaquinas() {
@@ -106,14 +104,14 @@ public class AreaFabricaAEmbeber {
 	}
 
 	private void elegirMP() {
-		constructorDeFabricas.setDibujante(
+		constructorDeFabricas.setInstalador(
 				new InstaladorDeMateriaPrima(
 						espacioFabril,
 						new Producto(validadorProd, comboMP.getText(), 0F), comboMP.getText()));
 	}
 
 	private void elegirMaquina() {
-		constructorDeFabricas.setDibujante(
+		constructorDeFabricas.setInstalador(
 				new InstaladorDeMaquinas(espacioFabril, hashTipoMaquinas.get(comboMaquina.getText())));
 	}
 	
@@ -158,41 +156,41 @@ public class AreaFabricaAEmbeber {
     }
 
     /**
-	 * This method initializes groupControl
+	 * This method initializes grupoConstruccion
 	 *
 	 */
 	private void createGroupControl() {
-		GridData gridData3 = new GridData();
-		gridData3.horizontalAlignment = GridData.FILL;
-		gridData3.verticalAlignment = GridData.CENTER;
-		GridData gridData2 = new GridData();
-		gridData2.horizontalAlignment = GridData.FILL;
-		gridData2.verticalAlignment = GridData.CENTER;
-		GridLayout gridLayout1 = new GridLayout();
-		gridLayout1.numColumns = 1;
-		GridData gridData1 = new GridData();
-		gridData1.horizontalAlignment = GridData.FILL;
-		gridData1.verticalAlignment = GridData.CENTER;
-		groupControl = new Group(compositeControles, SWT.NONE);
-		groupControl.setText("Controles");
-		groupControl.setLayout(gridLayout1);
-		buttonCinta = new Button(groupControl, SWT.TOGGLE);
-		buttonCinta.setText("Linea");
-		buttonCinta.setLayoutData(gridData1);
-		buttonMateriaPrima = new Button(groupControl, SWT.TOGGLE);
-		buttonMateriaPrima.setText("Materia Prima");
-		buttonMateriaPrima.setLayoutData(gridData3);
+		GridData layoutBotonMP = new GridData();
+		layoutBotonMP.horizontalAlignment = GridData.FILL;
+		layoutBotonMP.verticalAlignment = GridData.CENTER;
+		GridData layoutBotonMaquina = new GridData();
+		layoutBotonMaquina.horizontalAlignment = GridData.FILL;
+		layoutBotonMaquina.verticalAlignment = GridData.CENTER;
+		GridLayout layoutGrupoConstruccion = new GridLayout();
+		layoutGrupoConstruccion.numColumns = 2;
+		GridData layoutBotonCinta = new GridData();
+		layoutBotonCinta.horizontalAlignment = GridData.FILL;
+		layoutBotonCinta.verticalAlignment = GridData.CENTER;
+        layoutBotonCinta.horizontalSpan = 2;
+		grupoConstruccion = new Group(compositeControles, SWT.NONE);
+		grupoConstruccion.setText("Controles");
+		grupoConstruccion.setLayout(layoutGrupoConstruccion);
+        buttonCinta = crearBoton(grupoConstruccion, "Cinta Transportadora", layoutBotonCinta);
+        buttonMateriaPrima = crearBoton(grupoConstruccion, "Materia Prima", layoutBotonMP);
 		createComboMP();
-		buttonMaquina = new Button(groupControl, SWT.TOGGLE);
-		buttonMaquina.setText("Maquina");
-		buttonMaquina.setLayoutData(gridData2);
+        buttonMaquina = crearBoton(grupoConstruccion, "Maquina", layoutBotonMaquina);
 		createComboMaquina();
+        buttonBorrarMaquina = crearBoton(grupoConstruccion, "Borrar Maquina", layoutBotonMaquina);
+        buttonBorrarMP = crearBoton(grupoConstruccion, "Borrar M.P.", layoutBotonMaquina);
+        buttonBorrarCinta = crearBoton(grupoConstruccion, "Borrar Cinta Transportadora", layoutBotonCinta);
+
 		cambiarHabilitacionBotones(false);
 		buttonCinta.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				System.out.println("Paso dibujar cintas");
-				constructorDeFabricas.setDibujante(new InstaladorDeCintas(espacioFabril));
+				System.out.println("Paso a dibujar cintas");
+				constructorDeFabricas.setInstalador(new InstaladorDeCintas(espacioFabril));
 				deseleccionarControles();
+                buttonCinta.setSelection(true);
 			}
 		});
 		buttonMateriaPrima
@@ -200,6 +198,7 @@ public class AreaFabricaAEmbeber {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("Paso a dibujar materia prima");
 				deseleccionarControles();
+                buttonMateriaPrima.setSelection(true);
 				comboMP.setEnabled(true);
 				elegirMP();
 			}
@@ -208,14 +207,29 @@ public class AreaFabricaAEmbeber {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("Paso a dibujar maquinas");
 				deseleccionarControles();
+                buttonMaquina.setSelection(true);
 				comboMaquina.setEnabled(true);
 				elegirMaquina();
 			}
 		});
-
-
+        buttonBorrarMaquina.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent selectionEvent) {
+                deseleccionarControles();
+                buttonBorrarMaquina.setSelection(true);
+                constructorDeFabricas.setInstalador(new DesinstaladorDeMaquinas(espacioFabril));
+            }
+        });
 	}
-	
+
+    private Button crearBoton(Composite padre, String texto, Object layoutData) {
+        Button nuevoBoton = new Button(padre, SWT.TOGGLE);
+		nuevoBoton.setText(texto);
+		nuevoBoton.setLayoutData(layoutData);
+        botones.add(nuevoBoton);
+        return nuevoBoton;
+    }
+
 	/**
 	 * This method initializes compositeControles
 	 * @param cTabFolder
@@ -228,11 +242,10 @@ public class AreaFabricaAEmbeber {
 	}
 	
 	private void deseleccionarControles() {
-		buttonCinta.setSelection(false);
-		buttonMaquina.setSelection(false);
-		buttonMateriaPrima.setSelection(false);
-		comboMP.setEnabled(false);
-		comboMaquina.setEnabled(false);
+        for (Button boton: botones)
+            boton.setSelection(false);
+        for (Combo combo: combos)
+            combo.setEnabled(false);
 	}
 	
 	protected void cargarComboMateriaPrimas() {
@@ -304,9 +317,10 @@ public class AreaFabricaAEmbeber {
     }
     
     public void cambiarHabilitacionBotones(boolean estado){
-    	buttonCinta.setEnabled(estado);
-    	buttonMaquina.setEnabled(estado);
-    	buttonMateriaPrima.setEnabled(estado);
+        for (Button boton: botones)
+            boton.setEnabled(estado);
+        for (Combo combo: combos)
+            combo.setEnabled(estado);
     }
 }
 

@@ -17,7 +17,7 @@ public class ConstructorDeFabricas implements Listener {
         instalador = instaladorInicial;
     }
 
-    public void setDibujante(Instalador instalador) {
+    public void setInstalador(Instalador instalador) {
         this.instalador = instalador;
     }
 
