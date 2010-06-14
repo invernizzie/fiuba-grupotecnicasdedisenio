@@ -31,7 +31,6 @@ public class GeneradorDeColores {
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_MAGENTA));
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_MAGENTA));
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED));
-        colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_YELLOW));
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_YELLOW));
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));

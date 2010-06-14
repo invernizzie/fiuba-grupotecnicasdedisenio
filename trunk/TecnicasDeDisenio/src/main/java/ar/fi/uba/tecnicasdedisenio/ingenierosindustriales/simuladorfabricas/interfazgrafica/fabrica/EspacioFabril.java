@@ -9,10 +9,12 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Display;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -252,6 +254,13 @@ public class EspacioFabril {
         int alto = LONGITUD_DEL_LADO * _alto;
         gc.fillRectangle(x, y, ancho, alto);
         gc.setBackground(colorAnterior);
+        if (maquina.estaRota()) {
+            colorAnterior = gc.getForeground();
+            gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+            gc.drawLine(x, y, x + ancho, y + alto);
+            gc.drawLine(x, y + alto, x + ancho, y);
+            gc.setForeground(colorAnterior);
+        }
         gc.dispose();
     }
 
