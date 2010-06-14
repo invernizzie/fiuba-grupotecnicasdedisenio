@@ -9,6 +9,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.juga
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -137,6 +138,12 @@ public class AreaFabricaAEmbeber {
 		gridData.grabExcessVerticalSpace = true;
 		gridData.verticalAlignment = GridData.FILL;
         canvas = new Canvas(shellAreaDibujo, SWT.BORDER);
+        canvas.addPaintListener(new org.eclipse.swt.events.PaintListener() {
+            @Override
+            public void paintControl(PaintEvent event) {
+                espacioFabril.redibujar();
+            }
+        });
         resizeCanvas();
 		canvas.setLayout(new FillLayout());
 		canvas.setLayoutData(gridData);
@@ -337,6 +344,10 @@ public class AreaFabricaAEmbeber {
             boton.setEnabled(estado);
         for (Combo combo: combos)
             combo.setEnabled(estado);
+    }
+
+    public void actualizar() {
+        espacioFabril.redibujar();
     }
 }
 
