@@ -11,6 +11,8 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 public class LineaProduccion {
+	private static int CANTIDAD_PRODUCIDA_FIJA = 10;
+	
 	private Set<Maquina> maquinas;
 	private Set<Maquina> primerasMaquinas;
 	private Set<Maquina> maquinasActuales;
@@ -136,7 +138,7 @@ public class LineaProduccion {
 
 				if(this.esUltimaMaquina(maquina)){
 					// Si se terminó la linea guardamos el producto en el contenedor
-					this.getContenedor().recibirProducto(productoObtenido, 100);
+					this.getContenedor().recibirProducto(productoObtenido, CANTIDAD_PRODUCIDA_FIJA);
 					// Y seteamos la siguiente máquina en null para que vuelva a procesar desde el principio
 					siguientes = null;
 					
