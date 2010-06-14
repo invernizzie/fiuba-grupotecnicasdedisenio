@@ -7,12 +7,12 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  * @author Esteban I. Invernizzi (invernizzie@gmail.com)
  *         Date: 06/06/2010
  */
-public class InstaladorDeMateriaPrima extends Instalador {
+public class InstaladorDeFuentes extends Instalador {
 
     private Producto materiaPrima;
     private String nombre;
 
-    public InstaladorDeMateriaPrima(EspacioFabril espacioFabril, Producto materiaPrima, String nombre) {
+    public InstaladorDeFuentes(EspacioFabril espacioFabril, Producto materiaPrima, String nombre) {
         super(espacioFabril);
         this.materiaPrima = materiaPrima;
         this.nombre = nombre; 

@@ -105,7 +105,7 @@ public class AreaFabricaAEmbeber {
 
 	private void elegirMP() {
 		constructorDeFabricas.setInstalador(
-				new InstaladorDeMateriaPrima(
+				new InstaladorDeFuentes(
 						espacioFabril,
 						new Producto(validadorProd, comboMP.getText(), 0F), comboMP.getText()));
 	}
@@ -218,6 +218,14 @@ public class AreaFabricaAEmbeber {
                 deseleccionarControles();
                 buttonBorrarMaquina.setSelection(true);
                 constructorDeFabricas.setInstalador(new DesinstaladorDeMaquinas(espacioFabril));
+            }
+        });
+        buttonBorrarMP.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent selectionEvent) {
+                deseleccionarControles();
+                buttonBorrarMP.setSelection(true);
+                constructorDeFabricas.setInstalador(new DesinstaladorDeFuentes(espacioFabril));
             }
         });
 	}

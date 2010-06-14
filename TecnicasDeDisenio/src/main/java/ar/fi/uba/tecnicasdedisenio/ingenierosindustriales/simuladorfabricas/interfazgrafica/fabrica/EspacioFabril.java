@@ -133,9 +133,24 @@ public class EspacioFabril {
         if (cubiculoClickeado == null)
             throw new CubiculoVacioException();
         Maquina maquina = cubiculoClickeado.obtenerMaquina();
+        getFabrica().eliminarMaquina(maquina);
         borrarAqui(maquina, x, y);
         borrarAlrededor(maquina, x, y);
-        getFabrica().eliminarMaquina(maquina);
+        // TODO Eliminar cintas!
+    }
+
+    public void borrarFuente(int _x, int _y) throws CoordenadasIncorrectasException, CubiculoVacioException {
+        int x = transformarCoordenada(_x);
+        int y = transformarCoordenada(_y);
+
+        CubiculoFabril cubiculoClickeado = obtenerCubiculo(x, y);
+        if (cubiculoClickeado == null)
+            throw new CubiculoVacioException();
+        Fuente fuente = cubiculoClickeado.obtenerFuente();
+        // TODO Comunicar a la Fabrica??
+        borrarAqui(fuente, x, y);
+        borrarAlrededor(fuente, x, y);
+        // TODO Eliminar cintas!
     }
 
     public void redibujar() {
