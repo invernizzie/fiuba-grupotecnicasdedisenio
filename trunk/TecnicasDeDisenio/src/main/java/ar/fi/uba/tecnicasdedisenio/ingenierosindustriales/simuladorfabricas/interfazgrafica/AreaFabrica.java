@@ -93,7 +93,7 @@ public class AreaFabrica {
 
     private void elegirMP() {
         constructorDeFabricas.setInstalador(
-                new InstaladorDeMateriaPrima(
+                new InstaladorDeFuentes(
                         espacioFabril,
                         new Producto(validadorProd, comboMP.getText(), 0F), comboMP.getText()));
     }
