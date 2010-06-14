@@ -25,6 +25,7 @@ public class CintaTransportadora{
 			IEntrada extremoFinal) {
 		this.extremoInicial = extremoInicial;
 		this.extremoFinal = extremoFinal;
+		this.longitud = 0;
 	}
 
 	/**
