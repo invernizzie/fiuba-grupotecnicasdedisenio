@@ -158,6 +158,19 @@ public class EspacioFabril {
         // TODO Eliminar cintas!
     }
 
+    public void repararMaquina(int _x, int _y) throws CoordenadasIncorrectasException, CubiculoVacioException {
+        int x = transformarCoordenada(_x);
+        int y = transformarCoordenada(_y);
+
+        CubiculoFabril cubiculoClickeado = obtenerCubiculo(x, y);
+        if (cubiculoClickeado == null)
+            throw new CubiculoVacioException();
+
+        Maquina maquina = cubiculoClickeado.obtenerMaquina();
+        if (maquina.estaRota())
+            getFabrica().repararMaquina(maquina);
+    }
+
     public void redibujar() {
         List<IFuente> dibujados = new ArrayList<IFuente>();
         GC gc = new GC(canvas);
@@ -257,6 +270,7 @@ public class EspacioFabril {
         int alto = LONGITUD_DEL_LADO * _alto;
         gc.fillRectangle(x, y, ancho, alto);
         gc.setBackground(colorAnterior);
+
         if (maquina.estaRota()) {
             colorAnterior = gc.getForeground();
             gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));

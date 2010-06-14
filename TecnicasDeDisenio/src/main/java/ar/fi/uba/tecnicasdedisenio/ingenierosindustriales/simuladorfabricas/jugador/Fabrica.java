@@ -70,6 +70,10 @@ public class Fabrica implements Sincronizado{
 		this.maquinas.remove(maquina);
 	}
 
+    public void repararMaquina(Maquina maquina) {
+        getJugador().disminuirDinero(maquina.reparar());
+    }
+
     public CintaTransportadora conectarMaquina(IFuente fuente, Maquina maquina, float longitud) {
         if (fuente instanceof Fuente)
             return conectarMaquina((Fuente)fuente, maquina, longitud);
