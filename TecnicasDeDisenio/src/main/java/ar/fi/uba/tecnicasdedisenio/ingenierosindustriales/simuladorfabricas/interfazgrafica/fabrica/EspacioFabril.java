@@ -118,8 +118,11 @@ public class EspacioFabril {
             throw new CintaImposibleException();
 
         CintaTransportadora nuevaCinta = null;
+        float deltaX = _x1 - _x2;
+        float deltaY = _y1 - _y2;
+        float longitud = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         try {
-            nuevaCinta = getFabrica().conectarMaquina(cubiculoInicial.obtenerPrincipioDeCinta(), cubiculoFinal.obtenerFinDeCinta(), new Float(10)); // TODO Calcular longitud
+            nuevaCinta = getFabrica().conectarMaquina(cubiculoInicial.obtenerPrincipioDeCinta(), cubiculoFinal.obtenerFinDeCinta(), longitud);
             cintas.put(nuevaCinta, new Integer[][] {{_x1, _y1}, {_x2, _y2}});
         } catch (CubiculoVacioException e) {
             throw new CintaImposibleException();
