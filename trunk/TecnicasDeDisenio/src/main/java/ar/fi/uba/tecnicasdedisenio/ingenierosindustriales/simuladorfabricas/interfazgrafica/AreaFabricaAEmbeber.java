@@ -30,7 +30,7 @@ public class AreaFabricaAEmbeber {
 	private Button buttonMaquina = null;
     private Button buttonBorrarMaquina = null;
     private Button buttonBorrarMP = null;
-    private Button buttonBorrarCinta = null;
+    private Button buttonRepararMaquina = null;
     private Composite compositeControles = null;
     private Boolean dibujar = false;
     private Button buttonMateriaPrima = null;
@@ -168,21 +168,21 @@ public class AreaFabricaAEmbeber {
 		layoutBotonMaquina.verticalAlignment = GridData.CENTER;
 		GridLayout layoutGrupoConstruccion = new GridLayout();
 		layoutGrupoConstruccion.numColumns = 2;
-		GridData layoutBotonCinta = new GridData();
-		layoutBotonCinta.horizontalAlignment = GridData.FILL;
-		layoutBotonCinta.verticalAlignment = GridData.CENTER;
-        layoutBotonCinta.horizontalSpan = 2;
+		GridData layoutBotonDoble = new GridData();
+		layoutBotonDoble.horizontalAlignment = GridData.FILL;
+		layoutBotonDoble.verticalAlignment = GridData.CENTER;
+        layoutBotonDoble.horizontalSpan = 2;
 		grupoConstruccion = new Group(compositeControles, SWT.NONE);
 		grupoConstruccion.setText("Controles");
 		grupoConstruccion.setLayout(layoutGrupoConstruccion);
-        buttonCinta = crearBoton(grupoConstruccion, "Cinta Transportadora", layoutBotonCinta);
+        buttonCinta = crearBoton(grupoConstruccion, "Cinta Transportadora", layoutBotonDoble);
         buttonMateriaPrima = crearBoton(grupoConstruccion, "Materia Prima", layoutBotonMP);
 		createComboMP();
         buttonMaquina = crearBoton(grupoConstruccion, "Maquina", layoutBotonMaquina);
 		createComboMaquina();
         buttonBorrarMaquina = crearBoton(grupoConstruccion, "Borrar Maquina", layoutBotonMaquina);
         buttonBorrarMP = crearBoton(grupoConstruccion, "Borrar M.P.", layoutBotonMaquina);
-        buttonBorrarCinta = crearBoton(grupoConstruccion, "Borrar Cinta Transportadora", layoutBotonCinta);
+        buttonRepararMaquina = crearBoton(grupoConstruccion, "Reparar Maquina", layoutBotonDoble);
 
 		cambiarHabilitacionBotones(false);
 		buttonCinta.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -226,6 +226,14 @@ public class AreaFabricaAEmbeber {
                 deseleccionarControles();
                 buttonBorrarMP.setSelection(true);
                 constructorDeFabricas.setInstalador(new DesinstaladorDeFuentes(espacioFabril));
+            }
+        });
+        buttonRepararMaquina.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent selectionEvent) {
+                deseleccionarControles();
+                buttonRepararMaquina.setSelection(true);
+                constructorDeFabricas.setInstalador(new ReparadorDeMaquinas(espacioFabril));
             }
         });
 	}
