@@ -22,7 +22,6 @@ public class TestMaquinaPrensa {
 	@Before
 	public void setUp() throws Exception {
 		val = ValidadorProductos.instancia();
-		val.cargar();
 		prensa = new Prensa(0F, 0F);
 		prensa.setCintaSalida(new CintaTransportadora(prensa.getSalida(), new Entrada()));
 	}

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.XMLParser;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.XMLParserProductos;
 
 /**
  * 
@@ -19,7 +20,7 @@ public class TestXMLParser {
 
 	@Before
 	public void setUp() throws Exception {
-		parser = new XMLParser();
+		parser = new XMLParserProductos("Costos.xml");
 	}
 
 	@After
@@ -29,7 +30,7 @@ public class TestXMLParser {
 	@Test
 	public void testLeerDoc() {
 		try{
-			parser.LeerDoc("Costos.xml");
+			parser.leerDoc();
 		}catch(Exception e){
 			e.printStackTrace();
 			fail("Falló la lectura del XML: " + e.getMessage());

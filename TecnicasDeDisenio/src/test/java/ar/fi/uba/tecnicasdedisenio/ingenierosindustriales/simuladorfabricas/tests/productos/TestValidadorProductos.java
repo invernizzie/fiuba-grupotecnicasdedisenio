@@ -13,7 +13,6 @@ public class TestValidadorProductos {
 	@Before
 	public void setUp() throws Exception {
 		val = ValidadorProductos.instancia();
-		val.cargar();
 	}
 
 	@After
