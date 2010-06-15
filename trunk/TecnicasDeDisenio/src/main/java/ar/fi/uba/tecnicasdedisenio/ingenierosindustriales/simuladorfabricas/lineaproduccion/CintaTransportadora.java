@@ -91,10 +91,19 @@ public class CintaTransportadora{
 		origen.removerCinta(this);
 		destino.removeMateriaPrima(origen.getTipoProducto());
 		destino.removeFuente(origen);
+		destino.removeCintaEntrada(this);
 	}
 	
 	public float getCostoConectar(){
 		return COSTOXMETRO*longitud;
+	}
+
+	public void desconectar(IFuente fuente, Maquina maquina) {
+		if (fuente instanceof Fuente){
+			desconectar((Fuente)fuente, maquina);
+        }else{
+        	desconectar((Maquina)fuente, maquina);
+        }
 	}
 	
 }

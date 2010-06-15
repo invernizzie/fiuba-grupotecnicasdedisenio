@@ -20,7 +20,7 @@ public class TestXMLParser {
 
 	@Before
 	public void setUp() throws Exception {
-		parser = new XMLParserProductos("Costos.xml");
+		parser = new XMLParserProductos("Productos.xml");
 	}
 
 	@After

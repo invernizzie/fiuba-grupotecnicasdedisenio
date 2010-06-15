@@ -139,7 +139,7 @@ public class TestFabricaLineas {
 		dineroEsperado -= prensa.getCostoMaquina();
 		dineroEsperado -= plancha.getCostoMaquina();
 		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
-		dineroEsperado += 200F;
+		dineroEsperado += 100F;
 		
 		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
 		
@@ -147,7 +147,7 @@ public class TestFabricaLineas {
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
 		
 		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
-		dineroEsperado += 200F;
+		dineroEsperado += 100F;
 		
 		dineroJugador = jugador.getDineroActual();
 		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
@@ -254,7 +254,7 @@ public class TestFabricaLineas {
 		dineroEsperado -= prensa.getCostoMaquina();
 		dineroEsperado -= plancha.getCostoMaquina();
 		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
-		dineroEsperado += 200F;
+		dineroEsperado += 100F;
 		
 		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
 		
@@ -303,7 +303,7 @@ public class TestFabricaLineas {
 		dineroEsperado -= plancha.getCostoMaquina();
 		dineroEsperado -= controlCalidad.getCostoMaquina();
 		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
-		dineroEsperado += 200F;
+		dineroEsperado += 100F;
 		
 		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
 
