@@ -1,23 +1,21 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.interfazgrafica;
 
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.AreaFabrica;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Fabrica;
 import org.eclipse.swt.SWTException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.AreaFabricaAEmbeber;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
-
 public class TestAreaFabricaAEmbeber {
 
 
-		private AreaFabricaAEmbeber ventana;
+		private AreaFabrica ventana;
 		
 		@Before
 		public void setUp() throws Exception {
-			this.ventana = new AreaFabricaAEmbeber();
+			this.ventana = new AreaFabrica();
 		}
 
 		@After

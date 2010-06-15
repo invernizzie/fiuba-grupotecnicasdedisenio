@@ -185,7 +185,7 @@ public class AreaFabrica {
 		createComboMP();
         buttonMaquina = crearBoton(grupoConstruccion, "Maquina", layoutBotonSimple);
 		createComboMaquina();
-        buttonBorrarMaquina = crearBoton(grupoConstruccion, "Borrar Maquina", layoutBotonSimple);
+        buttonBorrarMaquina = crearBoton(grupoConstruccion, "Vender Maquina", layoutBotonSimple);
         buttonBorrarMP = crearBoton(grupoConstruccion, "Borrar M.P.", layoutBotonSimple);
         buttonRepararMaquina = crearBoton(grupoConstruccion, "Reparar Maquina", layoutBotonSimple);
         buttonMoverMaquina = crearBoton(grupoConstruccion, "Mover Maquina", layoutBotonSimple);

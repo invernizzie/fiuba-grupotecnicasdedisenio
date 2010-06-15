@@ -1,13 +1,10 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.interfazgrafica;
 
 
-import static org.junit.Assert.*;
-
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.old.AreaFabrica;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.*;
 
 
 public class TestAreaFabrica {

@@ -71,6 +71,11 @@ public class Fabrica implements Sincronizado{
         maquinas.remove(maquina);
     }
 
+    public void eliminarFuente(Fuente fuente) {
+        limpiarCintas(fuente);
+        fuentes.remove(fuente);
+    }
+
 	private void limpiarCintas(Maquina maquina) {
 		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
 		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
@@ -83,6 +88,24 @@ public class Fabrica implements Sincronizado{
 			}
 		}
 		
+		for (CintaTransportadora cintaAEliminar : cintasAEliminar) {
+			cintasMaquinas.remove(cintaAEliminar);
+		}
+	}
+
+    // TODO Eliminar repeticion de codigo con su sobrecarga para Maquinas
+    private void limpiarCintas(Fuente fuente) {
+		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
+		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
+
+		for (CintaTransportadora cintaTransportadora : cintas) {
+			FuenteSumidero par = cintasMaquinas.get(cintaTransportadora);
+			if(par.getOrigen() == fuente){
+				cintaTransportadora.desconectar(par.getOrigen(), par.getDestino());
+				cintasAEliminar.add(cintaTransportadora);
+			}
+		}
+
 		for (CintaTransportadora cintaAEliminar : cintasAEliminar) {
 			cintasMaquinas.remove(cintaAEliminar);
 		}
