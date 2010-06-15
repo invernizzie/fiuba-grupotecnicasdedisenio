@@ -149,6 +149,7 @@ public class EspacioFabril {
         if (cubiculoClickeado == null)
             throw new CubiculoVacioException();
         Fuente fuente = cubiculoClickeado.obtenerFuente();
+        getFabrica().eliminarFuente(fuente);
         // FIXME Comunicar a la Fabrica??
         borrarFuenteEn(fuente, x, y);
         borrarFuenteAlrededorDe(fuente, x, y);
