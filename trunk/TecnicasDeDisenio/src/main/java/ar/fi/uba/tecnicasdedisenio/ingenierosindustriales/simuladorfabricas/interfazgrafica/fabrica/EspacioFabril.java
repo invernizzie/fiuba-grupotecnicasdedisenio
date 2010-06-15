@@ -31,7 +31,6 @@ public class EspacioFabril {
 
     public static final int ANCHO_MATERIA_PRIMA = 2;
 
-    // TODO Cambiar por tipoMaquina.getAncho()
     public static final int ANCHO_MAQUINA = 2;
 
     public static final int CANTIDAD_MATERIAPRIMA_DEFAULT = 100;
@@ -357,9 +356,5 @@ public class EspacioFabril {
             return false;
         }
         return true;
-    }
-
-    public Canvas getCanvas() {
-        return canvas;
     }
 }

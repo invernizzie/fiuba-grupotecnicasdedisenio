@@ -46,7 +46,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	private Text textDineroAcum = null;
 	private Button checkBoxInvertirLabo = null;
 	private Combo comboFabrica = null;
-	private AreaFabricaAEmbeber areaFabrica = null;
+	private AreaFabrica areaFabrica = null;
 	private Jugador jugador = null;
 	private Button buttonComprar = null;
 	private Button buttonAlquilar = null;
@@ -353,7 +353,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	 *
 	 */
 	private void createCanvasFabrica() {
-		areaFabrica = new AreaFabricaAEmbeber();
+		areaFabrica = new AreaFabrica();
 		areaFabrica.load(tabFolderFabrica);
 	}
 
