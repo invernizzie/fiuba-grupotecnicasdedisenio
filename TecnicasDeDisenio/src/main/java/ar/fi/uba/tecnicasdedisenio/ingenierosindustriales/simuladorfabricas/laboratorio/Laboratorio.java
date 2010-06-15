@@ -23,14 +23,16 @@ public class Laboratorio{
 	
 	private float dineroAcumulado;
 	private boolean habilitado;
-	private ArrayList<Proceso> procesosHabilitados;
-	private ArrayList<Proceso> procesosInhabilitados;
+	private List<Proceso> procesosHabilitados;
+	private List<Proceso> procesosInhabilitados;
 	private String tipo;
 	private String nombreImagen;
+	private CargadorDeProcesos cargador;
 	
 	public Laboratorio(String tipo, String nombreImagen){
 		this.setProcesosHabilitados(new ArrayList<Proceso>());
 		this.setProcesosInhabilitados(new ArrayList<Proceso>());
+		this.setCargador(new CargadorDeProcesos());
 		this.setDineroAcumulado(0);
 		this.setHabilitado(false);
 		this.setTipo(tipo);
@@ -38,73 +40,28 @@ public class Laboratorio{
 		this.cargarProcesos();
 	}
 	
-	public void setProcesosHabilitados(ArrayList<Proceso> procesosHabilitados) {
+	public void setProcesosHabilitados(List<Proceso> procesosHabilitados) {
 		this.procesosHabilitados = procesosHabilitados;
 	}
 
-	public ArrayList<Proceso> getProcesosHabilitados() {
+	public List<Proceso> getProcesosHabilitados() {
 		return procesosHabilitados;
 	}
 	
-	
+	/**
+	 * Llama al cargador para que cargue los procesos y habilita los de costo 0.
+	 */
 	public void cargarProcesos(){
-		TipoMaquina maq = null;
-		Proceso proceso = null;
-		ValidadorProductos val = ValidadorProductos.instancia();
-		
-		proceso = new Proceso(1000);
-		maq = new TipoMaquinaPrensa();
-		maq.getPrecedentes().add(new TipoMaquinaHorno());
-		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaMezcladora());
-		maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto(val, "azucar", 0));
-		proceso.setMaquinaFinal(maq);
-		this.getProcesosHabilitados().add(proceso);
-		
-		proceso = new Proceso(20);
-		maq = new TipoMaquinaPrensa();
-		maq.addMateriaPrima(new Producto(val,"centeno",0));
-		proceso.setMaquinaFinal(maq);
-		this.getProcesosHabilitados().add(proceso);
-		
-		proceso = new Proceso(1500);
-		maq = new TipoMaquinaPrensa();
-		maq.addPrecedente(new TipoMaquinaPlancha());
-		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
-		proceso.setMaquinaFinal(maq);
-		this.getProcesosHabilitados().add(proceso);
-		
-		proceso = new Proceso(500);
-		maq = new TipoMaquinaPrensa();
-		maq.addPrecedente(new TipoMaquinaMezcladora());
-		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
-		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "centeno", 0));
-		proceso.setMaquinaFinal(maq);
-		this.getProcesosInhabilitados().add(proceso);
-		
-		proceso = new Proceso(500);
-		maq = new TipoMaquinaPrensa();
-		maq.addPrecedente(new TipoMaquinaMezcladora());
-		maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
-		maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-		maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "maiz", 0));
-		proceso.setMaquinaFinal(maq);
-		this.getProcesosInhabilitados().add(proceso);
-		
-		proceso = new Proceso(200);
-		maq = new TipoMaquinaPrensa();
-		maq.addMateriaPrima(new Producto(val,"agua",0));
-		proceso.setMaquinaFinal(maq);
-		this.getProcesosInhabilitados().add(proceso);
-		
+		this.setProcesosInhabilitados(this.getCargador().cargarProcesos(this.getTipo()));
+		this.habilitarProcesos();
 	}
 	
 
-	public void setProcesosInhabilitados(ArrayList<Proceso> procesosInhabilitados) {
+	public void setProcesosInhabilitados(List<Proceso> procesosInhabilitados) {
 		this.procesosInhabilitados = procesosInhabilitados;
 	}
 
-	public ArrayList<Proceso> getProcesosInhabilitados() {
+	public List<Proceso> getProcesosInhabilitados() {
 		return procesosInhabilitados;
 	}
 	
@@ -184,6 +141,14 @@ public class Laboratorio{
 
 	public String getNombreImagen() {
 		return nombreImagen;
+	}
+
+	public void setCargador(CargadorDeProcesos cargador) {
+		this.cargador = cargador;
+	}
+
+	public CargadorDeProcesos getCargador() {
+		return cargador;
 	}
 
 	public class IteradorProcesos implements Iterator<Proceso>{
