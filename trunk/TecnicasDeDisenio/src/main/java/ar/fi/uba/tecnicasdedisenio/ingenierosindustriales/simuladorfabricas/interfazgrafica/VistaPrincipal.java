@@ -428,7 +428,6 @@ public class VistaPrincipal implements Sincronizado, Observer {
     private void cambiarHabilitacionBotonesDePartida(boolean habilitados) {
         for (Widget boton: botonesPartida)
             ((Control) boton).setEnabled(habilitados);
-   
         if(this.getJugador()!=null){
         	this.buttonAlquilar.setEnabled(!this.getJugador().hasFabrica());
         	this.buttonComprar.setEnabled(!this.getJugador().hasFabrica());
@@ -437,6 +436,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
         	this.buttonTimer.setEnabled(this.getJugador().hasFabrica());
         	this.areaFabrica.cambiarHabilitacionBotones(this.getJugador().hasFabrica());
         }
+        this.areaFabrica.getCanvas().setEnabled(habilitados);
     }
 	
     /**
