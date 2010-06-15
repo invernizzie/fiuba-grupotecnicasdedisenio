@@ -190,7 +190,8 @@ public class VistaPrincipal implements Sincronizado, Observer {
             @Override
             public void widgetSelected(SelectionEvent selectionEvent) {
                 if (!Calendario.instancia().estaIniciado()) {
-                    Calendario.instancia().iniciar();
+                	jugador.getFabrica().validarCiclos();
+                	Calendario.instancia().iniciar();
                     cambiarHabilitacionBotonesDePartida(false);
                     /*Se hace porque sino quedan habilitados algunos botones.*/
                     buttonTimer.setEnabled(true);
@@ -199,7 +200,8 @@ public class VistaPrincipal implements Sincronizado, Observer {
                 }
                 else{
                     if (Calendario.instancia().estaPausado()){
-                        Calendario.instancia().reanudar();
+                    	jugador.getFabrica().validarCiclos();
+                    	Calendario.instancia().reanudar();
                 		cambiarHabilitacionBotonesDePartida(false);
                 		/*Se hace porque sino quedan habilitados algunos botones.*/
                         buttonTimer.setEnabled(true);

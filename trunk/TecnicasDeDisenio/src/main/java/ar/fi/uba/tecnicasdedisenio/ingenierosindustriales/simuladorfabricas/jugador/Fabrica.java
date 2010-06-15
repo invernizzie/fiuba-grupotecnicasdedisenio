@@ -381,4 +381,12 @@ public class Fabrica implements Sincronizado{
 	public List<LineaProduccion> getLineas() {
 		return this.lineas;
 	}
+	
+	/**
+	 * Para cada linea de producción se verifica si se tiene un ciclo.
+	 */
+	public void validarCiclos(){
+		for(LineaProduccion linea : this.getLineas())
+			linea.validarCiclo();
+	}
 }

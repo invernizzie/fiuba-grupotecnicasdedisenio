@@ -1,6 +1,8 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
@@ -35,21 +37,21 @@ public class LineaProduccion {
 	public void agregarMaquina(Maquina maquina) {
 		
 		this.setCostoLinea(costoLinea + maquina.getCostoMaquina());
-		this.maquinas.add(maquina);
+		this.getMaquinas().add(maquina);
 		this.actualizarLinea();
 	}
 
 	public void eliminarMaquina(Maquina maquina) {
 		
 		this.setCostoLinea(costoLinea - maquina.getCostoMaquina());
-		this.maquinas.remove(maquina);
+		this.getMaquinas().remove(maquina);
 		
 		this.actualizarLinea();
 	}
 	
 	public void actualizarLinea() {
 		
-		for (Maquina maquina : maquinas) {
+		for (Maquina maquina : getMaquinas()) {
 			maquina.setConectadaAContenedor(false);
 			if(esPrimeraMaquina(maquina)){
 				this.primerasMaquinas.add(maquina);
@@ -67,7 +69,7 @@ public class LineaProduccion {
 	}
 
 	public boolean contieneMaquina(Maquina maquina) {
-		return this.maquinas.contains(maquina);
+		return this.getMaquinas().contains(maquina);
 	}
 	
 	public Maquina obtenerUltimaMaquina(){
@@ -176,7 +178,7 @@ public class LineaProduccion {
 		
 		boolean esUltima = true;
 		
-		for (Maquina maquina : maquinas) {
+		for (Maquina maquina : getMaquinas()) {
 			if(!maquina.equals(maquinaAVerificar) &&
 					!maquina.getPrecedentes().isEmpty() && 
 					maquina.getPrecedentes().contains(maquinaAVerificar)){
@@ -189,7 +191,64 @@ public class LineaProduccion {
 	}
 
 	public boolean estaVacia() {
-		return this.maquinas.isEmpty();
+		return this.getMaquinas().isEmpty();
+	}
+	
+	/**
+	 * Verifica si se tiene un ciclo en esa linea y si es asi rompe todas las maquinas.
+	 * */
+	public void validarCiclo(){
+		boolean hayCiclo = false;
+		
+		/**
+		 * Recorre las maquinas y llama a ver si se asignaron mutuamente.
+		 */
+		for (Maquina maquina : getMaquinas()){
+			for(Maquina maq : getMaquinas()){
+				if(!maquina.equals(maq))
+					if(tienenAsignacionMutua(maquina, maq)){
+						hayCiclo = true;
+					}
+						
+			}
+		}
+		
+		if(hayCiclo)
+			for(Maquina maquina : getMaquinas())
+				maquina.forzarRotura();
+	}
+	
+	/**
+	 * Para dos maquinas ve si alguna esta asignada en otra como precedente.
+	 * Si ambas se tienen asignadas entonces devuelve true, sino devuelve false.
+	 * @param m1
+	 * @param m2
+	 * @return
+	 */
+	public boolean tienenAsignacionMutua(Maquina m1, Maquina m2){
+		return (compararMaquinaVSPrecedentes(m1,m2.precedentes)&&compararMaquinaVSPrecedentes(m2,m1.precedentes));
+	}
+	
+	/**
+	 * Compara una maquina contra distintos precedentes.
+	 * @param m
+	 * @param precedentes
+	 * @return
+	 */
+	public boolean compararMaquinaVSPrecedentes(Maquina m, List<Maquina> precedentes){
+		for(Maquina precedente : precedentes){
+			if(precedente.equals(m)){
+				return true;
+			}
+			if(precedente.getPrecedentes().size()>0){
+				return compararMaquinaVSPrecedentes(m,precedente.getPrecedentes());
+			}
+		}
+		return false;
+	}
+
+	public Set<Maquina> getMaquinas() {
+		return maquinas;
 	}
 	
 }

@@ -309,6 +309,77 @@ public class TestFabricaLineas {
 
 	}
 	
+	@Test
+	public void testNoHayUnCiclo(){
+		Maquina horno = new Horno(0F, 0F);
+		Maquina licuadora = new Licuadora(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		
+		fabrica.agregarMaquina(horno);
+		fabrica.agregarMaquina(licuadora);
+		fabrica.agregarMaquina(plancha);
+		
+		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
+		fabrica.validarCiclos();
+		
+		/*Las máquinas no deberían estar rotas.*/
+		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+			Assert.assertFalse("Las máquinas deberían estar rotas", maquina.estaRota());
+		
+		fabrica.conectarMaquina(horno, licuadora, 0);
+		fabrica.validarCiclos();
+		
+		/*Las máquinas no deberían estar rotas.*/
+		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+			Assert.assertFalse("Las máquinas deberían estar rotas", maquina.estaRota());
+		
+		fabrica.conectarMaquina(licuadora, plancha, 0);
+		fabrica.validarCiclos();
+		
+		/*Las máquinas no deberían estar rotas.*/
+		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+			Assert.assertFalse("Las máquinas deberían estar rotas", maquina.estaRota());
+	}
+	
+	@Test
+	public void testHayUnCiclo(){
+		Maquina horno = new Horno(0F, 0F);
+		Maquina licuadora = new Licuadora(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		
+		fabrica.agregarMaquina(horno);
+		fabrica.agregarMaquina(licuadora);
+		fabrica.agregarMaquina(plancha);
+		
+		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
+		fabrica.validarCiclos();
+		
+		/*Las máquinas no deberían estar rotas.*/
+		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+			Assert.assertFalse("Las máquinas deberían estar rotas", maquina.estaRota());
+		
+		fabrica.conectarMaquina(horno, licuadora, 0);
+		fabrica.validarCiclos();
+		
+		/*Las máquinas no deberían estar rotas.*/
+		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+			Assert.assertFalse("Las máquinas deberían estar rotas", maquina.estaRota());
+		
+		fabrica.conectarMaquina(licuadora, plancha, 0);
+		fabrica.validarCiclos();
+
+		/*Las máquinas no deberían estar rotas.*/
+		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+			Assert.assertFalse("Las máquinas deberían estar rotas", maquina.estaRota());
+		
+		fabrica.conectarMaquina(plancha, horno, 0);
+		fabrica.validarCiclos();
+
+		/*Todas las máquinas deberían estar rotas ya que ahora hay un ciclo.*/
+		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+			Assert.assertTrue("Las máquinas deberían estar rotas", maquina.estaRota());
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 	}
