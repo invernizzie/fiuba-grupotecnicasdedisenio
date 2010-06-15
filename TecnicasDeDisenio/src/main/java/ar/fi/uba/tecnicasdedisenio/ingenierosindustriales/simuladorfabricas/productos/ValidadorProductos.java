@@ -21,7 +21,7 @@ public class ValidadorProductos implements Sincronizado {
 	private HashMap<String,Boolean> mapProductos;
 	private HashMap<String,Float> mapProductosPrecio;
 	private XMLParserProductos parser;
-	private final String pathXML = new String("..\\TecnicasDeDisenio\\src\\main\\resources\\Productos.xml");
+	private final String pathXML = new String("Productos.xml");
 	
 	private ValidadorProductos() {
 		this.mapProductos = new HashMap<String,Boolean>();

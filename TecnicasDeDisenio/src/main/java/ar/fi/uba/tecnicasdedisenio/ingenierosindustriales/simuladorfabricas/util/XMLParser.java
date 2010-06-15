@@ -1,20 +1,12 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -34,7 +26,7 @@ public abstract class XMLParser {
      * Lee un XML y lo deja en memoria.
      */
     public void leerDoc() {
-    	
+    	InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
         // 1. Obtener el objeto DocumentBuilderFactory, con el que se creará el documento XML
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         
@@ -42,7 +34,7 @@ public abstract class XMLParser {
             // 2. Usar DocumentBuilderFactory para crear un DocumentBuilder
             DocumentBuilder db = dbf.newDocumentBuilder();
             // 3. Parsear a partir de un archivo
-            dom = db.parse(path);
+            dom = db.parse(is);
             
         } catch (ParserConfigurationException pce) {  //Capturamos los errores, si los hubiera
         	

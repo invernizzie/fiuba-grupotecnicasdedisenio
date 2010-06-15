@@ -26,13 +26,11 @@ public class TestProductos {
 	@Test
 	public void testCrearProducto() {
 		Assert.assertNotNull("No se puede crear producto",producto.getEstado());
-		//System.out.print("Estado: " + producto.getEstado());
 	}
 	
 	@Test
 	public void testEqualsProducto() {
 		Producto prod = new Producto(val, "pan",0);
-		//Assert.assertEquals(true, producto.equals( prod));
 		Assert.assertEquals("Error en el estado de Producto",producto, prod);
 	}
 }

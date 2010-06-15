@@ -1,7 +1,11 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Calendario;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
@@ -25,6 +29,7 @@ public class Fabrica implements Sincronizado{
 	private List<Maquina> maquinas;
 	private List<LineaProduccion> lineas;
 	private List<Fuente> fuentes;
+	private Map<CintaTransportadora, FuenteSumidero> cintasMaquinas;
 	private float costoCompra;
 	private float costoAlquiler;
 	private int metrosCuadrados;
@@ -35,6 +40,7 @@ public class Fabrica implements Sincronizado{
 		this.maquinas = new ArrayList<Maquina>();
 		this.lineas = new ArrayList<LineaProduccion>();
 		this.fuentes = new ArrayList<Fuente>();
+		this.cintasMaquinas = new HashMap<CintaTransportadora, FuenteSumidero>();
 		this.setMetrosCuadrados(metrosCuadrados);
 		this.setCostoCompra(costoCompra);
 		this.setCostoAlquiler(costoAlquiler);
@@ -51,6 +57,31 @@ public class Fabrica implements Sincronizado{
 	}
 	
 	public void eliminarMaquina(Maquina maquina) {
+		
+		limpiarCintas(maquina);		
+		limpiarLineas(maquina);
+		this.getJugador().aumentarDinero(maquina.obtenerCostoVenta());
+		this.maquinas.remove(maquina);
+	}
+
+	private void limpiarCintas(Maquina maquina) {
+		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
+		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
+		
+		for (CintaTransportadora cintaTransportadora : cintas) {
+			FuenteSumidero par = cintasMaquinas.get(cintaTransportadora);
+			if(par.contieneMaquina(maquina)){
+				cintaTransportadora.desconectar(par.getOrigen(), par.getDestino());
+				cintasAEliminar.add(cintaTransportadora);
+			}
+		}
+		
+		for (CintaTransportadora cintaAEliminar : cintasAEliminar) {
+			cintasMaquinas.remove(cintaAEliminar);
+		}
+	}
+
+	private void limpiarLineas(Maquina maquina) {
 		List<LineaProduccion> lineasAEliminar = new ArrayList<LineaProduccion>();
 		
 		for (LineaProduccion linea : this.getLineas()) {
@@ -66,8 +97,6 @@ public class Fabrica implements Sincronizado{
 		for (LineaProduccion lineaProduccion : lineasAEliminar) {
 			this.eliminarLinea(lineaProduccion);
 		}
-		this.getJugador().aumentarDinero(maquina.obtenerCostoVenta());
-		this.maquinas.remove(maquina);
 	}
 
     public void repararMaquina(Maquina maquina) {
@@ -75,9 +104,17 @@ public class Fabrica implements Sincronizado{
     }
 
     public CintaTransportadora conectarMaquina(IFuente fuente, Maquina maquina, float longitud) {
-        if (fuente instanceof Fuente)
-            return conectarMaquina((Fuente)fuente, maquina, longitud);
-        return conectarMaquina((Maquina)fuente, maquina, longitud);
+    	CintaTransportadora cinta = null;
+        if (fuente instanceof Fuente){
+        	cinta = conectarMaquina((Fuente)fuente, maquina, longitud);
+        }else{
+        	cinta = conectarMaquina((Maquina)fuente, maquina, longitud);
+        }
+        
+        FuenteSumidero par = new FuenteSumidero(fuente, maquina);
+        cintasMaquinas.put(cinta, par);
+        
+        return cinta;
     }
 
     // TODO Eliminar repeticion de codigo con su sobrecarga para (Maquina, Maquina)
@@ -153,6 +190,10 @@ public class Fabrica implements Sincronizado{
 		}
 		this.getJugador().disminuirDinero(cinta.getCostoConectar());
 		return cinta;
+	}
+	
+	public void desconectar(){
+		
 	}
 	
 	public void agregarLinea(LineaProduccion linea){

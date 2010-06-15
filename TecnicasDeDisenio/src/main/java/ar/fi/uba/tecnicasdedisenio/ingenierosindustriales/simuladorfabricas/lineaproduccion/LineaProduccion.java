@@ -64,7 +64,6 @@ public class LineaProduccion {
 				maquina.setConectadaAContenedor(true);
 			}
 		}
-		System.out.println(ultimaMaquina.toString());
 	}
 
 	public boolean contieneMaquina(Maquina maquina) {
@@ -88,7 +87,7 @@ public class LineaProduccion {
 	
 	/**
 	 * Verifica si, para el laboratorio recibido, la linea produce un producto
-	 * ya descubierto, de no ser así retorna false y los producido por esta linea 
+	 * ya descubierto, de no ser asï¿½ retorna false y los producido por esta linea 
 	 * debe considerarse desecho.
 	 * @param laboratorio
 	 * @return
@@ -137,9 +136,9 @@ public class LineaProduccion {
 				}
 
 				if(this.esUltimaMaquina(maquina)){
-					// Si se terminó la linea guardamos el producto en el contenedor
+					// Si se terminï¿½ la linea guardamos el producto en el contenedor
 					this.getContenedor().recibirProducto(productoObtenido, CANTIDAD_PRODUCIDA_FIJA);
-					// Y seteamos la siguiente máquina en null para que vuelva a procesar desde el principio
+					// Y seteamos la siguiente mï¿½quina en null para que vuelva a procesar desde el principio
 					siguientes = null;
 					
 					Float ganancia = this.getContenedor().calcularGanancia();
@@ -168,8 +167,8 @@ public class LineaProduccion {
 	}
 
 	/**
-	 * Una máquina es la última de la linea si no figura en la lista de precedentes
-	 * de otra máquina.
+	 * Una mï¿½quina es la ï¿½ltima de la linea si no figura en la lista de precedentes
+	 * de otra mï¿½quina.
 	 * @param maquinaAVerificar
 	 * @return
 	 */
