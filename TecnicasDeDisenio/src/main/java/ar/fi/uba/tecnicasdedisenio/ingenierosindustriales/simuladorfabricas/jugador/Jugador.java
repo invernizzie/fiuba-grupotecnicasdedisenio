@@ -16,8 +16,8 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 /**
  * Representa a un jugador.
  * Tiene un nombre y un dinero el cual va siendo actualizado.
- * Puede comprar, alquilar o vender una fábrica.
- * Puede crear líneas de producción dentro de cada fábrica que tenga.
+ * Puede comprar, alquilar o vender una fï¿½brica.
+ * Puede crear lï¿½neas de producciï¿½n dentro de cada fï¿½brica que tenga.
  *
  * @author Gustavo A. Meller (gmeller@gmail.com)
  */
@@ -79,7 +79,7 @@ public class Jugador extends Observable implements Sincronizado {
 	}
 	
 	public void agregarMaquina(Maquina maquina){
-		this.getFabrica().agregarMaquina(maquina);
+		this.getFabrica().comprarMaquina(maquina);
 	}
 	
 	public void agregarFuente(Fuente fuente){
@@ -115,7 +115,7 @@ public class Jugador extends Observable implements Sincronizado {
 	}
 	
 	/**
-	 * Verifica la existencia de una fábrica asignada a un jugador.
+	 * Verifica la existencia de una fï¿½brica asignada a un jugador.
 	 * @throws JugadorConFabricaException
 	 */
 	public void verificarFabricaAsignada() throws JugadorConFabricaException{
@@ -129,7 +129,7 @@ public class Jugador extends Observable implements Sincronizado {
 	}
 	
 	/**
-	 * El jugador deja de tener una fábrica y recupera parte del dinero que gastó.*/
+	 * El jugador deja de tener una fï¿½brica y recupera parte del dinero que gastï¿½.*/
 	public void venderFabrica(float ganancia){
 		try{
 			this.verificarFabricaAsignada();

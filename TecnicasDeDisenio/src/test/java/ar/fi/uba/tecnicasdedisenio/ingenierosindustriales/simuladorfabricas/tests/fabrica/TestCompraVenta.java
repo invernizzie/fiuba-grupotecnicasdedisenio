@@ -58,8 +58,8 @@ public class TestCompraVenta {
 		catch (JugadorConFabricaException e) {
 			Assert.fail("No deberia haber lanzado una excepcion");
 		}
-		Assert.assertNull("El jugador no debería tener una fabrica asignada",this.jugador.getFabrica());
-		Assert.assertNull("La fabrica no debería tener un jugador que la compró",this.fabricas.get(1).getJugador());
+		Assert.assertNull("El jugador no deberï¿½a tener una fabrica asignada",this.jugador.getFabrica());
+		Assert.assertNull("La fabrica no deberï¿½a tener un jugador que la comprï¿½",this.fabricas.get(1).getJugador());
 		
 		
 		
@@ -83,11 +83,11 @@ public class TestCompraVenta {
 			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		Assert.assertNotNull("El jugador debería tener una fabrica asignada",this.jugador.getFabrica());
-		Assert.assertNotNull("La fabrica debería tener un jugador que la compró",this.fabricas.get(1).getJugador());
+		Assert.assertNotNull("El jugador deberï¿½a tener una fabrica asignada",this.jugador.getFabrica());
+		Assert.assertNotNull("La fabrica deberï¿½a tener un jugador que la comprï¿½",this.fabricas.get(1).getJugador());
 		Assert.assertEquals("El jugador deberia tener la plata anterior menos el costo de la fabrica", jugador.getDineroActual(),plata-this.fabricas.get(1).getCostoCompra());
-		Assert.assertEquals("El jugador deberia tener la fabrica que compró",this.jugador.getFabrica(),this.fabricas.get(1));
-		Assert.assertEquals("La fabrica debería tener asignada al jugador que la compró",this.fabricas.get(1).getJugador(),this.jugador);
+		Assert.assertEquals("El jugador deberia tener la fabrica que comprï¿½",this.jugador.getFabrica(),this.fabricas.get(1));
+		Assert.assertEquals("La fabrica deberï¿½a tener asignada al jugador que la comprï¿½",this.fabricas.get(1).getJugador(),this.jugador);
 	}
 	
 	@Test
@@ -107,11 +107,11 @@ public class TestCompraVenta {
 		}
 		
 		
-		Assert.assertEquals("El jugador deberia tener la plata anterior sin ninguna reducción", jugador.getDineroActual(),plata);
-		Assert.assertNotNull("El jugador debería tener una fabrica asignada",this.jugador.getFabrica());
-		Assert.assertNotNull("La fabrica debería tener un jugador que la alquiló",this.fabricas.get(4).getJugador());
-		Assert.assertEquals("El jugador deberia tener la fabrica que alquiló",this.jugador.getFabrica(),this.fabricas.get(4));
-		Assert.assertEquals("La fabrica debería tener asignada al jugador que la alquiló",this.fabricas.get(4).getJugador(),this.jugador);
+		Assert.assertEquals("El jugador deberia tener la plata anterior sin ninguna reducciï¿½n", jugador.getDineroActual(),plata);
+		Assert.assertNotNull("El jugador deberï¿½a tener una fabrica asignada",this.jugador.getFabrica());
+		Assert.assertNotNull("La fabrica deberï¿½a tener un jugador que la alquilï¿½",this.fabricas.get(4).getJugador());
+		Assert.assertEquals("El jugador deberia tener la fabrica que alquilï¿½",this.jugador.getFabrica(),this.fabricas.get(4));
+		Assert.assertEquals("La fabrica deberï¿½a tener asignada al jugador que la alquilï¿½",this.fabricas.get(4).getJugador(),this.jugador);
 	}
 	
 	@Test
@@ -150,11 +150,11 @@ public class TestCompraVenta {
 			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		Assert.assertEquals("La plata del jugador 2 no debería haberse modificado", jug2.getDineroActual(),plata2);
-		Assert.assertNull("El jugador 2 no debería tener una fabrica asignada",jug2.getFabrica());
-		Assert.assertEquals("La fábrica 1 debería tener asignado al jugador 1",this.fabricas.get(1).getJugador(),this.jugador);
+		Assert.assertEquals("La plata del jugador 2 no deberï¿½a haberse modificado", jug2.getDineroActual(),plata2);
+		Assert.assertNull("El jugador 2 no deberï¿½a tener una fabrica asignada",jug2.getFabrica());
+		Assert.assertEquals("La fï¿½brica 1 deberï¿½a tener asignado al jugador 1",this.fabricas.get(1).getJugador(),this.jugador);
 		
-		/*El jugador 1 intenta comprar otra fábrica.*/
+		/*El jugador 1 intenta comprar otra fï¿½brica.*/
 		plata = jugador.getDineroActual();
 		try {
 			this.fabricas.get(0).comprar(jugador);
@@ -170,9 +170,9 @@ public class TestCompraVenta {
 			
 		}
 		
-		Assert.assertEquals("La plata del jugador 1 no debería haberse modificado", this.jugador.getDineroActual(), plata);
-		Assert.assertNull("La fábrica 0 no deberia tener un jugador asignado",this.fabricas.get(0).getJugador());
-		Assert.assertEquals("El jugador 1 debería tener asignada la fábrica 1", this.jugador.getFabrica(),this.fabricas.get(1));
+		Assert.assertEquals("La plata del jugador 1 no deberï¿½a haberse modificado", this.jugador.getDineroActual(), plata);
+		Assert.assertNull("La fï¿½brica 0 no deberia tener un jugador asignado",this.fabricas.get(0).getJugador());
+		Assert.assertEquals("El jugador 1 deberï¿½a tener asignada la fï¿½brica 1", this.jugador.getFabrica(),this.fabricas.get(1));
 	}
 	
 	@Test
@@ -208,10 +208,10 @@ public class TestCompraVenta {
 			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		Assert.assertNull("El jugador 2 no debería tener una fabrica asignada",jug2.getFabrica());
-		Assert.assertEquals("La fábrica 1 debería tener asignado al jugador 1",this.fabricas.get(1).getJugador(),this.jugador);
+		Assert.assertNull("El jugador 2 no deberï¿½a tener una fabrica asignada",jug2.getFabrica());
+		Assert.assertEquals("La fï¿½brica 1 deberï¿½a tener asignado al jugador 1",this.fabricas.get(1).getJugador(),this.jugador);
 		
-		/*El jugador 1 intenta alquilar otra fábrica.*/
+		/*El jugador 1 intenta alquilar otra fï¿½brica.*/
 		try {
 			this.fabricas.get(0).comprar(jugador);
 			Assert.fail("Deberia haber lanzado una excepcion de JugadorConFabrica");
@@ -226,8 +226,8 @@ public class TestCompraVenta {
 			
 		}
 	
-		Assert.assertNull("La fábrica 0 no deberia tener un jugador asignado",this.fabricas.get(0).getJugador());
-		Assert.assertEquals("El jugador 1 debería tener asignada la fábrica 1", this.jugador.getFabrica(),this.fabricas.get(1));
+		Assert.assertNull("La fï¿½brica 0 no deberia tener un jugador asignado",this.fabricas.get(0).getJugador());
+		Assert.assertEquals("El jugador 1 deberï¿½a tener asignada la fï¿½brica 1", this.jugador.getFabrica(),this.fabricas.get(1));
 	}
 	
 	@Test
@@ -247,13 +247,13 @@ public class TestCompraVenta {
 			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		Assert.assertNotNull("La fábrica debería tener un jugador asignado",this.fabricas.get(1).getJugador());
-		Assert.assertNotNull("El jugador debería tener una fábrica asignada",this.jugador.getFabrica());
+		Assert.assertNotNull("La fï¿½brica deberï¿½a tener un jugador asignado",this.fabricas.get(1).getJugador());
+		Assert.assertNotNull("El jugador deberï¿½a tener una fï¿½brica asignada",this.jugador.getFabrica());
 		
 		this.fabricas.get(1).vender();
-		Assert.assertNull("La fábrica no debería tener un jugador asignado",this.fabricas.get(1).getJugador());
-		Assert.assertNull("El jugador no debería tener una fábrica asignada",this.jugador.getFabrica());
-		Assert.assertEquals("El dinero actual del jugador debería ser el del principio menos el 20% del costo de la fábrica",this.jugador.getDineroActual(),(float)(plata-this.fabricas.get(1).getCostoCompra()*0.2));	
+		Assert.assertNull("La fï¿½brica no deberï¿½a tener un jugador asignado",this.fabricas.get(1).getJugador());
+		Assert.assertNull("El jugador no deberï¿½a tener una fï¿½brica asignada",this.jugador.getFabrica());
+		Assert.assertEquals("El dinero actual del jugador deberï¿½a ser el del principio menos el 20% del costo de la fï¿½brica",this.jugador.getDineroActual(),(float)(plata-this.fabricas.get(1).getCostoCompra()*0.2));	
 	}
 	
 	@Test
@@ -273,21 +273,21 @@ public class TestCompraVenta {
 			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		Assert.assertNotNull("La fábrica debería tener un jugador asignado",
+		Assert.assertNotNull("La fï¿½brica deberï¿½a tener un jugador asignado",
 								this.fabricas.get(1).getJugador());
-		Assert.assertNotNull("El jugador debería tener una fábrica asignada",
+		Assert.assertNotNull("El jugador deberï¿½a tener una fï¿½brica asignada",
 								this.jugador.getFabrica());
 		
 		Maquina maquina1 = new Horno(0F, 0F);
-		this.jugador.getFabrica().agregarMaquina(maquina1);
+		this.jugador.getFabrica().comprarMaquina(maquina1);
 		
 		this.fabricas.get(1).vender();
-		Assert.assertNull("La fábrica no debería tener un jugador asignado",
+		Assert.assertNull("La fï¿½brica no deberï¿½a tener un jugador asignado",
 							this.fabricas.get(1).getJugador());
-		Assert.assertNull("El jugador no debería tener una fábrica asignada",
+		Assert.assertNull("El jugador no deberï¿½a tener una fï¿½brica asignada",
 							this.jugador.getFabrica());
-		Assert.assertEquals("El dinero actual del jugador debería ser el del " +
-								"principio menos el 20% del costo de la fábrica",
+		Assert.assertEquals("El dinero actual del jugador deberï¿½a ser el del " +
+								"principio menos el 20% del costo de la fï¿½brica",
 								this.jugador.getDineroActual(),
 								(float)(plata - this.fabricas.get(1).getCostoCompra()*0.2 
 										+ maquina1.obtenerCostoVenta() - 
@@ -309,13 +309,13 @@ public class TestCompraVenta {
 			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		Assert.assertNotNull("La fábrica debería tener un jugador asignado",this.fabricas.get(1).getJugador());
-		Assert.assertNotNull("El jugador debería tener una fábrica asignada",this.jugador.getFabrica());
+		Assert.assertNotNull("La fï¿½brica deberï¿½a tener un jugador asignado",this.fabricas.get(1).getJugador());
+		Assert.assertNotNull("El jugador deberï¿½a tener una fï¿½brica asignada",this.jugador.getFabrica());
 		
 		this.fabricas.get(1).vender();
-		Assert.assertNull("La fábrica no debería tener un jugador asignado",this.fabricas.get(1).getJugador());
-		Assert.assertNull("El jugador no debería tener una fábrica asignada",this.jugador.getFabrica());
-		Assert.assertEquals("El dinero actual del jugador debería ser el del principio",this.jugador.getDineroActual(),plata);	
+		Assert.assertNull("La fï¿½brica no deberï¿½a tener un jugador asignado",this.fabricas.get(1).getJugador());
+		Assert.assertNull("El jugador no deberï¿½a tener una fï¿½brica asignada",this.jugador.getFabrica());
+		Assert.assertEquals("El dinero actual del jugador deberï¿½a ser el del principio",this.jugador.getDineroActual(),plata);	
 	}
 	
 	@Test
@@ -325,6 +325,6 @@ public class TestCompraVenta {
 		this.fabricas.get(1).vender();
 		this.jugador.venderFabrica(1000);
 		
-		Assert.assertEquals("El jugador no debería haber ganado plata", this.jugador.getDineroActual(),plata);
+		Assert.assertEquals("El jugador no deberï¿½a haber ganado plata", this.jugador.getDineroActual(),plata);
 	}
 }

@@ -85,7 +85,7 @@ public class EspacioFabril {
         }
 
         Maquina maquina = tipoMaquina.getInstancia();
-        getFabrica().agregarMaquina(maquina);
+        getFabrica().comprarMaquina(maquina);
         try {
             ocupar(maquina, _x, _y, ANCHO_MAQUINA, ANCHO_MAQUINA);
         } catch (CubiculoOcupadoExcetion cubiculoOcupadoExcetion) {
@@ -140,7 +140,7 @@ public class EspacioFabril {
         if (cubiculoClickeado == null)
             throw new CubiculoVacioException();
         Maquina maquina = cubiculoClickeado.obtenerMaquina();
-        getFabrica().eliminarMaquina(maquina);
+        getFabrica().venderMaquina(maquina);
         borrarFuenteEn(maquina, x, y);
         borrarFuenteAlrededorDe(maquina, x, y);
     }
