@@ -1,6 +1,5 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.GeneradorDeColores;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Fabrica;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.CintaTransportadora;
@@ -9,12 +8,9 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Display;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +43,7 @@ public class EspacioFabril {
     private Rectangle limiteCanvas;
 
     private Map<CintaTransportadora, Integer[][]> cintas = new HashMap<CintaTransportadora, Integer[][]>();
+    private final DibujanteDeFabricas dibujanteDeFabricas = new DibujanteDeFabricas();
 
     public EspacioFabril(Canvas canvas) {
         setCanvas(canvas);
@@ -212,7 +209,7 @@ public class EspacioFabril {
                     IFuente fuente = obtenerCubiculo(x, y).getFuente();
                     if (!dibujados.contains(fuente)) {
                         dibujados.add(fuente);
-                        dibujarFuente(fuente, x * LONGITUD_DEL_LADO, y * LONGITUD_DEL_LADO);
+                        dibujanteDeFabricas.dibujarFuente(fuente, antitransformarCoordenada(x), antitransformarCoordenada(y));
                     }
                 }
                 catch (CubiculoVacioException ignored) {}
@@ -224,8 +221,12 @@ public class EspacioFabril {
 
         for (CintaTransportadora cinta: cintas.keySet()) {
             Integer[][] coordenadas = cintas.get(cinta);
-            dibujarCinta(coordenadas[0][0], coordenadas[0][1], coordenadas[1][0], coordenadas[1][1]);
+            dibujanteDeFabricas.dibujarCinta(coordenadas[0][0], coordenadas[0][1], coordenadas[1][0], coordenadas[1][1]);
         }
+    }
+
+    private int antitransformarCoordenada(int coordenada) {
+        return coordenada * LONGITUD_DEL_LADO;
     }
 
     public void setFabrica(Fabrica fabrica, Canvas canvas) {
@@ -249,62 +250,11 @@ public class EspacioFabril {
         limiteCanvas = canvas.getBounds();
         ancho = transformarCoordenada(limiteCanvas.width);
         alto = transformarCoordenada(limiteCanvas.height);
+        dibujanteDeFabricas.setCanvas(canvas);
     }
 
     private void borrarCanvas(GC gc) {
         gc.fillRectangle(0, 0, limiteCanvas.width, limiteCanvas.height);
-    }
-
-    private void dibujarCinta(int _x1, int _y1, int _x2, int _y2) {
-        GC gc = new GC(canvas);
-        gc.drawLine (_x1, _y1, _x2, _y2);
-        gc.dispose ();
-    }
-
-    private void dibujarFuente(IFuente _fuente, int _x, int _y) {
-        if (_fuente instanceof Maquina) {
-            Maquina maquina = (Maquina)_fuente;
-            dibujarMaquina(maquina, _x, _y, ANCHO_MAQUINA, ANCHO_MAQUINA);
-        } else if (_fuente instanceof Fuente) {
-            Fuente fuente = (Fuente)_fuente;
-            dibujarMateriaPrima(fuente.getNombreProducto(), _x, _y, ANCHO_MATERIA_PRIMA, ANCHO_MATERIA_PRIMA);
-        }
-    }
-
-    private void dibujarMateriaPrima(String nombre, int _x, int _y, int _ancho, int _alto) {
-        int x = transformarCoordenada(_x) * LONGITUD_DEL_LADO;
-        int y = transformarCoordenada(_y) * LONGITUD_DEL_LADO;
-
-        GC gc = new GC(canvas);
-        Color colorAnterior = gc.getBackground();
-        gc.setBackground(GeneradorDeColores.porString(nombre));
-        int ancho = LONGITUD_DEL_LADO * _ancho;
-        int alto = LONGITUD_DEL_LADO * _alto;
-        gc.fillOval(x, y, ancho, alto);
-        gc.setBackground(colorAnterior);
-        gc.dispose();
-    }
-
-    private void dibujarMaquina(Maquina maquina, int _x, int _y, int _ancho, int _alto) {
-        int x = transformarCoordenada(_x) * LONGITUD_DEL_LADO;
-        int y = transformarCoordenada(_y) * LONGITUD_DEL_LADO;
-
-        GC gc = new GC(canvas);
-        Color colorAnterior = gc.getBackground();
-        gc.setBackground(GeneradorDeColores.porClass(maquina.getClass()));
-        int ancho = LONGITUD_DEL_LADO * _ancho;
-        int alto = LONGITUD_DEL_LADO * _alto;
-        gc.fillRectangle(x, y, ancho, alto);
-        gc.setBackground(colorAnterior);
-
-        if (maquina.estaRota()) {
-            colorAnterior = gc.getForeground();
-            gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-            gc.drawLine(x, y, x + ancho, y + alto);
-            gc.drawLine(x, y + alto, x + ancho, y);
-            gc.setForeground(colorAnterior);
-        }
-        gc.dispose();
     }
 
     private void borrarFuenteAlrededorDe(IFuente fuente, int x, int y) {
@@ -343,8 +293,8 @@ public class EspacioFabril {
     private boolean estaDentroDelEspacio(int x, int y, int ancho, int alto) {
         if ((x < 0) || (y < 0))
             return false;
-        return !((transformarCoordenada(x + ancho * LONGITUD_DEL_LADO) >= this.ancho)
-                || (transformarCoordenada(y + alto * LONGITUD_DEL_LADO) >= this.alto));
+        return !((transformarCoordenada(x + antitransformarCoordenada(ancho)) >= this.ancho)
+                || (transformarCoordenada(y + antitransformarCoordenada(alto)) >= this.alto));
     }
 
     private void ocupar(Fuente fuente, int _x, int _y, int ancho, int alto) throws CubiculoOcupadoExcetion, CoordenadasIncorrectasException {
@@ -391,7 +341,7 @@ public class EspacioFabril {
         return false;
     }
 
-    private int transformarCoordenada(int coordenada) {
+    int transformarCoordenada(int coordenada) {
         return coordenada / LONGITUD_DEL_LADO;
     }
 
@@ -407,5 +357,9 @@ public class EspacioFabril {
             return false;
         }
         return true;
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
     }
 }
