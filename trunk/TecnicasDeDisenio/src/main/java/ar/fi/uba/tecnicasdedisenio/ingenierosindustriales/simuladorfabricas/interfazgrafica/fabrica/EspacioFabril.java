@@ -185,6 +185,9 @@ public class EspacioFabril {
         Maquina maquina = cubiculoClickeado.obtenerMaquina();
         borrarFuenteEn(maquina, xInicial, yInicial);
         borrarFuenteAlrededorDe(maquina, xInicial, yInicial);
+        getFabrica().eliminarMaquina(maquina);
+        maquina.reset();
+        getFabrica().agregarMaquina(maquina);
 
         try {
             ocupar(maquina, _xFinal, _yFinal, ANCHO_MAQUINA, ANCHO_MAQUINA);

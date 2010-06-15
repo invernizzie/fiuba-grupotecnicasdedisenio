@@ -43,7 +43,7 @@ public class TrasladadorDeMaquinas extends Instalador {
             } catch (CubiculoVacioException e) {
                 // Simplemente no se mueve
             } catch (EspacioOcupadoException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                // Simplemente no se mueve
             }
         }
 

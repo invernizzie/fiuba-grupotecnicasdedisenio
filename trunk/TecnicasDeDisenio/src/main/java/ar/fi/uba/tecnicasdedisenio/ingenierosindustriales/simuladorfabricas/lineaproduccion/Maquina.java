@@ -303,4 +303,15 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	public Boolean isConectadaAContenedor() {
 		return conectadaAContenedor;
 	}
+
+    public void reset() {
+        this.cintasEntrada = new ArrayList<CintaTransportadora>();
+		this.entrada = new Entrada();
+		this.salida = new Salida();
+		this.setMateriasPrimas(new ArrayList<Producto>());
+		this.fuentes = new ArrayList<Fuente>();
+		this.setPrecedentes(new ArrayList<Maquina>());
+		this.estaRota = false;
+		this.setConectadaAContenedor(false);
+    };
 }
