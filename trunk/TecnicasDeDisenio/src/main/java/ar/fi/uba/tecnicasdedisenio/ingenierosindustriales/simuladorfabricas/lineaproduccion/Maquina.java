@@ -9,7 +9,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 
 
 /**
- * Abstracción que representa una entidad encargada de realizar un procesamiento sobre 
+ * Abstracciï¿½n que representa una entidad encargada de realizar un procesamiento sobre 
  * una serie de materiales ({@link Producto}).
  * @author santiago
  *
@@ -55,15 +55,15 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	
 	/**
 	 * Verifica que ingresen los elementos correctos para realizar la tarea que 
-	 * le corresponde a cada máquina.
-	 * La validación puede ser por tipo, cantidad, etc.
+	 * le corresponde a cada mï¿½quina.
+	 * La validaciï¿½n puede ser por tipo, cantidad, etc.
 	 * @return true si y solo si los elementos son los que precisa la mÃ¡quina 
 	 * para operar, false en otro caso.
 	 */
 	protected abstract Boolean validarEntrada();
 	
 	/**
-	 * Método que realiza el procesamiento de los elementos, devuelve el elemento
+	 * Mï¿½todo que realiza el procesamiento de los elementos, devuelve el elemento
 	 * resultado de procesar los elementos de entrada.
 	 * 
 	 * @return
@@ -71,12 +71,12 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	protected abstract Producto realizarProceso();
 	
 	/**
-	 * Template para la realización del proceso, las subclases deberán implementar
-	 * el método realizarProceso que es el que realiza efectivemente la tarea y 
+	 * Template para la realizaciï¿½n del proceso, las subclases deberï¿½n implementar
+	 * el mï¿½todo realizarProceso que es el que realiza efectivemente la tarea y 
 	 * validarEntrada que verifica si los datos que los elementos que ingresan
-	 * son válidos para la tarea a realizar.
+	 * son vï¿½lidos para la tarea a realizar.
 	 * 
-	 * Este método toma los elementos de la entrada, los procesa y deposita el
+	 * Este mï¿½todo toma los elementos de la entrada, los procesa y deposita el
 	 * resultado en la salida.
 	 * @param construirProductoValido 
 	 */
@@ -101,7 +101,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 			}else{
 				throw new EntradaInvalidaException("Los elementos que ingresaron" +
 													" no se corresponden con los necesarios " +
-													"para que esta máquina opere");
+													"para que esta mï¿½quina opere");
 			}
 		}else{
 			elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
@@ -110,7 +110,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 	
 	/**
-	 * Verifica si la máquina se rompió luego de haber sido utilizada y cambia su 
+	 * Verifica si la mï¿½quina se rompiï¿½ luego de haber sido utilizada y cambia su 
 	 * estado de manera acorde.
 	 */
 	protected void verificarRotura(){
@@ -214,7 +214,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 	
 	/**
-	 * Repara la fábrica.
+	 * Repara la fï¿½brica.
 	 * @return 
 	 */
 	public float reparar(){
@@ -224,7 +224,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	
 	/**
 	 * Verifica el estado de la fabrica
-	 * @return true si la fábrica está rota y no puede operar, false en otro caso.
+	 * @return true si la fï¿½brica estï¿½ rota y no puede operar, false en otro caso.
 	 */
 	public Boolean estaRota(){
 		return estaRota;
@@ -255,7 +255,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 
 	/**
-	 * Devuelve el costo de venta de la máquina. Un 50% del costo si la máquina 
+	 * Devuelve el costo de venta de la mï¿½quina. Un 50% del costo si la mï¿½quina 
 	 * no se encuentra rota, 0 en caso contrario.
 	 * @return
 	 */
@@ -311,7 +311,6 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		this.setMateriasPrimas(new ArrayList<Producto>());
 		this.fuentes = new ArrayList<Fuente>();
 		this.setPrecedentes(new ArrayList<Maquina>());
-		this.estaRota = false;
 		this.setConectadaAContenedor(false);
     };
 }

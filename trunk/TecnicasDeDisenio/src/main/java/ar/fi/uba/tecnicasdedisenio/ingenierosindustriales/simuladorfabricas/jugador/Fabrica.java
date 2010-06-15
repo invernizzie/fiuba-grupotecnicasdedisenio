@@ -17,7 +17,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.ProcesamientoException;
 
 /**
- * Representa a una fábrica en particular.
+ * Representa a una fï¿½brica en particular.
  * La misma tiene unos metros cuadrados, un costo de compra y un costo de alquiler.
  * Puede ser comprada, alquilada o vendida por un jugador.
  *
@@ -51,18 +51,25 @@ public class Fabrica implements Sincronizado{
 		this.fuentes.add(fuente);
 	}
 	
-	public void agregarMaquina(Maquina maquina) {
+	public void comprarMaquina(Maquina maquina) {
 		this.getJugador().disminuirDinero(maquina.getCostoMaquina());
-		this.maquinas.add(maquina);
+		agregarMaquina(maquina);
 	}
+
+    public void agregarMaquina(Maquina maquina) {
+        maquinas.add(maquina);
+    }
 	
-	public void eliminarMaquina(Maquina maquina) {
-		
-		limpiarCintas(maquina);		
-		limpiarLineas(maquina);
+	public void venderMaquina(Maquina maquina) {
+		eliminarMaquina(maquina);
 		this.getJugador().aumentarDinero(maquina.obtenerCostoVenta());
-		this.maquinas.remove(maquina);
 	}
+
+    public void eliminarMaquina(Maquina maquina) {
+        limpiarCintas(maquina);
+        limpiarLineas(maquina);
+        maquinas.remove(maquina);
+    }
 
 	private void limpiarCintas(Maquina maquina) {
 		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
@@ -120,7 +127,7 @@ public class Fabrica implements Sincronizado{
     // TODO Eliminar repeticion de codigo con su sobrecarga para (Maquina, Maquina)
 	public CintaTransportadora conectarMaquina(Fuente fuente, Maquina maquina, float longitud){
 		if(!maquinas.contains(maquina)){
-			this.agregarMaquina(maquina);
+			this.comprarMaquina(maquina);
 		}
 		
 		CintaTransportadora cinta = new CintaTransportadora(longitud);
@@ -143,26 +150,26 @@ public class Fabrica implements Sincronizado{
 	}
 
 	/**
-	 * Conecta dos máquinas dadas, verifica si alguna de las dos pertenece a una linea
-	 * de producción existente, en caso negativo crea una nueva linea que las contenga.
+	 * Conecta dos mï¿½quinas dadas, verifica si alguna de las dos pertenece a una linea
+	 * de producciï¿½n existente, en caso negativo crea una nueva linea que las contenga.
 	 * @param origen
 	 * @param destino
 	 */
     // TODO Dividir en metodos mas cohesivos
 	public CintaTransportadora conectarMaquina(Maquina origen, Maquina destino, float longitud){
 		if(!maquinas.contains(origen)){
-			this.agregarMaquina(origen);
+			this.comprarMaquina(origen);
 		}
 		
 		if(!maquinas.contains(destino)){
-			this.agregarMaquina(destino);
+			this.comprarMaquina(destino);
 		}
 		
 		CintaTransportadora cinta = new CintaTransportadora(longitud);
 		cinta.conectar(origen, destino);
 		
 		/*
-		 * Si una linea contiene alguna de las máquinas agrego la otra a esa linea.
+		 * Si una linea contiene alguna de las mï¿½quinas agrego la otra a esa linea.
 		 */
 		boolean maquinasEnLinea = true;
 		for (LineaProduccion linea : lineas) {
@@ -179,7 +186,7 @@ public class Fabrica implements Sincronizado{
 		}
 		
 		/*
-		 * Ninguna de las dos máquinas está en alguna de las lineas, creo una 
+		 * Ninguna de las dos mï¿½quinas estï¿½ en alguna de las lineas, creo una 
 		 * nueva linea que las contenga.
 		 */
 		if(!maquinasEnLinea){
@@ -245,7 +252,7 @@ public class Fabrica implements Sincronizado{
 	}
 	
 	/**
-	 * Verifica la existencia de un jugador poseyendo la fábrica.
+	 * Verifica la existencia de un jugador poseyendo la fï¿½brica.
 	 * @throws FabricaOcupadaException
 	 */
 	public void verificarJugadorAsignado() throws FabricaOcupadaException{
@@ -254,7 +261,7 @@ public class Fabrica implements Sincronizado{
 	}
 	
 	/**
-	 * La fábrica se intenta comprar, previamente verificando que se cumplan las condiciones de
+	 * La fï¿½brica se intenta comprar, previamente verificando que se cumplan las condiciones de
 	 * dinero suficiente.
 	 * @param jugador
 	 * @throws DineroInsuficienteException
@@ -268,7 +275,7 @@ public class Fabrica implements Sincronizado{
 	}
 	
 	/**
-	 * La fábrica se intenta alquilar.
+	 * La fï¿½brica se intenta alquilar.
 	 * @param jugador
 	 * @throws FabricaOcupadaException
 	 * @throws JugadorConFabricaException
@@ -279,8 +286,8 @@ public class Fabrica implements Sincronizado{
 	}
 	
 	/**
-	 * Realiza la compra o alquiler de la fábrica verificando que el jugador no tenga
-	 * ya una fábrica asignada y que la fábrica no este asignada a un jugador.
+	 * Realiza la compra o alquiler de la fï¿½brica verificando que el jugador no tenga
+	 * ya una fï¿½brica asignada y que la fï¿½brica no este asignada a un jugador.
 	 * @param jugador
 	 * @param costoXMes
 	 * @throws FabricaOcupadaException
@@ -296,7 +303,7 @@ public class Fabrica implements Sincronizado{
 	}
 
 	/**
-	 * La fábrica deja de tener un jugador asignado.
+	 * La fï¿½brica deja de tener un jugador asignado.
 	 */
 	public void vender(){
 		try{
@@ -356,7 +363,7 @@ public class Fabrica implements Sincronizado{
 						linea.procesar();
 				}
 			} catch (ProcesamientoException e) {
-				// TODO ¿Qué hacemos en este caso? ¿cómo informamos al jugador?
+				// TODO ï¿½Quï¿½ hacemos en este caso? ï¿½cï¿½mo informamos al jugador?
 			}
 		}
 	}
@@ -383,7 +390,7 @@ public class Fabrica implements Sincronizado{
 	}
 	
 	/**
-	 * Para cada linea de producción se verifica si se tiene un ciclo.
+	 * Para cada linea de producciï¿½n se verifica si se tiene un ciclo.
 	 */
 	public void validarCiclos(){
 		for(LineaProduccion linea : this.getLineas())
