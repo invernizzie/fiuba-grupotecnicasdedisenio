@@ -29,11 +29,11 @@ public class TestXMLParser {
 
 	@Test
 	public void testLeerDoc() {
-		try{
+		try {
 			parser.leerDoc();
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-			fail("Falló la lectura del XML: " + e.getMessage());
+			fail("FallÃ³ la lectura del XML: " + e.getMessage());
 		}
 	}
 

@@ -29,7 +29,7 @@ public class XMLParserProductos extends XMLParser {
 	    	
 	    // 1. Obtener el documento raiz
 	    //Se crea un objeto Element, a partir del documento XML
-		Element docEle = dom.getDocumentElement();
+		Element docEle = getDom().getDocumentElement();
 	    // 2. Obtener un nodelist de elementos <descarga>
 	    NodeList nl = docEle.getElementsByTagName("Producto");
 	    if (nl != null && nl.getLength() > 0) {
@@ -60,7 +60,7 @@ public class XMLParserProductos extends XMLParser {
 	    	
 	    // 1. Obtener el documento raiz
 	    //Se crea un objeto Element, a partir del documento XML
-		Element docEle = dom.getDocumentElement();
+		Element docEle = getDom().getDocumentElement();
 	    // 2. Obtener un nodelist de elementos <descarga>
 	    NodeList nl = docEle.getElementsByTagName("Producto");
 	    if (nl != null && nl.getLength() > 0) {

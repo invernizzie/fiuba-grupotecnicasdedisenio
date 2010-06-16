@@ -11,11 +11,13 @@ public class TestVentana {
 
 	@SuppressWarnings("deprecation")
 	private Ventana ventanaPPAL;
-	
-	@SuppressWarnings("deprecation")
+    private static final int ALTO = 800;
+    private static final int ANCHO = 600;
+
+    @SuppressWarnings("deprecation")
 	@Before
 	public void setUp() throws Exception {
-		this.ventanaPPAL = new Ventana(800, 600, "TP Tecnicas de Dise�o");
+		this.ventanaPPAL = new Ventana(ALTO, ANCHO, "TP Tecnicas de Diseño");
 	}
 
 	@After

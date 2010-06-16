@@ -9,15 +9,16 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  *
  */
 public class Prensa extends Maquina {
+    private static final float COSTO_PRENSA = 150F;
 
-	public Prensa(Float tasaDeFallos, Float tasaRotura) {
+    public Prensa(final Float tasaDeFallos, final Float tasaRotura) {
 		super(tasaDeFallos, tasaRotura);
-		this.setCostoMaquina(150F);
+		this.setCostoMaquina(COSTO_PRENSA);
 	}
 
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(),"prensado",this.getTasaDeFallos());
+		return new Producto(ValidadorProductos.instancia(), "prensado", this.getTasaDeFallos());
 	}
 
 	/**
@@ -36,7 +37,7 @@ public class Prensa extends Maquina {
 
 	@Override
 	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(),"prensado",0);
+		return new Producto(ValidadorProductos.instancia(), "prensado", 0);
 	}
 
 }

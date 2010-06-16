@@ -56,7 +56,7 @@ public class Fuente implements IFuente {
 	}
 
 	/**
-	 * Devuelve un producto que representa el tipo de producto que provee esta m·quina.
+	 * Devuelve un producto que representa el tipo de producto que provee esta m√°quina.
 	 * @return
 	 */
 	public Producto getTipoProducto() {
