@@ -234,13 +234,13 @@ public class LineaProduccion {
 	 * @param precedentes
 	 * @return
 	 */
-	public boolean compararMaquinaVSPrecedentes(Maquina m, List<Maquina> precedentes){
-		for(Maquina precedente : precedentes){
+	public boolean compararMaquinaVSPrecedentes(Maquina m, List<Maquina> precedentes) {
+		for(Maquina precedente : precedentes) {
 			if (precedente.equals(m)){
 				return true;
 			}
-			if (precedente.getPrecedentes().size()>0){
-				return compararMaquinaVSPrecedentes(m,precedente.getPrecedentes());
+			if (precedente.obtenerPrecedentesFisicos().size() > 0) {
+				return compararMaquinaVSPrecedentes(m, precedente.obtenerPrecedentesFisicos());
 			}
 		}
 		return false;
