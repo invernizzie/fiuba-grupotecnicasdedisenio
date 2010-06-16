@@ -10,10 +10,13 @@ import org.junit.Test;
 
 public class TestAreaFabricaAEmbeber {
 
+    private static final int SUPERFICIE = 1000;
+    private static final int PRECIO_ALQUILER = 150;
+    private static final float PRECIO_COMPRA = 1000;
 
-		private AreaFabrica ventana;
-		
-		@Before
+    private AreaFabrica ventana;
+
+    @Before
 		public void setUp() throws Exception {
 			this.ventana = new AreaFabrica();
 		}
@@ -24,10 +27,10 @@ public class TestAreaFabricaAEmbeber {
 
 		@Test
 		public void testPantalla() {
-			try{
+			try {
 				this.ventana.run();
-				this.ventana.setFabrica(new Fabrica(1000, 1000, 150));
-			}catch(SWTException e){
+				this.ventana.setFabrica(new Fabrica(SUPERFICIE, PRECIO_COMPRA, PRECIO_ALQUILER));
+			} catch(SWTException e) {
 				
 			}
 		}

@@ -10,7 +10,7 @@ public class TipoMaquinaLicuadora extends TipoMaquina {
     
 	private Licuadora licuadora;
 	
-	public TipoMaquinaLicuadora(ComparadorDeMaquinas comparador) {
+	public TipoMaquinaLicuadora(final ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
 		licuadora = new Licuadora(CUARENTA_PORCIENTO, UNO_PORCIENTO);
@@ -28,7 +28,7 @@ public class TipoMaquinaLicuadora extends TipoMaquina {
 	}
 
 	@Override
-	public Boolean verificarTipo(Maquina maquina) {
+	public Boolean verificarTipo(final Maquina maquina) {
 		return (this.getComparador().compare(maquina, licuadora) == 0);
 	}
 }

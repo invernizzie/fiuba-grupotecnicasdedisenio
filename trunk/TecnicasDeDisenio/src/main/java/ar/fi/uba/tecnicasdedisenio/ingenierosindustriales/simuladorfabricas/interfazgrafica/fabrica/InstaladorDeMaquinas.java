@@ -10,16 +10,16 @@ public class InstaladorDeMaquinas extends Instalador {
 
     private TipoMaquina tipoMaquina;
 
-    public InstaladorDeMaquinas(EspacioFabril espacioFabril, TipoMaquina tipoMaquina) {
+    public InstaladorDeMaquinas(final EspacioFabril espacioFabril, final TipoMaquina tipoMaquina) {
         super(espacioFabril);
         this.tipoMaquina = tipoMaquina;
     }
 
     @Override
-    public void doMouseMove(int x, int y) {}
+    public void doMouseMove(final int x, final int y) { }
 
     @Override
-    public void doMouseDown(int x, int y) {
+    public void doMouseDown(final int x, final int y) {
         try {
             getEspacioFabril().crearMaquina(x, y, tipoMaquina);
         } catch (EspacioOcupadoException e) {
@@ -28,5 +28,5 @@ public class InstaladorDeMaquinas extends Instalador {
     }
 
     @Override
-    public void doMouseUp(int x, int y) {}
+    public void doMouseUp(final int x, final int y) { }
 }

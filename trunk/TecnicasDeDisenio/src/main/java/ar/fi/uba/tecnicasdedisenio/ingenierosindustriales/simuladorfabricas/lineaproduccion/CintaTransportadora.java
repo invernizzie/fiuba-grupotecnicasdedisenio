@@ -4,8 +4,8 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 
 
 /**
- * Representa la conexiÛn entre dos m·quinas {@link Maquina} o una fuente de materia prima 
- * y una m·quina. Traslada los elementos ({@link Producto})  entre ellas.
+ * Representa la conexi√≥n entre dos m√°quinas {@link Maquina} o una fuente de materia prima 
+ * y una m√°quina. Traslada los elementos ({@link Producto})  entre ellas.
  * @author santiago
  *
  */
@@ -30,7 +30,7 @@ public class CintaTransportadora {
 	/**
 	 * Traslada un elemento del extremo inicial al final.
 	 */
-	public void trasladarElementos(){
+	public void trasladarElementos() {
 		Producto producto = this.getExtremoInicial().obtenerProducto();
 		this.getExtremoFinal().agregarProducto(producto);
 	}

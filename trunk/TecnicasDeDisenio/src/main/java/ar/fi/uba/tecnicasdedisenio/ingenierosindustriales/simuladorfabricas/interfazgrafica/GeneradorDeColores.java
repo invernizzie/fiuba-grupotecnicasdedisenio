@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public class GeneradorDeColores {
 
+    private GeneradorDeColores() { }
+
     private static List<Color> colores = new ArrayList<Color>();
     private static int cantidad;
     private static int indice = 0;
@@ -46,17 +48,17 @@ public class GeneradorDeColores {
         return colores.get(indice++);
     }
     
-    public static Color porString(String clave) {
-        if (!claveString.containsKey(clave))
+    public static Color porString(final String clave) {
+        if (!claveString.containsKey(clave)) {
             claveString.put(clave, siguienteColor());
-
+        }
         return claveString.get(clave);
     }
 
-    public static Color porClass(Class clave) {
-        if (!claveClass.containsKey(clave))
+    public static Color porClass(final Class clave) {
+        if (!claveClass.containsKey(clave)) {
             claveClass.put(clave, siguienteColor());
-
+        }
         return claveClass.get(clave);
     }
 }

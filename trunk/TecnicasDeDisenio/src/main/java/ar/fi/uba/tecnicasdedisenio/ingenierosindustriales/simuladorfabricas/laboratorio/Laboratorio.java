@@ -16,7 +16,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
  * @author Gustavo A. Meller (gmeller@gmail.com)
  */
 
-public class Laboratorio{
+public class Laboratorio {
 	
 	private float dineroAcumulado;
 	private boolean habilitado;
@@ -26,7 +26,7 @@ public class Laboratorio{
 	private String nombreImagen;
 	private CargadorDeProcesos cargador;
 	
-	public Laboratorio(String tipo, String nombreImagen){
+	public Laboratorio(final String tipo, final String nombreImagen) {
 		this.setProcesosHabilitados(new ArrayList<Proceso>());
 		this.setProcesosInhabilitados(new ArrayList<Proceso>());
 		this.setCargador(new CargadorDeProcesos());
@@ -37,7 +37,7 @@ public class Laboratorio{
 		this.cargarProcesos();
 	}
 	
-	public void setProcesosHabilitados(List<Proceso> procesosHabilitados) {
+	public void setProcesosHabilitados(final List<Proceso> procesosHabilitados) {
 		this.procesosHabilitados = procesosHabilitados;
 	}
 
@@ -54,7 +54,7 @@ public class Laboratorio{
 	}
 	
 
-	public void setProcesosInhabilitados(List<Proceso> procesosInhabilitados) {
+	public void setProcesosInhabilitados(final List<Proceso> procesosInhabilitados) {
 		this.procesosInhabilitados = procesosInhabilitados;
 	}
 
@@ -63,22 +63,21 @@ public class Laboratorio{
 	}
 	
 	/**
-	 * Invierte una cantidad de dinero en el laboratorio y llama a la habilitación de
+	 * Invierte una cantidad de dinero en el laboratorio y llama a la habilitaciï¿½n de
 	 * procesos.
 	 * @param cantidad
 	 * @throws LaboratorioInhabilitadoException
 	 */
-	public void invertir(float cantidad) throws LaboratorioInhabilitadoException{
-		if(this.isHabilitado()){
+	public void invertir(final float cantidad) throws LaboratorioInhabilitadoException {
+		if (this.isHabilitado()) {
 			this.aumentarDinero(cantidad);
 			this.habilitarProcesos();
-		}
-		else{
+		} else {
 			throw new LaboratorioInhabilitadoException();
 		}
 	}
 
-	public void setDineroAcumulado(float dineroAcumulado) {
+	public void setDineroAcumulado(final float dineroAcumulado) {
 		this.dineroAcumulado = dineroAcumulado;
 	}
 
@@ -86,24 +85,24 @@ public class Laboratorio{
 		return dineroAcumulado;
 	}
 	
-	public Iterator<Proceso> iteratorProcesosHabilitados(){
+	public Iterator<Proceso> iteratorProcesosHabilitados() {
 		return new IteradorProcesos(this.getProcesosHabilitados());
 	}
 	
-	public Iterator<Proceso> iteratorProcesosInhabilitados(){
+	public Iterator<Proceso> iteratorProcesosInhabilitados() {
 		return new IteradorProcesos(this.getProcesosInhabilitados());
 	}
 	
 	/**
-	 * Recorre cada proceso inhabilitado y verifica si se puede habilitar. Si es así
+	 * Recorre cada proceso inhabilitado y verifica si se puede habilitar. Si es asï¿½
 	 * lo habilita y debita el dinero.
 	 */
-	public void habilitarProcesos(){
+	public void habilitarProcesos() {
 		Iterator<Proceso> it = this.iteratorProcesosInhabilitados();
 		Proceso proc = null;
-		while(it.hasNext()){
+		while (it.hasNext()) {
 			proc = it.next();
-			if(proc.sePuedeHabilitar(this.getDineroAcumulado())){
+			if (proc.sePuedeHabilitar(this.getDineroAcumulado())) {
 				this.getProcesosHabilitados().add(proc);
 				this.disminuirDinero(proc.getCosto());
 				it.remove();
@@ -112,7 +111,7 @@ public class Laboratorio{
 		}
 	}
 	
-	public void setHabilitado(boolean habilitado) {
+	public void setHabilitado(final boolean habilitado) {
 		this.habilitado = habilitado;
 	}
 
@@ -121,24 +120,24 @@ public class Laboratorio{
 	}
 	
 	/**
-	 * Si existe un proceso que sea igual a la linea de producción
+	 * Si existe un proceso que sea igual a la linea de producciï¿½n
 	 * entonces devuelve el elemento que produce.
 	 * @param maquinaFinalLinea
 	 * @return
 	 **/
-	public boolean existeProcesoValido(Maquina maquinaFinalLinea){
+	public boolean existeProcesoValido(final Maquina maquinaFinalLinea) {
 		Iterator<Proceso> itProcesos = this.iteratorProcesosHabilitados();
 		boolean procesoValido;
-		while(itProcesos.hasNext()){
+		while (itProcesos.hasNext()) {
 			procesoValido = itProcesos.next().esProcesoIgualALinea(maquinaFinalLinea);
-			if (procesoValido){
+			if (procesoValido) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public void setTipo(String tipo) {
+	public void setTipo(final String tipo) {
 		this.tipo = tipo;
 	}
 
@@ -146,7 +145,7 @@ public class Laboratorio{
 		return tipo;
 	}
 
-	public void setNombreImagen(String nombreImagen) {
+	public void setNombreImagen(final String nombreImagen) {
 		this.nombreImagen = nombreImagen;
 	}
 
@@ -154,7 +153,7 @@ public class Laboratorio{
 		return nombreImagen;
 	}
 
-	public void setCargador(CargadorDeProcesos cargador) {
+	public void setCargador(final CargadorDeProcesos cargador) {
 		this.cargador = cargador;
 	}
 
@@ -162,25 +161,25 @@ public class Laboratorio{
 		return cargador;
 	}
 	
-	public void aumentarDinero(float cantidad){
-		this.setDineroAcumulado(this.getDineroAcumulado()+cantidad);
+	public void aumentarDinero(final float cantidad) {
+		this.setDineroAcumulado(this.getDineroAcumulado() + cantidad);
 	}
 	
-	public void disminuirDinero(float cantidad){
-		this.setDineroAcumulado(this.getDineroAcumulado()-cantidad);
+	public void disminuirDinero(final float cantidad) {
+		this.setDineroAcumulado(this.getDineroAcumulado() - cantidad);
 	}
 	
-	public class IteradorProcesos implements Iterator<Proceso>{
+	public class IteradorProcesos implements Iterator<Proceso> {
 		private int indice;
-		List<Proceso> lista;
+		private List<Proceso> lista;
 		
-		public IteradorProcesos(List<Proceso> lista){
+		public IteradorProcesos(final List<Proceso> lista) {
 			this.lista = lista;
 			indice = 0;
 		}
 		
 		public boolean hasNext() {
-			return indice<lista.size();
+			return indice < lista.size();
 		}
 
 		public Proceso next() {
@@ -193,7 +192,7 @@ public class Laboratorio{
 			lista.remove(--indice);
 		
 		}
-	}
+    }
 	
 	
 }

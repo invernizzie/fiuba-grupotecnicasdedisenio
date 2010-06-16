@@ -17,82 +17,82 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.juga
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 
 public class TestCompraVentaCalendario {
-	
+
+    private static final int SEGUNDOS_POR_DIA = 1;
+    private static final int PASO_SUPERFICIE = 100;
+    private static final int PASO_COMPRA = 1000;
+    private static final int PASO_ALQUILER = 150;
+    private static final int DINERO_INICIAL_1 = 3000;
+    private static final int DINERO_INICIAL_2 = 2000;
+    private static final int MAX_DIAS_POR_MES = 31;
+    private static final int OFFSET_MILLIS = 250;
+    private static final int CANTIDAD_DE_FABRICAS = 5;
+
 	private ArrayList<Fabrica> fabricas;
-	private static int SEGUNDOS_POR_DIA = 1;
-	
-	@Before
+
+    @Before
 	public void setUp() throws Exception {
 		Calendario.instancia().inicializar();
 		int i;
-		/*
-		 * Fabrica 0: Tamanio 100, Costo Compra 1000, Costo Alquiler 150, Cantidad Lineas 1.
-		 * Fabrica 1: Tamanio 200, Costo Compra 2000, Costo Alquiler 300, Cantidad Lineas 2.
-		 * Fabrica 2: Tamanio 300, Costo Compra 3000, Costo Alquiler 450, Cantidad Lineas 3.
-		 * Fabrica 3: Tamanio 400, Costo Compra 4000, Costo Alquiler 600, Cantidad Lineas 4.
-		 * Fabrica 4: Tamanio 500, Costo Compra 5000, Costo Alquiler 750, Cantidad Lineas 5.
-		 */
+
 		fabricas = new ArrayList<Fabrica>();
-		for (i=0;i<5;i++){
-			fabricas.add(new Fabrica((i+1)*100,(i+1)*1000, (i+1)*150));
+		for (i = 0; i < CANTIDAD_DE_FABRICAS; i++) {
+			fabricas.add(new Fabrica((i + 1) * PASO_SUPERFICIE, (i + 1) * PASO_COMPRA, (i + 1) * PASO_ALQUILER));
 		}
 	}
 	
 	@Test
-	public void testCompraAlquilerVentaCalendario(){
+	public void testCompraAlquilerVentaCalendario() {
 		Jugador jugador, jugador2;
 
-		jugador = new Jugador("Gustavo",3000);
-		jugador.setLaboratorio(new Laboratorio("Cocina",""));
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		jugador.setLaboratorio(new Laboratorio("Cocina", ""));
 		float plata = jugador.getDineroActual();
 		try {
 			fabricas.get(2).alquilar(jugador);
-		} 
-		catch (FabricaOcupadaException e) {
+		} catch (FabricaOcupadaException e) {
 			Assert.fail("No deberia haber lanzado una excepcion");
-		}
-		catch (JugadorConFabricaException e) {
+		} catch (JugadorConFabricaException e) {
 			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		jugador2 = new Jugador("Gustavo",2000);
-		jugador2.setLaboratorio(new Laboratorio("Cocina",""));
+		jugador2 = new Jugador("Gustavo", DINERO_INICIAL_2);
+		jugador2.setLaboratorio(new Laboratorio("Cocina", ""));
 		float plata2 = jugador2.getDineroActual();
 		try {
 			fabricas.get(1).comprar(jugador2);
-		} 
-		catch (DineroInsuficienteException e) {
+		} catch (DineroInsuficienteException e) {
 			Assert.fail("No deberia haber lanzado una excepcion");
-		}
-		catch (FabricaOcupadaException e) {
+		} catch (FabricaOcupadaException e) {
 			Assert.fail("No deberia haber lanzado una excepcion");
-		}
-		catch (JugadorConFabricaException e) {
+		} catch (JugadorConFabricaException e) {
 			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		/*Pasa un mes.*/
+		/* Pasa un mes. */
 		Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
 		Calendario.instancia().iniciar();
 		esperar(SEGUNDOS_POR_DIA * 1);
 		Calendario.instancia().pausar();
 	   
-		Assert.assertEquals("Deberia debitarse del jugador el costo por mes de alquiler", jugador.getDineroActual(),(float)(plata-jugador.getFabrica().getCostoAlquiler()));
-		Assert.assertEquals("Deberia debitarse del jugador el costo de la compra y nada del alquiler", jugador2.getDineroActual(),(float)(plata2-jugador2.getFabrica().getCostoCompra()));
+		Assert.assertEquals("Deberia debitarse del jugador el costo por mes de alquiler", jugador.getDineroActual(),
+                plata - jugador.getFabrica().getCostoAlquiler());
+		Assert.assertEquals("Deberia debitarse del jugador el costo de la compra y nada del alquiler", jugador2.getDineroActual(),
+                plata2 - jugador2.getFabrica().getCostoCompra());
 		
 	    plata = jugador.getDineroActual();
 	    fabricas.get(2).vender();
 	    
 	    /*Pasa un mes.*/
 	    Calendario.instancia().reanudar();
-	    esperar(SEGUNDOS_POR_DIA * 31);
+	    esperar(SEGUNDOS_POR_DIA * MAX_DIAS_POR_MES);
 	    Calendario.instancia().pausar();
 	    
-	    Assert.assertEquals("No deberia debitarse de la plata el costo por mes", jugador.getDineroActual(),plata);
+	    Assert.assertEquals("No deberia debitarse de la plata el costo por mes", jugador.getDineroActual(), plata);
 	    
 		
 	}
-	private void esperar(int segundos) {
+	private void esperar(final int segundos) {
         Date inicio = new Date();
         long diferencia = 0;
         /* Se agrega un offset de 250ms para evitar el problema
@@ -100,7 +100,7 @@ public class TestCompraVentaCalendario {
          * de los suscriptores al calendario. Eso probablemente
          * sucede porque este thread es muy activo y se prioriza
          * ante el del calendario. */
-        while (diferencia < 1000 * segundos + 250) {
+        while (diferencia < PASO_COMPRA * segundos + OFFSET_MILLIS) {
             diferencia = new Date().getTime() - inicio.getTime();
         }
     }

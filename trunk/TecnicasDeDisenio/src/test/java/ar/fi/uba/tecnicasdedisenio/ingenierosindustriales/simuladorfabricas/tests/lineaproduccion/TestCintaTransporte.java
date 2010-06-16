@@ -21,9 +21,10 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 
 public class TestCintaTransporte {
 
+    private static final int CANTIDAD_DE_PRUEBA = 100;
+
 	private CintaTransportadora cintaTransportadora;
 	private ValidadorProductos val;
-    private static final int CANTIDAD_DE_PRUEBA = 100;
 
     @Before
 	public void setUp() throws Exception {
@@ -34,7 +35,7 @@ public class TestCintaTransporte {
 	}
 
 	@Test
-	public void testAsignarProducto(){
+	public void testAsignarProducto() {
 		Producto testProduct = new Producto(val, "Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct);
 		

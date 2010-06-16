@@ -30,6 +30,7 @@ public class Calendario {
 	public static final int MES_INICIAL = 11;
 	public static final int DIA_INICIAL = 31;
 	public static final int DEFAULT_SEGUNDOS_POR_DIA = 5;
+    private static final int CIEN_MILLIS = 100;
 	
 	private static Calendario instancia = new Calendario();
 	
@@ -40,7 +41,7 @@ public class Calendario {
     private boolean pausado = false;
     private Calendar virtualCalendar = new GregorianCalendar(ANIO_INICIAL, MES_INICIAL, DIA_INICIAL);
     private Thread threadCalendario = new ThreadCalendario(this);
-  
+
     /**
      * Restaura el calendario virtual a la fecha inicial.
      * Luego debe ser iniciado para comenzar el paso del tiempo.
@@ -48,7 +49,7 @@ public class Calendario {
     public void inicializar() {
         detener();
         try {
-        threadCalendario.join(100);
+        threadCalendario.join(CIEN_MILLIS);
         } catch (InterruptedException e) { /* ?? */ }
         sincronizados = new ArrayList<Sincronizado>();
         virtualCalendar = new GregorianCalendar(ANIO_INICIAL, MES_INICIAL, DIA_INICIAL);
@@ -77,7 +78,7 @@ public class Calendario {
      *
      * @param sincronizado Nuevo suscriptor a las notificaciones
      */
-    public synchronized void registrar(Sincronizado sincronizado) {
+    public synchronized void registrar(final Sincronizado sincronizado) {
         getSincronizados().add(sincronizado);
     }
 
@@ -88,7 +89,7 @@ public class Calendario {
      * @return true si estaba registrado y se puedo desregistrar.
      * false si no estaba registrado, o bien no puedo ser desregistrado.
      */
-    public synchronized boolean desregistrar(Sincronizado sincronizado) {
+    public synchronized boolean desregistrar(final Sincronizado sincronizado) {
         return getSincronizados().remove(sincronizado);
     }
 
@@ -98,7 +99,7 @@ public class Calendario {
     public synchronized void iniciar() {
         iniciado = true;
         threadCalendario.start();
-        notificar(Evento.INICIO_TIEMPO); // TODO Testear
+        notificar(Evento.INICIO_TIEMPO);
     }
 
     /**
@@ -107,7 +108,7 @@ public class Calendario {
      */
     public void detener() {
         detenido = true;
-        notificar(Evento.FIN_TIEMPO); // TODO Testear
+        notificar(Evento.FIN_TIEMPO);
     }
 
     /**
@@ -116,7 +117,7 @@ public class Calendario {
      */
     public synchronized void pausar() {
         pausado = true;
-        notificar(Evento.INICIO_PAUSA); // TODO Testear
+        notificar(Evento.INICIO_PAUSA);
     }
 
     /**
@@ -125,7 +126,7 @@ public class Calendario {
      */
     public synchronized void reanudar() {
         pausado = false;
-        notificar(Evento.FIN_PAUSA);// TODO Testear
+        notificar(Evento.FIN_PAUSA);
     }
 
     /**
@@ -167,7 +168,7 @@ public class Calendario {
      * 
      * @param segundosPorDia Nueva cantidad de segundos por dia
      */
-    public synchronized void setSegundosPorDia(int segundosPorDia) {
+    public synchronized void setSegundosPorDia(final int segundosPorDia) {
         this.segundosPorDia = segundosPorDia;
     }
 
@@ -177,15 +178,16 @@ public class Calendario {
     }
 
     // Acceso de paquete
-    void notificar(Evento evento) {
-        for (Sincronizado sincronizado: getSincronizados())
+    void notificar(final Evento evento) {
+        for (Sincronizado sincronizado : getSincronizados()) {
             sincronizado.notificar(evento);
+        }
     }
     
     /**
      * Constructor privado para evitar instanciacion externa.
      */
-    private Calendario() {}
+    private Calendario() { }
     
     private synchronized List<Sincronizado> getSincronizados() {
         return sincronizados;

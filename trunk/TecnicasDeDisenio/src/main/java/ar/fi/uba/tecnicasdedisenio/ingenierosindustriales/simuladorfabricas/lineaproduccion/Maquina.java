@@ -31,8 +31,10 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	
 	private Float costoMaquina;
 	private boolean conectadaAContenedor;
+    private static final float VEINTICINCO_PORCIENTO = 0.25f;
+    private static final float CINCUENTA_PORCIENTO = 0.5f;
 
-	/** 
+    /**
 	 * Usar Maquina(Float)
 	 */
 	@Deprecated
@@ -40,7 +42,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		this(0F, 0F);
 	}
 	
-	public Maquina(Float tasaDeFallos, Float tasaRotura){
+	public Maquina(final Float tasaDeFallos, final Float tasaRotura) {
 		this.cintasEntrada = new ArrayList<CintaTransportadora>();
 		this.entrada = new Entrada();
 		this.salida = new Salida();
@@ -54,26 +56,26 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 	
 	/**
-	 * Template para la realizaci�n del proceso, las subclases deber�n implementar
-	 * el m�todo realizarProceso que es el que realiza efectivemente la tarea y 
+	 * Template para la realización del proceso, las subclases deberín implementar
+	 * el método realizarProceso que es el que realiza efectivemente la tarea y
 	 * validarEntrada que verifica si los datos que los elementos que ingresan
-	 * son v�lidos para la tarea a realizar.
+	 * son válidos para la tarea a realizar.
 	 * 
-	 * Este m�todo toma los elementos de la entrada, los procesa y deposita el
+	 * Este método toma los elementos de la entrada, los procesa y deposita el
 	 * resultado en la salida.
 	 * @param construirProductoValido 
 	 */
-	public final Producto procesar(Boolean construirProductoValido) throws EntradaInvalidaException{
+	public final Producto procesar(final Boolean construirProductoValido) throws EntradaInvalidaException {
 		Producto elementoProcesado = null;
-		if (!this.estaRota){
+		if (!this.estaRota) {
 			obtenerProductosEntrada();
 			
 			Boolean isEntradaValida = this.validarEntrada();
 			
-			if (isEntradaValida){
-				if (construirProductoValido){
+			if (isEntradaValida) {
+				if (construirProductoValido) {
 					elementoProcesado = this.realizarProceso();
-				}else{
+				} else {
 					elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
 				}
 				this.getProductos().clear();
@@ -81,18 +83,18 @@ public abstract class Maquina implements Cloneable, IFuente  {
 				this.getSalida().asignarProducto(elementoProcesado);
 				this.cintaSalida.trasladarElementos();
 				this.verificarRotura();
-			}else{
-				throw new EntradaInvalidaException("Los elementos que ingresaron" +
-													" no se corresponden con los necesarios " +
-													"para que esta m�quina opere");
+			} else {
+				throw new EntradaInvalidaException("Los elementos que ingresaron"
+													+ " no se corresponden con los necesarios "
+													+ "para que esta máquina opere");
 			}
-		}else{
+		} else {
 			elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
 		}
 		return elementoProcesado;
 	}
 	
-	public void setProductos(List<Producto> productos) {
+	public void setProductos(final List<Producto> productos) {
 		this.productos = productos;
 	}
 
@@ -108,7 +110,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		return salida;
 	}
 	
-	public void setMateriasPrimas(List<Producto> materiasPrimas) {
+	public void setMateriasPrimas(final List<Producto> materiasPrimas) {
 		this.materiasPrimas = materiasPrimas;
 	}
 
@@ -116,11 +118,11 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		return materiasPrimas;
 	}
 
-	public final List<Producto> obtenerMateriasPrimasFisicas(){
+	public final List<Producto> obtenerMateriasPrimasFisicas() {
     	return materiasPrimas;
     }
 	
-	public void setPrecedentes(List<Maquina> precedentes) {
+	public void setPrecedentes(final List<Maquina> precedentes) {
 		this.precedentes = precedentes;
 	}
 
@@ -132,33 +134,33 @@ public abstract class Maquina implements Cloneable, IFuente  {
         return precedentes;
     }
     
-	public void addPrecedente(Maquina precedente) {
-		if (this.precedentes == null){
+	public void addPrecedente(final Maquina precedente) {
+		if (this.precedentes == null) {
 			this.precedentes = new ArrayList<Maquina>();
 		}
 		this.precedentes.add(precedente);
 		
 	}
 
-	public void addMateriaPrima(Producto tipoProducto) {
-		if (this.materiasPrimas == null){
+	public void addMateriaPrima(final Producto tipoProducto) {
+		if (this.materiasPrimas == null) {
 			this.materiasPrimas = new ArrayList<Producto>();
 		}
 		this.materiasPrimas.add(tipoProducto);
 		
 	}
 	
-	public void removePrecedente(Maquina precedente) {
+	public void removePrecedente(final Maquina precedente) {
 		this.precedentes.remove(precedente);
 		
 	}
 
-	public void removeMateriaPrima(Producto tipoProducto) {
+	public void removeMateriaPrima(final Producto tipoProducto) {
 		this.materiasPrimas.remove(tipoProducto);
 		
 	}
 
-	public void setTasaDeFallos(Float tasaDeFallos) {
+	public void setTasaDeFallos(final Float tasaDeFallos) {
 		this.tasaDeFallos = tasaDeFallos;
 	}
 
@@ -166,11 +168,11 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		return tasaDeFallos;
 	}
 
-	public void addCintaEntrada(CintaTransportadora cintaTransportadora) {
+	public void addCintaEntrada(final CintaTransportadora cintaTransportadora) {
 		this.cintasEntrada.add(cintaTransportadora);
 	}
 
-	public void setCintaSalida(CintaTransportadora cintaTransportadora) {
+	public void setCintaSalida(final CintaTransportadora cintaTransportadora) {
 		this.cintaSalida = cintaTransportadora;
 	}
 
@@ -178,29 +180,29 @@ public abstract class Maquina implements Cloneable, IFuente  {
         return cintaSalida;
     }
 
-	public void removeCintaEntrada(CintaTransportadora cintaTransportadora) {
+	public void removeCintaEntrada(final CintaTransportadora cintaTransportadora) {
 		this.cintasEntrada.remove(cintaTransportadora);
 		
 	}
 	
 	/**
-	 * Repara la f�brica.
-	 * @return 
+	 * Repara la máquina.
+	 * @return El costo de la reparación
 	 */
-	public float reparar(){
+	public float reparar() {
 		this.estaRota = false;
-		return this.costoMaquina/4;
+		return this.costoMaquina * VEINTICINCO_PORCIENTO;
 	}
 	
 	/**
 	 * Verifica el estado de la fabrica
-	 * @return true si la f�brica est� rota y no puede operar, false en otro caso.
+	 * @return true si la fábrica esta rota y no puede operar, false en otro caso.
 	 */
-	public Boolean estaRota(){
+	public Boolean estaRota() {
 		return estaRota;
 	}
 	
-	public void setSiguiente(Maquina siguiente) {
+	public void setSiguiente(final Maquina siguiente) {
 		this.siguiente = siguiente;
 	}
 
@@ -208,7 +210,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		return siguiente;
 	}
 
-	public void setTasaRotura(Float tasaRotura) {
+	public void setTasaRotura(final Float tasaRotura) {
 		this.tasaRotura = tasaRotura;
 	}
 
@@ -216,7 +218,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		return tasaRotura;
 	}
 
-	public void setCostoMaquina(Float costoMaquina) {
+	public void setCostoMaquina(final Float costoMaquina) {
 		this.costoMaquina = costoMaquina;
 	}
 
@@ -229,10 +231,10 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	 * no se encuentra rota, 0 en caso contrario.
 	 * @return
 	 */
-	public Float obtenerCostoVenta(){
+	public Float obtenerCostoVenta() {
 		Float costoVenta = 0F;
-		if (!this.estaRota()){
-			costoVenta = this.getCostoMaquina()/2;
+		if (!this.estaRota()) {
+			costoVenta = this.getCostoMaquina() * CINCUENTA_PORCIENTO;
 		}
 		return costoVenta;
 	}
@@ -243,11 +245,11 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	 */
 	public abstract Producto getTipoProducto();
 
-	public void addFuente(Fuente fuente) {
+	public void addFuente(final Fuente fuente) {
 		this.fuentes.add(fuente);
 	}
 	
-	public void removeFuente(Fuente fuente) {
+	public void removeFuente(final Fuente fuente) {
 		this.fuentes.remove(fuente);
 	}
 
@@ -261,12 +263,10 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 
     public boolean tieneCintaDeSalida() {
-        if (getCintaSalida() == null)
-            return false;
-        return !this.isConectadaAContenedor();
+        return getCintaSalida() != null && !this.isConectadaAContenedor();
     }
 
-	public void setConectadaAContenedor(Boolean conectadaAContenedor) {
+	public void setConectadaAContenedor(final Boolean conectadaAContenedor) {
 		this.conectadaAContenedor = conectadaAContenedor;
 	}
 
@@ -285,11 +285,11 @@ public abstract class Maquina implements Cloneable, IFuente  {
     }
 	
 	/**
-	 * Verifica si la m�quina se rompi� luego de haber sido utilizada y cambia su 
+	 * Verifica si la máquina se rompió luego de haber sido utilizada y cambia su
 	 * estado de manera acorde.
 	 */
-	protected void verificarRotura(){
-		double proba= Math.random();
+	protected void verificarRotura() {
+		double proba = Math.random();
 		if (getTasaRotura() >= proba) {
 			this.estaRota = true;
 		} 
@@ -316,7 +316,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		this.setProductos(getEntrada().getProdcutos());
 		
 		for (Producto producto : materiasPrimas) {
-			if (!this.productos.contains(producto)){
+			if (!this.productos.contains(producto)) {
 				this.productos.add(producto);
 			}
 		}
