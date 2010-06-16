@@ -97,7 +97,7 @@ public class LineaProduccion {
 		Maquina maquinaAVerificar = ultimaMaquina;
 		if (this.tipoControlDeCalidad.verificarTipo(ultimaMaquina)){
 			// Kinda nasty, but works
-			maquinaAVerificar = ultimaMaquina.precedentes.get(0);
+			maquinaAVerificar = ultimaMaquina.obtenerPrecedentesFisicos().get(0);
 		}
 		
 		return this.laboratorio.existeProcesoValido(maquinaAVerificar);
@@ -225,7 +225,7 @@ public class LineaProduccion {
 	 * @return
 	 */
 	public boolean tienenAsignacionMutua(Maquina m1, Maquina m2){
-		return (compararMaquinaVSPrecedentes(m1,m2.precedentes)&&compararMaquinaVSPrecedentes(m2,m1.precedentes));
+		return (compararMaquinaVSPrecedentes(m1, m2.obtenerPrecedentesFisicos())&&compararMaquinaVSPrecedentes(m2, m1.obtenerPrecedentesFisicos()));
 	}
 	
 	/**

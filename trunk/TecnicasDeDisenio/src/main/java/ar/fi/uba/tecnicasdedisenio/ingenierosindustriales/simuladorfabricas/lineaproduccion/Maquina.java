@@ -21,7 +21,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	private List<Producto> productos;
 	private List<Producto> materiasPrimas;
 	private List<Fuente> fuentes;
-	protected List<Maquina> precedentes;
+	private List<Maquina> precedentes;
 	private Maquina siguiente;
 	private Float tasaDeFallos;
 	private List<CintaTransportadora> cintasEntrada;
