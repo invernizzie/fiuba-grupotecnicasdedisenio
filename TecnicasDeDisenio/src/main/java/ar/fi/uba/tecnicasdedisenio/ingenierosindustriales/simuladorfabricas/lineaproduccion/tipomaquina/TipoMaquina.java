@@ -20,7 +20,7 @@ public abstract class TipoMaquina {
 		this.setPrecedentes(new ArrayList<TipoMaquina>());
 	}
 	
-	public void setCosto(float costo) {
+	public void setCosto(final float costo) {
 		this.costo = costo;
 	}
 
@@ -28,7 +28,7 @@ public abstract class TipoMaquina {
 		return costo;
 	}
 	
-	public void setMateriasPrimas(List<Producto> materiasPrimas) {
+	public void setMateriasPrimas(final List<Producto> materiasPrimas) {
 		this.materiasPrimas = materiasPrimas;
 	}
 
@@ -36,7 +36,7 @@ public abstract class TipoMaquina {
 		return materiasPrimas;
 	}
 
-	public void setPrecedentes(List<TipoMaquina> precedentes) {
+	public void setPrecedentes(final List<TipoMaquina> precedentes) {
 		this.precedentes = precedentes;
 	}
 
@@ -44,33 +44,33 @@ public abstract class TipoMaquina {
 		return precedentes;
 	}
 
-	public void addPrecedente(TipoMaquina precedente) {
-		if (this.precedentes == null){
+	public void addPrecedente(final TipoMaquina precedente) {
+		if (this.precedentes == null) {
 			this.precedentes = new ArrayList<TipoMaquina>();
 		}
 		this.precedentes.add(precedente);
 		
 	}
 
-	public void addMateriaPrima(Producto tipoProducto) {
-		if (this.materiasPrimas == null){
+	public void addMateriaPrima(final Producto tipoProducto) {
+		if (this.materiasPrimas == null) {
 			this.materiasPrimas = new ArrayList<Producto>();
 		}
 		this.materiasPrimas.add(tipoProducto);
 		
 	}
 	
-	public void removePrecedente(TipoMaquina precedente) {
+	public void removePrecedente(final TipoMaquina precedente) {
 		this.precedentes.remove(precedente);
 		
 	}
 
-	public void removeMateriaPrima(Producto tipoProducto) {
+	public void removeMateriaPrima(final Producto tipoProducto) {
 		this.materiasPrimas.remove(tipoProducto);
 		
 	}
 
-	public void setComparador(ComparadorDeMaquinas comparador) {
+	public void setComparador(final ComparadorDeMaquinas comparador) {
 		this.comparador = comparador;
 	}
 
@@ -78,7 +78,7 @@ public abstract class TipoMaquina {
 		return comparador;
 	}
 	
-	public boolean equals(Maquina maquina){
+	public boolean equals(final Maquina maquina){
 		
 		/*Se copian las listas a auxiliares para poder trabajar mejor.*/
 		List<Producto> listMatPrimasAux = new ArrayList<Producto>(maquina.getMateriasPrimas());

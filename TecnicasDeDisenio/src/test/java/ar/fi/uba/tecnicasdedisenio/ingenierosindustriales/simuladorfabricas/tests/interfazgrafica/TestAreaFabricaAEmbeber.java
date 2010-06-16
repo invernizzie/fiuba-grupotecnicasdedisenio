@@ -30,7 +30,7 @@ public class TestAreaFabricaAEmbeber {
 			try {
 				this.ventana.run();
 				this.ventana.setFabrica(new Fabrica(SUPERFICIE, PRECIO_COMPRA, PRECIO_ALQUILER));
-			} catch(SWTException e) {
+			} catch (SWTException e) {
 				
 			}
 		}

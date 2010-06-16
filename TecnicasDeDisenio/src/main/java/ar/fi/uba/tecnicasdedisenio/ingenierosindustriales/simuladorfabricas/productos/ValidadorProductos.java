@@ -16,15 +16,15 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util
  */
 public class ValidadorProductos implements Sincronizado {
 	
-	private static final ValidadorProductos instancia = new ValidadorProductos();
+	private static final ValidadorProductos INSTANCIA = new ValidadorProductos();
 	
 	private HashMap<String, Boolean> mapProductos;
 	private HashMap<String, Float> mapProductosPrecio;
 	private XMLParserProductos parser;
 	private final String pathXML = "Productos.xml";
-	
-	
-	public HashMap<String, Boolean> getMapProductos() {
+
+
+    public HashMap<String, Boolean> getMapProductos() {
 		return mapProductos;
 	}
 
@@ -33,7 +33,7 @@ public class ValidadorProductos implements Sincronizado {
 	}
 
 	public static ValidadorProductos instancia(){
-		return instancia;
+		return INSTANCIA;
 	}
 
 	

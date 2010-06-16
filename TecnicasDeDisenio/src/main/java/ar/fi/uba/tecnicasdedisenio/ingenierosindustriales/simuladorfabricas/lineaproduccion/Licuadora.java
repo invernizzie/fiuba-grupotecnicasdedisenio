@@ -18,7 +18,7 @@ public class Licuadora extends Maquina {
 	}
 		
 	@Override
-	public Licuadora clone(){
+	public Licuadora clone() {
 		return new Licuadora(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 

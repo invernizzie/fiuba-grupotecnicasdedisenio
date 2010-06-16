@@ -13,26 +13,28 @@ import org.eclipse.swt.widgets.Display;
 public class DibujanteDeFabricas {
     private Canvas canvas;
     
-    public void setCanvas(Canvas canvas) {
+    public void setCanvas(final Canvas canvas) {
         this.canvas = canvas;
     }
     
-    void dibujarFuente(IFuente _fuente, int x, int y) {
-        if (canvas == null)
+    void dibujarFuente(final IFuente iFuente, final int x, final int y) {
+        if (canvas == null) {
             return;
+        }
 
-        if (_fuente instanceof Maquina) {
-            Maquina maquina = (Maquina) _fuente;
+        if (iFuente instanceof Maquina) {
+            Maquina maquina = (Maquina) iFuente;
             dibujarMaquina(maquina, x, y, EspacioFabril.ANCHO_MAQUINA, EspacioFabril.ANCHO_MAQUINA);
-        } else if (_fuente instanceof Fuente) {
-            Fuente fuente = (Fuente) _fuente;
+        } else if (iFuente instanceof Fuente) {
+            Fuente fuente = (Fuente) iFuente;
             dibujarMateriaPrima(fuente.getNombreProducto(), x, y, EspacioFabril.ANCHO_MATERIA_PRIMA, EspacioFabril.ANCHO_MATERIA_PRIMA);
         }
     }
 
-    void dibujarMateriaPrima(String nombre, int x, int y, int _ancho, int _alto) {
-        if (canvas == null)
+    void dibujarMateriaPrima(final String nombre, final int x, final int y, final int _ancho, final int _alto) {
+        if (canvas == null) {
             return;
+        }
 
         GC gc = new GC(canvas);
         Color colorAnterior = gc.getBackground();
@@ -44,9 +46,10 @@ public class DibujanteDeFabricas {
         gc.dispose();
     }
 
-    void dibujarMaquina(Maquina maquina, int x, int y, int _ancho, int _alto) {
-        if (canvas == null)
+    void dibujarMaquina(final Maquina maquina, final int x, final int y, final int _ancho, final int _alto) {
+        if (canvas == null) {
             return;
+        }
 
         GC gc = new GC(canvas);
         Color colorAnterior = gc.getBackground();
@@ -66,12 +69,13 @@ public class DibujanteDeFabricas {
         gc.dispose();
     }
 
-    void dibujarCinta(int _x1, int _y1, int _x2, int _y2) {
-        if (canvas == null)
+    void dibujarCinta(final int x1, final int y1, final int x2, final int y2) {
+        if (canvas == null) {
             return;
+        }
 
         GC gc = new GC(canvas);
-        gc.drawLine (_x1, _y1, _x2, _y2);
-        gc.dispose ();
+        gc.drawLine(x1, y1, x2, y2);
+        gc.dispose();
     }
 }

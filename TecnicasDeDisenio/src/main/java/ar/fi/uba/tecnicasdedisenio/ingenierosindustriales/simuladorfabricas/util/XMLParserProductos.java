@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 
 public class XMLParserProductos extends XMLParser {
 	
-	public XMLParserProductos(String path) {
+	public XMLParserProductos(final String path) {
 		super(path);
 	}
 	
@@ -20,10 +20,10 @@ public class XMLParserProductos extends XMLParser {
 	 * Obtiene cada producto con su precio.
 	 * @return
 	 */
-	public HashMap<String,Boolean> obtenerProductos(){
+	public HashMap<String, Boolean> obtenerProductos() {
 		String nombreProd;
 		Boolean mp;
-		HashMap<String,Boolean> mapProductos = new HashMap<String,Boolean>();
+		HashMap<String, Boolean> mapProductos = new HashMap<String, Boolean>();
 		//Parsea el documento XML y extrae los datos:
 	    //extrae los datos del documento XML y los almacena en beans de la clase Descarga
 	    	
@@ -51,10 +51,10 @@ public class XMLParserProductos extends XMLParser {
 	 * Obtiene cada producto con su precio.
 	 * @return
 	 */
-	public HashMap<String,Float> obtenerPrecios(){
+	public HashMap<String, Float> obtenerPrecios() {
 		String nombreProd;
 		Float precio;
-		HashMap<String,Float> mapPrecios = new HashMap<String,Float>();
+		HashMap<String, Float> mapPrecios = new HashMap<String, Float>();
 		//Parsea el documento XML y extrae los datos:
 	    //extrae los datos del documento XML y los almacena en beans de la clase Descarga
 	    	

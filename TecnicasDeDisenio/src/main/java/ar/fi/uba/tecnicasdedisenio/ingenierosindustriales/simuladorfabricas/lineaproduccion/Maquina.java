@@ -38,7 +38,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	 * Usar Maquina(Float)
 	 */
 	@Deprecated
-	public Maquina(){
+	public Maquina() {
 		this(0F, 0F);
 	}
 	

@@ -10,7 +10,7 @@ public class TipoMaquinaHorno extends TipoMaquina {
 	
 	private Horno horno;
 	
-	public TipoMaquinaHorno(ComparadorDeMaquinas comparador) {
+	public TipoMaquinaHorno(final ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
 		horno = new Horno(VEINTE_PORCIENTO, UNO_PORCIENTO);
@@ -23,12 +23,11 @@ public class TipoMaquinaHorno extends TipoMaquina {
 
 	@Override
 	public Maquina getInstancia() {
-		Horno nuevoHorno = horno.clone();
-		return nuevoHorno;
+        return horno.clone();
 	}
 
 	@Override
-	public Boolean verificarTipo(Maquina maquina) {
+	public Boolean verificarTipo(final Maquina maquina) {
 		return (this.getComparador().compare(maquina, horno) == 0);
 	}
 }
