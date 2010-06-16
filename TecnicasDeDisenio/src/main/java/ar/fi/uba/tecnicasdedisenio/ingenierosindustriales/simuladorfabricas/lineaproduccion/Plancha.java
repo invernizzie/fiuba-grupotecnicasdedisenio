@@ -16,6 +16,16 @@ public class Plancha extends Maquina {
 	}
 	
 	@Override
+	public Plancha clone(){
+		return new Plancha(this.getTasaDeFallos(), this.getTasaRotura());
+	}
+
+	@Override
+	public Producto getTipoProducto() {
+		return new Producto(ValidadorProductos.instancia(),"Planchado",0);
+	}
+	
+	@Override
 	protected Producto realizarProceso() {
 		return new Producto(ValidadorProductos.instancia(),"planchado",this.getTasaDeFallos());
 	}
@@ -28,15 +38,4 @@ public class Plancha extends Maquina {
 	protected Boolean validarEntrada() {
 		return (this.getProductos().size() == 1);
 	}
-	
-	@Override
-	public Plancha clone(){
-		return new Plancha(this.getTasaDeFallos(), this.getTasaRotura());
-	}
-
-	@Override
-	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(),"Planchado",0);
-	}
-
 }

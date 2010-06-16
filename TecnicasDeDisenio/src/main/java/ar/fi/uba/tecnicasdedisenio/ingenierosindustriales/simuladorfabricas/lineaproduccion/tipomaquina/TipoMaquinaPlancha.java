@@ -6,14 +6,15 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 
 public class TipoMaquinaPlancha extends TipoMaquina {
 
-	private Plancha plancha;
+	private static final float TREINTA_PORCIENTO = 0.3F;
+    private static final float UNO_PORCIENTO = 0.01F;
 	
-	
-	
+    private Plancha plancha;
+    
 	public TipoMaquinaPlancha(ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
-		plancha = new Plancha(0.3F, 0.01F);
+		plancha = new Plancha(TREINTA_PORCIENTO, UNO_PORCIENTO);
 		
 	}
 	
@@ -31,5 +32,4 @@ public class TipoMaquinaPlancha extends TipoMaquina {
 	public Boolean verificarTipo(Maquina maquina) {
 		return (this.getComparador().compare(maquina, plancha) == 0);
 	}
-
 }

@@ -4,13 +4,16 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 
 public class TipoMaquinaLicuadora extends TipoMaquina {
-
+	
+	private static final float CUARENTA_PORCIENTO = 0.4F;
+    private static final float UNO_PORCIENTO = 0.01F;
+    
 	private Licuadora licuadora;
 	
 	public TipoMaquinaLicuadora(ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
-		licuadora = new Licuadora(0.4F, 0.01F);
+		licuadora = new Licuadora(CUARENTA_PORCIENTO, UNO_PORCIENTO);
 	}
 	
 	public TipoMaquinaLicuadora() {
@@ -28,5 +31,4 @@ public class TipoMaquinaLicuadora extends TipoMaquina {
 	public Boolean verificarTipo(Maquina maquina) {
 		return (this.getComparador().compare(maquina, licuadora) == 0);
 	}
-
 }

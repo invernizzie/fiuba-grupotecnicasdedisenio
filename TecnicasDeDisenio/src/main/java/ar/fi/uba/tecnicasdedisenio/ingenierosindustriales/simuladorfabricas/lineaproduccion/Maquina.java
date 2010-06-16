@@ -54,23 +54,6 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 	
 	/**
-	 * Verifica que ingresen los elementos correctos para realizar la tarea que 
-	 * le corresponde a cada m�quina.
-	 * La validaci�n puede ser por tipo, cantidad, etc.
-	 * @return true si y solo si los elementos son los que precisa la máquina 
-	 * para operar, false en otro caso.
-	 */
-	protected abstract Boolean validarEntrada();
-	
-	/**
-	 * M�todo que realiza el procesamiento de los elementos, devuelve el elemento
-	 * resultado de procesar los elementos de entrada.
-	 * 
-	 * @return
-	 */
-	protected abstract Producto realizarProceso();
-	
-	/**
 	 * Template para la realizaci�n del proceso, las subclases deber�n implementar
 	 * el m�todo realizarProceso que es el que realiza efectivemente la tarea y 
 	 * validarEntrada que verifica si los datos que los elementos que ingresan
@@ -107,27 +90,6 @@ public abstract class Maquina implements Cloneable, IFuente  {
 			elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
 		}
 		return elementoProcesado;
-	}
-	
-	/**
-	 * Verifica si la m�quina se rompi� luego de haber sido utilizada y cambia su 
-	 * estado de manera acorde.
-	 */
-	protected void verificarRotura(){
-		double proba= Math.random();
-		if (getTasaRotura() >= proba) {
-			this.estaRota = true;
-		} 
-	}
-	
-	private void obtenerProductosEntrada() {
-		this.setProductos(getEntrada().getProdcutos());
-		
-		for (Producto producto : materiasPrimas) {
-			if (!this.productos.contains(producto)){
-				this.productos.add(producto);
-			}
-		}
 	}
 	
 	public void setProductos(List<Producto> productos) {
@@ -320,5 +282,43 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		this.fuentes = new ArrayList<Fuente>();
 		this.setPrecedentes(new ArrayList<Maquina>());
 		this.setConectadaAContenedor(false);
-    };
+    }
+	
+	/**
+	 * Verifica si la m�quina se rompi� luego de haber sido utilizada y cambia su 
+	 * estado de manera acorde.
+	 */
+	protected void verificarRotura(){
+		double proba= Math.random();
+		if (getTasaRotura() >= proba) {
+			this.estaRota = true;
+		} 
+	}
+	
+	/**
+	 * Verifica que ingresen los elementos correctos para realizar la tarea que 
+	 * le corresponde a cada m�quina.
+	 * La validaci�n puede ser por tipo, cantidad, etc.
+	 * @return true si y solo si los elementos son los que precisa la máquina 
+	 * para operar, false en otro caso.
+	 */
+	protected abstract Boolean validarEntrada();
+	
+	/**
+	 * M�todo que realiza el procesamiento de los elementos, devuelve el elemento
+	 * resultado de procesar los elementos de entrada.
+	 * 
+	 * @return
+	 */
+	protected abstract Producto realizarProceso();
+	
+	private void obtenerProductosEntrada() {
+		this.setProductos(getEntrada().getProdcutos());
+		
+		for (Producto producto : materiasPrimas) {
+			if (!this.productos.contains(producto)){
+				this.productos.add(producto);
+			}
+		}
+	}
 }

@@ -4,13 +4,16 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 
 public class TipoMaquinaHorno extends TipoMaquina {
-
+	
+	private static final float VEINTE_PORCIENTO = 0.2F;
+    private static final float UNO_PORCIENTO = 0.01F;
+	
 	private Horno horno;
 	
 	public TipoMaquinaHorno(ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
-		horno = new Horno(0.2F, 0.01F);
+		horno = new Horno(VEINTE_PORCIENTO, UNO_PORCIENTO);
 	}
 	
 	public TipoMaquinaHorno() {
@@ -28,5 +31,4 @@ public class TipoMaquinaHorno extends TipoMaquina {
 	public Boolean verificarTipo(Maquina maquina) {
 		return (this.getComparador().compare(maquina, horno) == 0);
 	}
-
 }

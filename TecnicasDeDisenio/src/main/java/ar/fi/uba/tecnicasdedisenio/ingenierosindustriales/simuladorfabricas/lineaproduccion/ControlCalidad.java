@@ -13,27 +13,6 @@ public class ControlCalidad extends Maquina {
 		this.setCostoMaquina(200F);
 	}
 	
-	/**
-	 * Si un producto está defectuoso lo desecha, sino lo pasa a la siguiente instancia
-	 * sin modificaciones.
-	 * @see ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina#realizarProceso()
-	 */
-	@Override
-	protected Producto realizarProceso() {
-		Producto salida = this.getProductos().get(0); 
-		
-		if (salida.getEstado().equals("Defectuoso")){
-			salida = new Producto(ValidadorProductos.instancia(),"Desecho", 0);
-		}
-		
-		return salida;
-	}
-
-	@Override
-	protected Boolean validarEntrada() {
-		return (this.getProductos().size() == 1);
-	}
-	
 	@Override
 	public ControlCalidad clone(){
 		return new ControlCalidad(this.getTasaDeFallos(), this.getTasaRotura());
@@ -56,5 +35,24 @@ public class ControlCalidad extends Maquina {
 		return this.obtenerPrecedentesFisicos().get(0).getPrecedentes();
 	}
 	
-	
+	/**
+	 * Si un producto está defectuoso lo desecha, sino lo pasa a la siguiente instancia
+	 * sin modificaciones.
+	 * @see ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina#realizarProceso()
+	 */
+	@Override
+	protected Producto realizarProceso() {
+		Producto salida = this.getProductos().get(0); 
+		
+		if (salida.getEstado().equals("Defectuoso")){
+			salida = new Producto(ValidadorProductos.instancia(),"Desecho", 0);
+		}
+		
+		return salida;
+	}
+
+	@Override
+	protected Boolean validarEntrada() {
+		return (this.getProductos().size() == 1);
+	}	
 }

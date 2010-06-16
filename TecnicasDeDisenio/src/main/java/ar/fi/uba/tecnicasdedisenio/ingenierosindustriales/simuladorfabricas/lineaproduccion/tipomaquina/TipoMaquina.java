@@ -20,10 +20,6 @@ public abstract class TipoMaquina {
 		this.setPrecedentes(new ArrayList<TipoMaquina>());
 	}
 	
-	public abstract Maquina getInstancia();
-
-	public abstract Boolean verificarTipo(Maquina maquina);
-
 	public void setCosto(float costo) {
 		this.costo = costo;
 	}
@@ -157,4 +153,7 @@ public abstract class TipoMaquina {
 		
 	}
 	
+	public abstract Maquina getInstancia();
+
+	public abstract Boolean verificarTipo(Maquina maquina);	
 }

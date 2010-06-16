@@ -75,60 +75,7 @@ public class Fabrica implements Sincronizado{
         limpiarCintas(fuente);
         fuentes.remove(fuente);
     }
-
-	private void limpiarCintas(Maquina maquina) {
-		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
-		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
-		
-		for (CintaTransportadora cintaTransportadora : cintas) {
-			FuenteSumidero par = cintasMaquinas.get(cintaTransportadora);
-			if (par.contieneMaquina(maquina)){
-				cintaTransportadora.desconectar(par.getOrigen(), par.getDestino());
-				cintasAEliminar.add(cintaTransportadora);
-			}
-		}
-		
-		for (CintaTransportadora cintaAEliminar : cintasAEliminar) {
-			cintasMaquinas.remove(cintaAEliminar);
-		}
-	}
-
-    // TODO Eliminar repeticion de codigo con su sobrecarga para Maquinas
-    private void limpiarCintas(Fuente fuente) {
-		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
-		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
-
-		for (CintaTransportadora cintaTransportadora : cintas) {
-			FuenteSumidero par = cintasMaquinas.get(cintaTransportadora);
-			if (par.getOrigen() == fuente){
-				cintaTransportadora.desconectar(par.getOrigen(), par.getDestino());
-				cintasAEliminar.add(cintaTransportadora);
-			}
-		}
-
-		for (CintaTransportadora cintaAEliminar : cintasAEliminar) {
-			cintasMaquinas.remove(cintaAEliminar);
-		}
-	}
-
-	private void limpiarLineas(Maquina maquina) {
-		List<LineaProduccion> lineasAEliminar = new ArrayList<LineaProduccion>();
-		
-		for (LineaProduccion linea : this.getLineas()) {
-			if (linea.contieneMaquina(maquina)){
-				linea.eliminarMaquina(maquina);
-				
-				if (linea.estaVacia()){
-					lineasAEliminar.add(linea);
-				}
-			}
-		}
-		
-		for (LineaProduccion lineaProduccion : lineasAEliminar) {
-			this.eliminarLinea(lineaProduccion);
-		}
-	}
-
+    
     public void repararMaquina(Maquina maquina) {
         getJugador().disminuirDinero(maquina.reparar());
     }
@@ -418,5 +365,58 @@ public class Fabrica implements Sincronizado{
 	public void validarCiclos(){
 		for (LineaProduccion linea : this.getLineas())
 			linea.validarCiclo();
+	}
+
+	private void limpiarCintas(Maquina maquina) {
+		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
+		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
+		
+		for (CintaTransportadora cintaTransportadora : cintas) {
+			FuenteSumidero par = cintasMaquinas.get(cintaTransportadora);
+			if (par.contieneMaquina(maquina)){
+				cintaTransportadora.desconectar(par.getOrigen(), par.getDestino());
+				cintasAEliminar.add(cintaTransportadora);
+			}
+		}
+		
+		for (CintaTransportadora cintaAEliminar : cintasAEliminar) {
+			cintasMaquinas.remove(cintaAEliminar);
+		}
+	}
+
+    // TODO Eliminar repeticion de codigo con su sobrecarga para Maquinas
+    private void limpiarCintas(Fuente fuente) {
+		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
+		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
+
+		for (CintaTransportadora cintaTransportadora : cintas) {
+			FuenteSumidero par = cintasMaquinas.get(cintaTransportadora);
+			if (par.getOrigen() == fuente){
+				cintaTransportadora.desconectar(par.getOrigen(), par.getDestino());
+				cintasAEliminar.add(cintaTransportadora);
+			}
+		}
+
+		for (CintaTransportadora cintaAEliminar : cintasAEliminar) {
+			cintasMaquinas.remove(cintaAEliminar);
+		}
+	}
+
+	private void limpiarLineas(Maquina maquina) {
+		List<LineaProduccion> lineasAEliminar = new ArrayList<LineaProduccion>();
+		
+		for (LineaProduccion linea : this.getLineas()) {
+			if (linea.contieneMaquina(maquina)){
+				linea.eliminarMaquina(maquina);
+				
+				if (linea.estaVacia()){
+					lineasAEliminar.add(linea);
+				}
+			}
+		}
+		
+		for (LineaProduccion lineaProduccion : lineasAEliminar) {
+			this.eliminarLinea(lineaProduccion);
+		}
 	}
 }
