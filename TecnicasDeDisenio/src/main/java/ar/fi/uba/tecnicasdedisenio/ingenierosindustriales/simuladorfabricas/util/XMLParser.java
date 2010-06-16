@@ -16,9 +16,9 @@ import org.xml.sax.SAXException;
 
 public abstract class XMLParser {
     private String path;
-	protected Document dom; 
+	private Document dom;
     
-    public XMLParser(String path) {
+    public XMLParser(final String path) {
     	this.path = path;
     }
     
@@ -27,14 +27,14 @@ public abstract class XMLParser {
      */
     public void leerDoc() {
     	InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
-        // 1. Obtener el objeto DocumentBuilderFactory, con el que se crear· el documento XML
+        // 1. Obtener el objeto DocumentBuilderFactory, con el que se crear√° el documento XML
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         
         try {
             // 2. Usar DocumentBuilderFactory para crear un DocumentBuilder
             DocumentBuilder db = dbf.newDocumentBuilder();
             // 3. Parsear a partir de un archivo
-            dom = db.parse(is);
+            setDom(db.parse(is));
             
         } catch (ParserConfigurationException pce) {  //Capturamos los errores, si los hubiera
         	
@@ -49,7 +49,14 @@ public abstract class XMLParser {
             
         }
         
-    }   
-    
-		
+    }
+
+
+    public Document getDom() {
+        return dom;
+    }
+
+    public void setDom(final Document dom) {
+        this.dom = dom;
+    }
 }

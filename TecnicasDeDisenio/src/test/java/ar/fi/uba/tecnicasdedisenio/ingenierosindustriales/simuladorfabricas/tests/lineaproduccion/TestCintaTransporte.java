@@ -23,8 +23,9 @@ public class TestCintaTransporte {
 
 	private CintaTransportadora cintaTransportadora;
 	private ValidadorProductos val;
-	
-	@Before
+    private static final int CANTIDAD_DE_PRUEBA = 100;
+
+    @Before
 	public void setUp() throws Exception {
 		val = ValidadorProductos.instancia();
 		ISalida extremoInicial = new Salida();
@@ -37,8 +38,8 @@ public class TestCintaTransporte {
 		Producto testProduct = new Producto(val, "Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct);
 		
-		Assert.assertNotNull("Se esperaba un solo Producto en la lista de Productos " +
-				"del extremo inicial", this.cintaTransportadora.getExtremoInicial().obtenerProducto());
+		Assert.assertNotNull("Se esperaba un solo Producto en la lista de Productos "
+				+ "del extremo inicial", this.cintaTransportadora.getExtremoInicial().obtenerProducto());
 		
 		Producto obtainedProduct = this.cintaTransportadora.getExtremoInicial().obtenerProducto();
 		Assert.assertEquals("El Producto asignado no coincide con el recuperado", 
@@ -47,15 +48,15 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testTrasladarProducto(){
+	public void testTrasladarProducto() {
 		Producto testProduct = new Producto(val, "Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct);
 		
 		this.cintaTransportadora.trasladarElementos();
 		
 		int cantidadProductos = this.cintaTransportadora.getExtremoFinal().getProdcutos().size();
-		Assert.assertEquals("Se esperaba un solo Producto en la lista de Productos " +
-				"del extremo final", 1, cantidadProductos );
+		Assert.assertEquals("Se esperaba un solo Producto en la lista de Productos "
+				+ "del extremo final", 1, cantidadProductos);
 		
 		Producto obtainedProduct = this.cintaTransportadora.getExtremoFinal().getProdcutos().get(0);
 		Assert.assertEquals("El Producto asignado no coincide con el recuperado", 
@@ -64,22 +65,22 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testAsignarProductos(){
+	public void testAsignarProductos() {
 		Producto testProduct1 = new Producto(val, "Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct1);
 		
-		Assert.assertSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct1 );
+		Assert.assertSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct1);
 		
 		Producto testProduct2 = new Producto(val, "Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct2);
 		
-		Assert.assertNotSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct1 );
-		Assert.assertSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct2 );
+		Assert.assertNotSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct1);
+		Assert.assertSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct2);
 		
 	}
 	
 	@Test
-	public void testConectarMaquina(){
+	public void testConectarMaquina() {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		Producto testProduct = new Producto(val, "Pan", 0F);
@@ -98,7 +99,7 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testConectarMaquinas(){
+	public void testConectarMaquinas() {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		Maquina plancha2 = new Plancha(0F, 0F);
@@ -109,22 +110,22 @@ public class TestCintaTransporte {
 		Assert.assertEquals("La plancha no tiene la cantidad de precedentes esperada", 
 							2, plancha.getPrecedentes().size());
 		
-		Assert.assertEquals("El tipo de producto recibido por la máquina no se " +
-								"condice con el entregado",	prensa, plancha.getPrecedentes().get(0));
+		Assert.assertEquals("El tipo de producto recibido por la mÃ¡quina no se "
+                            + "condice con el entregado",	prensa, plancha.getPrecedentes().get(0));
 		
-		Assert.assertEquals("El tipo de producto recibido por la máquina no se " +
-								"condice con el entregado",	plancha2, plancha.getPrecedentes().get(1));
+		Assert.assertEquals("El tipo de producto recibido por la mÃ¡quina no se "
+                            + "condice con el entregado",	plancha2, plancha.getPrecedentes().get(1));
 		
 	}
 	
 	@Test
-	public void testPrecedente(){
+	public void testPrecedente() {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
 		this.cintaTransportadora.conectar(prensa, plancha);
 		
-		Assert.assertEquals("La plancha tiene más de un precedente", 
+		Assert.assertEquals("La plancha tiene mÃ¡s de un precedente", 
 								1, plancha.getPrecedentes().size());
 		
 		Assert.assertEquals("El precedente de la plancha no es la prensa", 
@@ -132,7 +133,7 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testDesconectar(){
+	public void testDesconectar() {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
@@ -148,10 +149,10 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testConectarMaquinaFuente(){
+	public void testConectarMaquinaFuente() {
 		Producto testProduct = new Producto(val, "Pan", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
-		Fuente fuente = new Fuente("pan", 100, testProduct);
+		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		
 		this.cintaTransportadora.conectar(fuente, prensa);
 		
@@ -165,27 +166,27 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testMateriaPrima(){
+	public void testMateriaPrima() {
 		Producto testProduct = new Producto(val, "Pan", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
-		Fuente fuente = new Fuente("pan", 100, testProduct);
+		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		
 		this.cintaTransportadora.conectar(fuente, prensa);
 		
-		Assert.assertEquals("La prensa tiene más de una materia prima", 
+		Assert.assertEquals("La prensa tiene mÃ¡s de una materia prima", 
 								1, prensa.getMateriasPrimas().size());
 		
-		Assert.assertEquals("El tipo de producto recibido por la máquina no se " +
-				"condice con el entregado",	testProduct, prensa.getMateriasPrimas().get(0));
+		Assert.assertEquals("El tipo de producto recibido por la mÃ¡quina no se "
+				+ "condice con el entregado", testProduct, prensa.getMateriasPrimas().get(0));
 	}
 	
 	@Test
-	public void testMateriasPrimas(){
+	public void testMateriasPrimas() {
 		Producto testProduct = new Producto(val, "Pan", 0F);
 		Producto testProduct2 = new Producto(val, "trigo", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
-		Fuente fuente = new Fuente("pan", 100, testProduct);
-		Fuente fuente2 = new Fuente("pan", 100, testProduct2);
+		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
+		Fuente fuente2 = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct2);
 		
 		this.cintaTransportadora.conectar(fuente, prensa);
 		this.cintaTransportadora.conectar(fuente2, prensa);
@@ -193,18 +194,18 @@ public class TestCintaTransporte {
 		Assert.assertEquals("La prensa no tiene la cantidad de materia prima esperada", 
 								2, prensa.getMateriasPrimas().size());
 		
-		Assert.assertEquals("El tipo de producto recibido por la máquina no se " +
-				"condice con el entregado",	testProduct, prensa.getMateriasPrimas().get(0));
+		Assert.assertEquals("El tipo de producto recibido por la mÃ¡quina no se "
+				+ "condice con el entregado",	testProduct, prensa.getMateriasPrimas().get(0));
 		
-		Assert.assertEquals("El tipo de producto recibido por la máquina no se " +
-				"condice con el entregado",	testProduct2, prensa.getMateriasPrimas().get(1));
+		Assert.assertEquals("El tipo de producto recibido por la mÃ¡quina no se "
+				+ "condice con el entregado",	testProduct2, prensa.getMateriasPrimas().get(1));
 	}
 	
 	@Test
-	public void testDesconectarFuente(){
+	public void testDesconectarFuente() {
 		Producto testProduct = new Producto(val, "Pan", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
-		Fuente fuente = new Fuente("pan", 100, testProduct);
+		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		
 		this.cintaTransportadora.conectar(fuente, prensa);
 		
@@ -214,7 +215,7 @@ public class TestCintaTransporte {
 								0, prensa.getMateriasPrimas().size());
 		
 		Assert.assertFalse("La prensa sigue conteniendo la materia prima", 
-							prensa.getMateriasPrimas().contains(prensa));
+							prensa.getMateriasPrimas().contains(fuente.getTipoProducto()));
 	}
 	
 	@After

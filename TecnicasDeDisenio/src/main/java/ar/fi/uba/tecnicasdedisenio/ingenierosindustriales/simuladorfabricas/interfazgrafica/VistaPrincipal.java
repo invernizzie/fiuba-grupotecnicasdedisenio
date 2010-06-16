@@ -71,7 +71,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
 		shellPrincipal = new Shell(SWT.V_SCROLL | SWT.SHELL_TRIM | SWT.H_SCROLL);
-		shellPrincipal.setText("TP Tecnicas de diseño");
+		shellPrincipal.setText("TP Tecnicas de diseÃ±o");
 		createGroupTiempo();
 		createTabFolderFabrica();
 		createGroupJugador();
@@ -125,7 +125,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				 MessageBox messageBox = new MessageBox(shellPrincipal, SWT.OK|SWT.ICON_INFORMATION);	 
 				 String mensaje = new String ("Contenido:\n");
-				 mensaje += "TP Tecnicas de Diseño 2010 - Simulador de Fábricas";  
+				 mensaje += "TP Tecnicas de DiseÃ±o 2010 - Simulador de FÃ¡bricas";
 				 messageBox.setMessage(mensaje);
 				 messageBox.open();
 			}
@@ -314,7 +314,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		gridData6.horizontalAlignment = GridData.FILL;
 		
 		buttonAlquilar = new Button(groupJugador, SWT.NONE);
-		buttonAlquilar.setText("Alquilar Fábrica");
+		buttonAlquilar.setText("Alquilar FÃ¡brica");
 		buttonAlquilar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				alquilar();
@@ -322,7 +322,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		});
 		
 		buttonComprar = new Button(groupJugador, SWT.NONE);
-		buttonComprar.setText("Comprar Fábrica");
+		buttonComprar.setText("Comprar FÃ¡brica");
 		buttonComprar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				comprar();
@@ -330,7 +330,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		});
 		
 		buttonVender = new Button(groupJugador, SWT.NONE);
-		buttonVender.setText("Vender Fábrica");
+		buttonVender.setText("Vender FÃ¡brica");
 		buttonVender.setEnabled(false);
 		buttonVender.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -498,7 +498,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
     }
     
     /**
-	 * Vende la fábrica del jugador.
+	 * Vende la fÃ¡brica del jugador.
 	 * */
 	private void vender(){
 		try {
@@ -512,7 +512,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	}
 	
 	/**
-	 * Compra la fábrica seleccionada.
+	 * Compra la fÃ¡brica seleccionada.
 	 * */
 	private void comprar(){
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());
@@ -530,21 +530,21 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		catch (FabricaOcupadaException e) {
 			 MessageBox messageBox =
 				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
-				 messageBox.setMessage("La fábrica ya se encuentra comprada por otro jugador.");
+				 messageBox.setMessage("La fÃ¡brica ya se encuentra comprada por otro jugador.");
 				 messageBox.open();
 		} 
 		catch (JugadorConFabricaException e) {
 			
 			 MessageBox messageBox =
 				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
-				 messageBox.setMessage("El jugador ya tiene una fábrica.");
+				 messageBox.setMessage("El jugador ya tiene una fÃ¡brica.");
 				 messageBox.open();
 		}
 		
 	}
 	
 	/**
-	 * Alquila la fábrica seleccionada.
+	 * Alquila la fÃ¡brica seleccionada.
 	 * */
 	private void alquilar(){
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());
@@ -556,13 +556,13 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		catch (FabricaOcupadaException e) {
 			 MessageBox messageBox =
 				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
-				 messageBox.setMessage("La fábrica ya se encuentra comprada por otro jugador.");
+				 messageBox.setMessage("La fÃ¡brica ya se encuentra comprada por otro jugador.");
 				 messageBox.open();
 		} 
 		catch (JugadorConFabricaException e) {
 			 MessageBox messageBox =
 				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
-				 messageBox.setMessage("El jugador ya tiene una fábrica.");
+				 messageBox.setMessage("El jugador ya tiene una fÃ¡brica.");
 				 messageBox.open();
 
 		}

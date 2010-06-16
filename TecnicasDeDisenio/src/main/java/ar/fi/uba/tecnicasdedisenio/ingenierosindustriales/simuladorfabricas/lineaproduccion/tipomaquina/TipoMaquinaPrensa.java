@@ -7,11 +7,13 @@ public class TipoMaquinaPrensa extends TipoMaquina {
 
 
 	private Prensa prensa;
-	
-	public TipoMaquinaPrensa(ComparadorDeMaquinas comparador) {
+    private static final float VEINTE_PORCIENTO = 0.2F;
+    private static final float UNO_PORCIENTO = 0.01F;
+
+    public TipoMaquinaPrensa(final ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
-		prensa = new Prensa(0.2F, 0.01F);
+		prensa = new Prensa(VEINTE_PORCIENTO, UNO_PORCIENTO);
 	}
 	
 	public TipoMaquinaPrensa() {
@@ -21,12 +23,11 @@ public class TipoMaquinaPrensa extends TipoMaquina {
 
 	@Override
 	public Maquina getInstancia() {
-		Prensa nuevaPrensa = prensa.clone();
-		return nuevaPrensa;
+        return prensa.clone();
 	}
 
 	@Override
-	public Boolean verificarTipo(Maquina maquina) {
+	public Boolean verificarTipo(final Maquina maquina) {
 		return (this.getComparador().compare(maquina, prensa) == 0);
 	}
 

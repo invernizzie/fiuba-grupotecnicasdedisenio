@@ -9,20 +9,19 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  * @author santiago
  *
  */
-public class CintaTransportadora{
+public class CintaTransportadora {
 	
-	private static float COSTOXMETRO = 1;
+	private static final float COSTOXMETRO = 1;
 	
 	private ISalida extremoInicial;
 	private IEntrada extremoFinal;
 	private float longitud;
 	
-	public CintaTransportadora(float longitud) {
+	public CintaTransportadora(final float longitud) {
 		this.longitud = longitud;
 	}
 	
-	public CintaTransportadora(ISalida extremoInicial,
-			IEntrada extremoFinal) {
+	public CintaTransportadora(final ISalida extremoInicial, final IEntrada extremoFinal) {
 		this.extremoInicial = extremoInicial;
 		this.extremoFinal = extremoFinal;
 		this.longitud = 0;
@@ -36,7 +35,7 @@ public class CintaTransportadora{
 		this.getExtremoFinal().agregarProducto(producto);
 	}
 	
-	public void setExtremoInicial(ISalida extremoInicial) {
+	public void setExtremoInicial(final ISalida extremoInicial) {
 		this.extremoInicial = extremoInicial;
 	}
 	
@@ -44,7 +43,7 @@ public class CintaTransportadora{
 		return extremoInicial;
 	}
 	
-	public void setExtremoFinal(IEntrada extremoFinal) {
+	public void setExtremoFinal(final IEntrada extremoFinal) {
 		this.extremoFinal = extremoFinal;
 	}
 	
@@ -52,7 +51,7 @@ public class CintaTransportadora{
 		return extremoFinal;
 	}
 	
-	public void conectar(Maquina origen, Maquina destino){
+	public void conectar(final Maquina origen, final Maquina destino) {
 		this.extremoInicial = origen.getSalida();
 		this.extremoFinal = destino.getEntrada();
 		
@@ -64,7 +63,7 @@ public class CintaTransportadora{
 		
 	}
 
-	public void conectar(Fuente origen, Maquina destino){
+	public void conectar(final Fuente origen, final Maquina destino) {
 		this.extremoInicial = origen.getSalida();
 		this.extremoFinal = destino.getEntrada();
 		
@@ -75,7 +74,7 @@ public class CintaTransportadora{
 		destino.addFuente(origen);
 	}
 	
-	public void desconectar(Maquina origen, Maquina destino){
+	public void desconectar(final Maquina origen, final Maquina destino) {
 		this.extremoInicial = null;
 		this.extremoFinal = null;
 		
@@ -85,7 +84,7 @@ public class CintaTransportadora{
 		destino.removePrecedente(origen);
 	}
 
-	public void desconectar(Fuente origen, Maquina destino){
+	public void desconectar(final Fuente origen, final Maquina destino) {
 		this.extremoInicial = null;
 		this.extremoFinal = null;
 		origen.removerCinta(this);
@@ -94,15 +93,15 @@ public class CintaTransportadora{
 		destino.removeCintaEntrada(this);
 	}
 	
-	public float getCostoConectar(){
-		return COSTOXMETRO*longitud;
+	public float getCostoConectar() {
+		return COSTOXMETRO * longitud;
 	}
 
-	public void desconectar(IFuente fuente, Maquina maquina) {
-		if (fuente instanceof Fuente){
-			desconectar((Fuente)fuente, maquina);
-        }else{
-        	desconectar((Maquina)fuente, maquina);
+	public void desconectar(final IFuente fuente, final Maquina maquina) {
+		if (fuente instanceof Fuente) {
+			desconectar((Fuente) fuente, maquina);
+        } else {
+        	desconectar((Maquina) fuente, maquina);
         }
 	}
 	

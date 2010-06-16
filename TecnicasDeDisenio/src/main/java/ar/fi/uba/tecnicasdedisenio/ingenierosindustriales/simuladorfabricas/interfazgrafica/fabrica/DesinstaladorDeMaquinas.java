@@ -9,22 +9,22 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.inte
  */
 public class DesinstaladorDeMaquinas extends Instalador {
 
-    public DesinstaladorDeMaquinas(EspacioFabril espacioFabril) {
+    public DesinstaladorDeMaquinas(final EspacioFabril espacioFabril) {
         super(espacioFabril);
     }
 
     @Override
-    public void doMouseMove(int x, int y) {}
+    public void doMouseMove(final int x, final int y) { }
 
     @Override
-    public void doMouseDown(int x, int y) {
+    public void doMouseDown(final int x, final int y) {
         try {
             getEspacioFabril().borrarMaquina(x, y);
-        }
-        catch (CoordenadasIncorrectasException ignored) {}
-        catch (CubiculoVacioException ignored) {}
+        } catch (CoordenadasIncorrectasException ignored) {
+
+        } catch (CubiculoVacioException ignored) { }
     }
 
     @Override
-    public void doMouseUp(int x, int y) {}
+    public void doMouseUp(final int x, final int y) { }
 }
