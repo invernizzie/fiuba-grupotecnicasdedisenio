@@ -266,7 +266,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		checkBoxInvertirLabo.setText("Invertir en Laboratorio");
 		checkBoxInvertirLabo.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				if(checkBoxInvertirLabo.getSelection())
+				if (checkBoxInvertirLabo.getSelection())
 					getJugador().habilitarLaboratorio();
 				else
 					getJugador().deshabilitarLaboratorio();
@@ -430,7 +430,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
     private void cambiarHabilitacionBotonesDePartida(boolean habilitados) {
         for (Widget boton: botonesPartida)
             ((Control) boton).setEnabled(habilitados);
-        if(this.getJugador()!=null){
+        if (this.getJugador()!=null){
         	this.buttonAlquilar.setEnabled(!this.getJugador().hasFabrica());
         	this.buttonComprar.setEnabled(!this.getJugador().hasFabrica());
         	this.comboFabrica.setEnabled(!this.getJugador().hasFabrica());

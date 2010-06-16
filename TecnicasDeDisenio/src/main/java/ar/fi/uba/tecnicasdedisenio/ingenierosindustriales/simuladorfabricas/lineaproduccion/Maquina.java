@@ -82,13 +82,13 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	 */
 	public final Producto procesar(Boolean construirProductoValido) throws EntradaInvalidaException{
 		Producto elementoProcesado = null;
-		if(!this.estaRota){
+		if (!this.estaRota){
 			obtenerProductosEntrada();
 			
 			Boolean isEntradaValida = this.validarEntrada();
 			
-			if(isEntradaValida){
-				if(construirProductoValido){
+			if (isEntradaValida){
+				if (construirProductoValido){
 					elementoProcesado = this.realizarProceso();
 				}else{
 					elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
@@ -115,7 +115,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	 */
 	protected void verificarRotura(){
 		double proba= Math.random();
-		if(getTasaRotura() >= proba) {
+		if (getTasaRotura() >= proba) {
 			this.estaRota = true;
 		} 
 	}
@@ -124,7 +124,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		this.setProductos(getEntrada().getProdcutos());
 		
 		for (Producto producto : materiasPrimas) {
-			if(!this.productos.contains(producto)){
+			if (!this.productos.contains(producto)){
 				this.productos.add(producto);
 			}
 		}
@@ -163,7 +163,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 
 	public void addPrecedente(Maquina precedente) {
-		if(this.precedentes == null){
+		if (this.precedentes == null){
 			this.precedentes = new ArrayList<Maquina>();
 		}
 		this.precedentes.add(precedente);
@@ -171,7 +171,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 
 	public void addMateriaPrima(Producto tipoProducto) {
-		if(this.materiasPrimas == null){
+		if (this.materiasPrimas == null){
 			this.materiasPrimas = new ArrayList<Producto>();
 		}
 		this.materiasPrimas.add(tipoProducto);
@@ -261,7 +261,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	 */
 	public Float obtenerCostoVenta(){
 		Float costoVenta = 0F;
-		if(!this.estaRota()){
+		if (!this.estaRota()){
 			costoVenta = this.getCostoMaquina()/2;
 		}
 		return costoVenta;

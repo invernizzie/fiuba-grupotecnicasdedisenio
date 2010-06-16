@@ -66,7 +66,7 @@ public class ValidadorProductos implements Sincronizado {
 	
 	public Float obtenerPrecioMercado(String producto){
 		Float precio = this.mapProductosPrecio.get(producto);
-		if(precio == null){
+		if (precio == null){
 			precio = 0F;
 		}
 		return precio;
@@ -81,7 +81,7 @@ public class ValidadorProductos implements Sincronizado {
 		HashMap<String,Boolean> mapMateriasPrimas = new HashMap<String,Boolean>();
 		while (it.hasNext()) {
 		Map.Entry<String,Boolean> e = (Map.Entry<String,Boolean>)it.next();
-			if((Boolean)e.getValue()){
+			if ((Boolean)e.getValue()){
 				mapMateriasPrimas.put((String)e.getKey(), (Boolean)e.getValue());
 			}	
 		}
@@ -91,7 +91,7 @@ public class ValidadorProductos implements Sincronizado {
 
 	public Float obtenerPrecioCompra(String producto) {	
 		Float precio = this.mapProductosPrecio.get(producto);
-		if(precio == null){
+		if (precio == null){
 			precio = 0F;
 		}else{
 			precio /= 2;
@@ -102,7 +102,7 @@ public class ValidadorProductos implements Sincronizado {
 	@Override
 	public void notificar(Evento evento) {
 		/*Una vez por semana se vuelven a cargar los costos de las materias primas.*/
-		if(evento==Evento.COMIENZO_DE_SEMANA){
+		if (evento==Evento.COMIENZO_DE_SEMANA){
 			this.cargarXML();
 		}
 		

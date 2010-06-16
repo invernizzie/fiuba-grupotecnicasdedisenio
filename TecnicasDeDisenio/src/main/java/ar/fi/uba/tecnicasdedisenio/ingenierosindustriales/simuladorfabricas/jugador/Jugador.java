@@ -131,7 +131,7 @@ public class Jugador extends Observable implements Sincronizado {
 	 * @throws JugadorConFabricaException
 	 */
 	public void verificarFabricaAsignada() throws JugadorConFabricaException{
-		if(this.getFabrica()!=null)
+		if (this.getFabrica()!=null)
 			throw new JugadorConFabricaException();
 	}
 	
@@ -141,7 +141,7 @@ public class Jugador extends Observable implements Sincronizado {
 	 * @throws DineroInsuficienteException
 	 */
 	public void verificarDineroSuficiente(float costo) throws DineroInsuficienteException{
-		if(this.getDineroActual()< costo)
+		if (this.getDineroActual()< costo)
 			throw new DineroInsuficienteException();
 	}
 	
@@ -178,7 +178,7 @@ public class Jugador extends Observable implements Sincronizado {
 
 	@Override
 	public void notificar(Evento evento) {
-		if(evento==Evento.COMIENZO_DE_MES)
+		if (evento==Evento.COMIENZO_DE_MES)
 			this.invertirDineroLaboratorio(PORCENTAJE_INVERSION_LABORATORIO);
 		
 	}

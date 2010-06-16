@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.*;
 
+@Deprecated
 public class TestVentana {
 
 	@SuppressWarnings("deprecation")

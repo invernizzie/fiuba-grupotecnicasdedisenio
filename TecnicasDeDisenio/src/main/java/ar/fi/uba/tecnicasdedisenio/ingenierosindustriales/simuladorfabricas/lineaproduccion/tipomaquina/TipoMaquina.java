@@ -49,7 +49,7 @@ public abstract class TipoMaquina {
 	}
 
 	public void addPrecedente(TipoMaquina precedente) {
-		if(this.precedentes == null){
+		if (this.precedentes == null){
 			this.precedentes = new ArrayList<TipoMaquina>();
 		}
 		this.precedentes.add(precedente);
@@ -57,7 +57,7 @@ public abstract class TipoMaquina {
 	}
 
 	public void addMateriaPrima(Producto tipoProducto) {
-		if(this.materiasPrimas == null){
+		if (this.materiasPrimas == null){
 			this.materiasPrimas = new ArrayList<Producto>();
 		}
 		this.materiasPrimas.add(tipoProducto);
@@ -88,7 +88,7 @@ public abstract class TipoMaquina {
 		List<Producto> listMatPrimasAux = new ArrayList<Producto>(maquina.getMateriasPrimas());
 		List<Maquina> listPrecedentesAux = new ArrayList<Maquina>(maquina.getPrecedentes());
 		
-		if(this.verificarTipo(maquina)){
+		if (this.verificarTipo(maquina)){
 			try{
 				this.verificarMateriasPrimas(listMatPrimasAux);
 				this.verificarPrecedencias(listPrecedentesAux);
@@ -113,14 +113,14 @@ public abstract class TipoMaquina {
 		int i,j;
 		
 		/*Si las cantidades son distintas no estan bien las materias primas.*/
-		if(this.getMateriasPrimas().size()!=matPrimas.size()){
+		if (this.getMateriasPrimas().size()!=matPrimas.size()){
 			throw new MateriaPrimaDistintaException();
 		}
 		
 		/*Se comparan todas las materias primas.*/
 		for(i=0;i<this.getMateriasPrimas().size();i++){
 			for(j=0;j<matPrimas.size();j++){
-				if(this.getMateriasPrimas().get(i).equals(matPrimas.get(j))){
+				if (this.getMateriasPrimas().get(i).equals(matPrimas.get(j))){
 					matPrimas.remove(j);
 					
 				}
@@ -128,7 +128,7 @@ public abstract class TipoMaquina {
 		}
 		
 		/*Si todas tuvieron equivalencia no deberia quedar ninguna en maquina.*/
-		if(matPrimas.size()!=0){
+		if (matPrimas.size()!=0){
 			throw new MateriaPrimaDistintaException();
 		}
 	}
@@ -137,21 +137,21 @@ public abstract class TipoMaquina {
 		int i, j;
 		
 		/*Si las cantidades son distintas no estan bien las precedencias.*/
-		if(this.getPrecedentes().size()!=maquinas.size()){
+		if (this.getPrecedentes().size()!=maquinas.size()){
 			throw new PrecedentesDistintosException();
 		}
 		
 		/*Se comparan todas los precedencias.*/
 		for(i=0;i<this.getPrecedentes().size();i++){
 			for(j=0;j<maquinas.size();j++){
-				if(this.getPrecedentes().get(i).equals(maquinas.get(j))){
+				if (this.getPrecedentes().get(i).equals(maquinas.get(j))){
 					maquinas.remove(j);	
 				}
 			}
 		}
 		
 		/*Si todas tuvieron equivalencia no deberia quedar ninguna en maquina.*/
-		if(maquinas.size()!=0){
+		if (maquinas.size()!=0){
 			throw new PrecedentesDistintosException();
 		}
 		

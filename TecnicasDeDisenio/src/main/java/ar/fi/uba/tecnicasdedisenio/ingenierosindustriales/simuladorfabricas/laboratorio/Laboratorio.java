@@ -131,7 +131,7 @@ public class Laboratorio{
 		boolean procesoValido;
 		while(itProcesos.hasNext()){
 			procesoValido = itProcesos.next().esProcesoIgualALinea(maquinaFinalLinea);
-			if(procesoValido){
+			if (procesoValido){
 				return true;
 			}
 		}
