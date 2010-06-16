@@ -34,8 +34,7 @@ public class AreaFabrica {
     private ConstructorDeFabricas constructorDeFabricas;
     private EspacioFabril espacioFabril;
     private ValidadorProductos validadorProd = ValidadorProductos.instancia();
-    private Jugador jugador;
-
+    
     /**
 	 * This method initializes comboMP
 	 *
@@ -241,7 +240,6 @@ public class AreaFabrica {
     }
 
     public void setJugador(Jugador jugador) {
-        this.jugador = jugador;
     }
 
     private void deseleccionarControles() {

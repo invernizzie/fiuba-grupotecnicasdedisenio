@@ -5,4 +5,9 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
  *         Date: 06/06/2010
  */
 public class CintaImposibleException extends Throwable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 }
