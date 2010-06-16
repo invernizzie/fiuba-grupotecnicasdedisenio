@@ -6,11 +6,12 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class ControlCalidad extends Maquina {
+    
+    private static final float DEFAULT_COSTO_MAQUINA = 200F;
 
-	
-	public ControlCalidad(float tasaDeFallos, float tasaRotura) {
+    public ControlCalidad(final float tasaDeFallos, final float tasaRotura) {
 		super(tasaDeFallos, tasaRotura);
-		this.setCostoMaquina(200F);
+		this.setCostoMaquina(DEFAULT_COSTO_MAQUINA);
 	}
 	
 	/**
@@ -22,8 +23,8 @@ public class ControlCalidad extends Maquina {
 	protected Producto realizarProceso() {
 		Producto salida = this.getProductos().get(0); 
 		
-		if (salida.getEstado().equals("Defectuoso")){
-			salida = new Producto(ValidadorProductos.instancia(),"Desecho", 0);
+		if (salida.getEstado().equals("Defectuoso")) {
+			salida = new Producto(ValidadorProductos.instancia(), "Desecho", 0);
 		}
 		
 		return salida;
@@ -35,7 +36,7 @@ public class ControlCalidad extends Maquina {
 	}
 	
 	@Override
-	public ControlCalidad clone(){
+	public ControlCalidad clone() {
 		return new ControlCalidad(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
@@ -43,17 +44,17 @@ public class ControlCalidad extends Maquina {
 	public Producto getTipoProducto() {
 		// El control de calidad se aplica sobre una �nica m�quina y su tipo de
 		// producto es el de esta última
-		return this.precedentes.get(0).getTipoProducto();
+		return this.getPrecedentes().get(0).getTipoProducto();
 	}
 
 	@Override
 	public List<Producto> getMateriasPrimas() {
-		return this.precedentes.get(0).getMateriasPrimas();
+		return this.getPrecedentes().get(0).getMateriasPrimas();
 	}
 
 	@Override
 	public List<Maquina> getPrecedentes() {
-		return this.precedentes.get(0).getPrecedentes();
+		return this.getPrecedentes().get(0).getPrecedentes();
 	}
 	
 	

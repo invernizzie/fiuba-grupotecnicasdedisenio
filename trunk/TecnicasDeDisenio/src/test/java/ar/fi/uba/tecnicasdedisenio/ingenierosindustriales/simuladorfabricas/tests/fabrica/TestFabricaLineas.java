@@ -323,21 +323,21 @@ public class TestFabricaLineas {
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
 			Assert.assertFalse("Las m�quinas deber�an estar rotas", maquina.estaRota());
 		
 		fabrica.conectarMaquina(horno, licuadora, 0);
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
 			Assert.assertFalse("Las m�quinas deber�an estar rotas", maquina.estaRota());
 		
 		fabrica.conectarMaquina(licuadora, plancha, 0);
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
 			Assert.assertFalse("Las m�quinas deber�an estar rotas", maquina.estaRota());
 	}
 	
@@ -355,28 +355,28 @@ public class TestFabricaLineas {
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
 			Assert.assertFalse("Las m�quinas deber�an estar rotas", maquina.estaRota());
 		
 		fabrica.conectarMaquina(horno, licuadora, 0);
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
 			Assert.assertFalse("Las m�quinas deber�an estar rotas", maquina.estaRota());
 		
 		fabrica.conectarMaquina(licuadora, plancha, 0);
 		fabrica.validarCiclos();
 
 		/*Las m�quinas no deber�an estar rotas.*/
-		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
 			Assert.assertFalse("Las m�quinas deber�an estar rotas", maquina.estaRota());
 		
 		fabrica.conectarMaquina(plancha, horno, 0);
 		fabrica.validarCiclos();
 
 		/*Todas las m�quinas deber�an estar rotas ya que ahora hay un ciclo.*/
-		for(Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
 			Assert.assertTrue("Las m�quinas deber�an estar rotas", maquina.estaRota());
 	}
 	

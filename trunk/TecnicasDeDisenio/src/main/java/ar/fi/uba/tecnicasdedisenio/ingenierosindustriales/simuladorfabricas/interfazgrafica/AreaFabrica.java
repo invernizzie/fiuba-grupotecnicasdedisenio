@@ -279,9 +279,6 @@ public class AreaFabrica {
 	}
 	
 	protected void cargarComboMateriaPrimas() {
-		/*for(int i=0; i<10; i++){
-			comboMP.add("Materia Prima  " + i);
-		}*/
 		comboMP.setItems(validadorProd.toString().split(",", 0));
 		comboMP.setItems(validadorProd.getMateriasPrimas());
 		comboMP.setText(comboMP.getItem(0));

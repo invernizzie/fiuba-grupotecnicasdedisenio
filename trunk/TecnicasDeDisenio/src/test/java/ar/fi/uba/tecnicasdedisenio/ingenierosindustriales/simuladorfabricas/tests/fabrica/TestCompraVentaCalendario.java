@@ -33,7 +33,7 @@ public class TestCompraVentaCalendario {
 		 * Fabrica 4: Tamanio 500, Costo Compra 5000, Costo Alquiler 750, Cantidad Lineas 5.
 		 */
 		fabricas = new ArrayList<Fabrica>();
-		for(i=0;i<5;i++){
+		for (i=0;i<5;i++){
 			fabricas.add(new Fabrica((i+1)*100,(i+1)*1000, (i+1)*150));
 		}
 	}
