@@ -52,11 +52,11 @@ public class LineaProduccion {
 		
 		for (Maquina maquina : getMaquinas()) {
 			maquina.setConectadaAContenedor(false);
-			if(esPrimeraMaquina(maquina)){
+			if (esPrimeraMaquina(maquina)){
 				this.primerasMaquinas.add(maquina);
 			}
 			
-			if(esUltimaMaquina(maquina)){
+			if (esUltimaMaquina(maquina)){
 				ultimaMaquina = maquina;
 				this.contenedor = new Contenedor(maquina.getTipoProducto());
 				CintaTransportadora cinta = new CintaTransportadora(new Salida(), new Entrada());
@@ -78,7 +78,7 @@ public class LineaProduccion {
 	public boolean esPrimeraMaquina(Maquina maquinaAVerificar){
 		boolean esPrimera = false;
 		
-		if(maquinaAVerificar.getPrecedentes().isEmpty() && 
+		if (maquinaAVerificar.getPrecedentes().isEmpty() &&
 				!maquinaAVerificar.getMateriasPrimas().isEmpty()){
 			esPrimera = true;
 		}
@@ -95,7 +95,7 @@ public class LineaProduccion {
 	 */
 	public boolean construyeProductoValido(){
 		Maquina maquinaAVerificar = ultimaMaquina;
-		if(this.tipoControlDeCalidad.verificarTipo(ultimaMaquina)){
+		if (this.tipoControlDeCalidad.verificarTipo(ultimaMaquina)){
 			// Kinda nasty, but works
 			maquinaAVerificar = ultimaMaquina.precedentes.get(0);
 		}
@@ -105,7 +105,7 @@ public class LineaProduccion {
 	
 	public void procesar() throws ProcesamientoException {
 		
-		if(this.maquinasActuales == null || this.maquinasActuales.isEmpty()){
+		if (this.maquinasActuales == null || this.maquinasActuales.isEmpty()){
 			this.maquinasActuales = this.primerasMaquinas;
 		}
 		
@@ -116,14 +116,14 @@ public class LineaProduccion {
 		for (Maquina maquina : maquinasActuales) {
 			try {
 				
-				if(!maquina.getFuentes().isEmpty()){
+				if (!maquina.getFuentes().isEmpty()){
 					for (Fuente fuente : maquina.getFuentes()) {
 						Float precioCompra = fuente.getTipoProducto().getPrecioCompra();
 						this.jugador.disminuirDinero(precioCompra);
 					}
 				}
 				
-				if(this.esUltimaMaquina(maquina)){
+				if (this.esUltimaMaquina(maquina)){
 					productoValido = this.construyeProductoValido();
 				}else{
 					productoValido = true;
@@ -132,11 +132,11 @@ public class LineaProduccion {
 				Producto productoObtenido = maquina.procesar(productoValido);
 				
 				
-				if(maquina.getSiguiente() != null){
+				if (maquina.getSiguiente() != null){
 					siguientes.add(maquina.getSiguiente());
 				}
 
-				if(this.esUltimaMaquina(maquina)){
+				if (this.esUltimaMaquina(maquina)){
 					// Si se termin� la linea guardamos el producto en el contenedor
 					this.getContenedor().recibirProducto(productoObtenido, CANTIDAD_PRODUCIDA_FIJA);
 					// Y seteamos la siguiente m�quina en null para que vuelva a procesar desde el principio
@@ -178,7 +178,7 @@ public class LineaProduccion {
 		boolean esUltima = true;
 		
 		for (Maquina maquina : getMaquinas()) {
-			if(!maquina.equals(maquinaAVerificar) &&
+			if (!maquina.equals(maquinaAVerificar) &&
 					!maquina.getPrecedentes().isEmpty() && 
 					maquina.getPrecedentes().contains(maquinaAVerificar)){
 				esUltima = false;
@@ -204,15 +204,15 @@ public class LineaProduccion {
 		 */
 		for (Maquina maquina : getMaquinas()){
 			for(Maquina maq : getMaquinas()){
-				if(!maquina.equals(maq))
-					if(tienenAsignacionMutua(maquina, maq)){
+				if (!maquina.equals(maq))
+					if (tienenAsignacionMutua(maquina, maq)){
 						hayCiclo = true;
 					}
 						
 			}
 		}
 		
-		if(hayCiclo)
+		if (hayCiclo)
 			for(Maquina maquina : getMaquinas())
 				maquina.forzarRotura();
 	}
@@ -236,10 +236,10 @@ public class LineaProduccion {
 	 */
 	public boolean compararMaquinaVSPrecedentes(Maquina m, List<Maquina> precedentes){
 		for(Maquina precedente : precedentes){
-			if(precedente.equals(m)){
+			if (precedente.equals(m)){
 				return true;
 			}
-			if(precedente.getPrecedentes().size()>0){
+			if (precedente.getPrecedentes().size()>0){
 				return compararMaquinaVSPrecedentes(m,precedente.getPrecedentes());
 			}
 		}

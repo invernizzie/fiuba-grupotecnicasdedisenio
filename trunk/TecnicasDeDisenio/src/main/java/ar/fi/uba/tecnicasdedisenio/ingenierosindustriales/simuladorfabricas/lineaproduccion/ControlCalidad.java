@@ -22,7 +22,7 @@ public class ControlCalidad extends Maquina {
 	protected Producto realizarProceso() {
 		Producto salida = this.getProductos().get(0); 
 		
-		if(salida.getEstado().equals("Defectuoso")){
+		if (salida.getEstado().equals("Defectuoso")){
 			salida = new Producto(ValidadorProductos.instancia(),"Desecho", 0);
 		}
 		

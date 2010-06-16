@@ -15,16 +15,16 @@ public class Producto implements Cloneable {
 	}
 
 	public void setEstado(String estado) {
-		if(!this.estado.equals("Defectuoso") || !this.estado.equals("Desecho"))
+		if (!this.estado.equals("Defectuoso") || !this.estado.equals("Desecho"))
 			this.estado = estado;
 	}
 
 	public Producto(ValidadorProductos val, String estado, double tasa_falla) {
 		super();
 		this.validador = val;
-		if(val.existe(estado)){
+		if (val.existe(estado)){
 			double proba= Math.random();
-			if(tasa_falla < proba) {
+			if (tasa_falla < proba) {
 				this.estado = estado;
 			} else{
 				this.estado= "Defectuoso";

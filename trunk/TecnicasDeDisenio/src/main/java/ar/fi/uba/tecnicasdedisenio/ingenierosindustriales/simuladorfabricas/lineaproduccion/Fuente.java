@@ -39,7 +39,7 @@ public class Fuente implements IFuente {
 	
 	public void proveerMateria(CintaTransportadora cinta, int cantidad) throws MateriaPrimaInsuficienteException{
 	
-		if(this.cantidad < cantidad){
+		if (this.cantidad < cantidad){
 			throw new MateriaPrimaInsuficienteException("La fuente no posee la cantidad de " +
 					"materia prima suficiente para proveer a la cinta");
 		}

@@ -27,7 +27,7 @@ public class CargadorDeProcesos {
 		
 		List<Proceso> procesos = new ArrayList<Proceso>();
 		
-		if(tipo=="Comidas"){
+		if (tipo=="Comidas"){
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
 			maq.getPrecedentes().add(new TipoMaquinaHorno());
@@ -73,7 +73,7 @@ public class CargadorDeProcesos {
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 		}
-		if(tipo=="Bebidas"){
+		if (tipo=="Bebidas"){
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
 			maq.getPrecedentes().add(new TipoMaquinaHorno());
@@ -119,7 +119,7 @@ public class CargadorDeProcesos {
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 		}
-		if(tipo=="Ropa"){
+		if (tipo=="Ropa"){
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
 			maq.getPrecedentes().add(new TipoMaquinaHorno());
@@ -165,7 +165,7 @@ public class CargadorDeProcesos {
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 		}
-		if(tipo=="Videojuegos"){
+		if (tipo=="Videojuegos"){
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
 			maq.getPrecedentes().add(new TipoMaquinaHorno());
@@ -211,7 +211,7 @@ public class CargadorDeProcesos {
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 		}
-		if(tipo=="Electrodomesticos"){
+		if (tipo=="Electrodomesticos"){
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
 			maq.getPrecedentes().add(new TipoMaquinaHorno());

@@ -44,7 +44,7 @@ public class Contenedor {
 		int cantidadDesecho = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if(producto.getEstado().equalsIgnoreCase("Desecho")){
+			if (producto.getEstado().equalsIgnoreCase("Desecho")){
 				cantidadDesecho++;
 			}
 		}
@@ -56,7 +56,7 @@ public class Contenedor {
 		int cantidadDefectuosos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if(producto.getEstado().equalsIgnoreCase("Defectuoso")){
+			if (producto.getEstado().equalsIgnoreCase("Defectuoso")){
 				cantidadDefectuosos++;
 			}
 		}
@@ -68,7 +68,7 @@ public class Contenedor {
 		int cantidadValidos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if(producto.getEstado().equalsIgnoreCase(this.producto.getEstado())){
+			if (producto.getEstado().equalsIgnoreCase(this.producto.getEstado())){
 				cantidadValidos++;
 			}
 		}
@@ -80,7 +80,7 @@ public class Contenedor {
 		int cantidadInvalidos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if(!producto.getEstado().equalsIgnoreCase(this.producto.getEstado())){
+			if (!producto.getEstado().equalsIgnoreCase(this.producto.getEstado())){
 				cantidadInvalidos++;
 			}
 		}
@@ -131,7 +131,7 @@ public class Contenedor {
 		int totalProduccion = cantidadValidos + cantidadDefectuosos;
 		
 		Float porcentajeDefectuosos = cantidadDefectuosos * 100F;
-		if(totalProduccion > 0){
+		if (totalProduccion > 0){
 			porcentajeDefectuosos /= totalProduccion;
 		}else{
 			porcentajeDefectuosos = 0F;
