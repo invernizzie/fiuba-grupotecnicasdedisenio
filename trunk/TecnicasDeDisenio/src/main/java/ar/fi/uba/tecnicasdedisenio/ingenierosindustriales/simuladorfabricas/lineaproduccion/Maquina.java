@@ -162,6 +162,10 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		return precedentes;
 	}
 
+    public final List<Maquina> obtenerPrecedentesFisicos() {
+        return precedentes;
+    }
+
 	public void addPrecedente(Maquina precedente) {
 		if (this.precedentes == null){
 			this.precedentes = new ArrayList<Maquina>();
