@@ -40,8 +40,7 @@ public class GeneradorDeColores {
 
     private static Map<String, Color> claveString = new HashMap<String, Color>();
     private static Map<Class, Color> claveClass = new HashMap<Class, Color>();
-    
-    
+   
     private static Color siguienteColor() {
         indice %= cantidad;
         return colores.get(indice++);

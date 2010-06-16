@@ -29,6 +29,30 @@ public class DialogoNuevaPartida {
 	 * This method initializes shellPartida
 	 *
 	 */
+	
+	public DialogoNuevaPartida(VistaPrincipal menu){
+		this.createShellPartida();
+		this.menu = menu;
+	}
+	
+	public void crearJuego(){
+		menu.resetearCalendario();
+		Jugador jug = new Jugador(tUsuario.getText(),new Float(sDineroInicial.getText()));
+		menu.setJugador(jug);
+		menu.getJugador().addObserver(menu);
+		menu.getJugador().setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
+		menu.cargarOpcionesFabrica();
+		shellPartida.close();
+	}
+	
+	public void hacerVisible(){
+		this.shellPartida.setVisible(true);
+	}
+	
+	 /**
+	 * This method initializes shellPartida
+	 *
+	 */
 	private void createShellPartida() {
 		GridData gridData7 = new GridData();
 		gridData7.horizontalAlignment = GridData.FILL;
@@ -141,30 +165,6 @@ public class DialogoNuevaPartida {
 		cTipoLaboratorio = new Combo(shellPartida, SWT.NONE);
 		cTipoLaboratorio.setItems(laboratorios);
 		cTipoLaboratorio.setText(cTipoLaboratorio.getItem(0));
-	}
-
-    /**
-	 * This method initializes shellPartida
-	 *
-	 */
-	
-	public DialogoNuevaPartida(VistaPrincipal menu){
-		this.createShellPartida();
-		this.menu = menu;
-	}
-	
-	public void crearJuego(){
-		menu.resetearCalendario();
-		Jugador jug = new Jugador(tUsuario.getText(),new Float(sDineroInicial.getText()));
-		menu.setJugador(jug);
-		menu.getJugador().addObserver(menu);
-		menu.getJugador().setLaboratorio(hashLaboratorios.get(cTipoLaboratorio.getText()));
-		menu.cargarOpcionesFabrica();
-		shellPartida.close();
-	}
-	
-	public void hacerVisible(){
-		this.shellPartida.setVisible(true);
 	}
 }
 

@@ -63,7 +63,115 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	private Image imagenLaboratorio = null;
 	private Display display = null;
 
-    /**
+	/**
+	 * Carga las distintas fabricas standard.
+	 */
+	public void cargarOpcionesFabrica(){
+		int i;
+		String[] fab = new String[5];
+		
+		/*
+		 * Fabrica 0: Tamanio 100, Costo Compra 1000, Costo Alquiler 150, Cantidad Lineas 1.
+		 * Fabrica 1: Tamanio 200, Costo Compra 2000, Costo Alquiler 300, Cantidad Lineas 2.
+		 * Fabrica 2: Tamanio 300, Costo Compra 3000, Costo Alquiler 450, Cantidad Lineas 3.
+		 * Fabrica 3: Tamanio 400, Costo Compra 4000, Costo Alquiler 600, Cantidad Lineas 4.
+		 * Fabrica 4: Tamanio 500, Costo Compra 5000, Costo Alquiler 750, Cantidad Lineas 5.
+		 */
+		fabricas = new HashMap<String,Fabrica>();
+		Fabrica fabrica = null;
+		for (i=0;i<5;i++){
+			fabrica = new Fabrica((i+1)*15000,(i+1)*1000, (i+1)*150);
+			fabricas.put(fabrica.toString(),fabrica);
+			fab[i]=fabrica.toString();
+		}
+		//comboFabrica = new Combo(groupJugador, SWT.NONE);
+		comboFabrica.removeAll();
+		comboFabrica.setItems(fab);
+		comboFabrica.setText(comboFabrica.getItem(0));
+		checkBoxInvertirLabo.setSelection(false);
+	}
+
+	
+    @Override
+    public void notificar(Evento evento) {
+        String textoControlDeTiempo = null;
+        switch (evento) {
+            case INICIO_TIEMPO:
+            case FIN_PAUSA:
+                textoControlDeTiempo = "Pausar";
+                break;
+            case INICIO_PAUSA:
+                textoControlDeTiempo = "Reanudar";
+                break;
+            case FIN_TIEMPO:
+            	buttonTimer.setEnabled(false);
+                break;
+            case COMIENZO_DE_DIA:
+            	forzarActualizacion();
+                break;
+        }
+
+        if (textoControlDeTiempo != null)
+        	buttonTimer.setText(textoControlDeTiempo);
+    }    
+	
+	public void run() {
+		display  = Display.getDefault();
+		this.createShellPrincipal();
+		this.shellPrincipal.open();
+		resetearCalendario();
+        this.cambiarHabilitacionBotonesDePartida(false);
+        
+
+        formateador.setMaximumFractionDigits(2);
+        formateador.setMinimumFractionDigits(2);
+
+		while (!this.shellPrincipal.isDisposed()) {
+			try {
+                if (!display.readAndDispatch())
+                    display.sleep();
+                if (this.necesitaActualizacion()) {
+                    this.actualizarDatosTiempo();
+                    this.actualizarDatosJugador();
+                    this.verificarFinalJuego();
+                    areaFabrica.actualizar();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+		}
+		display.dispose();
+	}
+
+    public void setJugador(Jugador jugador) {
+    	this.jugador = jugador;
+        areaFabrica.setFabrica(jugador.getFabrica());
+        cambiarHabilitacionBotonesDePartida(jugador != null);
+        
+	}
+
+	public Jugador getJugador() {
+		return jugador;
+	}
+    
+	
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		forzarActualizacion();
+	}
+	
+	/**
+    * Resetea el calendario para que vuelva a empezar.
+    */
+    public void resetearCalendario(){
+    	Calendario.instancia().inicializar();
+    	Calendario.instancia().registrar(this);
+    	Calendario.instancia().registrar(ValidadorProductos.instancia());
+        Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
+        buttonTimer.setText("Comenzar");
+    }
+	
+	/**
 	 * This method initializes shellPrincipal
 	 *
 	 */
@@ -569,114 +677,6 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		
 	}
     
-	/**
-	 * Carga las distintas fabricas standard.
-	 */
-	public void cargarOpcionesFabrica(){
-		int i;
-		String[] fab = new String[5];
-		
-		/*
-		 * Fabrica 0: Tamanio 100, Costo Compra 1000, Costo Alquiler 150, Cantidad Lineas 1.
-		 * Fabrica 1: Tamanio 200, Costo Compra 2000, Costo Alquiler 300, Cantidad Lineas 2.
-		 * Fabrica 2: Tamanio 300, Costo Compra 3000, Costo Alquiler 450, Cantidad Lineas 3.
-		 * Fabrica 3: Tamanio 400, Costo Compra 4000, Costo Alquiler 600, Cantidad Lineas 4.
-		 * Fabrica 4: Tamanio 500, Costo Compra 5000, Costo Alquiler 750, Cantidad Lineas 5.
-		 */
-		fabricas = new HashMap<String,Fabrica>();
-		Fabrica fabrica = null;
-		for (i=0;i<5;i++){
-			fabrica = new Fabrica((i+1)*15000,(i+1)*1000, (i+1)*150);
-			fabricas.put(fabrica.toString(),fabrica);
-			fab[i]=fabrica.toString();
-		}
-		//comboFabrica = new Combo(groupJugador, SWT.NONE);
-		comboFabrica.removeAll();
-		comboFabrica.setItems(fab);
-		comboFabrica.setText(comboFabrica.getItem(0));
-		checkBoxInvertirLabo.setSelection(false);
-	}
-
-	
-    @Override
-    public void notificar(Evento evento) {
-        String textoControlDeTiempo = null;
-        switch (evento) {
-            case INICIO_TIEMPO:
-            case FIN_PAUSA:
-                textoControlDeTiempo = "Pausar";
-                break;
-            case INICIO_PAUSA:
-                textoControlDeTiempo = "Reanudar";
-                break;
-            case FIN_TIEMPO:
-            	buttonTimer.setEnabled(false);
-                break;
-            case COMIENZO_DE_DIA:
-            	forzarActualizacion();
-                break;
-        }
-
-        if (textoControlDeTiempo != null)
-        	buttonTimer.setText(textoControlDeTiempo);
-    }    
-	
-	public void run() {
-		display  = Display.getDefault();
-		this.createShellPrincipal();
-		this.shellPrincipal.open();
-		resetearCalendario();
-        this.cambiarHabilitacionBotonesDePartida(false);
-        
-
-        formateador.setMaximumFractionDigits(2);
-        formateador.setMinimumFractionDigits(2);
-
-		while (!this.shellPrincipal.isDisposed()) {
-			try {
-                if (!display.readAndDispatch())
-                    display.sleep();
-                if (this.necesitaActualizacion()) {
-                    this.actualizarDatosTiempo();
-                    this.actualizarDatosJugador();
-                    this.verificarFinalJuego();
-                    areaFabrica.actualizar();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-		}
-		display.dispose();
-	}
-
-    public void setJugador(Jugador jugador) {
-    	this.jugador = jugador;
-        areaFabrica.setFabrica(jugador.getFabrica());
-        cambiarHabilitacionBotonesDePartida(jugador != null);
-        
-	}
-
-	public Jugador getJugador() {
-		return jugador;
-	}
-    
-	
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		forzarActualizacion();
-	}
-	
-	/**
-    * Resetea el calendario para que vuelva a empezar.
-    */
-    public void resetearCalendario(){
-    	Calendario.instancia().inicializar();
-    	Calendario.instancia().registrar(this);
-    	Calendario.instancia().registrar(ValidadorProductos.instancia());
-        Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
-        buttonTimer.setText("Comenzar");
-    }
-
 	public static void main(String [ ] args){
 		VistaPrincipal ventana = new VistaPrincipal();
 		ventana.run();

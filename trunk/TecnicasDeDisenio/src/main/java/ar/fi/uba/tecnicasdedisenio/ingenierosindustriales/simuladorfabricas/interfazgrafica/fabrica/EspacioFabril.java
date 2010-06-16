@@ -28,11 +28,8 @@ import java.util.Map;
 public class EspacioFabril {
 
     public static final int LONGITUD_DEL_LADO = 10;
-
     public static final int ANCHO_MATERIA_PRIMA = 2;
-
     public static final int ANCHO_MAQUINA = 2;
-
     public static final int CANTIDAD_MATERIAPRIMA_DEFAULT = 100;
 
     private int ancho, alto;
@@ -225,10 +222,6 @@ public class EspacioFabril {
         }
     }
 
-    private int antitransformarCoordenada(int coordenada) {
-        return coordenada * LONGITUD_DEL_LADO;
-    }
-
     public void setFabrica(Fabrica fabrica, Canvas canvas) {
         this.fabrica = fabrica;
         setCanvas(canvas);
@@ -238,7 +231,25 @@ public class EspacioFabril {
         superficieFabril = new CubiculoFabril[ancho][alto];
         cintas = new HashMap<CintaTransportadora, Integer[][]>();
     }
-
+    
+    public boolean hayMaquinaEn(int _x, int _y) {
+        try {
+            CubiculoFabril cubiculo = obtenerCubiculo(transformarCoordenada(_x), transformarCoordenada(_y));
+            if (cubiculo == null)
+                return false;
+            cubiculo.obtenerMaquina();
+        } catch (CubiculoVacioException e) {
+            return false;
+        } catch (CoordenadasIncorrectasException e) {
+            return false;
+        }
+        return true;
+    }
+    
+    int transformarCoordenada(int coordenada) {
+        return coordenada / LONGITUD_DEL_LADO;
+    }
+    
     protected Fabrica getFabrica() {
         if (fabrica == null)
             throw new FabricaAusenteException();
@@ -296,7 +307,11 @@ public class EspacioFabril {
         return !((transformarCoordenada(x + antitransformarCoordenada(ancho)) >= this.ancho)
                 || (transformarCoordenada(y + antitransformarCoordenada(alto)) >= this.alto));
     }
-
+    
+    private int antitransformarCoordenada(int coordenada) {
+        return coordenada * LONGITUD_DEL_LADO;
+    }
+    
     private void ocupar(Fuente fuente, int _x, int _y, int ancho, int alto) throws CubiculoOcupadoExcetion, CoordenadasIncorrectasException {
         int x = transformarCoordenada(_x);
         int y = transformarCoordenada(_y);
@@ -339,23 +354,5 @@ public class EspacioFabril {
                     return true;
 
         return false;
-    }
-
-    int transformarCoordenada(int coordenada) {
-        return coordenada / LONGITUD_DEL_LADO;
-    }
-
-    public boolean hayMaquinaEn(int _x, int _y) {
-        try {
-            CubiculoFabril cubiculo = obtenerCubiculo(transformarCoordenada(_x), transformarCoordenada(_y));
-            if (cubiculo == null)
-                return false;
-            cubiculo.obtenerMaquina();
-        } catch (CubiculoVacioException e) {
-            return false;
-        } catch (CoordenadasIncorrectasException e) {
-            return false;
-        }
-        return true;
     }
 }

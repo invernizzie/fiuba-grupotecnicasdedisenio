@@ -12,7 +12,11 @@ import org.eclipse.swt.widgets.Display;
 
 public class DibujanteDeFabricas {
     private Canvas canvas;
-
+    
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+    
     void dibujarFuente(IFuente _fuente, int x, int y) {
         if (canvas == null)
             return;
@@ -69,9 +73,5 @@ public class DibujanteDeFabricas {
         GC gc = new GC(canvas);
         gc.drawLine (_x1, _y1, _x2, _y2);
         gc.dispose ();
-    }
-
-    public void setCanvas(Canvas canvas) {
-        this.canvas = canvas;
     }
 }

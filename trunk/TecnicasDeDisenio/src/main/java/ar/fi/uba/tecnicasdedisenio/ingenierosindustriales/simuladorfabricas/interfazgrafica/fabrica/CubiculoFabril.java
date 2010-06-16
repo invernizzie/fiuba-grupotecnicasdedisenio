@@ -15,11 +15,7 @@ public class CubiculoFabril {
     private Maquina maquina = null;
     private Fuente fuente = null;
     private List<CintaTransportadora> cintasIncidentes = new ArrayList<CintaTransportadora>();
-    
-    private boolean puedeSerFinDeCinta() {
-        return (maquina != null);
-    }
-    
+      
     public boolean estaOcupado() {
         return (maquina != null) || (fuente != null);
     }
@@ -101,5 +97,9 @@ public class CubiculoFabril {
             return true;
         }
         return false;
+    }
+    
+    private boolean puedeSerFinDeCinta() {
+        return (maquina != null);
     }
 }
