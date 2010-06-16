@@ -23,6 +23,7 @@ public class LineaProduccion {
 	private Float costoLinea = 0F;
 	private Jugador jugador;
 	private TipoMaquinaControlCalidad tipoControlDeCalidad;
+	private boolean ciclo;
 	
 	public LineaProduccion(Jugador jugador){
 		this.maquinas = new HashSet<Maquina>();
@@ -30,6 +31,7 @@ public class LineaProduccion {
 		this.jugador = jugador;
 		this.laboratorio = jugador.getLaboratorio();
 		tipoControlDeCalidad = new TipoMaquinaControlCalidad();
+		this.setCiclo(false);
 		
 	}
 	
@@ -49,7 +51,8 @@ public class LineaProduccion {
 	}
 	
 	public void actualizarLinea() {
-		
+		ultimaMaquina = null;
+		this.primerasMaquinas = new HashSet<Maquina>();
 		for (Maquina maquina : getMaquinas()) {
 			maquina.setConectadaAContenedor(false);
 			if (esPrimeraMaquina(maquina)){
@@ -65,6 +68,11 @@ public class LineaProduccion {
 				maquina.setConectadaAContenedor(true);
 			}
 		}
+		/*Si no hay ultima maquina entonces es un ciclo.*/
+		if(ultimaMaquina==null)
+			this.setCiclo(true);
+		else
+			this.setCiclo(false);
 	}
 
 	public boolean contieneMaquina(Maquina maquina) {
@@ -79,7 +87,7 @@ public class LineaProduccion {
 		boolean esPrimera = false;
 		
 		if (maquinaAVerificar.obtenerPrecedentesFisicos().isEmpty() &&
-				!maquinaAVerificar.getMateriasPrimas().isEmpty()){
+				!maquinaAVerificar.obtenerMateriasPrimasFisicas().isEmpty()){
 			esPrimera = true;
 		}
 		
@@ -197,57 +205,21 @@ public class LineaProduccion {
 	 * Verifica si se tiene un ciclo en esa linea y si es asi rompe todas las maquinas.
 	 * */
 	public void validarCiclo(){
-		boolean hayCiclo = false;
-		
-		/**
-		 * Recorre las maquinas y llama a ver si se asignaron mutuamente.
-		 */
-		for (Maquina maquina : getMaquinas()){
-			for(Maquina maq : getMaquinas()){
-				if (!maquina.equals(maq))
-					if (tienenAsignacionMutua(maquina, maq)){
-						hayCiclo = true;
-					}
-						
-			}
-		}
-		
-		if (hayCiclo)
+		if (this.isCiclo())
 			for(Maquina maquina : getMaquinas())
 				maquina.forzarRotura();
 	}
 	
-	/**
-	 * Para dos maquinas ve si alguna esta asignada en otra como precedente.
-	 * Si ambas se tienen asignadas entonces devuelve true, sino devuelve false.
-	 * @param m1
-	 * @param m2
-	 * @return
-	 */
-	public boolean tienenAsignacionMutua(Maquina m1, Maquina m2){
-		return (compararMaquinaVSPrecedentes(m1, m2.obtenerPrecedentesFisicos())&&compararMaquinaVSPrecedentes(m2, m1.obtenerPrecedentesFisicos()));
-	}
-	
-	/**
-	 * Compara una maquina contra distintos precedentes.
-	 * @param m
-	 * @param precedentes
-	 * @return
-	 */
-	public boolean compararMaquinaVSPrecedentes(Maquina m, List<Maquina> precedentes) {
-		for(Maquina precedente : precedentes) {
-			if (precedente.equals(m)){
-				return true;
-			}
-			if (precedente.obtenerPrecedentesFisicos().size() > 0) {
-				return compararMaquinaVSPrecedentes(m, precedente.obtenerPrecedentesFisicos());
-			}
-		}
-		return false;
-	}
-
 	public Set<Maquina> getMaquinas() {
 		return maquinas;
+	}
+
+	public void setCiclo(boolean ciclo) {
+		this.ciclo = ciclo;
+	}
+
+	public boolean isCiclo() {
+		return ciclo;
 	}
 	
 }
