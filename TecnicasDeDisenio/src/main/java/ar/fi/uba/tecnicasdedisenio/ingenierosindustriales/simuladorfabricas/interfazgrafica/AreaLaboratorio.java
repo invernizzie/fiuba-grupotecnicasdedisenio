@@ -29,7 +29,11 @@ public class AreaLaboratorio {
 	private Display display = null;
 	private Image imagenLaboratorio = null;
 	
-	/**
+    public void run() {
+    	createSShellLaboratorio();
+	}
+    
+    /**
 	 * This method initializes sShellLaboratorio
 	 *
 	 */
@@ -125,7 +129,4 @@ public class AreaLaboratorio {
 		buttonImagenLaboratorio.setLayoutData(gridData1);
 	}
 
-    public void run() {
-    	createSShellLaboratorio();
-	}
 }

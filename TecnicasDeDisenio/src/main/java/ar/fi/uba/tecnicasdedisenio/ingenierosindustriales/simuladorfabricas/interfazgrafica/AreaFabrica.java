@@ -46,6 +46,84 @@ public class AreaFabrica {
     private List<Combo> combos = new ArrayList<Combo>();
     private Fabrica fabrica;
 
+    
+	
+	public void load(CTabFolder cTabFolder) {
+		createShellAreaDibujo(cTabFolder);
+	}
+	
+	public void run() {
+		Display display =new Display();
+		Shell shell = new Shell(display);
+		GridData gridData = new GridData();
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		gridData.grabExcessHorizontalSpace = true;
+		gridData.horizontalAlignment = GridData.FILL;
+		gridData.verticalAlignment = GridData.FILL;
+		gridData.grabExcessVerticalSpace = true;
+		CTabFolder cTabFolder = new CTabFolder(shell, SWT.NONE);
+		cTabFolder.setLayoutData(gridData);
+		CTabItem cTabItem = new CTabItem(cTabFolder, SWT.NONE);
+		cTabItem.setText("Fabrica");
+		createShellAreaDibujo(cTabFolder);
+		cTabItem.setControl(compositeControles);
+
+		shell.setLayout(gridLayout);
+		shell.setSize(new Point(399, 316));
+		shell.setVisible(true);
+
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch())
+				display.sleep();
+		}
+		display.dispose();
+	}
+
+	
+	public void DibujarLinea(){
+		this.setDibujar(!this.getDibujar());
+	}
+
+	public void setDibujar(Boolean dibujar) {
+		this.dibujar = dibujar;
+	}
+
+	public Boolean getDibujar() {
+		return dibujar;
+	}
+
+	public Canvas getCanvas() {
+		return canvas;
+	}
+
+	public Composite getCompositeControles() {
+		return compositeControles;
+	}
+
+    public void setFabrica(Fabrica fabrica) {
+        this.fabrica = fabrica;
+        resizeCanvas();
+        espacioFabril.setFabrica(fabrica, canvas);
+    }
+    
+    public void cambiarHabilitacionBotones(boolean estado){
+        for (Button boton: botones)
+            boton.setEnabled(estado);
+        for (Combo combo: combos)
+            combo.setEnabled(estado);
+    }
+
+    public void actualizar() {
+        espacioFabril.redibujar();
+    }
+    
+    protected void cargarComboMateriaPrimas() {
+		comboMP.setItems(validadorProd.toString().split(",", 0));
+		comboMP.setItems(validadorProd.getMateriasPrimas());
+		comboMP.setText(comboMP.getItem(0));
+	}
+    
     /**
 	 * This method initializes comboMP
 	 *
@@ -277,82 +355,6 @@ public class AreaFabrica {
         for (Combo combo: combos)
             combo.setEnabled(false);
 	}
-	
-	protected void cargarComboMateriaPrimas() {
-		comboMP.setItems(validadorProd.toString().split(",", 0));
-		comboMP.setItems(validadorProd.getMateriasPrimas());
-		comboMP.setText(comboMP.getItem(0));
-	}
-
-    public void load(CTabFolder cTabFolder) {
-		createShellAreaDibujo(cTabFolder);
-	}
-	
-	public void run() {
-		Display display =new Display();
-		Shell shell = new Shell(display);
-		GridData gridData = new GridData();
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		gridData.grabExcessHorizontalSpace = true;
-		gridData.horizontalAlignment = GridData.FILL;
-		gridData.verticalAlignment = GridData.FILL;
-		gridData.grabExcessVerticalSpace = true;
-		CTabFolder cTabFolder = new CTabFolder(shell, SWT.NONE);
-		cTabFolder.setLayoutData(gridData);
-		CTabItem cTabItem = new CTabItem(cTabFolder, SWT.NONE);
-		cTabItem.setText("Fabrica");
-		createShellAreaDibujo(cTabFolder);
-		cTabItem.setControl(compositeControles);
-
-		shell.setLayout(gridLayout);
-		shell.setSize(new Point(399, 316));
-		shell.setVisible(true);
-
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-		display.dispose();
-	}
-
-	
-	public void DibujarLinea(){
-		this.setDibujar(!this.getDibujar());
-	}
-
-	public void setDibujar(Boolean dibujar) {
-		this.dibujar = dibujar;
-	}
-
-	public Boolean getDibujar() {
-		return dibujar;
-	}
-
-	public Canvas getCanvas() {
-		return canvas;
-	}
-
-	public Composite getCompositeControles() {
-		return compositeControles;
-	}
-
-    public void setFabrica(Fabrica fabrica) {
-        this.fabrica = fabrica;
-        resizeCanvas();
-        espacioFabril.setFabrica(fabrica, canvas);
-    }
-    
-    public void cambiarHabilitacionBotones(boolean estado){
-        for (Button boton: botones)
-            boton.setEnabled(estado);
-        for (Combo combo: combos)
-            combo.setEnabled(estado);
-    }
-
-    public void actualizar() {
-        espacioFabril.redibujar();
-    }
 }
 
 

@@ -12,10 +12,6 @@ public abstract class Instalador {
         this.espacioFabril = espacioFabril;
     }
 
-    protected EspacioFabril getEspacioFabril() {
-        return espacioFabril;
-    }
-
     public final void mouseMove(int x, int y) {
         doMouseMove(x, y);
     }
@@ -35,4 +31,8 @@ public abstract class Instalador {
     public abstract void doMouseDown(int x, int y);
 
     public abstract void doMouseUp(int x, int y);
+    
+    protected EspacioFabril getEspacioFabril() {
+        return espacioFabril;
+    }
 }

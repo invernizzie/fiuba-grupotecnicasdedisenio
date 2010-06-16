@@ -26,38 +26,21 @@ import java.util.*;
  */
 public class Calendario {
 	
+	public static final int ANIO_INICIAL = 1999;
+	public static final int MES_INICIAL = 11;
+	public static final int DIA_INICIAL = 31;
+	public static final int DEFAULT_SEGUNDOS_POR_DIA = 5;
+	
 	private static Calendario instancia = new Calendario();
 	
-    public static final int ANIO_INICIAL = 1999;
-    public static final int MES_INICIAL = 11;
-    public static final int DIA_INICIAL = 31;
-    public static final int DEFAULT_SEGUNDOS_POR_DIA = 5;
-
-    private int segundosPorDia = DEFAULT_SEGUNDOS_POR_DIA;
-    private List<Sincronizado> sincronizados = new ArrayList<Sincronizado>();
+	private int segundosPorDia = DEFAULT_SEGUNDOS_POR_DIA;
+	private List<Sincronizado> sincronizados = new ArrayList<Sincronizado>();
     private boolean iniciado = false;
     private boolean detenido = false;
     private boolean pausado = false;
     private Calendar virtualCalendar = new GregorianCalendar(ANIO_INICIAL, MES_INICIAL, DIA_INICIAL);
     private Thread threadCalendario = new ThreadCalendario(this);
-
-    /**
-     * Devuelve la unica instancia valida del Calendario
-     * @return instancia valida actual del Calendario
-     */
-    public static Calendario instancia() {
-        return instancia;
-    }
-    
-    /**
-     * Constructor privado para evitar instanciacion externa.
-     */
-    private Calendario() {}
-    
-    private synchronized List<Sincronizado> getSincronizados() {
-        return sincronizados;
-    }
-    
+  
     /**
      * Restaura el calendario virtual a la fecha inicial.
      * Luego debe ser iniciado para comenzar el paso del tiempo.
@@ -198,6 +181,24 @@ public class Calendario {
         for (Sincronizado sincronizado: getSincronizados())
             sincronizado.notificar(evento);
     }
+    
+    /**
+     * Constructor privado para evitar instanciacion externa.
+     */
+    private Calendario() {}
+    
+    private synchronized List<Sincronizado> getSincronizados() {
+        return sincronizados;
+    }
+    
+    /**
+     * Devuelve la unica instancia valida del Calendario
+     * @return instancia valida actual del Calendario
+     */
+    public static Calendario instancia() {
+        return instancia;
+    }
+    
 
     
 }

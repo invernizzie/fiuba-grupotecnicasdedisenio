@@ -16,11 +16,6 @@ class ThreadCalendario extends Thread {
 
     Calendario calendario;
 
-    // Acceso de paquete
-    ThreadCalendario(Calendario calendario) {
-        this.calendario = calendario;
-    }
-
     /**
      * Bucle de ejecucion del hilo.
      * Debe dejar pasar tantos segundos como devuelva getSegundosPorDia(),
@@ -61,5 +56,10 @@ class ThreadCalendario extends Thread {
                     calendario.notificar(Evento.COMIENZO_DE_MES);
             } catch (InterruptedException e) { /* ?? */ }
         }
+    }
+    
+    // Acceso de paquete
+    ThreadCalendario(Calendario calendario) {
+        this.calendario = calendario;
     }
 }
