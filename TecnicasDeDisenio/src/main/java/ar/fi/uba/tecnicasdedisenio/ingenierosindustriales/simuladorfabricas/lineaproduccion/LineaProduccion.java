@@ -78,7 +78,7 @@ public class LineaProduccion {
 	public boolean esPrimeraMaquina(Maquina maquinaAVerificar){
 		boolean esPrimera = false;
 		
-		if (maquinaAVerificar.getPrecedentes().isEmpty() &&
+		if (maquinaAVerificar.obtenerPrecedentesFisicos().isEmpty() &&
 				!maquinaAVerificar.getMateriasPrimas().isEmpty()){
 			esPrimera = true;
 		}
@@ -179,8 +179,8 @@ public class LineaProduccion {
 		
 		for (Maquina maquina : getMaquinas()) {
 			if (!maquina.equals(maquinaAVerificar) &&
-					!maquina.getPrecedentes().isEmpty() && 
-					maquina.getPrecedentes().contains(maquinaAVerificar)){
+					!maquina.obtenerPrecedentesFisicos().isEmpty() && 
+					maquina.obtenerPrecedentesFisicos().contains(maquinaAVerificar)){
 				esUltima = false;
 			}
 		}
