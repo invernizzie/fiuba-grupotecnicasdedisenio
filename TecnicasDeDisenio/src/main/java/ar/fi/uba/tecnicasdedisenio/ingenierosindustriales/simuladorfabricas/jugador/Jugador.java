@@ -69,6 +69,10 @@ public class Jugador extends Observable implements Sincronizado {
 		this.getLaboratorio().setHabilitado(false);
 	}
 	
+	/**
+	 * Trata de invertir un porcentaje de dinero en el laboratorio.
+	 * @param porcentaje
+	 */
 	public void invertirDineroLaboratorio(float porcentaje){
 		try{
 			this.getLaboratorio().invertir(this.getDineroActual()*porcentaje/100);
@@ -104,18 +108,26 @@ public class Jugador extends Observable implements Sincronizado {
 		return fabrica;
 	}
 	
+	/**
+	 * Compra una fábrica.
+	 * @param fabrica
+	 */
 	public void comprarFabrica(Fabrica fabrica){
 		this.disminuirDinero(fabrica.getCostoCompra());
 		this.setFabrica(fabrica);
 	}
 	
+	/**
+	 * Alquila una fábrica.
+	 * @param fabrica
+	 */
 	public void alquilarFabrica(Fabrica fabrica){
 		this.setFabrica(fabrica);
 		this.setChanged();
 	}
 	
 	/**
-	 * Verifica la existencia de una fï¿½brica asignada a un jugador.
+	 * Verifica la existencia de una fábrica asignada a un jugador.
 	 * @throws JugadorConFabricaException
 	 */
 	public void verificarFabricaAsignada() throws JugadorConFabricaException{
@@ -123,13 +135,20 @@ public class Jugador extends Observable implements Sincronizado {
 			throw new JugadorConFabricaException();
 	}
 	
+	/**
+	 * Verifica si el dinero que tiene es mayor a un costo.
+	 * @param costo
+	 * @throws DineroInsuficienteException
+	 */
 	public void verificarDineroSuficiente(float costo) throws DineroInsuficienteException{
 		if(this.getDineroActual()< costo)
 			throw new DineroInsuficienteException();
 	}
 	
 	/**
-	 * El jugador deja de tener una fï¿½brica y recupera parte del dinero que gastï¿½.*/
+	 * El jugador deja de tener una fábrica y recupera parte del dinero que gastó.
+	 * @param ganancia
+	 */
 	public void venderFabrica(float ganancia){
 		try{
 			this.verificarFabricaAsignada();

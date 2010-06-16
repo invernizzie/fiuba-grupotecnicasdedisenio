@@ -16,6 +16,10 @@ public class XMLParserProductos extends XMLParser {
 		super(path);
 	}
 	
+	/**
+	 * Obtiene cada producto con su precio.
+	 * @return
+	 */
 	public HashMap<String,Boolean> obtenerProductos(){
 		String nombreProd;
 		Boolean mp;
@@ -43,6 +47,10 @@ public class XMLParserProductos extends XMLParser {
 		return mapProductos;
 	}
 	
+	/**
+	 * Obtiene cada producto con su precio.
+	 * @return
+	 */
 	public HashMap<String,Float> obtenerPrecios(){
 		String nombreProd;
 		Float precio;
