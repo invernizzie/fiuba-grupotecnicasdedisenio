@@ -154,6 +154,10 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		return materiasPrimas;
 	}
 
+	public final List<Producto> obtenerMateriasPrimasFisicas(){
+    	return materiasPrimas;
+    }
+	
 	public void setPrecedentes(List<Maquina> precedentes) {
 		this.precedentes = precedentes;
 	}
@@ -165,7 +169,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
     public final List<Maquina> obtenerPrecedentesFisicos() {
         return precedentes;
     }
-
+    
 	public void addPrecedente(Maquina precedente) {
 		if (this.precedentes == null){
 			this.precedentes = new ArrayList<Maquina>();
