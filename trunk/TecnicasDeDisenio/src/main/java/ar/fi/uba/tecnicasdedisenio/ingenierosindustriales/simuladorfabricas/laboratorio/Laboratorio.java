@@ -62,9 +62,15 @@ public class Laboratorio{
 		return procesosInhabilitados;
 	}
 	
+	/**
+	 * Invierte una cantidad de dinero en el laboratorio y llama a la habilitación de
+	 * procesos.
+	 * @param cantidad
+	 * @throws LaboratorioInhabilitadoException
+	 */
 	public void invertir(float cantidad) throws LaboratorioInhabilitadoException{
 		if(this.isHabilitado()){
-			this.setDineroAcumulado(this.getDineroAcumulado()+cantidad);
+			this.aumentarDinero(cantidad);
 			this.habilitarProcesos();
 		}
 		else{
@@ -88,14 +94,18 @@ public class Laboratorio{
 		return new IteradorProcesos(this.getProcesosInhabilitados());
 	}
 	
+	/**
+	 * Recorre cada proceso inhabilitado y verifica si se puede habilitar. Si es así
+	 * lo habilita y debita el dinero.
+	 */
 	public void habilitarProcesos(){
 		Iterator<Proceso> it = this.iteratorProcesosInhabilitados();
 		Proceso proc = null;
 		while(it.hasNext()){
 			proc = it.next();
-			if(proc.habilitar(this.getDineroAcumulado())){
+			if(proc.sePuedeHabilitar(this.getDineroAcumulado())){
 				this.getProcesosHabilitados().add(proc);
-				this.setDineroAcumulado(this.getDineroAcumulado()-proc.getCosto());
+				this.disminuirDinero(proc.getCosto());
 				it.remove();
 				it = this.iteratorProcesosInhabilitados();
 			}
@@ -110,8 +120,12 @@ public class Laboratorio{
 		return habilitado;
 	}
 	
-	/* Si existe un proceso que sea igual a la linea de producciÃ³n
-	 * entonces devuelve el elemento que produce*/
+	/**
+	 * Si existe un proceso que sea igual a la linea de producción
+	 * entonces devuelve el elemento que produce.
+	 * @param maquinaFinalLinea
+	 * @return
+	 **/
 	public boolean existeProcesoValido(Maquina maquinaFinalLinea){
 		Iterator<Proceso> itProcesos = this.iteratorProcesosHabilitados();
 		boolean procesoValido;
@@ -147,7 +161,15 @@ public class Laboratorio{
 	public CargadorDeProcesos getCargador() {
 		return cargador;
 	}
-
+	
+	public void aumentarDinero(float cantidad){
+		this.setDineroAcumulado(this.getDineroAcumulado()+cantidad);
+	}
+	
+	public void disminuirDinero(float cantidad){
+		this.setDineroAcumulado(this.getDineroAcumulado()-cantidad);
+	}
+	
 	public class IteradorProcesos implements Iterator<Proceso>{
 		private int indice;
 		List<Proceso> lista;

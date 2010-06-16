@@ -37,10 +37,21 @@ public class Proceso {
 		return costo;
 	}
 	
-	public boolean habilitar(float oferta){
+	/**
+	 * Si la oferta es mayor o igual al costo del proceso indica que lo puede habilitar.
+	 * @param oferta
+	 * @return
+	 */
+	public boolean sePuedeHabilitar(float oferta){
 		return this.getCosto()<=oferta;
 	}
-		
+	
+	/**
+	 * Dada la maquina final de una linea de producción verifica si un proceso (receta)
+	 * es igual a una línea de producción.
+	 * @param maquinaFinalLinea
+	 * @return
+	 */
 	public boolean esProcesoIgualALinea(Maquina maquinaFinalLinea) {
 		return this.getMaquinaFinal().equals(maquinaFinalLinea);
 	}

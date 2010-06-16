@@ -6,7 +6,20 @@ import java.util.List;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.*;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.*;
 
+/**
+ * Clase encargada de cargar procesos dado un tipo de laboratorio en particular.
+ * Se encuentra harcodeada para los tipos de laboratorios que tenemos creados, pero
+ * a futuro se puede implementar un cargador de un XML u otro lado.
+ * 
+ * @author Gustavo A. Meller (gmeller@gmail.com)
+ *
+ */
 public class CargadorDeProcesos {
+	/**
+	 * Dado un tipo de laboratorio devuelve la lista de todos sus procesos.
+	 * @param tipo
+	 * @return
+	 */
 	public List<Proceso> cargarProcesos(String tipo){
 		TipoMaquina maq = null;
 		Proceso proceso = null;
