@@ -20,7 +20,7 @@ public class Fuente implements IFuente {
 	private ISalida salida;
     private String nombreProducto;
 
-    public Fuente(String nombre, int cantidad, Producto producto){
+    public Fuente(final String nombre, final int cantidad, final Producto producto) {
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.cintas = new LinkedList<CintaTransportadora>();
@@ -29,25 +29,25 @@ public class Fuente implements IFuente {
         this.nombreProducto = nombre;
 	}
 	
-	public void agregarCinta(CintaTransportadora cinta){
+	public void agregarCinta(final CintaTransportadora cinta) {
 		this.cintas.add(cinta);
 	}
 	
-	public void agregarMateria(int cantidad){
+	public void agregarMateria(final int cantidad) {
 		this.cantidad += cantidad;
 	}
 	
-	public void proveerMateria(CintaTransportadora cinta, int cantidad) throws MateriaPrimaInsuficienteException{
+	public void proveerMateria(final CintaTransportadora cinta, final int cantidad) throws MateriaPrimaInsuficienteException {
 	
 		if (this.cantidad < cantidad){
-			throw new MateriaPrimaInsuficienteException("La fuente no posee la cantidad de " +
-					"materia prima suficiente para proveer a la cinta");
+			throw new MateriaPrimaInsuficienteException("La fuente no posee la cantidad de "
+					+ "materia prima suficiente para proveer a la cinta");
 		}
 		
 		cinta.getExtremoInicial().asignarProducto(producto.clone());
 	}
 
-	public void setSalida(ISalida salida) {
+	public void setSalida(final ISalida salida) {
 		this.salida = salida;
 	}
 
@@ -63,7 +63,7 @@ public class Fuente implements IFuente {
 		return producto;
 	}
 
-	public void removerCinta(CintaTransportadora cintaTransportadora) {
+	public void removerCinta(final CintaTransportadora cintaTransportadora) {
 		this.cintas.remove(cintaTransportadora);
 		
 	}

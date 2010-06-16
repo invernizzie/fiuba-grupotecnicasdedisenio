@@ -10,7 +10,7 @@ public class TipoMaquinaMezcladora extends TipoMaquina {
 	
 	private Mezcladora mezcladora;
 	
-	public TipoMaquinaMezcladora(ComparadorDeMaquinas comparador) {
+	public TipoMaquinaMezcladora(final ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
 		mezcladora = new Mezcladora(DIEZ_PORCIENTO, UNO_PORCIENTO);
@@ -22,12 +22,11 @@ public class TipoMaquinaMezcladora extends TipoMaquina {
 
 	@Override
 	public Maquina getInstancia() {
-		Mezcladora nuevaMezcladora = mezcladora.clone();
-		return nuevaMezcladora;
+        return mezcladora.clone();
 	}
 
 	@Override
-	public Boolean verificarTipo(Maquina maquina) {
+	public Boolean verificarTipo(final Maquina maquina) {
 		return (this.getComparador().compare(maquina, mezcladora) == 0);
 	}
 }

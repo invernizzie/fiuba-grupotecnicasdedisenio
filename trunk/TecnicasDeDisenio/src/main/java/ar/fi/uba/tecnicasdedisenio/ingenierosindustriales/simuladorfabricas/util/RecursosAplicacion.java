@@ -14,7 +14,7 @@ public class RecursosAplicacion {
 	/**
 	 * La unica instancia de este Singleton
 	 */    
-	private static RecursosAplicacion instance = new RecursosAplicacion();
+	private static final RecursosAplicacion INSTANCE = new RecursosAplicacion();
 	
 	/**
 	 * Properties de la aplicacion
@@ -25,16 +25,16 @@ public class RecursosAplicacion {
         return this.properties;
     }
     
-    public String getProperty(String key) {
+    public String getProperty(final String key) {
         return this.getProperties().getProperty(key);
     }
 
-    public int getIntProperty(String key) {
+    public int getIntProperty(final String key) {
         
         return Integer.parseInt(this.getProperty(key));
     }
 
-    public InputStream getResourceAsStream(String classpathRelativePath) {
+    public InputStream getResourceAsStream(final String classpathRelativePath) {
         return this.getClass().getClassLoader().getResourceAsStream(classpathRelativePath);
     }
     
@@ -65,8 +65,8 @@ public class RecursosAplicacion {
 		this.loadProperties();
 	}
     
-    public static RecursosAplicacion instance(){
-		return instance;
+    public static RecursosAplicacion instance() {
+		return INSTANCE;
 	}
 }
 
