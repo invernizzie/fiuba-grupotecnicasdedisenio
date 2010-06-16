@@ -5,4 +5,9 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
  *         Date: 12/06/2010
  */
 public class CubiculoVacioException extends Throwable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 }

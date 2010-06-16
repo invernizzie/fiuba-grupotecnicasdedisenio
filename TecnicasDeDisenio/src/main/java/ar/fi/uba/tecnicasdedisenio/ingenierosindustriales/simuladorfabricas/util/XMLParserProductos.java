@@ -3,7 +3,6 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.uti
 import java.util.HashMap;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**

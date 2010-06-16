@@ -1,7 +1,5 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.interfazgrafica;
 
-import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +8,10 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.inte
 
 public class TestVentana {
 
+	@SuppressWarnings("deprecation")
 	private Ventana ventanaPPAL;
 	
+	@SuppressWarnings("deprecation")
 	@Before
 	public void setUp() throws Exception {
 		this.ventanaPPAL = new Ventana(800, 600, "TP Tecnicas de Dise�o");
@@ -21,6 +21,7 @@ public class TestVentana {
 	public void tearDown() throws Exception {
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testPantalla() {
 		ventanaPPAL.dibujar5();

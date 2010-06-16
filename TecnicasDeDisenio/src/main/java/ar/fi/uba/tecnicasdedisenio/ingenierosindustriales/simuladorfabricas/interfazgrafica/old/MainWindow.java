@@ -4,7 +4,6 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.cale
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.DialogoNuevaPartida;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -42,11 +41,7 @@ public class MainWindow implements Sincronizado {
     private ToolItem botonControlDeTiempo;
     private Label labelFecha;
     private boolean actualizado = false;
-    private Combo comboFabrica = null;
-    private Jugador jugador = null;
-
-
-	/**
+    /**
 	 * This method initializes scAreaTrabajo
 	 *
 	 */
@@ -106,6 +101,7 @@ public class MainWindow implements Sincronizado {
 	 * This method initializes gUserProperties
 	 *
 	 */
+	@SuppressWarnings("unused")
 	private void createGUserProperties() {
 		GridData gridData2 = new GridData();
 		gridData2.verticalSpan = 3;
@@ -150,7 +146,7 @@ public class MainWindow implements Sincronizado {
 	 *
 	 */
 	private void createComboFabrica() {
-		comboFabrica = new Combo(gUserProperties, SWT.NONE);
+		new Combo(gUserProperties, SWT.NONE);
 	}
 
 	/**
@@ -232,9 +228,6 @@ public class MainWindow implements Sincronizado {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				System.out.println("widgetDefaultSelected()");
 				juegoNuevo();
-				//openItem.setEnabled(true);
-				//saveItem.setEnabled(true);
-				//saveAllItem.setEnabled(true);
 			}
 		});
 		MenuItem openItem = new MenuItem(FileItem, SWT.PUSH);
@@ -246,6 +239,7 @@ public class MainWindow implements Sincronizado {
 		MenuItem saveAllItem = new MenuItem(FileItem, SWT.PUSH);
 		saveAllItem.setText("Guardar todo");
 		saveAllItem.setEnabled(false);
+		@SuppressWarnings("unused")
 		MenuItem separatorFile = new MenuItem(FileItem, SWT.SEPARATOR);
 		newItem.setMenu(FileItem);
 		MenuItem exitItem = new MenuItem(FileItem, SWT.PUSH);

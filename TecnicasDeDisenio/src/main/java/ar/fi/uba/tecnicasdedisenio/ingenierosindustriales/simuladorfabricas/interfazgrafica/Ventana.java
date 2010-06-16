@@ -8,18 +8,12 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-
+@Deprecated
 public class Ventana {
-	private Integer alto;
-	private Integer ancho;
-	private String nombre;
 	private Display display;
 	private Shell shell;
 	
 	public Ventana(Integer alto, Integer ancho, String nombre) {
-		this.alto = alto;
-		this.ancho = ancho;
-		this.nombre = nombre;
 		this.display = new Display ();
 		this.shell = new Shell (this.display);
 		shell.setSize (alto,ancho);

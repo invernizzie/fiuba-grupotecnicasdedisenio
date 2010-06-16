@@ -88,6 +88,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
         MenuItem submenuItemAyuda = crearSubmenu(menuBar, "Ayuda");
 		submenuAyuda = new Menu(submenuItemAyuda);
         MenuItem pushContenido = crearItemDeMenu(submenuAyuda, "Contenido");
+		@SuppressWarnings("unused")
 		MenuItem separatorAyuda = new MenuItem(submenuAyuda, SWT.SEPARATOR);
         MenuItem pushAcercaDe = crearItemDeMenu(submenuAyuda, "Acerca de...");
 		submenuItemAyuda.setMenu(submenuAyuda);
@@ -273,7 +274,6 @@ public class VistaPrincipal implements Sincronizado, Observer {
 			}
 		});
 		
-		Label filler = new Label(groupJugador, SWT.NONE);
 		createOpcionesFabrica();
         botonesPartida.add(checkBoxInvertirLabo);
 	}
