@@ -43,17 +43,17 @@ public class ControlCalidad extends Maquina {
 	public Producto getTipoProducto() {
 		// El control de calidad se aplica sobre una �nica m�quina y su tipo de
 		// producto es el de esta última
-		return this.precedentes.get(0).getTipoProducto();
+		return this.obtenerPrecedentesFisicos().get(0).getTipoProducto();
 	}
 
 	@Override
 	public List<Producto> getMateriasPrimas() {
-		return this.precedentes.get(0).getMateriasPrimas();
+		return this.obtenerPrecedentesFisicos().get(0).getMateriasPrimas();
 	}
 
 	@Override
 	public List<Maquina> getPrecedentes() {
-		return this.precedentes.get(0).getPrecedentes();
+		return this.obtenerPrecedentesFisicos().get(0).getPrecedentes();
 	}
 	
 	
