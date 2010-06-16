@@ -118,8 +118,8 @@ public abstract class TipoMaquina {
 		}
 		
 		/*Se comparan todas las materias primas.*/
-		for(i=0;i<this.getMateriasPrimas().size();i++){
-			for(j=0;j<matPrimas.size();j++){
+		for (i=0;i<this.getMateriasPrimas().size();i++){
+			for (j=0;j<matPrimas.size();j++){
 				if (this.getMateriasPrimas().get(i).equals(matPrimas.get(j))){
 					matPrimas.remove(j);
 					
@@ -142,8 +142,8 @@ public abstract class TipoMaquina {
 		}
 		
 		/*Se comparan todas los precedencias.*/
-		for(i=0;i<this.getPrecedentes().size();i++){
-			for(j=0;j<maquinas.size();j++){
+		for (i=0;i<this.getPrecedentes().size();i++){
+			for (j=0;j<maquinas.size();j++){
 				if (this.getPrecedentes().get(i).equals(maquinas.get(j))){
 					maquinas.remove(j);	
 				}

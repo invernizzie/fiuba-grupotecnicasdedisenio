@@ -56,7 +56,7 @@ public class AreaFabrica {
 	}
 
 	protected void cargarComboMateriaPrimas() {
-		//for(int i=0; i<10; i++){
+		//for (int i=0; i<10; i++){
 		//	comboMP.add(new String("Materia Prima  " + i));
 		//}
 		//comboMP.setItems(validadorProd.toString().split(",", 0));
@@ -84,7 +84,7 @@ public class AreaFabrica {
 	}
 
 	private void cargarMaquinas() {
-		for(int i=0; i<10; i++){
+		for (int i=0; i<10; i++){
 			comboMaquina.add("Maquina " + i);
 		}
 		//comboMaquina.setText(comboMaquina.getItem(0));

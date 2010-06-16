@@ -585,7 +585,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		 */
 		fabricas = new HashMap<String,Fabrica>();
 		Fabrica fabrica = null;
-		for(i=0;i<5;i++){
+		for (i=0;i<5;i++){
 			fabrica = new Fabrica((i+1)*15000,(i+1)*1000, (i+1)*150);
 			fabricas.put(fabrica.toString(),fabrica);
 			fab[i]=fabrica.toString();

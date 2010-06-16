@@ -8,15 +8,15 @@ public class EntradaInvalidaException extends Exception {
 	public EntradaInvalidaException() {
 	}
 
-	public EntradaInvalidaException(String message) {
+	public EntradaInvalidaException(final String message) {
 		super(message);
 	}
 
-	public EntradaInvalidaException(Throwable cause) {
+	public EntradaInvalidaException(final Throwable cause) {
 		super(cause);
 	}
 
-	public EntradaInvalidaException(String message, Throwable cause) {
+	public EntradaInvalidaException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 
