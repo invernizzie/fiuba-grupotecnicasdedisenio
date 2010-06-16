@@ -21,5 +21,4 @@ public class Salida implements ISalida {
 	public Producto obtenerProducto(){
 		return this.producto;
 	}
-
 }

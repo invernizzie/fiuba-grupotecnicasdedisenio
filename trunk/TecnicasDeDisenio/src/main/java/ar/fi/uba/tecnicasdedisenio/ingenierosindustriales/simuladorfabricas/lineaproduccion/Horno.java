@@ -17,6 +17,16 @@ public class Horno extends Maquina {
 	}
 	
 	@Override
+	public Horno clone(){
+		return new Horno(this.getTasaDeFallos(), this.getTasaRotura());
+	}
+
+	@Override
+	public Producto getTipoProducto() {
+		return new Producto(ValidadorProductos.instancia(),"Horneado",0);
+	}
+	
+	@Override
 	protected Producto realizarProceso() {
 		return new Producto(ValidadorProductos.instancia(),"Horneado",this.getTasaDeFallos());
 	}
@@ -29,15 +39,4 @@ public class Horno extends Maquina {
 	protected Boolean validarEntrada() {
 		return (this.getProductos().size() == 1);
 	}
-	
-	@Override
-	public Horno clone(){
-		return new Horno(this.getTasaDeFallos(), this.getTasaRotura());
-	}
-
-	@Override
-	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(),"Horneado",0);
-	}
-
 }

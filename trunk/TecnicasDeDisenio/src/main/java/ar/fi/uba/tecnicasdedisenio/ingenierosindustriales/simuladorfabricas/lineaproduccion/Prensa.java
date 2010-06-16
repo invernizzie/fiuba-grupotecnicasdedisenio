@@ -15,7 +15,17 @@ public class Prensa extends Maquina {
 		super(tasaDeFallos, tasaRotura);
 		this.setCostoMaquina(COSTO_PRENSA);
 	}
+	
+	@Override
+	public Prensa clone(){
+		return new Prensa(this.getTasaDeFallos(), this.getTasaRotura());
+	}
 
+	@Override
+	public Producto getTipoProducto() {
+		return new Producto(ValidadorProductos.instancia(), "prensado", 0);
+	}
+	
 	@Override
 	protected Producto realizarProceso() {
 		return new Producto(ValidadorProductos.instancia(), "prensado", this.getTasaDeFallos());
@@ -29,15 +39,4 @@ public class Prensa extends Maquina {
 	protected Boolean validarEntrada() {
 		return (this.getProductos().size() == 1);
 	}
-	
-	@Override
-	public Prensa clone(){
-		return new Prensa(this.getTasaDeFallos(), this.getTasaRotura());
-	}
-
-	@Override
-	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(), "prensado", 0);
-	}
-
 }

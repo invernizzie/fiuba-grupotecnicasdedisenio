@@ -5,10 +5,10 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 
 public class TipoMaquinaPrensa extends TipoMaquina {
 
-
-	private Prensa prensa;
-    private static final float VEINTE_PORCIENTO = 0.2F;
+	private static final float VEINTE_PORCIENTO = 0.2F;
     private static final float UNO_PORCIENTO = 0.01F;
+    
+	private Prensa prensa;
 
     public TipoMaquinaPrensa(final ComparadorDeMaquinas comparador) {
 		super();
@@ -30,5 +30,4 @@ public class TipoMaquinaPrensa extends TipoMaquina {
 	public Boolean verificarTipo(final Maquina maquina) {
 		return (this.getComparador().compare(maquina, prensa) == 0);
 	}
-
 }

@@ -23,29 +23,6 @@ public class ValidadorProductos implements Sincronizado {
 	private XMLParserProductos parser;
 	private final String pathXML = new String("Productos.xml");
 	
-	private ValidadorProductos() {
-		this.mapProductos = new HashMap<String,Boolean>();
-		this.mapProductosPrecio = new HashMap<String,Float>();
-		this.cargarXML();
-	}
-	
-	private XMLParserProductos getParser() {
-		return parser;
-	}
-
-	private void setParser(XMLParserProductos parser) {
-		this.parser = parser;
-	}
-	
-	/**
-	 * Se cargan los productos desde el XML con sus precios.
-	 */
-	private void cargarXML(){
-		this.setParser(new XMLParserProductos(pathXML));
-		this.getParser().leerDoc();
-		this.mapProductos = parser.obtenerProductos();
-		this.mapProductosPrecio = parser.obtenerPrecios();
-	}
 	
 	public HashMap<String, Boolean> getMapProductos() {
 		return mapProductos;
@@ -106,5 +83,29 @@ public class ValidadorProductos implements Sincronizado {
 			this.cargarXML();
 		}
 		
+	}
+	
+	private ValidadorProductos() {
+		this.mapProductos = new HashMap<String,Boolean>();
+		this.mapProductosPrecio = new HashMap<String,Float>();
+		this.cargarXML();
+	}
+	
+	private XMLParserProductos getParser() {
+		return parser;
+	}
+
+	private void setParser(XMLParserProductos parser) {
+		this.parser = parser;
+	}
+	
+	/**
+	 * Se cargan los productos desde el XML con sus precios.
+	 */
+	private void cargarXML(){
+		this.setParser(new XMLParserProductos(pathXML));
+		this.getParser().leerDoc();
+		this.mapProductos = parser.obtenerProductos();
+		this.mapProductosPrecio = parser.obtenerPrecios();
 	}
 }

@@ -15,6 +15,16 @@ public class Licuadora extends Maquina {
 		super(tasaDeFallos, tasaRotura);
 		this.setCostoMaquina(100F);
 	}
+		
+	@Override
+	public Licuadora clone(){
+		return new Licuadora(this.getTasaDeFallos(), this.getTasaRotura());
+	}
+
+	@Override
+	public Producto getTipoProducto() {
+		return new Producto(ValidadorProductos.instancia(),"Licuado",0);
+	}
 	
 	@Override
 	protected Producto realizarProceso() {
@@ -29,16 +39,4 @@ public class Licuadora extends Maquina {
 	protected Boolean validarEntrada() {
 		return (this.getProductos().size() == 1);
 	}
-	
-	@Override
-	public Licuadora clone(){
-		return new Licuadora(this.getTasaDeFallos(), this.getTasaRotura());
-	}
-
-	@Override
-	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(),"Licuado",0);
-	}
-
-
 }

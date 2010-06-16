@@ -174,29 +174,7 @@ public class LineaProduccion {
 	public Contenedor getContenedor() {
 		return contenedor;
 	}
-
-	/**
-	 * Una m�quina es la �ltima de la linea si no figura en la lista de precedentes
-	 * de otra m�quina.
-	 * @param maquinaAVerificar
-	 * @return
-	 */
-	private boolean esUltimaMaquina(Maquina maquinaAVerificar){
-		
-		boolean esUltima = true;
-		
-		for (Maquina maquina : getMaquinas()) {
-			if (!maquina.equals(maquinaAVerificar) &&
-					!maquina.obtenerPrecedentesFisicos().isEmpty() && 
-					maquina.obtenerPrecedentesFisicos().contains(maquinaAVerificar)){
-				esUltima = false;
-			}
-		}
-		
-		return esUltima;
-		
-	}
-
+	
 	public boolean estaVacia() {
 		return this.getMaquinas().isEmpty();
 	}
@@ -222,4 +200,25 @@ public class LineaProduccion {
 		return ciclo;
 	}
 	
+	/**
+	 * Una m�quina es la �ltima de la linea si no figura en la lista de precedentes
+	 * de otra m�quina.
+	 * @param maquinaAVerificar
+	 * @return
+	 */
+	private boolean esUltimaMaquina(Maquina maquinaAVerificar){
+		
+		boolean esUltima = true;
+		
+		for (Maquina maquina : getMaquinas()) {
+			if (!maquina.equals(maquinaAVerificar) &&
+					!maquina.obtenerPrecedentesFisicos().isEmpty() && 
+					maquina.obtenerPrecedentesFisicos().contains(maquinaAVerificar)){
+				esUltima = false;
+			}
+		}
+		
+		return esUltima;
+		
+	}
 }

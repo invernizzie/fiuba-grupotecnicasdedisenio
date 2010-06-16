@@ -4,13 +4,16 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Mezcladora;
 
 public class TipoMaquinaMezcladora extends TipoMaquina {
-
+	
+	private static final float DIEZ_PORCIENTO = 0.1F;
+    private static final float UNO_PORCIENTO = 0.01F;
+	
 	private Mezcladora mezcladora;
 	
 	public TipoMaquinaMezcladora(ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
-		mezcladora = new Mezcladora(0.1F, 0.01F);
+		mezcladora = new Mezcladora(DIEZ_PORCIENTO, UNO_PORCIENTO);
 	}
 	
 	public TipoMaquinaMezcladora() {
@@ -27,5 +30,4 @@ public class TipoMaquinaMezcladora extends TipoMaquina {
 	public Boolean verificarTipo(Maquina maquina) {
 		return (this.getComparador().compare(maquina, mezcladora) == 0);
 	}
-
 }

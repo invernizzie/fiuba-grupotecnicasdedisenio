@@ -74,5 +74,4 @@ public class Producto implements Cloneable {
 	public Float getPrecioCompra() {
 		return this.validador.obtenerPrecioCompra(this.estado);		
 	}
-
 }

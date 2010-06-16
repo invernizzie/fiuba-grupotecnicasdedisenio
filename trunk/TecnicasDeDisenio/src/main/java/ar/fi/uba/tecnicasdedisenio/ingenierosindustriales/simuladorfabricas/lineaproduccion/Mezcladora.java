@@ -15,6 +15,16 @@ public class Mezcladora extends Maquina {
 		super(tasaDeFallos, tasaRotura);
 		this.setCostoMaquina(100F);
 	}
+		
+	@Override
+	public Mezcladora clone(){
+		return new Mezcladora(this.getTasaDeFallos(), this.getTasaRotura());
+	}
+
+	@Override
+	public Producto getTipoProducto() {
+		return new Producto(ValidadorProductos.instancia(),"Mezclado",0);
+	}
 	
 	@Override
 	protected Producto realizarProceso() {
@@ -29,16 +39,4 @@ public class Mezcladora extends Maquina {
 	protected Boolean validarEntrada() {
 		return (this.getProductos().size() == 1);
 	}
-	
-	@Override
-	public Mezcladora clone(){
-		return new Mezcladora(this.getTasaDeFallos(), this.getTasaRotura());
-	}
-
-	@Override
-	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(),"Mezclado",0);
-	}
-
-
 }

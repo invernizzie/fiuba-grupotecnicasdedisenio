@@ -10,28 +10,34 @@ import java.util.Properties;
  */
 public class RecursosAplicacion {
 	public static final String PROPERTIES_PATH = "config.xml";
-
+	
+	/**
+	 * La unica instancia de este Singleton
+	 */    
+	private static RecursosAplicacion instance = new RecursosAplicacion();
+	
 	/**
 	 * Properties de la aplicacion
 	 */
 	private Properties properties = null;
 
-	/**
-	 * La unica instancia de este Singleton
-	 */    
-	private static RecursosAplicacion instance = new RecursosAplicacion();
+    public Properties getProperties() {
+        return this.properties;
+    }
+    
+    public String getProperty(String key) {
+        return this.getProperties().getProperty(key);
+    }
 
-	/** 
-	 * Forzamos el Singleton ocultando el constructor 
-	 */ 
-	private RecursosAplicacion() {
-		this.loadProperties();
-	}
+    public int getIntProperty(String key) {
+        
+        return Integer.parseInt(this.getProperty(key));
+    }
 
-	public static RecursosAplicacion instance(){
-		return instance;
-	}
-	
+    public InputStream getResourceAsStream(String classpathRelativePath) {
+        return this.getClass().getClassLoader().getResourceAsStream(classpathRelativePath);
+    }
+    
 	/**
      * Carga las properties de configuración.
      *
@@ -52,22 +58,15 @@ public class RecursosAplicacion {
         }
     }
 
-    public Properties getProperties() {
-        return this.properties;
-    }
+    /** 
+	 * Forzamos el Singleton ocultando el constructor 
+	 */ 
+	private RecursosAplicacion() {
+		this.loadProperties();
+	}
     
-    public String getProperty(String key) {
-        return this.getProperties().getProperty(key);
-    }
-
-    
-    public int getIntProperty(String key) {
-        
-        return Integer.parseInt(this.getProperty(key));
-    }
-
-    public InputStream getResourceAsStream(String classpathRelativePath) {
-        return this.getClass().getClassLoader().getResourceAsStream(classpathRelativePath);
-    }
+    public static RecursosAplicacion instance(){
+		return instance;
+	}
 }
 

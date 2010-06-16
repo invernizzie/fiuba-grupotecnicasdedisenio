@@ -28,5 +28,4 @@ public class TipoMaquinaControlCalidad extends TipoMaquina {
 	public Boolean verificarTipo(Maquina maquina) {
 		return (this.getComparador().compare(maquina, controlCalidad) == 0);
 	}
-
 }

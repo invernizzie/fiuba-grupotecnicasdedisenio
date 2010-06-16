@@ -120,7 +120,12 @@ public class Contenedor {
 		
 		return ganancia ;
 	}
-
+	
+	public void vaciar() {
+		this.productosRecibidos = new LinkedList<Producto>();
+		this.cantidad = 0;		
+	}
+	
 	/**
 	 * Devuelve el porcentaje de piezas defectuosas producidas por la linea.
 	 * @return
@@ -140,8 +145,4 @@ public class Contenedor {
 		return porcentajeDefectuosos;
 	}
 
-	public void vaciar() {
-		this.productosRecibidos = new LinkedList<Producto>();
-		this.cantidad = 0;		
-	}
 }
