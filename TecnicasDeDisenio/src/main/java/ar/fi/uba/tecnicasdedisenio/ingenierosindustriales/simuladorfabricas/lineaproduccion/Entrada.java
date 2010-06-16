@@ -9,15 +9,15 @@ public class Entrada implements IEntrada {
 	
 	private List<Producto> productos;
 	
-	public Entrada(){
+	public Entrada() {
 		this.setElementos(new ArrayList<Producto>());
 	}
 	
-	public void agregarProducto(Producto producto) {
+	public void agregarProducto(final Producto producto) {
 		this.getProdcutos().add(producto);
 	}
 
-	public void setElementos(List<Producto> productos) {
+	public void setElementos(final List<Producto> productos) {
 		this.productos = productos;
 	}
 

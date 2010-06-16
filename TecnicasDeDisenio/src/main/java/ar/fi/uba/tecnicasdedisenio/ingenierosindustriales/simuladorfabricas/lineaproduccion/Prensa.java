@@ -9,6 +9,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  *
  */
 public class Prensa extends Maquina {
+
     private static final float COSTO_PRENSA = 150F;
 
     public Prensa(final Float tasaDeFallos, final Float tasaRotura) {
@@ -17,7 +18,7 @@ public class Prensa extends Maquina {
 	}
 	
 	@Override
-	public Prensa clone(){
+	public Prensa clone() {
 		return new Prensa(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 

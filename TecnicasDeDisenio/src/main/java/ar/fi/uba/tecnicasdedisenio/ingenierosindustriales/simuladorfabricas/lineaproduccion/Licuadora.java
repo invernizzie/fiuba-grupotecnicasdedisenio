@@ -10,10 +10,11 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  */
 
 public class Licuadora extends Maquina {
+    private static final float COSTO_LICUADORA = 100F;
 
-	public Licuadora(Float tasaDeFallos, Float tasaRotura) {
+    public Licuadora(final Float tasaDeFallos, final Float tasaRotura) {
 		super(tasaDeFallos, tasaRotura);
-		this.setCostoMaquina(100F);
+		this.setCostoMaquina(COSTO_LICUADORA);
 	}
 		
 	@Override
@@ -23,12 +24,12 @@ public class Licuadora extends Maquina {
 
 	@Override
 	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(),"Licuado",0);
+		return new Producto(ValidadorProductos.instancia(), "Licuado", 0);
 	}
 	
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(),"Licuado",this.getTasaDeFallos());
+		return new Producto(ValidadorProductos.instancia(), "Licuado", this.getTasaDeFallos());
 	}
 
 	/**

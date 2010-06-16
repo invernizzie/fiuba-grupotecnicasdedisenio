@@ -24,23 +24,15 @@ import org.eclipse.swt.widgets.Composite;
 public class MainWindow implements Sincronizado {
 
 	private Shell sShell = null;  //  @jve:decl-index=0:visual-constraint="106,8"
-	private Menu menuBar = null;
-	private Menu FileItem = null;
-	private Menu HelpItem = null;
-	private Menu EditItem = null;
-	private ScrolledComposite scAreaTrabajo = null;
+    private ScrolledComposite scAreaTrabajo = null;
 	private CTabFolder tabWorkingControls = null;
 	private Composite composite = null;
 	private Group gUserProperties = null;
-	private Label lJugador = null;
-	private Text tJugador = null;
-	private Button checkInvertirLab = null;
-	private Canvas canvasFabrica = null;
-	private Button bFabrica = null;
-    private ToolBar toolbarCalendario = null;
+    private Canvas canvasFabrica = null;
     private ToolItem botonControlDeTiempo;
     private Label labelFecha;
     private boolean actualizado = false;
+
     /**
 	 * This method initializes scAreaTrabajo
 	 *
@@ -112,16 +104,16 @@ public class MainWindow implements Sincronizado {
 		gUserProperties = new Group(sShell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		gUserProperties.setText("Propiedades del Jugador");
 		gUserProperties.setLayout(gridLayout2);
-		lJugador = new Label(gUserProperties, SWT.NONE);
+        Label lJugador = new Label(gUserProperties, SWT.NONE);
 		lJugador.setText("Jugador");
-		tJugador = new Text(gUserProperties, SWT.BORDER);
+        Text tJugador = new Text(gUserProperties, SWT.BORDER);
 		tJugador.setEditable(false);
 		tJugador.setText("Nombre Jugador");
-		checkInvertirLab = new Button(gUserProperties, SWT.CHECK);
+        Button checkInvertirLab = new Button(gUserProperties, SWT.CHECK);
 		checkInvertirLab.setText("Invertir en Laboratorio");
 		checkInvertirLab.setLayoutData(gridData1);
 		createComboFabrica();
-		bFabrica = new Button(gUserProperties, SWT.NONE);
+        Button bFabrica = new Button(gUserProperties, SWT.NONE);
 		bFabrica.setText("Fabrica");
 		bFabrica.setLayoutData(gridData2);
 		checkInvertirLab
@@ -153,7 +145,7 @@ public class MainWindow implements Sincronizado {
      * Crea la barra de herramientas del tiempo y su contenido
      */
     private void crearToolbarCalendario() {
-        toolbarCalendario = new ToolBar(sShell, SWT.BORDER);
+        ToolBar toolbarCalendario = new ToolBar(sShell, SWT.BORDER);
 
         labelFecha = new Label(sShell, SWT.PUSH | SWT.BORDER);
         
@@ -207,20 +199,20 @@ public class MainWindow implements Sincronizado {
 
 		gridLayout.horizontalSpacing = 1;
 		sShell = new Shell(SWT.V_SCROLL | SWT.SHELL_TRIM | SWT.H_SCROLL);
-		sShell.setText("Tecnincas de Diseño");
+		sShell.setText("Tecnincas de Diseï¿½o");
 		sShell.setMaximized(false);
 		sShell.setVisible(true);
 		sShell.setLayout(gridLayout);
         crearToolbarCalendario();
 		createScAreaTrabajo();
 		sShell.setSize(new Point(481, 382));
-		menuBar = new Menu(sShell, SWT.BAR);
+        Menu menuBar = new Menu(sShell, SWT.BAR);
 
 		MenuItem newItem = new MenuItem(menuBar, SWT.CASCADE);
 		newItem.setText("Archivo");
-		FileItem = new Menu(newItem);
-		FileItem.setVisible(true);
-		MenuItem newItem4 = new MenuItem(FileItem, SWT.PUSH);
+        Menu fileItem = new Menu(newItem);
+		fileItem.setVisible(true);
+		MenuItem newItem4 = new MenuItem(fileItem, SWT.PUSH);
 		newItem4.setText("Nuevo");
 		newItem4.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
 			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -230,30 +222,30 @@ public class MainWindow implements Sincronizado {
 				juegoNuevo();
 			}
 		});
-		MenuItem openItem = new MenuItem(FileItem, SWT.PUSH);
+		MenuItem openItem = new MenuItem(fileItem, SWT.PUSH);
 		openItem.setText("Abrir");
 		openItem.setEnabled(false);
-		MenuItem saveItem = new MenuItem(FileItem, SWT.PUSH);
+		MenuItem saveItem = new MenuItem(fileItem, SWT.PUSH);
 		saveItem.setText("Guardar");
 		saveItem.setEnabled(false);
-		MenuItem saveAllItem = new MenuItem(FileItem, SWT.PUSH);
+		MenuItem saveAllItem = new MenuItem(fileItem, SWT.PUSH);
 		saveAllItem.setText("Guardar todo");
 		saveAllItem.setEnabled(false);
 		@SuppressWarnings("unused")
-		MenuItem separatorFile = new MenuItem(FileItem, SWT.SEPARATOR);
-		newItem.setMenu(FileItem);
-		MenuItem exitItem = new MenuItem(FileItem, SWT.PUSH);
+		MenuItem separatorFile = new MenuItem(fileItem, SWT.SEPARATOR);
+		newItem.setMenu(fileItem);
+		MenuItem exitItem = new MenuItem(fileItem, SWT.PUSH);
 		exitItem.setText("Salir");
 		MenuItem Edit = new MenuItem(menuBar, SWT.CASCADE);
 		Edit.setText("Edicion");
-		EditItem = new Menu(Edit);
-		MenuItem copy = new MenuItem(EditItem, SWT.PUSH);
+        Menu editItem = new Menu(Edit);
+		MenuItem copy = new MenuItem(editItem, SWT.PUSH);
 		copy.setText("Copiar");
 		copy.setEnabled(false);
-		MenuItem paste = new MenuItem(EditItem, SWT.PUSH);
+		MenuItem paste = new MenuItem(editItem, SWT.PUSH);
 		paste.setText("Pegar");
 		paste.setEnabled(false);
-		Edit.setMenu(EditItem);
+		Edit.setMenu(editItem);
 		exitItem.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				sShell.close();
@@ -263,10 +255,10 @@ public class MainWindow implements Sincronizado {
 		});
 		MenuItem helpItem = new MenuItem(menuBar, SWT.CASCADE);
 		helpItem.setText("Ayuda");
-		HelpItem = new Menu(helpItem);
-		MenuItem about = new MenuItem(HelpItem, SWT.PUSH);
+        Menu helpItem1 = new Menu(helpItem);
+		MenuItem about = new MenuItem(helpItem1, SWT.PUSH);
 		about.setText("Acerca de...");
-		helpItem.setMenu(HelpItem);
+		helpItem.setMenu(helpItem1);
 		sShell.setMenuBar(menuBar);
 	}
 

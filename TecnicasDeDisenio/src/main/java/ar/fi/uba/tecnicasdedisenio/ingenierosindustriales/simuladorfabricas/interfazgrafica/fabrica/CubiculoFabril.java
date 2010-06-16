@@ -28,8 +28,9 @@ public class CubiculoFabril {
     }
 
     public void ubicarMateriaPrima(final Fuente fuente) throws CubiculoOcupadoExcetion {
-        if (estaOcupado())
+        if (estaOcupado()) {
             throw new CubiculoOcupadoExcetion();
+        }
         this.fuente = fuente;
     }
 
@@ -55,28 +56,33 @@ public class CubiculoFabril {
     }
 
     public Maquina obtenerFinDeCinta() throws CubiculoVacioException {
-        if (!puedeSerFinDeCinta())
+        if (!puedeSerFinDeCinta()) {
             throw new CubiculoVacioException();
+        }
         return maquina;
     }
 
     public Maquina obtenerMaquina() throws CubiculoVacioException {
-        if (maquina == null)
+        if (maquina == null) {
             throw new CubiculoVacioException();
+        }
         return maquina;
     }
 
     public Fuente obtenerFuente() throws CubiculoVacioException {
-        if (fuente == null)
+        if (fuente == null) {
             throw new CubiculoVacioException();
+        }
         return fuente;
     }
 
     public IFuente getFuente() throws CubiculoVacioException {
-        if (fuente != null)
+        if (fuente != null) {
             return fuente;
-        if (maquina != null)
+        }
+        if (maquina != null) {
             return maquina;
+        }
         throw new CubiculoVacioException();
     }
 
@@ -88,9 +94,10 @@ public class CubiculoFabril {
         cintasIncidentes = new ArrayList<CintaTransportadora>();
     }
 
-    public boolean eliminar(IFuente fuente) {
-        if (fuente == null)
+    public boolean eliminar(final IFuente fuente) {
+        if (fuente == null) {
             return false;
+        }
         if ((maquina == fuente) || this.fuente == fuente) {
             maquina = null;
             this.fuente = null;

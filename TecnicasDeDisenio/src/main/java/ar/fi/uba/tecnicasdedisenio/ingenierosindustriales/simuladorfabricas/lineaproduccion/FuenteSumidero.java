@@ -1,7 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
 /**
- * Container class que almacena dos m·quinas, o una m·quina y una fuente, que se 
+ * Container class que almacena dos m√°quinas, o una m√°quina y una fuente, que se 
  * encuentran conectadas por una cinta
  * @author santiago
  */
@@ -9,13 +9,13 @@ public class FuenteSumidero {
 	private IFuente origen;
 	private Maquina destino;
 	
-	public FuenteSumidero(IFuente origen, Maquina destino) {
+	public FuenteSumidero(final IFuente origen, final Maquina destino) {
 		super();
 		this.setOrigen(origen);
 		this.setDestino(destino);
 	}
 
-	public void setOrigen(IFuente origen) {
+	public void setOrigen(final IFuente origen) {
 		this.origen = origen;
 	}
 
@@ -23,7 +23,7 @@ public class FuenteSumidero {
 		return origen;
 	}
 
-	public void setDestino(Maquina destino) {
+	public void setDestino(final Maquina destino) {
 		this.destino = destino;
 	}
 
@@ -31,7 +31,7 @@ public class FuenteSumidero {
 		return destino;
 	}
 	
-	public Boolean contieneMaquina(Maquina maquina){
+	public Boolean contieneMaquina(final Maquina maquina){
 		return origen.equals(maquina) || destino.equals(maquina);
 	}
 	
