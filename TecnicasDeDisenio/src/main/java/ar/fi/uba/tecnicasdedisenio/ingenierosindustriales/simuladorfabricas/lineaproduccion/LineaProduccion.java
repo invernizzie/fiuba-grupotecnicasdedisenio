@@ -12,7 +12,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 public class LineaProduccion {
-	private static final int CANTIDAD_PRODUCIDA_FIJA = 10;
+	private static int CANTIDAD_PRODUCIDA_FIJA = 10;
 	
 	private Set<Maquina> maquinas;
 	private Set<Maquina> primerasMaquinas;
@@ -24,7 +24,7 @@ public class LineaProduccion {
 	private Jugador jugador;
 	private TipoMaquinaControlCalidad tipoControlDeCalidad;
 	
-	public LineaProduccion(final Jugador jugador) {
+	public LineaProduccion(Jugador jugador){
 		this.maquinas = new HashSet<Maquina>();
 		this.primerasMaquinas = new HashSet<Maquina>();
 		this.jugador = jugador;
@@ -33,14 +33,14 @@ public class LineaProduccion {
 		
 	}
 	
-	public void agregarMaquina(final Maquina maquina) {
+	public void agregarMaquina(Maquina maquina) {
 		
 		this.setCostoLinea(costoLinea + maquina.getCostoMaquina());
 		this.getMaquinas().add(maquina);
 		this.actualizarLinea();
 	}
 
-	public void eliminarMaquina(final Maquina maquina) {
+	public void eliminarMaquina(Maquina maquina) {
 		
 		this.setCostoLinea(costoLinea - maquina.getCostoMaquina());
 		this.getMaquinas().remove(maquina);
@@ -56,7 +56,7 @@ public class LineaProduccion {
 				this.primerasMaquinas.add(maquina);
 			}
 			
-			if (esUltimaMaquina(maquina)) {
+			if (esUltimaMaquina(maquina)){
 				ultimaMaquina = maquina;
 				this.contenedor = new Contenedor(maquina.getTipoProducto());
 				CintaTransportadora cinta = new CintaTransportadora(new Salida(), new Entrada());
@@ -67,19 +67,19 @@ public class LineaProduccion {
 		}
 	}
 
-	public boolean contieneMaquina(final Maquina maquina) {
+	public boolean contieneMaquina(Maquina maquina) {
 		return this.getMaquinas().contains(maquina);
 	}
 	
-	public Maquina obtenerUltimaMaquina() {
+	public Maquina obtenerUltimaMaquina(){
 		return this.ultimaMaquina;
 	}
 	
-	public boolean esPrimeraMaquina(final Maquina maquinaAVerificar) {
+	public boolean esPrimeraMaquina(Maquina maquinaAVerificar){
 		boolean esPrimera = false;
 		
-		if (maquinaAVerificar.getPrecedentes().isEmpty()
-                && !maquinaAVerificar.getMateriasPrimas().isEmpty()) {
+		if (maquinaAVerificar.getPrecedentes().isEmpty() &&
+				!maquinaAVerificar.getMateriasPrimas().isEmpty()){
 			esPrimera = true;
 		}
 		
@@ -93,11 +93,11 @@ public class LineaProduccion {
 	 * @param laboratorio
 	 * @return
 	 */
-	public boolean construyeProductoValido() {
+	public boolean construyeProductoValido(){
 		Maquina maquinaAVerificar = ultimaMaquina;
-		if (this.tipoControlDeCalidad.verificarTipo(ultimaMaquina)) {
+		if (this.tipoControlDeCalidad.verificarTipo(ultimaMaquina)){
 			// Kinda nasty, but works
-			maquinaAVerificar = ultimaMaquina.getPrecedentes().get(0);
+			maquinaAVerificar = ultimaMaquina.precedentes.get(0);
 		}
 		
 		return this.laboratorio.existeProcesoValido(maquinaAVerificar);
@@ -105,7 +105,7 @@ public class LineaProduccion {
 	
 	public void procesar() throws ProcesamientoException {
 		
-		if (this.maquinasActuales == null || this.maquinasActuales.isEmpty()) {
+		if (this.maquinasActuales == null || this.maquinasActuales.isEmpty()){
 			this.maquinasActuales = this.primerasMaquinas;
 		}
 		
@@ -116,27 +116,27 @@ public class LineaProduccion {
 		for (Maquina maquina : maquinasActuales) {
 			try {
 				
-				if (!maquina.getFuentes().isEmpty()) {
+				if (!maquina.getFuentes().isEmpty()){
 					for (Fuente fuente : maquina.getFuentes()) {
 						Float precioCompra = fuente.getTipoProducto().getPrecioCompra();
 						this.jugador.disminuirDinero(precioCompra);
 					}
 				}
 				
-				if (this.esUltimaMaquina(maquina)) {
+				if (this.esUltimaMaquina(maquina)){
 					productoValido = this.construyeProductoValido();
-				} else {
+				}else{
 					productoValido = true;
 				}
 				
 				Producto productoObtenido = maquina.procesar(productoValido);
 				
 				
-				if (maquina.getSiguiente() != null) {
+				if (maquina.getSiguiente() != null){
 					siguientes.add(maquina.getSiguiente());
 				}
 
-				if (this.esUltimaMaquina(maquina)) {
+				if (this.esUltimaMaquina(maquina)){
 					// Si se termin� la linea guardamos el producto en el contenedor
 					this.getContenedor().recibirProducto(productoObtenido, CANTIDAD_PRODUCIDA_FIJA);
 					// Y seteamos la siguiente m�quina en null para que vuelva a procesar desde el principio
@@ -148,14 +148,14 @@ public class LineaProduccion {
 				}
 				
 			} catch (EntradaInvalidaException e) {
-				throw new ProcesamientoException("No se pudo realizar el proceso", e);
+				throw new ProcesamientoException("No se pudo realizar el proceso",e);
 			}
 		}
 		
 		this.maquinasActuales = siguientes;
 	}
 
-	public void setCostoLinea(final Float costoLinea) {
+	public void setCostoLinea(Float costoLinea) {
 		this.costoLinea = costoLinea;
 	}
 
@@ -173,14 +173,14 @@ public class LineaProduccion {
 	 * @param maquinaAVerificar
 	 * @return
 	 */
-	private boolean esUltimaMaquina(final Maquina maquinaAVerificar) {
+	private boolean esUltimaMaquina(Maquina maquinaAVerificar){
 		
 		boolean esUltima = true;
 		
 		for (Maquina maquina : getMaquinas()) {
-			if (!maquina.equals(maquinaAVerificar)
-					&& !maquina.getPrecedentes().isEmpty()
-					&& maquina.getPrecedentes().contains(maquinaAVerificar)) {
+			if (!maquina.equals(maquinaAVerificar) &&
+					!maquina.getPrecedentes().isEmpty() && 
+					maquina.getPrecedentes().contains(maquinaAVerificar)){
 				esUltima = false;
 			}
 		}
@@ -196,54 +196,51 @@ public class LineaProduccion {
 	/**
 	 * Verifica si se tiene un ciclo en esa linea y si es asi rompe todas las maquinas.
 	 * */
-	public void validarCiclo() {
+	public void validarCiclo(){
 		boolean hayCiclo = false;
 		
 		/**
 		 * Recorre las maquinas y llama a ver si se asignaron mutuamente.
 		 */
-		for (Maquina maquina : getMaquinas()) {
-			for (Maquina maq : getMaquinas()) {
-				if (!maquina.equals(maq)) {
-					if (tienenAsignacionMutua(maquina, maq)) {
+		for (Maquina maquina : getMaquinas()){
+			for(Maquina maq : getMaquinas()){
+				if (!maquina.equals(maq))
+					if (tienenAsignacionMutua(maquina, maq)){
 						hayCiclo = true;
 					}
-                }
+						
 			}
 		}
 		
-		if (hayCiclo) {
-			for (Maquina maquina : getMaquinas()) {
+		if (hayCiclo)
+			for(Maquina maquina : getMaquinas())
 				maquina.forzarRotura();
-            }
-        }
 	}
 	
 	/**
-	 * Para dos maquinas ve si ambas estan asignadas a la otra como precedente.
-	 *
-	 * @param m1 Maquina cuyos que se cheuqeara contra los precedentes de m2
-	 * @param m2 Maquina cuyos que se cheuqeara contra los precedentes de m1
-	 * @return Si ambas se tienen asignadas devuelve true, si no false.
+	 * Para dos maquinas ve si alguna esta asignada en otra como precedente.
+	 * Si ambas se tienen asignadas entonces devuelve true, sino devuelve false.
+	 * @param m1
+	 * @param m2
+	 * @return
 	 */
-	public boolean tienenAsignacionMutua(final Maquina m1, final Maquina m2) {
-		return (compararMaquinaVSPrecedentes(m1, m2.getPrecedentes())
-                && compararMaquinaVSPrecedentes(m2, m1.getPrecedentes()));
+	public boolean tienenAsignacionMutua(Maquina m1, Maquina m2){
+		return (compararMaquinaVSPrecedentes(m1,m2.precedentes)&&compararMaquinaVSPrecedentes(m2,m1.precedentes));
 	}
 	
 	/**
-	 * Compara una maquina contra una lista de precedentes.
-	 * @param maquina Maquina a chequear contra precedentes
-	 * @param precedentes Precedentes contra los cuales chequear maquina
-	 * @return True si la maquina forma parte de los precedentes, si no false.
+	 * Compara una maquina contra distintos precedentes.
+	 * @param m
+	 * @param precedentes
+	 * @return
 	 */
-	public boolean compararMaquinaVSPrecedentes(final Maquina maquina, final List<Maquina> precedentes){
-		for (Maquina precedente : precedentes) {
-			if (precedente.equals(maquina)) {
+	public boolean compararMaquinaVSPrecedentes(Maquina m, List<Maquina> precedentes){
+		for(Maquina precedente : precedentes){
+			if (precedente.equals(m)){
 				return true;
 			}
-			if (precedente.getPrecedentes().size() > 0) {
-				return compararMaquinaVSPrecedentes(maquina, precedente.getPrecedentes());
+			if (precedente.getPrecedentes().size()>0){
+				return compararMaquinaVSPrecedentes(m,precedente.getPrecedentes());
 			}
 		}
 		return false;
