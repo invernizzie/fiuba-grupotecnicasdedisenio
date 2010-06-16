@@ -7,7 +7,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.cale
  * @author Esteban I. Invernizzi (invernizzie@gmail.com)
  *         Date: 29/05/2010
  */
-public class ContadorSincronizado implements Sincronizado {
+public class TestContadorSincronizado implements Sincronizado {
 
     public int notificacionesDiarias = 0;
     public int notificacionesSemanales = 0;
