@@ -96,6 +96,7 @@ public class Fabrica implements Sincronizado {
         return cinta;
     }
 
+
 	public CintaTransportadora conectarMaquina(final Fuente fuente, final Maquina maquina, final float longitud) {
 		if (!maquinas.contains(maquina)) {
 			this.comprarMaquina(maquina);
@@ -142,19 +143,13 @@ public class Fabrica implements Sincronizado {
 			if (!linea.contieneMaquina(origen)
 					&& !linea.contieneMaquina(destino)) {
 				maquinasEnLinea = false;
-            }
-			if(linea.contieneMaquina(origen) && !linea.contieneMaquina(destino) ){
+            } else if (linea.contieneMaquina(origen)) {
 				linea.agregarMaquina(destino);
 				maquinasEnLinea = true;
-			}
-			if(linea.contieneMaquina(destino) && !linea.contieneMaquina(origen) ){
+			} else if (linea.contieneMaquina(destino)) {
 				linea.agregarMaquina(origen);
 				maquinasEnLinea = true;
-			}
-			if(linea.contieneMaquina(origen) && linea.contieneMaquina(destino)){
-				linea.actualizarLinea();
-				maquinasEnLinea = true;
-			}
+            }
 		}
 		
 		/*
@@ -345,6 +340,7 @@ public class Fabrica implements Sincronizado {
 		try {
 			this.verificarJugadorAsignado();
 		} catch (FabricaOcupadaException e) {
+			//TODO Habria que sumarle el costo de las lineas de produccion.
 			this.getJugador().disminuirDinero(this.getCostoFabricaXMes());
 		}
 	}
@@ -383,6 +379,7 @@ public class Fabrica implements Sincronizado {
 		}
 	}
 
+    // TODO Eliminar repeticion de codigo con su sobrecarga para Maquinas
     private void limpiarCintas(final Fuente fuente) {
 		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
 		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
