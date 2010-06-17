@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 @Deprecated
 public class MainWindow implements Sincronizado {
 
-	private Shell sShell = null;  //  @jve:decl-index=0:visual-constraint="106,8"
+	private Shell sShell = null;
     private ScrolledComposite scAreaTrabajo = null;
 	private CTabFolder tabWorkingControls = null;
 	private Composite composite = null;

@@ -9,25 +9,26 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  *
  */
 public class Plancha extends Maquina {
+    private static final float COSTO_PLANCHA = 100F;
 
-	public Plancha(Float tasaDeFallos, Float tasaRotura) {
+    public Plancha(final Float tasaDeFallos, final Float tasaRotura) {
 		super(tasaDeFallos, tasaRotura);
-		this.setCostoMaquina(100F);
+		this.setCostoMaquina(COSTO_PLANCHA);
 	}
 	
 	@Override
-	public Plancha clone(){
+	public Plancha clone() {
 		return new Plancha(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
 	@Override
 	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(),"Planchado",0);
+		return new Producto(ValidadorProductos.instancia(), "Planchado", 0);
 	}
 	
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(),"planchado",this.getTasaDeFallos());
+		return new Producto(ValidadorProductos.instancia(), "planchado", this.getTasaDeFallos());
 	}
 
 	/**

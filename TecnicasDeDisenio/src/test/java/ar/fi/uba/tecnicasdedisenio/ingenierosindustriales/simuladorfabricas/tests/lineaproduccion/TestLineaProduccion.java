@@ -1,6 +1,4 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.tests.lineaproduccion;
-
-
 import junit.framework.Assert;
 
 import org.junit.After;
@@ -25,38 +23,40 @@ public class TestLineaProduccion {
 	private Fuente fuenteAgua;
 	private CintaTransportadora cinta;
 	private Fuente fuenteSal;
-	
-	@Before
+    private static final int DINERO_INICIAL = 3000;
+    private static final int DEFAULT_CANTIDAD = 100;
+
+    @Before
 	public void setUp() throws Exception {
-		Jugador jugador = new Jugador("Santiago", 3000);
-		jugador.setLaboratorio(new Laboratorio("Cocina",""));
+		Jugador jugador = new Jugador("Santiago", DINERO_INICIAL);
+		jugador.setLaboratorio(new Laboratorio("Cocina", ""));
 		this.linea = new LineaProduccion(jugador);
-		this.fuenteTrigo = new Fuente("trigo", 100, 
+		this.fuenteTrigo = new Fuente("trigo", DEFAULT_CANTIDAD, 
 				new Producto(ValidadorProductos.instancia(), "trigo", 0));
-		this.fuenteAgua = new Fuente("agua", 100, 
+		this.fuenteAgua = new Fuente("agua", DEFAULT_CANTIDAD,
 				new Producto(ValidadorProductos.instancia(), "agua", 0));	
-		this.fuenteSal = new Fuente("agua", 100, 
+		this.fuenteSal = new Fuente("agua", DEFAULT_CANTIDAD,
 				new Producto(ValidadorProductos.instancia(), "sal", 0));
 		this.cinta = new CintaTransportadora(0);
 	}
 
 	@Test
-	public void testAgregarPrimeraMaquina(){
+	public void testAgregarPrimeraMaquina() {
 		Maquina maquina = new Prensa(0F, 0F);
 		cinta.conectar(fuenteTrigo, maquina);
-		linea.agregarMaquina(maquina );
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		linea.agregarMaquina(maquina);
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina));
 		
-		Assert.assertTrue("La m·quina insertada no es la primera", 
+		Assert.assertTrue("La m√°quina insertada no es la primera", 
 							linea.esPrimeraMaquina(maquina));
 		
-		Assert.assertEquals("La m·quina insertada no es la ˙ltima", 
+		Assert.assertEquals("La m√°quina insertada no es la √∫ltima", 
 								linea.obtenerUltimaMaquina(), maquina);
 	}
 	
 	@Test
-	public void testAgregarDosMaquinas(){
+	public void testAgregarDosMaquinas() {
 		Maquina maquina = new Prensa(0F, 0F);
 		cinta.conectar(fuenteTrigo, maquina);
 		Maquina maquina2 = new Plancha(0F, 0F);
@@ -66,20 +66,20 @@ public class TestLineaProduccion {
 		linea.agregarMaquina(maquina);
 		linea.agregarMaquina(maquina2);
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina));
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina2));
 
-		Assert.assertTrue("La m·quina insertada no es la primera", 
+		Assert.assertTrue("La m√°quina insertada no es la primera", 
 							linea.esPrimeraMaquina(maquina));
 
-		Assert.assertEquals("La m·quina insertada no es la ˙ltima", maquina2, 
+		Assert.assertEquals("La m√°quina insertada no es la √∫ltima", maquina2, 
 								linea.obtenerUltimaMaquina());
 	}
 	
 	@Test
-	public void testAgregarTresMaquinas(){
+	public void testAgregarTresMaquinas() {
 		CintaTransportadora cintaMaquinas = new CintaTransportadora(0);
 		CintaTransportadora cintaPrensaAgua = new CintaTransportadora(0);
 		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora(0);
@@ -96,27 +96,27 @@ public class TestLineaProduccion {
 		linea.agregarMaquina(maquina2);
 		linea.agregarMaquina(maquina3);
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina));
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina2));
 
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina3));
 		
-		Assert.assertTrue("La m·quina insertada no es la primera", 
+		Assert.assertTrue("La m√°quina insertada no es la primera", 
 							linea.esPrimeraMaquina(maquina));
 
-		Assert.assertTrue("La m·quina insertada no es la primera", 
+		Assert.assertTrue("La m√°quina insertada no es la primera", 
 							linea.esPrimeraMaquina(maquina3));
 		
-		Assert.assertEquals("La m·quina insertada no es la ˙ltima", maquina2, 
+		Assert.assertEquals("La m√°quina insertada no es la √∫ltima", maquina2, 
 								linea.obtenerUltimaMaquina());
 		
 	}
 	
 	@Test
-	public void testAgregarCuatroMaquinas(){
+	public void testAgregarCuatroMaquinas() {
 		CintaTransportadora cintaMaquinas = new CintaTransportadora(0);
 		CintaTransportadora cintaPrensaAgua = new CintaTransportadora(0);
 		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora(0);
@@ -141,35 +141,35 @@ public class TestLineaProduccion {
 		linea.agregarMaquina(maquina3);
 		linea.agregarMaquina(maquina4);
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina));
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina2));
 
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina3));
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina4));
 		
-		Assert.assertTrue("La m·quina insertada no es la primera", 
+		Assert.assertTrue("La m√°quina insertada no es la primera", 
 							linea.esPrimeraMaquina(maquina));
 
-		Assert.assertTrue("La m·quina insertada no es la primera", 
+		Assert.assertTrue("La m√°quina insertada no es la primera", 
 							linea.esPrimeraMaquina(maquina3));
 		
-		Assert.assertFalse("La m·quina insertada es la primera", 
+		Assert.assertFalse("La m√°quina insertada es la primera", 
 							linea.esPrimeraMaquina(maquina4));
 		
-		Assert.assertEquals("La m·quina insertada no es la ˙ltima", maquina4, 
+		Assert.assertEquals("La m√°quina insertada no es la √∫ltima", maquina4, 
 								linea.obtenerUltimaMaquina());
 		
 	}
 	
 	
 	@Test
-	public void testAgregarCuatroMaquinasDesordenadas(){
+	public void testAgregarCuatroMaquinasDesordenadas() {
 		CintaTransportadora cintaMaquinas = new CintaTransportadora(0);
 		CintaTransportadora cintaPrensaAgua = new CintaTransportadora(0);
 		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora(0);
@@ -194,44 +194,44 @@ public class TestLineaProduccion {
 		linea.agregarMaquina(maquina2);
 		linea.agregarMaquina(maquina);
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina));
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina2));
 
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina3));
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una m·quina",
+		Assert.assertTrue("Se esperaba que la linea tuviera una m√°quina",
 							this.linea.contieneMaquina(maquina4));
 		
-		Assert.assertTrue("La m·quina insertada no es la primera", 
+		Assert.assertTrue("La m√°quina insertada no es la primera", 
 							linea.esPrimeraMaquina(maquina));
 
-		Assert.assertTrue("La m·quina insertada no es la primera", 
+		Assert.assertTrue("La m√°quina insertada no es la primera", 
 							linea.esPrimeraMaquina(maquina3));
 		
-		Assert.assertFalse("La m·quina insertada es la primera", 
+		Assert.assertFalse("La m√°quina insertada es la primera", 
 							linea.esPrimeraMaquina(maquina4));
 		
-		Assert.assertEquals("La m·quina insertada no es la ˙ltima", maquina4, 
+		Assert.assertEquals("La m√°quina insertada no es la √∫ltima", maquina4, 
 								linea.obtenerUltimaMaquina());
 		
 	}
 	
 	
 	@Test
-	public void testCostoLineaUnaMaquina(){
+	public void testCostoLineaUnaMaquina() {
 		Maquina maquina = new Prensa(0F, 0F);
-		linea.agregarMaquina(maquina );
+		linea.agregarMaquina(maquina);
 
-		Assert.assertEquals("El costo de la linea no es el mismo que el de la m·quina", 
+		Assert.assertEquals("El costo de la linea no es el mismo que el de la m√°quina", 
 								linea.getCostoLinea(), maquina.getCostoMaquina());
 	}
 	
 	@Test
-	public void testCostoLineaDosMaquinas(){
+	public void testCostoLineaDosMaquinas() {
 		Maquina maquina = new Prensa(0F, 0F);
 		Maquina maquina2 = new Plancha(0F, 0F);
 		linea.agregarMaquina(maquina);
@@ -239,7 +239,7 @@ public class TestLineaProduccion {
 		
 		float costoMaquinas = maquina.getCostoMaquina() + maquina2.getCostoMaquina();
 
-		Assert.assertEquals("El costo de la linea no es el mismo que el de la m·quinas", 
+		Assert.assertEquals("El costo de la linea no es el mismo que el de la m√°quinas", 
 								linea.getCostoLinea(), costoMaquinas);
 	}
 	

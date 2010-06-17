@@ -19,18 +19,18 @@ public class Contenedor {
 	private List<CintaTransportadora> cintas;
 	private List<Producto> productosRecibidos;
 	
-	public Contenedor(Producto producto){
+	public Contenedor(final Producto producto) {
 		this.producto = producto;
 		this.cintas = new LinkedList<CintaTransportadora>();
 		this.productosRecibidos = new LinkedList<Producto>();
 		this.cantidad = 0;
 	}
 	
-	public void agregarCinta(CintaTransportadora cinta){
+	public void agregarCinta(final CintaTransportadora cinta) {
 		this.cintas.add(cinta);
 	}
 	
-	public void recibirProducto(Producto productoRecibido, int cantidad) {
+	public void recibirProducto(final Producto productoRecibido, final int cantidad) {
 		this.cantidad += cantidad;
 		List<Producto> recibidos = Collections.nCopies(cantidad, productoRecibido);
 		this.productosRecibidos.addAll(recibidos);
@@ -40,11 +40,11 @@ public class Contenedor {
 		return cantidad;
 	}
 	
-	public int getCantidadProductosDesecho(){
+	public int getCantidadProductosDesecho() {
 		int cantidadDesecho = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (producto.getEstado().equalsIgnoreCase("Desecho")){
+			if (producto.getEstado().equalsIgnoreCase("Desecho")) {
 				cantidadDesecho++;
 			}
 		}
@@ -52,11 +52,11 @@ public class Contenedor {
 		return cantidadDesecho;
 	}
 	
-	public int getCantidadProductosDefectuoso(){
+	public int getCantidadProductosDefectuoso() {
 		int cantidadDefectuosos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (producto.getEstado().equalsIgnoreCase("Defectuoso")){
+			if (producto.getEstado().equalsIgnoreCase("Defectuoso")) {
 				cantidadDefectuosos++;
 			}
 		}
@@ -64,11 +64,11 @@ public class Contenedor {
 		return cantidadDefectuosos;
 	}
 	
-	public int getCantidadProductosValidos(){
+	public int getCantidadProductosValidos() {
 		int cantidadValidos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (producto.getEstado().equalsIgnoreCase(this.producto.getEstado())){
+			if (producto.getEstado().equalsIgnoreCase(this.producto.getEstado())) {
 				cantidadValidos++;
 			}
 		}
@@ -76,11 +76,11 @@ public class Contenedor {
 		return cantidadValidos;
 	}
 	
-	public int getCantidadProductosInvalidos(){
+	public int getCantidadProductosInvalidos() {
 		int cantidadInvalidos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (!producto.getEstado().equalsIgnoreCase(this.producto.getEstado())){
+			if (!producto.getEstado().equalsIgnoreCase(this.producto.getEstado())) {
 				cantidadInvalidos++;
 			}
 		}
@@ -89,25 +89,25 @@ public class Contenedor {
 	}
 	
 	/**
-	 * Devuelve un producto que representa el tipo de producto que provee esta máquina.
-	 * @return
+	 * Devuelve un producto que representa el tipo de producto que provee esta mÃ¡quina.
+	 * @return Un producto del tipo que devuelve esta mÃ¡quina
 	 */
 	public Producto getTipoProducto() {
 		return producto;
 	}
 
-	public void removerCinta(CintaTransportadora cintaTransportadora) {
+	public void removerCinta(final CintaTransportadora cintaTransportadora) {
 		this.cintas.remove(cintaTransportadora);
 		
 	}
 	
 	/**
-	 * Calcula cuanto se ganó con la producción teniendo en cuenta la siguiente fórmula
+	 * Calcula cuanto se ganÃ³ con la producciÃ³n teniendo en cuenta la siguiente fÃ³rmula
 	 * 
 	 * (1 - [% de piezas defectuosas])2 X [Precio del producto en el mercado] = [Precio por pieza producida].
-	 * @return
+	 * @return Resultado del cÃ¡lculo
 	 */
-	public Float calcularGanancia(){
+	public Float calcularGanancia() {
 		
 		Float ganancia = 0F;
 		Float precioMercado = this.producto.getPrecioMercado();
@@ -118,7 +118,7 @@ public class Contenedor {
 		
 		ganancia = precioProduccion * this.getCantidadProductosValidos();
 		
-		return ganancia ;
+		return ganancia;
 	}
 	
 	public void vaciar() {
@@ -128,7 +128,7 @@ public class Contenedor {
 	
 	/**
 	 * Devuelve el porcentaje de piezas defectuosas producidas por la linea.
-	 * @return
+	 * @return Porcentaje de piezas defectuosas producidas
 	 */
 	private Float calcularPorcentajePiezasDefectuosas() {
 		int cantidadValidos = this.getCantidadProductosValidos();
@@ -136,9 +136,9 @@ public class Contenedor {
 		int totalProduccion = cantidadValidos + cantidadDefectuosos;
 		
 		Float porcentajeDefectuosos = cantidadDefectuosos * 100F;
-		if (totalProduccion > 0){
+		if (totalProduccion > 0) {
 			porcentajeDefectuosos /= totalProduccion;
-		}else{
+		} else {
 			porcentajeDefectuosos = 0F;
 		}
 		

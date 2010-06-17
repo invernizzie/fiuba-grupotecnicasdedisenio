@@ -13,7 +13,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.labo
 
 public class DialogoNuevaPartida {
 
-	private Shell shellPartida = null;  //  @jve:decl-index=0:visual-constraint="126,20"
+	private Shell shellPartida = null;
 	private Label lUsuario = null;
 	private Text tUsuario = null;
 	private Button bCreate = null;

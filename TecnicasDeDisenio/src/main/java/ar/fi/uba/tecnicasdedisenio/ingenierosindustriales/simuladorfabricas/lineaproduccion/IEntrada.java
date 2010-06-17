@@ -7,6 +7,6 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 
 
 public interface IEntrada {
-	public void agregarProducto(Producto producto);
-	public List<Producto> getProdcutos();
+	void agregarProducto(Producto producto);
+	List<Producto> getProdcutos();
 }

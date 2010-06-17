@@ -14,6 +14,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.cale
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.RecursosAplicacion;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.custom.CTabFolder;
@@ -29,21 +30,22 @@ public class VistaPrincipal implements Sincronizado, Observer {
 
 	private static final int DINERO_PARA_GANAR = 50000;
 	public static final int SEGUNDOS_POR_DIA = 1;
+    private static final int CANTIDAD_FABRICAS = 5;
+    private static final int PASO_SUPERFICIE = 15000;
+    private static final int PASO_PRECIO_COMPRA = 1000;
+    private static final int PASO_PRECIO_ALQUILER = 150;
+    private static final int DEFAULT_ANCHO = 792;
+    private static final int DEFAULT_ALTO = 459;
 
 	private boolean actualizado = false;
-	private Shell shellPrincipal = null;  //  @jve:decl-index=0:visual-constraint="79,7"
+	private Shell shellPrincipal = null;
 	private Menu menuBar = null;
-	private Group groupTiempo = null;
-	private Group groupJugador = null;
+    private Group groupJugador = null;
 	private CTabFolder tabFolderFabrica = null;
-	private Menu submenuJuego = null;
-	private Menu submenuAyuda = null;
-	private Button buttonTimer = null;
-	private Label labelJugador = null;
-	private Text textTime = null;
+    private Button buttonTimer = null;
+    private Text textTime = null;
 	private Text textJugador = null;
-	private Label labelDineroAcum = null;
-	private Text textDineroAcum = null;
+    private Text textDineroAcum = null;
 	private Button checkBoxInvertirLabo = null;
 	private Combo comboFabrica = null;
 	private AreaFabrica areaFabrica = null;
@@ -55,36 +57,25 @@ public class VistaPrincipal implements Sincronizado, Observer {
     private NumberFormat formateador = NumberFormat.getInstance();
     private Set<Widget> botonesPartida = new HashSet<Widget>();
 	private Composite compositeLaboratorio = null;
-	private Label labelTipoLabo = null;
-	private Text textTipoLabo = null;
-	private Label labelDineroAcumLabo = null;
-	private Text textDineroAcumLabo = null;
+    private Text textTipoLabo = null;
+    private Text textDineroAcumLabo = null;
 	private Button buttonImagenLabo = null;
-	private Image imagenLaboratorio = null;
-	private Display display = null;
+    private Display display = null;
 
-	/**
+    /**
 	 * Carga las distintas fabricas standard.
 	 */
 	public void cargarOpcionesFabrica(){
 		int i;
-		String[] fab = new String[5];
+		String[] fab = new String[CANTIDAD_FABRICAS];
 		
-		/*
-		 * Fabrica 0: Tamanio 100, Costo Compra 1000, Costo Alquiler 150, Cantidad Lineas 1.
-		 * Fabrica 1: Tamanio 200, Costo Compra 2000, Costo Alquiler 300, Cantidad Lineas 2.
-		 * Fabrica 2: Tamanio 300, Costo Compra 3000, Costo Alquiler 450, Cantidad Lineas 3.
-		 * Fabrica 3: Tamanio 400, Costo Compra 4000, Costo Alquiler 600, Cantidad Lineas 4.
-		 * Fabrica 4: Tamanio 500, Costo Compra 5000, Costo Alquiler 750, Cantidad Lineas 5.
-		 */
-		fabricas = new HashMap<String,Fabrica>();
+		fabricas = new HashMap<String, Fabrica>();
 		Fabrica fabrica = null;
-		for (i=0;i<5;i++){
-			fabrica = new Fabrica((i+1)*15000,(i+1)*1000, (i+1)*150);
-			fabricas.put(fabrica.toString(),fabrica);
-			fab[i]=fabrica.toString();
+		for (i = 0; i < CANTIDAD_FABRICAS; i++){
+			fabrica = new Fabrica((i + 1) * PASO_SUPERFICIE, (i + 1) * PASO_PRECIO_COMPRA, (i + 1) * PASO_PRECIO_ALQUILER);
+			fabricas.put(fabrica.toString(), fabrica);
+			fab[i] = fabrica.toString();
 		}
-		//comboFabrica = new Combo(groupJugador, SWT.NONE);
 		comboFabrica.removeAll();
 		comboFabrica.setItems(fab);
 		comboFabrica.setText(comboFabrica.getItem(0));
@@ -93,7 +84,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 
 	
     @Override
-    public void notificar(Evento evento) {
+    public void notificar(final Evento evento) {
         String textoControlDeTiempo = null;
         switch (evento) {
             case INICIO_TIEMPO:
@@ -111,8 +102,9 @@ public class VistaPrincipal implements Sincronizado, Observer {
                 break;
         }
 
-        if (textoControlDeTiempo != null)
+        if (textoControlDeTiempo != null) {
         	buttonTimer.setText(textoControlDeTiempo);
+        }
     }    
 	
 	public void run() {
@@ -128,8 +120,9 @@ public class VistaPrincipal implements Sincronizado, Observer {
 
 		while (!this.shellPrincipal.isDisposed()) {
 			try {
-                if (!display.readAndDispatch())
+                if (!display.readAndDispatch()) {
                     display.sleep();
+                }
                 if (this.necesitaActualizacion()) {
                     this.actualizarDatosTiempo();
                     this.actualizarDatosJugador();
@@ -143,7 +136,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		display.dispose();
 	}
 
-    public void setJugador(Jugador jugador) {
+    public void setJugador(final Jugador jugador) {
     	this.jugador = jugador;
         areaFabrica.setFabrica(jugador.getFabrica());
         cambiarHabilitacionBotonesDePartida(jugador != null);
@@ -156,14 +149,14 @@ public class VistaPrincipal implements Sincronizado, Observer {
     
 	
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void update(final Observable observable, final Object arg) {
 		forzarActualizacion();
 	}
 	
 	/**
     * Resetea el calendario para que vuelva a empezar.
     */
-    public void resetearCalendario(){
+    public void resetearCalendario() {
     	Calendario.instancia().inicializar();
     	Calendario.instancia().registrar(this);
     	Calendario.instancia().registrar(ValidadorProductos.instancia());
@@ -184,31 +177,31 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		createTabFolderFabrica();
 		createGroupJugador();
 		shellPrincipal.setLayout(gridLayout);
-		shellPrincipal.setSize(new Point(792, 459));
-		CreateMenuBar();
+		shellPrincipal.setSize(new Point(DEFAULT_ANCHO, DEFAULT_ALTO));
+		createMenuBar();
 		shellPrincipal.setMenuBar(menuBar);
 	}
 
-	private void CreateMenuBar(){
+	private void createMenuBar() {
 		menuBar = new Menu(shellPrincipal, SWT.BAR);
 		menuBar.setEnabled(true);
         MenuItem submenuItemJuego = crearSubmenu(menuBar, "Juego");
         MenuItem submenuItemAyuda = crearSubmenu(menuBar, "Ayuda");
-		submenuAyuda = new Menu(submenuItemAyuda);
+        Menu submenuAyuda = new Menu(submenuItemAyuda);
         MenuItem pushContenido = crearItemDeMenu(submenuAyuda, "Contenido");
 		@SuppressWarnings("unused")
 		MenuItem separatorAyuda = new MenuItem(submenuAyuda, SWT.SEPARATOR);
         MenuItem pushAcercaDe = crearItemDeMenu(submenuAyuda, "Acerca de...");
 		submenuItemAyuda.setMenu(submenuAyuda);
-		submenuJuego = new Menu(submenuItemJuego);
+        Menu submenuJuego = new Menu(submenuItemJuego);
 		submenuJuego.setVisible(true);
 		submenuJuego.setEnabled(true);
 		submenuItemJuego.setMenu(submenuJuego);
         MenuItem pushJuegoNuevo = crearItemDeMenu(submenuJuego, "Juego Nuevo");
-		pushJuegoNuevo.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
-			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
+		pushJuegoNuevo.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(final SelectionEvent selectionEvent) {
 			}
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+			public void widgetSelected(final SelectionEvent selectionEvent) {
 				System.out.println("widgetDefaultSelected()");
 				juegoNuevo();
 			}
@@ -221,29 +214,29 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		pushGuardarComo.setEnabled(false);
 		new MenuItem(submenuJuego, SWT.SEPARATOR);
         MenuItem pushSalir = crearItemDeMenu(submenuJuego, "Salir");
-		pushSalir.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+		pushSalir.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(final SelectionEvent e) {
 				Calendario.instancia().detener();
 				shellPrincipal.close();
 			}
-			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
+			public void widgetDefaultSelected(final SelectionEvent e) {
 			}
 		});
-		pushContenido.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				 MessageBox messageBox = new MessageBox(shellPrincipal, SWT.OK|SWT.ICON_INFORMATION);	 
-				 String mensaje = new String ("Contenido:\n");
+		pushContenido.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(final SelectionEvent e) {
+				 MessageBox messageBox = new MessageBox(shellPrincipal, SWT.OK | SWT.ICON_INFORMATION);
+				 String mensaje = "Contenido:\n";
 				 mensaje += "TP Tecnicas de Diseño 2010 - Simulador de Fábricas";
 				 messageBox.setMessage(mensaje);
 				 messageBox.open();
 			}
-			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
+			public void widgetDefaultSelected(SelectionEvent selectionEvent) {
 			}
 		});
-		pushAcercaDe.addSelectionListener(new org.eclipse.swt.events.SelectionListener() {
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				 MessageBox messageBox = new MessageBox(shellPrincipal, SWT.OK|SWT.ICON_INFORMATION);	 
-				 String mensaje = new String ("Creditos:\n");
+		pushAcercaDe.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(final SelectionEvent selectionEvent) {
+				 MessageBox messageBox = new MessageBox(shellPrincipal, SWT.OK | SWT.ICON_INFORMATION);
+				 String mensaje = "Creditos:\n";
 				 mensaje += "Esteban Invernizzi\n"; 
 				 mensaje += "Gustavo Meller\n"; 
 				 mensaje += "Santiago Risaro\n"; 
@@ -251,19 +244,19 @@ public class VistaPrincipal implements Sincronizado, Observer {
 				 messageBox.setMessage(mensaje);
 				 messageBox.open();
 			}
-			public void widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent e) {
+			public void widgetDefaultSelected(final SelectionEvent selectionEvent) {
 			}
 		});
 
 	}
 
-    private MenuItem crearItemDeMenu(Menu padre, String texto) {
+    private MenuItem crearItemDeMenu(final Menu padre, final String texto) {
         MenuItem itemDeMenu = new MenuItem(padre, SWT.PUSH);
         itemDeMenu.setText(texto);
         return itemDeMenu;
     }
 
-    private MenuItem crearSubmenu(Menu padre, String texto) {
+    private MenuItem crearSubmenu(final Menu padre, final String texto) {
         MenuItem submenu = new MenuItem(padre, SWT.CASCADE);
         submenu.setText(texto);
         return submenu;
@@ -285,7 +278,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		gridData1.verticalAlignment = GridData.CENTER;
 		GridLayout gridLayout1 = new GridLayout();
 		gridLayout1.numColumns = 2;
-		groupTiempo = new Group(shellPrincipal, SWT.NONE);
+        Group groupTiempo = new Group(shellPrincipal, SWT.NONE);
 		groupTiempo.setText("Timer");
 		groupTiempo.setLayoutData(gridData1);
 		groupTiempo.setLayout(gridLayout1);
@@ -297,7 +290,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		textTime.setText(Calendario.instancia().fechaAsString());
 		buttonTimer.addSelectionListener(new SelectionListener() {
             @Override
-            public void widgetSelected(SelectionEvent selectionEvent) {
+            public void widgetSelected(final SelectionEvent selectionEvent) {
                 if (!Calendario.instancia().estaIniciado()) {
                 	jugador.getFabrica().validarCiclos();
                 	Calendario.instancia().iniciar();
@@ -306,9 +299,8 @@ public class VistaPrincipal implements Sincronizado, Observer {
                     buttonTimer.setEnabled(true);
                     cambiarHabilitacionControlesDeFabrica(false);
                     areaFabrica.cambiarHabilitacionBotones(false);
-                }
-                else{
-                    if (Calendario.instancia().estaPausado()){
+                } else {
+                    if (Calendario.instancia().estaPausado()) {
                     	jugador.getFabrica().validarCiclos();
                     	Calendario.instancia().reanudar();
                 		cambiarHabilitacionBotonesDePartida(false);
@@ -316,8 +308,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
                         buttonTimer.setEnabled(true);
                         cambiarHabilitacionControlesDeFabrica(false);
                         areaFabrica.cambiarHabilitacionBotones(false);
-                    }
-                    else{
+                    } else {
                         Calendario.instancia().pausar();
                         cambiarHabilitacionBotonesDePartida(true);
                     }
@@ -325,13 +316,13 @@ public class VistaPrincipal implements Sincronizado, Observer {
             }
 
             @Override
-            public void widgetDefaultSelected(SelectionEvent selectionEvent) {}
+            public void widgetDefaultSelected(final SelectionEvent selectionEvent) { }
         });
 		
 		botonesPartida.add(buttonTimer);
 	}
 
-    private void cambiarHabilitacionControlesDeFabrica(boolean habilitados) {
+    private void cambiarHabilitacionControlesDeFabrica(final boolean habilitados) {
         buttonVender.setEnabled(habilitados);
         buttonComprar.setEnabled(habilitados);
         buttonAlquilar.setEnabled(habilitados);
@@ -361,24 +352,24 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		groupJugador.setText("Datos del Jugador");
 		groupJugador.setLayoutData(gridData2);
 		groupJugador.setLayout(gridLayout2);
-		labelJugador = new Label(groupJugador, SWT.NONE);
+        Label labelJugador = new Label(groupJugador, SWT.NONE);
 		labelJugador.setText("Jugador");
 		textJugador = new Text(groupJugador, SWT.BORDER);
 		textJugador.setEditable(false);
-		labelDineroAcum = new Label(groupJugador, SWT.NONE);
+        Label labelDineroAcum = new Label(groupJugador, SWT.NONE);
 		labelDineroAcum.setText("Dinero Acumulado");
 		textDineroAcum = new Text(groupJugador, SWT.BORDER);
 		textDineroAcum.setLayoutData(gridData4);
 		textDineroAcum.setEditable(false);
 		checkBoxInvertirLabo = new Button(groupJugador, SWT.CHECK);
 		checkBoxInvertirLabo.setText("Invertir en Laboratorio");
-		checkBoxInvertirLabo.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				if (checkBoxInvertirLabo.getSelection())
+		checkBoxInvertirLabo.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(final SelectionEvent selectionEvent) {
+				if (checkBoxInvertirLabo.getSelection()) {
 					getJugador().habilitarLaboratorio();
-				else
+                } else {
 					getJugador().deshabilitarLaboratorio();
-				
+                }
 			}
 		});
 		
@@ -422,26 +413,26 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		gridData6.horizontalAlignment = GridData.FILL;
 		
 		buttonAlquilar = new Button(groupJugador, SWT.NONE);
-		buttonAlquilar.setText("Alquilar F�brica");
-		buttonAlquilar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+		buttonAlquilar.setText("Alquilar F�brica");
+		buttonAlquilar.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(final SelectionEvent e) {
 				alquilar();
 			}
 		});
 		
 		buttonComprar = new Button(groupJugador, SWT.NONE);
-		buttonComprar.setText("Comprar F�brica");
-		buttonComprar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+		buttonComprar.setText("Comprar F�brica");
+		buttonComprar.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(final SelectionEvent e) {
 				comprar();
 			}
 		});
 		
 		buttonVender = new Button(groupJugador, SWT.NONE);
-		buttonVender.setText("Vender F�brica");
+		buttonVender.setText("Vender F�brica");
 		buttonVender.setEnabled(false);
-		buttonVender.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+		buttonVender.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(final SelectionEvent e) {
 				vender();
 			}
 		});
@@ -480,7 +471,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
     /**
      * Crea un juego nuevo.
      */
-	private void juegoNuevo(){
+	private void juegoNuevo() {
 		DialogoNuevaPartida partida = new DialogoNuevaPartida(this);
 		partida.hacerVisible();
 		System.out.println("Se Invoca la pantalla de Creacion");
@@ -513,7 +504,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		gridLayout1.numColumns = 2;
 		compositeLaboratorio  = new Composite(tabFolderFabrica, SWT.NONE);
 		compositeLaboratorio.setLayout(gridLayout1);
-		labelTipoLabo = new Label(compositeLaboratorio, SWT.NONE);
+        Label labelTipoLabo = new Label(compositeLaboratorio, SWT.NONE);
 		labelTipoLabo.setText("Tipo Laboratorio");
 		labelTipoLabo.setVisible(true);
 		labelTipoLabo.setLayoutData(gridData2);
@@ -521,7 +512,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		textTipoLabo.setVisible(true);
 		textTipoLabo.setText("<Tipo Laboratorio>");
 		textTipoLabo.setLayoutData(gridData5);
-		labelDineroAcumLabo = new Label(compositeLaboratorio, SWT.NONE);
+        Label labelDineroAcumLabo = new Label(compositeLaboratorio, SWT.NONE);
 		labelDineroAcumLabo.setText("Dinero Acumulado");
 		labelDineroAcumLabo.setEnabled(true);
 		labelDineroAcumLabo.setLayoutData(gridData3);
@@ -535,10 +526,11 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		buttonImagenLabo.setLayoutData(gridData1);
 	}
 	
-    private void cambiarHabilitacionBotonesDePartida(boolean habilitados) {
-        for (Widget boton: botonesPartida)
+    private void cambiarHabilitacionBotonesDePartida(final boolean habilitados) {
+        for (Widget boton : botonesPartida) {
             ((Control) boton).setEnabled(habilitados);
-        if (this.getJugador()!=null){
+        }
+        if (this.getJugador() != null) {
         	this.buttonAlquilar.setEnabled(!this.getJugador().hasFabrica());
         	this.buttonComprar.setEnabled(!this.getJugador().hasFabrica());
         	this.comboFabrica.setEnabled(!this.getJugador().hasFabrica());
@@ -553,8 +545,9 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	 * Actualiza los datos de un jugador en la pantalla.
 	 */
     private void actualizarDatosJugador() {
-        if (getJugador() == null)
+        if (getJugador() == null) {
             return;
+        }
     	textJugador.setText(getJugador().getNombre());
 		textDineroAcum.setText(formateador.format(getJugador().getDineroActual()));
 		actualizarDatosLaboratorio();
@@ -563,23 +556,26 @@ public class VistaPrincipal implements Sincronizado, Observer {
     /**
      * Verifica si termina el juego.
      */
-    private void verificarFinalJuego(){
-    	if (getJugador()==null)
+    private void verificarFinalJuego() {
+    	if (getJugador() == null) {
     		return;
-    	if (getJugador().getDineroActual()<0)
+        }
+    	if (getJugador().getDineroActual() < 0) {
         	this.finalizarJuego(" PERDIO al quedarse sin dinero.");
-		if (getJugador().getDineroActual()>=DINERO_PARA_GANAR)
+        }
+		if (getJugador().getDineroActual() >= DINERO_PARA_GANAR) {
 			this.finalizarJuego(" GANO al cumplir el objetivo monetario.");
+        }
     }
     
     /**
      * Indica el final de un juego.
      * @param mensaje
      */
-    private void finalizarJuego(String mensaje){
+    private void finalizarJuego(final String mensaje) {
     	MessageBox messageBox =
-			   new MessageBox(shellPrincipal, SWT.OK|SWT.ICON_INFORMATION);
-			 messageBox.setMessage("El jugador "+this.getJugador().getNombre() + mensaje);
+			   new MessageBox(shellPrincipal, SWT.OK | SWT.ICON_INFORMATION);
+			 messageBox.setMessage("El jugador " + this.getJugador().getNombre() + mensaje);
 			 messageBox.open();
 		cambiarHabilitacionBotonesDePartida(false);
 		Calendario.instancia().detener();
@@ -588,11 +584,10 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		this.notificarActualizacion();
     }
     
-    private void actualizarDatosLaboratorio(){
+    private void actualizarDatosLaboratorio() {
     	textTipoLabo.setText(getJugador().getLaboratorio().getTipo());
     	textDineroAcumLabo.setText(Float.toString(getJugador().getLaboratorio().getDineroAcumulado()));
-    	//imagenLaboratorio = new Image(display, dirImagenes+getJugador().getLaboratorio().getNombreImagen());
-    	imagenLaboratorio = new Image(display, RecursosAplicacion.instance()
+        Image imagenLaboratorio = new Image(display, RecursosAplicacion.instance()
                 .getResourceAsStream("images/" + getJugador().getLaboratorio().getNombreImagen()));
     	buttonImagenLabo.setImage(imagenLaboratorio);
     }
@@ -600,19 +595,18 @@ public class VistaPrincipal implements Sincronizado, Observer {
     /**
 	 * Actualiza los datos del tiempo en la pantalla.
 	 */
-    private void actualizarDatosTiempo(){
+    private void actualizarDatosTiempo() {
     	this.textTime.setText(Calendario.instancia().fechaAsString());
     	notificarActualizacion();
     }
     
     /**
 	 * Vende la fábrica del jugador.
-	 * */
-	private void vender(){
+	 */
+	private void vender() {
 		try {
 			this.getJugador().verificarFabricaAsignada();
-		} 
-		catch (JugadorConFabricaException e) {
+		} catch (JugadorConFabricaException e) {
 			this.getJugador().getFabrica().vender();
 			cambiarHabilitacionBotonesDePartida(true);
             areaFabrica.setFabrica(null);
@@ -621,30 +615,26 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	
 	/**
 	 * Compra la fábrica seleccionada.
-	 * */
-	private void comprar(){
+	 */
+	private void comprar() {
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());
 		try {
 			fabrica.comprar(this.getJugador());
 			cambiarHabilitacionBotonesDePartida(true);
             areaFabrica.setFabrica(fabrica);
-		} 
-		catch (DineroInsuficienteException e) {
+		} catch (DineroInsuficienteException e) {
 			 MessageBox messageBox =
-				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+				   new MessageBox(shellPrincipal, SWT.OK | SWT.CANCEL | SWT.ICON_ERROR);
 				 messageBox.setMessage("No se tiene dinero suficiente.");
 				 messageBox.open();
-		}
-		catch (FabricaOcupadaException e) {
+		} catch (FabricaOcupadaException e) {
 			 MessageBox messageBox =
-				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+				   new MessageBox(shellPrincipal, SWT.OK | SWT.CANCEL | SWT.ICON_ERROR);
 				 messageBox.setMessage("La fábrica ya se encuentra comprada por otro jugador.");
 				 messageBox.open();
-		} 
-		catch (JugadorConFabricaException e) {
-			
+		} catch (JugadorConFabricaException e) {
 			 MessageBox messageBox =
-				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+				   new MessageBox(shellPrincipal, SWT.OK | SWT.CANCEL | SWT.ICON_ERROR);
 				 messageBox.setMessage("El jugador ya tiene una fábrica.");
 				 messageBox.open();
 		}
@@ -653,33 +643,29 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	
 	/**
 	 * Alquila la fábrica seleccionada.
-	 * */
-	private void alquilar(){
+	 */
+	private void alquilar() {
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());
 		try {
 			fabrica.alquilar(this.getJugador());
 			cambiarHabilitacionBotonesDePartida(true);
             areaFabrica.setFabrica(fabrica);
-		}
-		catch (FabricaOcupadaException e) {
+		} catch (FabricaOcupadaException e) {
 			 MessageBox messageBox =
-				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+				   new MessageBox(shellPrincipal, SWT.OK | SWT.CANCEL | SWT.ICON_ERROR);
 				 messageBox.setMessage("La fábrica ya se encuentra comprada por otro jugador.");
 				 messageBox.open();
-		} 
-		catch (JugadorConFabricaException e) {
+		} catch (JugadorConFabricaException e) {
 			 MessageBox messageBox =
-				   new MessageBox(shellPrincipal, SWT.OK|SWT.CANCEL|SWT.ICON_ERROR);
+				   new MessageBox(shellPrincipal, SWT.OK | SWT.CANCEL | SWT.ICON_ERROR);
 				 messageBox.setMessage("El jugador ya tiene una fábrica.");
 				 messageBox.open();
-
 		}
 		
 	}
     
-	public static void main(String [ ] args){
+	public static void main(final String[] args) {
 		VistaPrincipal ventana = new VistaPrincipal();
 		ventana.run();
 	}
 }
-

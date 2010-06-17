@@ -5,8 +5,8 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 
 /**
  * Representa a un proceso en particular.
- * Un un conjunto ordenado de tipos de m·quinas y materias primas, simboliza
- * a un proceso de producciÛn, una receta para producir un producto.
+ * Un un conjunto ordenado de tipos de m√°quinas y materias primas, simboliza
+ * a un proceso de producci√≥n, una receta para producir un producto.
  * Tiene un costo de descubrimiento.
  *
  * @author Gustavo A. Meller (gmeller@gmail.com)
@@ -14,14 +14,14 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 
 public class Proceso {
 	
-	TipoMaquina tipoMaquinaFinal;
+	private TipoMaquina tipoMaquinaFinal;
 	private float costo;
 	
-	public Proceso(float costo) {
+	public Proceso(final float costo) {
 		this.setCosto(costo);
 	}
 
-	public void setMaquinaFinal(TipoMaquina maquina) {
+	public void setMaquinaFinal(final TipoMaquina maquina) {
 		this.tipoMaquinaFinal = maquina;
 	}
 
@@ -29,7 +29,7 @@ public class Proceso {
 		return tipoMaquinaFinal;
 	}
 	
-	public void setCosto(float costo) {
+	public void setCosto(final float costo) {
 		this.costo = costo;
 	}
 
@@ -39,20 +39,20 @@ public class Proceso {
 	
 	/**
 	 * Si la oferta es mayor o igual al costo del proceso indica que lo puede habilitar.
-	 * @param oferta
-	 * @return
+	 * @param oferta Valor de la oferta
+	 * @return Verdadero si la oferta es suficiente
 	 */
-	public boolean sePuedeHabilitar(float oferta){
-		return this.getCosto()<=oferta;
+	public boolean sePuedeHabilitar(final float oferta) {
+		return this.getCosto() <= oferta;
 	}
 	
 	/**
-	 * Dada la maquina final de una linea de producciÛn verifica si un proceso (receta)
-	 * es igual a una lÌnea de producciÛn.
+	 * Dada la maquina final de una linea de producciÔøΩn verifica si un proceso (receta)
+	 * es igual a una lÔøΩnea de producciÔøΩn.
 	 * @param maquinaFinalLinea
 	 * @return
 	 */
-	public boolean esProcesoIgualALinea(Maquina maquinaFinalLinea) {
+	public boolean esProcesoIgualALinea(final Maquina maquinaFinalLinea) {
 		return this.getMaquinaFinal().equals(maquinaFinalLinea);
 	}
 	

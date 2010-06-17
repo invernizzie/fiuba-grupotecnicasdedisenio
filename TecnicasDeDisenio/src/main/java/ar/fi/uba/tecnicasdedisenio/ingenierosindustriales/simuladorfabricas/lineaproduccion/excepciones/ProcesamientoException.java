@@ -8,15 +8,15 @@ public class ProcesamientoException extends Exception {
 		super();
 	}
 
-	public ProcesamientoException(String message, Throwable cause) {
+	public ProcesamientoException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 
-	public ProcesamientoException(String message) {
+	public ProcesamientoException(final String message) {
 		super(message);
 	}
 
-	public ProcesamientoException(Throwable cause) {
+	public ProcesamientoException(final Throwable cause) {
 		super(cause);
 	}
 	

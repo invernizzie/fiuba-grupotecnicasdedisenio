@@ -12,15 +12,15 @@ public class InstaladorDeCintas extends Instalador {
     private boolean dibujando = false;
     private int primerX, primerY;
 
-    public InstaladorDeCintas(EspacioFabril espacioFabril) {
+    public InstaladorDeCintas(final EspacioFabril espacioFabril) {
         super(espacioFabril);
     }
 
     @Override
-    public void doMouseMove(int x, int y) { }
+    public void doMouseMove(final int x, final int y) { }
 
     @Override
-    public void doMouseDown(int x, int y) {
+    public void doMouseDown(final int x, final int y) {
         try {
             if (getEspacioFabril().puedeComenzarCintaEn(x, y)) {
                 dibujando = true;
@@ -33,10 +33,11 @@ public class InstaladorDeCintas extends Instalador {
     }
 
     @Override
-    public void doMouseUp(int x, int y) {
+    public void doMouseUp(final int x, final int y) {
 
-        if (!dibujando)
+        if (!dibujando) {
             return;
+        }
 
         try {
             getEspacioFabril().crearCinta(primerX, primerY, x, y);
