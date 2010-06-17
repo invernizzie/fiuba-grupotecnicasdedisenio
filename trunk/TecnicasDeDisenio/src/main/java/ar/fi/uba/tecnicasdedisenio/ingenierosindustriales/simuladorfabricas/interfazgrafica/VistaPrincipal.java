@@ -422,7 +422,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		gridData6.horizontalAlignment = GridData.FILL;
 		
 		buttonAlquilar = new Button(groupJugador, SWT.NONE);
-		buttonAlquilar.setText("Alquilar FÃ¡brica");
+		buttonAlquilar.setText("Alquilar Fábrica");
 		buttonAlquilar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				alquilar();
@@ -430,7 +430,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		});
 		
 		buttonComprar = new Button(groupJugador, SWT.NONE);
-		buttonComprar.setText("Comprar FÃ¡brica");
+		buttonComprar.setText("Comprar Fábrica");
 		buttonComprar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				comprar();
@@ -438,7 +438,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		});
 		
 		buttonVender = new Button(groupJugador, SWT.NONE);
-		buttonVender.setText("Vender FÃ¡brica");
+		buttonVender.setText("Vender Fábrica");
 		buttonVender.setEnabled(false);
 		buttonVender.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
