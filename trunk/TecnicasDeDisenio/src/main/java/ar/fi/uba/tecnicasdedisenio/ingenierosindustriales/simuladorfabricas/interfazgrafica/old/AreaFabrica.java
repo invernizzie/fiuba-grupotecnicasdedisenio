@@ -21,8 +21,8 @@ import org.eclipse.swt.layout.FillLayout;
 @Deprecated
 public class AreaFabrica {
 
-	private Shell shellAreaDibujo = null;  //  @jve:decl-index=0:visual-constraint="109,17"
-	private Canvas canvas = null;  //  @jve:decl-index=0:visual-constraint="263,47"
+	private Shell shellAreaDibujo = null;
+	private Canvas canvas = null;
 	private Group groupControl = null;
 	private Button buttonCinta = null;
 	private Button buttonMaquina = null;

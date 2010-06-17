@@ -10,25 +10,26 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  */
 
 public class Horno extends Maquina {
+    private static final float COSTO_HORNO = 100F;
 
-	public Horno(Float tasaDeFallos, Float tasaRotura) {
+    public Horno(final Float tasaDeFallos, final Float tasaRotura) {
 		super(tasaDeFallos, tasaRotura);
-		this.setCostoMaquina(100F);
+		this.setCostoMaquina(COSTO_HORNO);
 	}
 	
 	@Override
-	public Horno clone(){
+	public Horno clone() {
 		return new Horno(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
 	@Override
 	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(),"Horneado",0);
+		return new Producto(ValidadorProductos.instancia(), "Horneado", 0);
 	}
 	
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(),"Horneado",this.getTasaDeFallos());
+		return new Producto(ValidadorProductos.instancia(), "Horneado", this.getTasaDeFallos());
 	}
 
 	/**

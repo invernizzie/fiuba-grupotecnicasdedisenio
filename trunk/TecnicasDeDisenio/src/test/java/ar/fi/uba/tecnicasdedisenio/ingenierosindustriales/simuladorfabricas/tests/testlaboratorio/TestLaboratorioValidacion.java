@@ -11,24 +11,25 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class TestLaboratorioValidacion {
-	private Laboratorio laboratorio = new Laboratorio("Comida","");
-	private Proceso proceso = new Proceso(1000);
-	
-	@Test
-	public void testProcesoSinTipoMaquina(){
+    
+    private static final int COSTO_1 = 1000;
+    private static final int COSTO_2 = 1500;
+
+	private Laboratorio laboratorio = new Laboratorio("Comida", "");
+	private Proceso proceso = new Proceso(COSTO_1);
+
+    @Test
+	public void testProcesoSinTipoMaquina() {
 		Assert.assertNull("Tiene una maquina asignada", proceso.getMaquinaFinal());
 	}
 	
 	@Test
-	public void testProcesoConTipoMaquina(){
+	public void testProcesoConTipoMaquina() {
 		TipoMaquina tipoMaquina = new TipoMaquinaPrensa();
 		proceso.setMaquinaFinal(tipoMaquina);
 		Assert.assertNotNull("No tiene una maquina asignada", proceso.getMaquinaFinal());
-		Assert.assertEquals("No son la misma maquina", proceso.getMaquinaFinal(),tipoMaquina);
+		Assert.assertEquals("No son la misma maquina", proceso.getMaquinaFinal(), tipoMaquina);
 	}
-	
-	
-	
 	
 	@Test
 	public void testExisteProcesoValido(){
@@ -36,13 +37,13 @@ public class TestLaboratorioValidacion {
 		Maquina maquina = null;
 		ValidadorProductos val = ValidadorProductos.instancia();
 		
-		proceso = new Proceso(1500);
+		proceso = new Proceso(COSTO_2);
 		maq = new TipoMaquinaPrensa();
 		maq.addPrecedente(new TipoMaquinaPlancha());
 		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
 		
-		proceso = new Proceso(1000);
+		proceso = new Proceso(COSTO_1);
 		maq = new TipoMaquinaPrensa();
 		maq.getPrecedentes().add(new TipoMaquinaPlancha());
 		maq.getPrecedentes().add(new TipoMaquinaPrensa());
@@ -68,8 +69,7 @@ public class TestLaboratorioValidacion {
 		maquina.addMateriaPrima(new Producto(val, "trigo", 0));
 		maquina.addMateriaPrima(new Producto(val, "agua", 0));
 
-		
-		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));		
+		Assert.assertTrue("Deberia haber un proceso valido", laboratorio.existeProcesoValido(maquina));
 
 		maquina = new Prensa(0F, 0F);
 		maquina.addPrecedente(new Prensa(0F, 0F));
@@ -80,10 +80,10 @@ public class TestLaboratorioValidacion {
 		maquina.getPrecedentes().get(1).addPrecedente(new Plancha(0F, 0F));
 		maquina.getPrecedentes().get(1).addMateriaPrima(new Producto(val, "harina", 0));
 		
-		Assert.assertFalse("No debería haber un proceso valido",laboratorio.existeProcesoValido(maquina));
+		Assert.assertFalse("No deber?a haber un proceso valido", laboratorio.existeProcesoValido(maquina));
 		
 		
-		proceso = new Proceso(1000);
+		proceso = new Proceso(COSTO_1);
 		maq = new TipoMaquinaPrensa();
 		maq.addPrecedente(new TipoMaquinaPlancha());
 		maq.addPrecedente(new TipoMaquinaPrensa());
@@ -95,13 +95,13 @@ public class TestLaboratorioValidacion {
 		proceso.setMaquinaFinal(maq);
 		laboratorio.getProcesosHabilitados().add(proceso);
 		
-		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));
+		Assert.assertTrue("Deberia haber un proceso valido", laboratorio.existeProcesoValido(maquina));
 		
 		
 		maquina = new Prensa(0F, 0F);
 		maquina.addPrecedente(new Plancha(0F, 0F));
 		
-		Assert.assertTrue("Deberia haber un proceso valido",laboratorio.existeProcesoValido(maquina));
+		Assert.assertTrue("Deberia haber un proceso valido", laboratorio.existeProcesoValido(maquina));
 		
 	}
 	

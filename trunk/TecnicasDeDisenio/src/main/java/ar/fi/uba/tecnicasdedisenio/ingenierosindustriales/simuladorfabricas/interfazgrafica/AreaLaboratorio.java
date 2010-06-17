@@ -18,16 +18,10 @@ import org.eclipse.swt.widgets.Button;
 
 public class AreaLaboratorio {
 
-	private Shell sShellLaboratorio = null;  //  @jve:decl-index=0:visual-constraint="89,-5"
+	private Shell sShellLaboratorio = null;
 	private CTabFolder cTabFolderLaboratorio = null;
 	private Composite compositeLaboratorio = null;
-	private Label labelTipoLaboratorio = null;
-	private Text textTipoLaboratorio = null;
-	private Label labelDineroAcumulado = null;
-	private Text textDineroAcumulado = null;
-	private Button buttonImagenLaboratorio = null;
-	private Display display = null;
-	private Image imagenLaboratorio = null;
+    private Image imagenLaboratorio = null;
 	
     public void run() {
     	createSShellLaboratorio();
@@ -38,7 +32,7 @@ public class AreaLaboratorio {
 	 *
 	 */
 	private void createSShellLaboratorio() {
-		display = new Display();
+        Display display = new Display();
 		sShellLaboratorio = new Shell(display);
 		imagenLaboratorio = new Image(display, RecursosAplicacion.instance().getResourceAsStream("lab.jpg"));
 		sShellLaboratorio.setVisible(true);
@@ -106,23 +100,23 @@ public class AreaLaboratorio {
 		gridLayout1.numColumns = 2;
 		compositeLaboratorio = new Composite(cTabFolderLaboratorio, SWT.NONE);
 		compositeLaboratorio.setLayout(gridLayout1);
-		labelTipoLaboratorio = new Label(compositeLaboratorio, SWT.NONE);
+        Label labelTipoLaboratorio = new Label(compositeLaboratorio, SWT.NONE);
 		labelTipoLaboratorio.setText("Tipo Laboratorio");
 		labelTipoLaboratorio.setVisible(true);
 		labelTipoLaboratorio.setLayoutData(gridData2);
-		textTipoLaboratorio = new Text(compositeLaboratorio, SWT.BORDER | SWT.READ_ONLY);
+        Text textTipoLaboratorio = new Text(compositeLaboratorio, SWT.BORDER | SWT.READ_ONLY);
 		textTipoLaboratorio.setVisible(true);
 		textTipoLaboratorio.setText("<Tipo Laboratorio>");
 		textTipoLaboratorio.setLayoutData(gridData5);
-		labelDineroAcumulado = new Label(compositeLaboratorio, SWT.NONE);
+        Label labelDineroAcumulado = new Label(compositeLaboratorio, SWT.NONE);
 		labelDineroAcumulado.setText("Dinero Acumulado");
 		labelDineroAcumulado.setEnabled(true);
 		labelDineroAcumulado.setLayoutData(gridData3);
-		textDineroAcumulado = new Text(compositeLaboratorio, SWT.BORDER);
+        Text textDineroAcumulado = new Text(compositeLaboratorio, SWT.BORDER);
 		textDineroAcumulado.setEditable(false);
 		textDineroAcumulado.setText("<Dinero Acumulado>");
 		textDineroAcumulado.setLayoutData(gridData4);
-		buttonImagenLaboratorio = new Button(compositeLaboratorio, SWT.PUSH);
+        Button buttonImagenLaboratorio = new Button(compositeLaboratorio, SWT.PUSH);
 		buttonImagenLaboratorio.setImage(imagenLaboratorio);
 		buttonImagenLaboratorio.setSelection(true);
 		buttonImagenLaboratorio.setVisible(true);

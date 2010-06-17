@@ -3,6 +3,6 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lin
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 public interface ISalida {
-	public void asignarProducto(Producto producto);
-	public Producto obtenerProducto();
+	void asignarProducto(Producto producto);
+	Producto obtenerProducto();
 }

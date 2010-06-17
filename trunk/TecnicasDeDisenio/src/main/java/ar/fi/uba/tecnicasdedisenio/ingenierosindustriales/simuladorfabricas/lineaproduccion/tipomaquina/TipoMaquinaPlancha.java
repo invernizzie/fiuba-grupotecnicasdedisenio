@@ -11,14 +11,14 @@ public class TipoMaquinaPlancha extends TipoMaquina {
 	
     private Plancha plancha;
     
-	public TipoMaquinaPlancha(ComparadorDeMaquinas comparador) {
+	public TipoMaquinaPlancha(final ComparadorDeMaquinas comparador) {
 		super();
 		this.setComparador(comparador);
 		plancha = new Plancha(TREINTA_PORCIENTO, UNO_PORCIENTO);
 		
 	}
 	
-	public TipoMaquinaPlancha(){
+	public TipoMaquinaPlancha() {
 		this(new ComparadorDeMaquinasSimple());
 	}
 
@@ -29,7 +29,7 @@ public class TipoMaquinaPlancha extends TipoMaquina {
 	}
 
 	@Override
-	public Boolean verificarTipo(Maquina maquina) {
+	public Boolean verificarTipo(final Maquina maquina) {
 		return (this.getComparador().compare(maquina, plancha) == 0);
 	}
 }

@@ -16,37 +16,39 @@ import org.eclipse.swt.widgets.Shell;
  *         Date: 05/06/2010
  */
 public class DialogoMensaje {
-   
-	public DialogoMensaje(String mensaje) {
-        Display display = Display.getCurrent();
-        final Shell dialog = new Shell (SWT.DIALOG_TRIM);
-        Label label = new Label (dialog, SWT.NONE);
-        label.setText (mensaje);
-        Button okButton = new Button (dialog, SWT.PUSH);
-        okButton.setText ("&Ok");
+    private static final int MARGEN = 8;
 
-        FormLayout form = new FormLayout ();
-        form.marginWidth = form.marginHeight = 8;
-        dialog.setLayout (form);
-        FormData okData = new FormData ();
-        okData.top = new FormAttachment(label, 8);
-        okButton.setLayoutData (okData);
+    public DialogoMensaje(final String mensaje) {
+        Display display = Display.getCurrent();
+        final Shell dialog = new Shell(SWT.DIALOG_TRIM);
+        Label label = new Label(dialog, SWT.NONE);
+        label.setText(mensaje);
+        Button okButton = new Button(dialog, SWT.PUSH);
+        okButton.setText("&Ok");
+
+        FormLayout form = new FormLayout();
+        form.marginWidth = MARGEN;
+        form.marginHeight = MARGEN;
+        dialog.setLayout(form);
+        FormData okData = new FormData();
+        okData.top = new FormAttachment(label, MARGEN);
+        okButton.setLayoutData(okData);
         okButton.addSelectionListener(new SelectionListener() {
             @Override
-            public void widgetSelected(SelectionEvent selectionEvent) {
+            public void widgetSelected(final SelectionEvent selectionEvent) {
                 dialog.close();
             }
 
             @Override
-            public void widgetDefaultSelected(SelectionEvent selectionEvent) {}
+            public void widgetDefaultSelected(final SelectionEvent selectionEvent) { }
         });
 
-        dialog.setDefaultButton (okButton);
-        dialog.pack ();
-        dialog.open ();
+        dialog.setDefaultButton(okButton);
+        dialog.pack();
+        dialog.open();
 
-        while (!dialog.isDisposed ()) {
-            if (!display.readAndDispatch ()) display.sleep ();
+        while (!dialog.isDisposed()) {
+            if (!display.readAndDispatch()) { display.sleep(); }
         }
     }
 }

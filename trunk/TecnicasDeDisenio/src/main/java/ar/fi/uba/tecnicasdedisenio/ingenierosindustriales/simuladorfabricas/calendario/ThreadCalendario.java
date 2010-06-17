@@ -14,7 +14,11 @@ import java.util.Date;
 // Acceso de paquete
 class ThreadCalendario extends Thread {
 
-    Calendario calendario;
+    private static final int DIAS_POR_SEMANA = 7;
+    private static final int MIL = 1000;
+    private static final int PAUSA_MINIMA = 10;
+
+    private Calendario calendario;
 
     /**
      * Bucle de ejecucion del hilo.
@@ -25,18 +29,20 @@ class ThreadCalendario extends Thread {
      */
     @Override
     public void run() {
-        int i = 7;
+        int i = DIAS_POR_SEMANA;
         while (calendario.esValido()) {
             try {
                 while (calendario.estaPausado()) {
                     sleep(1);
-                    if (!calendario.esValido())
+                    if (!calendario.esValido()) {
                         break;
+                    }
                 }
                 Date inicio = new Date();
-                while ((new Date().getTime() - inicio.getTime() < 1000 * calendario.getSegundosPorDia())
-                        && calendario.esValido() && !calendario.estaPausado())
-                    sleep(10);
+                while ((new Date().getTime() - inicio.getTime() < MIL * calendario.getSegundosPorDia())
+                        && calendario.esValido() && !calendario.estaPausado()) {
+                    sleep(PAUSA_MINIMA);
+                }
 
                 if (!calendario.esValido() || calendario.estaPausado())
                     continue;
@@ -46,20 +52,20 @@ class ThreadCalendario extends Thread {
 
                 calendario.notificar(Evento.COMIENZO_DE_DIA);
 
-                if ((i % 7) == 0) {
+                if ((i % DIAS_POR_SEMANA) == 0) {
                     calendario.notificar(Evento.COMIENZO_DE_SEMANA);
-                    i -= 7;
+                    i -= DIAS_POR_SEMANA;
                 }
                 i++;
 
-                if (mesAnterior != calendario.getVirtualCalendar().get(Calendar.MONTH))
+                if (mesAnterior != calendario.getVirtualCalendar().get(Calendar.MONTH)) {
                     calendario.notificar(Evento.COMIENZO_DE_MES);
-            } catch (InterruptedException e) { /* ?? */ }
+                }
+            } catch (InterruptedException ignored) { }
         }
     }
     
-    // Acceso de paquete
-    ThreadCalendario(Calendario calendario) {
+    ThreadCalendario(final Calendario calendario) {
         this.calendario = calendario;
     }
 }

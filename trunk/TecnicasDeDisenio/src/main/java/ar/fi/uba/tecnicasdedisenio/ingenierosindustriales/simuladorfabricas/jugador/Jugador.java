@@ -25,19 +25,20 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 public class Jugador extends Observable implements Sincronizado {
 	
 	private static final float PORCENTAJE_INVERSION_LABORATORIO = 10;
+    private static final int CIEN = 100;
 	
 	private float dineroActual;
 	private Laboratorio laboratorio;
 	private Fabrica fabrica;
 	private String nombre;
-	
-	public Jugador(String nombre, float dineroActual){
+
+    public Jugador(final String nombre, final float dineroActual) {
 		this.setDineroActual(dineroActual);
 		this.setNombre(nombre);
 		Calendario.instancia().registrar(this);
 	}
 	
-	public void setLaboratorio(Laboratorio laboratorio){
+	public void setLaboratorio(final Laboratorio laboratorio) {
 		this.laboratorio = laboratorio;
 		this.setChanged();
 		this.notifyObservers();
@@ -47,7 +48,7 @@ public class Jugador extends Observable implements Sincronizado {
 		return laboratorio;
 	}
 
-	public void setDineroActual(float dineroActual) {
+	public void setDineroActual(final float dineroActual) {
 		this.dineroActual = dineroActual;
 		this.setChanged();
 		this.notifyObservers();
@@ -58,10 +59,10 @@ public class Jugador extends Observable implements Sincronizado {
 	}
 	
 	public boolean hasFabrica(){
-		return (this.getFabrica()!=null);
+		return (this.getFabrica() != null);
 	}
 	
-	public void habilitarLaboratorio(){
+	public void habilitarLaboratorio() {
 		this.getLaboratorio().setHabilitado(true);
 	}
 	
@@ -71,34 +72,32 @@ public class Jugador extends Observable implements Sincronizado {
 	
 	/**
 	 * Trata de invertir un porcentaje de dinero en el laboratorio.
-	 * @param porcentaje
+	 * @param porcentaje Porcentaje del dinero en tenencia a invertir
 	 */
-	public void invertirDineroLaboratorio(float porcentaje){
-		try{
-			this.getLaboratorio().invertir(this.getDineroActual()*porcentaje/100);
-			this.setDineroActual(this.getDineroActual()-this.getDineroActual()*porcentaje/100);
-		}
-		catch(LaboratorioInhabilitadoException e){
-		}
+	public void invertirDineroLaboratorio(float porcentaje) {
+		try {
+			this.getLaboratorio().invertir(this.getDineroActual() * porcentaje / CIEN);
+			this.setDineroActual(this.getDineroActual() - this.getDineroActual() * porcentaje / CIEN);
+		} catch(LaboratorioInhabilitadoException ignored) { }
 	}
 	
-	public void agregarMaquina(Maquina maquina){
+	public void agregarMaquina(final Maquina maquina) {
 		this.getFabrica().comprarMaquina(maquina);
 	}
 	
-	public void agregarFuente(Fuente fuente){
+	public void agregarFuente(final Fuente fuente) {
 		this.getFabrica().agregarFuente(fuente);
 	}
 	
-	public void conectarMaquina(Fuente fuente, Maquina maquina, float longitud){
+	public void conectarMaquina(final Fuente fuente, final Maquina maquina, final float longitud) {
 		this.getFabrica().conectarMaquina(fuente, maquina, longitud);
 	}
 	
-	public void conectarMaquina(Maquina origen, Maquina destino, float longitud){
+	public void conectarMaquina(final Maquina origen, final Maquina destino, final float longitud) {
 		this.getFabrica().conectarMaquina(origen, destino, longitud);
 	}
 
-	public void setFabrica(Fabrica fabrica) {
+	public void setFabrica(final Fabrica fabrica) {
 		this.fabrica = fabrica;
 		this.setChanged();
 		this.notifyObservers();
@@ -109,65 +108,65 @@ public class Jugador extends Observable implements Sincronizado {
 	}
 	
 	/**
-	 * Compra una f·brica.
-	 * @param fabrica
+	 * Compra una f√°brica.
+	 * @param fabrica F√°brica a comprar
 	 */
-	public void comprarFabrica(Fabrica fabrica){
+	public void comprarFabrica(final Fabrica fabrica) {
 		this.disminuirDinero(fabrica.getCostoCompra());
 		this.setFabrica(fabrica);
 	}
 	
 	/**
-	 * Alquila una f·brica.
-	 * @param fabrica
+	 * Alquila una f√°brica.
+	 * @param fabrica F√°brica a comprar
 	 */
-	public void alquilarFabrica(Fabrica fabrica){
+	public void alquilarFabrica(final Fabrica fabrica) {
 		this.setFabrica(fabrica);
 		this.setChanged();
 	}
 	
 	/**
-	 * Verifica la existencia de una f·brica asignada a un jugador.
-	 * @throws JugadorConFabricaException
+	 * Verifica la existencia de una f√°brica asignada a un jugador.
+	 * @throws JugadorConFabricaException Si el jugador ya tiene f√°brica
 	 */
-	public void verificarFabricaAsignada() throws JugadorConFabricaException{
-		if (this.getFabrica()!=null)
+	public void verificarFabricaAsignada() throws JugadorConFabricaException {
+		if (this.getFabrica() != null)
 			throw new JugadorConFabricaException();
 	}
 	
 	/**
 	 * Verifica si el dinero que tiene es mayor a un costo.
-	 * @param costo
-	 * @throws DineroInsuficienteException
+	 * @param costo Costo contra el cual comprar el dinero del jugador
+	 * @throws DineroInsuficienteException Si el dinero es insuficiente 
 	 */
-	public void verificarDineroSuficiente(float costo) throws DineroInsuficienteException{
-		if (this.getDineroActual()< costo)
+	public void verificarDineroSuficiente(final float costo) throws DineroInsuficienteException {
+		if (this.getDineroActual() < costo) {
 			throw new DineroInsuficienteException();
+        }
 	}
 	
 	/**
-	 * El jugador deja de tener una f·brica y recupera parte del dinero que gastÛ.
-	 * @param ganancia
+	 * El jugador deja de tener una f√°brica y recupera parte del dinero que gast√≥.
+	 * @param ganancia Precio de venta (dinero obtenido)
 	 */
-	public void venderFabrica(float ganancia){
-		try{
+	public void venderFabrica(final float ganancia) {
+		try {
 			this.verificarFabricaAsignada();
-		}
-		catch(JugadorConFabricaException e){
+		} catch (JugadorConFabricaException e) {
 			this.aumentarDinero(ganancia);
 			this.setFabrica(null);
 		}
 	}
 	
-	public void aumentarDinero(float dinero){
-		this.setDineroActual(this.getDineroActual()+dinero);
+	public void aumentarDinero(final float dinero) {
+		this.setDineroActual(this.getDineroActual() + dinero);
 	}
 	
-	public void disminuirDinero(float dinero){
-		this.setDineroActual(this.getDineroActual()-dinero);
+	public void disminuirDinero(final float dinero) {
+		this.setDineroActual(this.getDineroActual() - dinero);
 	}
 
-	public void setNombre(String nombre) {
+	public void setNombre(final String nombre) {
 		this.nombre = nombre;
 		this.setChanged();
 	}
@@ -177,9 +176,9 @@ public class Jugador extends Observable implements Sincronizado {
 	}
 
 	@Override
-	public void notificar(Evento evento) {
-		if (evento==Evento.COMIENZO_DE_MES)
+	public void notificar(final Evento evento) {
+		if (evento == Evento.COMIENZO_DE_MES) {
 			this.invertirDineroLaboratorio(PORCENTAJE_INVERSION_LABORATORIO);
-		
+        }
 	}
 }

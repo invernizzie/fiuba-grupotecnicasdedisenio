@@ -10,25 +10,26 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  */
 
 public class Mezcladora extends Maquina {
+    private static final float COSTO_MEZCLADORA = 100F;
 
-	public Mezcladora(Float tasaDeFallos, Float tasaRotura) {
+    public Mezcladora(final Float tasaDeFallos, final Float tasaRotura) {
 		super(tasaDeFallos, tasaRotura);
-		this.setCostoMaquina(100F);
+		this.setCostoMaquina(COSTO_MEZCLADORA);
 	}
 		
 	@Override
-	public Mezcladora clone(){
+	public Mezcladora clone() {
 		return new Mezcladora(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
 	@Override
 	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(),"Mezclado",0);
+		return new Producto(ValidadorProductos.instancia(), "Mezclado", 0);
 	}
 	
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(),"Mezclado",this.getTasaDeFallos());
+		return new Producto(ValidadorProductos.instancia(), "Mezclado", this.getTasaDeFallos());
 	}
 
 	/**

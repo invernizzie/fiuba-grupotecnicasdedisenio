@@ -8,13 +8,13 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 public class ControlCalidad extends Maquina {
 
 	
-	public ControlCalidad(float tasaDeFallos, float tasaRotura) {
+	public ControlCalidad(final float tasaDeFallos, final float tasaRotura) {
 		super(tasaDeFallos, tasaRotura);
 		this.setCostoMaquina(200F);
 	}
 	
 	@Override
-	public ControlCalidad clone(){
+	public ControlCalidad clone() {
 		return new ControlCalidad(this.getTasaDeFallos(), this.getTasaRotura());
 	}
 
@@ -44,8 +44,8 @@ public class ControlCalidad extends Maquina {
 	protected Producto realizarProceso() {
 		Producto salida = this.getProductos().get(0); 
 		
-		if (salida.getEstado().equals("Defectuoso")){
-			salida = new Producto(ValidadorProductos.instancia(),"Desecho", 0);
+		if (salida.getEstado().equals("Defectuoso")) {
+			salida = new Producto(ValidadorProductos.instancia(), "Desecho", 0);
 		}
 		
 		return salida;

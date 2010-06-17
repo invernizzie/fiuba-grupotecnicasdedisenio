@@ -24,7 +24,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
  * @author Gustavo A. Meller (gmeller@gmail.com)
  */
 
-public class Fabrica implements Sincronizado{
+public class Fabrica implements Sincronizado {
 
 	private List<Maquina> maquinas;
 	private List<LineaProduccion> lineas;
@@ -35,8 +35,9 @@ public class Fabrica implements Sincronizado{
 	private int metrosCuadrados;
 	private Jugador jugador;
 	private float costoFabricaXMes;
+    private static final double OCHENTA_PORCIENTO = 0.8;
 
-	public Fabrica(int metrosCuadrados, float costoCompra, float costoAlquiler) {
+    public Fabrica(final int metrosCuadrados, final float costoCompra, final float costoAlquiler) {
 		this.maquinas = new ArrayList<Maquina>();
 		this.lineas = new ArrayList<LineaProduccion>();
 		this.fuentes = new ArrayList<Fuente>();
@@ -47,45 +48,45 @@ public class Fabrica implements Sincronizado{
 		this.setCostoFabricaXMes(0);
 	}
 
-	public void agregarFuente(Fuente fuente) {
+	public void agregarFuente(final Fuente fuente) {
 		this.fuentes.add(fuente);
 	}
 	
-	public void comprarMaquina(Maquina maquina) {
+	public void comprarMaquina(final Maquina maquina) {
 		this.getJugador().disminuirDinero(maquina.getCostoMaquina());
 		agregarMaquina(maquina);
 	}
 
-    public void agregarMaquina(Maquina maquina) {
+    public void agregarMaquina(final Maquina maquina) {
         maquinas.add(maquina);
     }
 	
-	public void venderMaquina(Maquina maquina) {
+	public void venderMaquina(final Maquina maquina) {
 		eliminarMaquina(maquina);
 		this.getJugador().aumentarDinero(maquina.obtenerCostoVenta());
 	}
 
-    public void eliminarMaquina(Maquina maquina) {
+    public void eliminarMaquina(final Maquina maquina) {
         limpiarCintas(maquina);
         limpiarLineas(maquina);
         maquinas.remove(maquina);
     }
 
-    public void eliminarFuente(Fuente fuente) {
+    public void eliminarFuente(final Fuente fuente) {
         limpiarCintas(fuente);
         fuentes.remove(fuente);
     }
     
-    public void repararMaquina(Maquina maquina) {
+    public void repararMaquina(final Maquina maquina) {
         getJugador().disminuirDinero(maquina.reparar());
     }
 
-    public CintaTransportadora conectarMaquina(IFuente fuente, Maquina maquina, float longitud) {
+    public CintaTransportadora conectarMaquina(final IFuente fuente, final Maquina maquina, final float longitud) {
     	CintaTransportadora cinta = null;
-        if (fuente instanceof Fuente){
-        	cinta = conectarMaquina((Fuente)fuente, maquina, longitud);
-        }else{
-        	cinta = conectarMaquina((Maquina)fuente, maquina, longitud);
+        if (fuente instanceof Fuente) {
+        	cinta = conectarMaquina((Fuente) fuente, maquina, longitud);
+        } else {
+        	cinta = conectarMaquina((Maquina) fuente, maquina, longitud);
         }
         
         FuenteSumidero par = new FuenteSumidero(fuente, maquina);
@@ -95,8 +96,8 @@ public class Fabrica implements Sincronizado{
     }
 
     // TODO Eliminar repeticion de codigo con su sobrecarga para (Maquina, Maquina)
-	public CintaTransportadora conectarMaquina(Fuente fuente, Maquina maquina, float longitud){
-		if (!maquinas.contains(maquina)){
+	public CintaTransportadora conectarMaquina(final Fuente fuente, final Maquina maquina, final float longitud) {
+		if (!maquinas.contains(maquina)) {
 			this.comprarMaquina(maquina);
 		}
 		
@@ -105,12 +106,12 @@ public class Fabrica implements Sincronizado{
 		
 		boolean maquinaEnLinea = false;
 		for (LineaProduccion linea : lineas) {
-			if (linea.contieneMaquina(maquina)){
+			if (linea.contieneMaquina(maquina)) {
 				maquinaEnLinea = true;
 			}
 		}
 		
-		if (!maquinaEnLinea){
+		if (!maquinaEnLinea) {
 			LineaProduccion linea = new LineaProduccion(this.jugador);
 			linea.agregarMaquina(maquina);
 			agregarLinea(linea);
@@ -126,12 +127,12 @@ public class Fabrica implements Sincronizado{
 	 * @param destino
 	 */
     // TODO Dividir en metodos mas cohesivos
-	public CintaTransportadora conectarMaquina(Maquina origen, Maquina destino, float longitud){
-		if (!maquinas.contains(origen)){
+	public CintaTransportadora conectarMaquina(final Maquina origen, final Maquina destino, final float longitud) {
+		if (!maquinas.contains(origen)) {
 			this.comprarMaquina(origen);
 		}
 		
-		if (!maquinas.contains(destino)){
+		if (!maquinas.contains(destino)) {
 			this.comprarMaquina(destino);
 		}
 		
@@ -144,12 +145,12 @@ public class Fabrica implements Sincronizado{
 		boolean maquinasEnLinea = true;
 		for (LineaProduccion linea : lineas) {
 			if (!linea.contieneMaquina(origen)
-					&& !linea.contieneMaquina(destino)){
+					&& !linea.contieneMaquina(destino)) {
 				maquinasEnLinea = false;
-			}else if (linea.contieneMaquina(origen)){
+			} else if (linea.contieneMaquina(origen)) {
 				linea.agregarMaquina(destino);
 				maquinasEnLinea = true;
-			}else if (linea.contieneMaquina(destino)){
+			} else if (linea.contieneMaquina(destino)) {
 				linea.agregarMaquina(origen);
 				maquinasEnLinea = true;
 			}
@@ -173,15 +174,15 @@ public class Fabrica implements Sincronizado{
 		
 	}
 	
-	public void agregarLinea(LineaProduccion linea){
+	public void agregarLinea(final LineaProduccion linea) {
 		this.lineas.add(linea);
 	}
 	
-	public void eliminarLinea(LineaProduccion linea){
+	public void eliminarLinea(final LineaProduccion linea) {
 		this.lineas.remove(linea);
 	}
 	
-	public void setCostoCompra(float costoCompra) {
+	public void setCostoCompra(final float costoCompra) {
 		this.costoCompra = costoCompra;
 	}
 
@@ -189,7 +190,7 @@ public class Fabrica implements Sincronizado{
 		return costoCompra;
 	}
 
-	public void setCostoAlquiler(float costoAlquiler) {
+	public void setCostoAlquiler(final float costoAlquiler) {
 		this.costoAlquiler = costoAlquiler;
 	}
 
@@ -197,7 +198,7 @@ public class Fabrica implements Sincronizado{
 		return costoAlquiler;
 	}
 
-	public void setMetrosCuadrados(int metrosCuadrados) {
+	public void setMetrosCuadrados(final int metrosCuadrados) {
 		this.metrosCuadrados = metrosCuadrados;
 	}
 
@@ -205,7 +206,7 @@ public class Fabrica implements Sincronizado{
 		return metrosCuadrados;
 	}
 
-	public void setJugador(Jugador jugador) {
+	public void setJugador(final Jugador jugador) {
 		this.jugador = jugador;
 	}
 
@@ -213,7 +214,7 @@ public class Fabrica implements Sincronizado{
 		return jugador;
 	}
 	
-	public void setCostoFabricaXMes(float costoFabricaXMes) {
+	public void setCostoFabricaXMes(final float costoFabricaXMes) {
 		this.costoFabricaXMes = costoFabricaXMes;
 	}
 
@@ -225,9 +226,10 @@ public class Fabrica implements Sincronizado{
 	 * Verifica la existencia de un jugador poseyendo la f�brica.
 	 * @throws FabricaOcupadaException
 	 */
-	public void verificarJugadorAsignado() throws FabricaOcupadaException{
-		if (this.getJugador()!=null)
+	public void verificarJugadorAsignado() throws FabricaOcupadaException {
+		if (this.getJugador() != null) {
 			throw new FabricaOcupadaException();
+        }
 	}
 	
 	/**
@@ -238,9 +240,9 @@ public class Fabrica implements Sincronizado{
 	 * @throws FabricaOcupadaException
 	 * @throws JugadorConFabricaException
 	 */
-	public void comprar(Jugador jugador) throws DineroInsuficienteException, FabricaOcupadaException, JugadorConFabricaException{
+	public void comprar(final Jugador jugador) throws DineroInsuficienteException, FabricaOcupadaException, JugadorConFabricaException {
 		jugador.verificarDineroSuficiente(this.getCostoCompra());
-		this.realizarCompraOAlquiler(jugador,0);
+		this.realizarCompraOAlquiler(jugador, 0);
 		jugador.comprarFabrica(this);
 	}
 	
@@ -250,8 +252,8 @@ public class Fabrica implements Sincronizado{
 	 * @throws FabricaOcupadaException
 	 * @throws JugadorConFabricaException
 	 */
-	public void alquilar(Jugador jugador) throws FabricaOcupadaException, JugadorConFabricaException{
-		this.realizarCompraOAlquiler(jugador,this.getCostoAlquiler());
+	public void alquilar(final Jugador jugador) throws FabricaOcupadaException, JugadorConFabricaException {
+		this.realizarCompraOAlquiler(jugador, this.getCostoAlquiler());
 		jugador.alquilarFabrica(this);
 	}
 	
@@ -263,7 +265,7 @@ public class Fabrica implements Sincronizado{
 	 * @throws FabricaOcupadaException
 	 * @throws JugadorConFabricaException
 	 */
-	public void realizarCompraOAlquiler(Jugador jugador, float costoXMes) throws FabricaOcupadaException, JugadorConFabricaException{
+	public void realizarCompraOAlquiler(final Jugador jugador, final float costoXMes) throws FabricaOcupadaException, JugadorConFabricaException {
 		jugador.verificarFabricaAsignada();
 		this.verificarJugadorAsignado();
 		this.lineas = new ArrayList<LineaProduccion>();
@@ -275,15 +277,14 @@ public class Fabrica implements Sincronizado{
 	/**
 	 * La f�brica deja de tener un jugador asignado.
 	 */
-	public void vender(){
+	public void vender() {
 		try{
 			this.verificarJugadorAsignado();
-		}
-		catch(FabricaOcupadaException e){
-			if (this.isAlquilada()){
+		} catch(FabricaOcupadaException e) {
+			if (this.isAlquilada()) {
 				this.getJugador().venderFabrica(0);
-			}else{
-				this.getJugador().venderFabrica((float) (this.getCostoCompra()*0.8));
+			} else {
+				this.getJugador().venderFabrica((float) (this.getCostoCompra() * OCHENTA_PORCIENTO));
 			}
 			
 			Float costoMaquinas = 0F;
@@ -310,48 +311,43 @@ public class Fabrica implements Sincronizado{
 	 * Si esta alquilada el costo x mes es el costo de alquiler y tiene un jugador asignado.
 	 * @return
 	 */
-	public boolean isAlquilada(){
-		return (this.getCostoAlquiler()==this.getCostoFabricaXMes() && this.getJugador()!=null);
+	public boolean isAlquilada() {
+		return ((getCostoAlquiler() == getCostoFabricaXMes()) && (getJugador() != null));
 	}
 	
 	/**
 	 * Si esta comprada el costo x mes es nulo y tiene un jugador asignado.
 	 * @return
 	 */
-	public boolean isComprada(){
-		return (this.getCostoFabricaXMes()==0 && this.getJugador()!=null);
+	public boolean isComprada() {
+		return ((getCostoFabricaXMes() == 0) && (getJugador() != null));
 	}
 
 	@Override
-	public void notificar(Evento evento) {
-		if (evento.equals(Evento.COMIENZO_DE_MES)){
+	public void notificar(final Evento evento) {
+		if (evento.equals(Evento.COMIENZO_DE_MES)) {
 			this.asignarCostoJugador();
 		}
-		if (evento.equals(Evento.COMIENZO_DE_DIA)){
+		if (evento.equals(Evento.COMIENZO_DE_DIA)) {
 			try {
 				for (LineaProduccion linea : lineas) {
 						linea.procesar();
 				}
-			} catch (ProcesamientoException e) {
-				// TODO �Qu� hacemos en este caso? �c�mo informamos al jugador?
-			}
+			} catch (ProcesamientoException ignored) { }
 		}
 	}
 	
-	public void asignarCostoJugador(){
+	public void asignarCostoJugador() {
 		
 		try {
 			this.verificarJugadorAsignado();
-		} 
-		catch (FabricaOcupadaException e) {
+		} catch (FabricaOcupadaException e) {
 			//TODO Habria que sumarle el costo de las lineas de produccion.
 			this.getJugador().disminuirDinero(this.getCostoFabricaXMes());
 		}
-		
-		
 	}
 	
-	public String toString(){
+	public String toString() {
 		return "Mts2: " + this.getMetrosCuadrados() + "-Compra: " + this.getCostoCompra() + "-Alquiler: " + this.getCostoAlquiler();
 	}
 
@@ -362,18 +358,19 @@ public class Fabrica implements Sincronizado{
 	/**
 	 * Para cada linea de producci�n se verifica si se tiene un ciclo.
 	 */
-	public void validarCiclos(){
-		for (LineaProduccion linea : this.getLineas())
+	public void validarCiclos() {
+		for (LineaProduccion linea : this.getLineas()) {
 			linea.validarCiclo();
+        }
 	}
 
-	private void limpiarCintas(Maquina maquina) {
+	private void limpiarCintas(final Maquina maquina) {
 		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
 		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
 		
 		for (CintaTransportadora cintaTransportadora : cintas) {
 			FuenteSumidero par = cintasMaquinas.get(cintaTransportadora);
-			if (par.contieneMaquina(maquina)){
+			if (par.contieneMaquina(maquina)) {
 				cintaTransportadora.desconectar(par.getOrigen(), par.getDestino());
 				cintasAEliminar.add(cintaTransportadora);
 			}
@@ -385,13 +382,13 @@ public class Fabrica implements Sincronizado{
 	}
 
     // TODO Eliminar repeticion de codigo con su sobrecarga para Maquinas
-    private void limpiarCintas(Fuente fuente) {
+    private void limpiarCintas(final Fuente fuente) {
 		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
 		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
 
 		for (CintaTransportadora cintaTransportadora : cintas) {
 			FuenteSumidero par = cintasMaquinas.get(cintaTransportadora);
-			if (par.getOrigen() == fuente){
+			if (par.getOrigen() == fuente) {
 				cintaTransportadora.desconectar(par.getOrigen(), par.getDestino());
 				cintasAEliminar.add(cintaTransportadora);
 			}
@@ -402,14 +399,14 @@ public class Fabrica implements Sincronizado{
 		}
 	}
 
-	private void limpiarLineas(Maquina maquina) {
+	private void limpiarLineas(final Maquina maquina) {
 		List<LineaProduccion> lineasAEliminar = new ArrayList<LineaProduccion>();
 		
 		for (LineaProduccion linea : this.getLineas()) {
-			if (linea.contieneMaquina(maquina)){
+			if (linea.contieneMaquina(maquina)) {
 				linea.eliminarMaquina(maquina);
 				
-				if (linea.estaVacia()){
+				if (linea.estaVacia()) {
 					lineasAEliminar.add(linea);
 				}
 			}
