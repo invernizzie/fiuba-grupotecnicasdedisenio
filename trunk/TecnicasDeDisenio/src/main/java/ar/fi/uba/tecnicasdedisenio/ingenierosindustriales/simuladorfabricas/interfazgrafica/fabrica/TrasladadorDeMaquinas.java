@@ -18,9 +18,7 @@ public class TrasladadorDeMaquinas extends Instalador {
     }
 
     @Override
-    public void doMouseMove(final int x, final int y) {
-        // TODO Previsualizar
-    }
+    public void doMouseMove(final int x, final int y) { }
 
     @Override
     public void doMouseDown(final int x, final int y) {

@@ -86,6 +86,11 @@ public class VistaPrincipal implements Sincronizado, Observer {
     @Override
     public void notificar(final Evento evento) {
         String textoControlDeTiempo = null;
+
+        if (shellPrincipal.isDisposed()) {
+            return;
+        }
+        
         switch (evento) {
             case INICIO_TIEMPO:
             case FIN_PAUSA:
