@@ -33,7 +33,6 @@ public class TestProductos {
 	@Test
 	public void testEqualsProducto() {
 		Producto prod = new Producto(val, "pan", 0);
-		//Assert.assertEquals("Error en el estado de Producto", producto.getEstado(), prod.getEstado());
-        Assert.assertEquals("Error en el estado de Producto", producto, prod);
+		Assert.assertEquals("Error en el estado de Producto", producto.getEstado(), prod.getEstado());
 	}
 }
