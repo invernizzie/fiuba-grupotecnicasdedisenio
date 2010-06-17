@@ -382,7 +382,7 @@ public class TestFabricaLineas {
 		
 		fabrica.conectarMaquina(plancha, horno, 0);
 		fabrica.validarCiclos();
-
+		
 		/*Todas las m�quinas deber�an estar rotas ya que ahora hay un ciclo.*/
 		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertTrue("Las m�quinas deber�an estar rotas", maquina.estaRota());

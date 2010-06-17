@@ -143,7 +143,23 @@ public class Fabrica implements Sincronizado {
 					&& !linea.contieneMaquina(destino)) {
 				maquinasEnLinea = false;
             }
+			if(linea.contieneMaquina(origen) && !linea.contieneMaquina(destino) ){
+				linea.agregarMaquina(destino);
+				maquinasEnLinea = true;
+			}
+			if(linea.contieneMaquina(destino) && !linea.contieneMaquina(origen) ){
+				linea.agregarMaquina(origen);
+				maquinasEnLinea = true;
+			}
+			if(linea.contieneMaquina(origen) && linea.contieneMaquina(destino)){
+				linea.actualizarLinea();
+				maquinasEnLinea = true;
+			}
 		}
+		
+		/*
+		 * Si una de las dos esta en una linea agrego la otra a la linea.
+		 */
 		/*
 		 * Ninguna de las dos m�quinas est� en alguna de las lineas, creo una 
 		 * nueva linea que las contenga.
