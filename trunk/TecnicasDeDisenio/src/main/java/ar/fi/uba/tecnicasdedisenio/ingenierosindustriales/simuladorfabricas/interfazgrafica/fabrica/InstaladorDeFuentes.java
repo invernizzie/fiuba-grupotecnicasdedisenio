@@ -12,25 +12,24 @@ public class InstaladorDeFuentes extends Instalador {
     private Producto materiaPrima;
     private String nombre;
 
-    public InstaladorDeFuentes(EspacioFabril espacioFabril, Producto materiaPrima, String nombre) {
+    public InstaladorDeFuentes(final EspacioFabril espacioFabril, final Producto materiaPrima, final String nombre) {
         super(espacioFabril);
         this.materiaPrima = materiaPrima;
         this.nombre = nombre; 
     }
 
     @Override
-    public void doMouseMove(int x, int y) {}
+    public void doMouseMove(final int x, final int y) { }
 
     @Override
-    public void doMouseDown(int x, int y) {
+    public void doMouseDown(final int x, final int y) {
         try {
             getEspacioFabril().crearMateriaPrima(x, y, materiaPrima, nombre);
-        } catch (EspacioOcupadoException e)
-        {
+        } catch (EspacioOcupadoException e) {
             // Simplemente no se crea la materia prima
         }
     }
 
     @Override
-    public void doMouseUp(int x, int y) {}
+    public void doMouseUp(final int x, final int y) { }
 }

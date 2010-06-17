@@ -2,9 +2,7 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lin
 
 
 public class EntradaInvalidaException extends Exception {
-
-	private static final long serialVersionUID = -6634819665116077698L;
-	
+    
 	public EntradaInvalidaException() {
 	}
 

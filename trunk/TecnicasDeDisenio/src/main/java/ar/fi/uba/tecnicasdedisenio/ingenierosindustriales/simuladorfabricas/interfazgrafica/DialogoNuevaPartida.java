@@ -3,6 +3,8 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 import java.util.HashMap;
 
 
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.Point;
@@ -11,26 +13,24 @@ import org.eclipse.swt.SWT;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.jugador.Jugador;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.laboratorio.Laboratorio;
 
+
+
 public class DialogoNuevaPartida {
 
-	private Shell shellPartida = null;
-	private Label lUsuario = null;
-	private Text tUsuario = null;
-	private Button bCreate = null;
-	private Button bCancel = null;
-	private Label lDineroInicial = null;
-	private Spinner sDineroInicial = null;
-	private Label lTipoLaboratorio = null;
-	private Combo cTipoLaboratorio = null;
-	private HashMap<String,Laboratorio> hashLaboratorios = null;
+    private static final int ANCHO = 300;
+    private static final int ALTO = 200;
+    private static final int DINERO_INICIAL = 1000;
+    private static final int DINERO_MAXIMO = 10000;
+    private static final int DINERO_MINIMO = 100;
+    
+    private Shell shellPartida = null;
+    private Text tUsuario = null;
+    private Spinner sDineroInicial = null;
+    private Combo cTipoLaboratorio = null;
+	private HashMap<String, Laboratorio> hashLaboratorios = null;
 	private VistaPrincipal menu;
 
-    /**
-	 * This method initializes shellPartida
-	 *
-	 */
-	
-	public DialogoNuevaPartida(VistaPrincipal menu){
+    public DialogoNuevaPartida(final VistaPrincipal menu) {
 		this.createShellPartida();
 		this.menu = menu;
 	}
@@ -45,7 +45,7 @@ public class DialogoNuevaPartida {
 		shellPartida.close();
 	}
 	
-	public void hacerVisible(){
+	public void hacerVisible() {
 		this.shellPartida.setVisible(true);
 	}
 	
@@ -91,46 +91,49 @@ public class DialogoNuevaPartida {
 		shellPartida = new Shell();
 		shellPartida.setText("Crear Partida");
 		shellPartida.setLayout(gridLayout);
-		shellPartida.setSize(new Point(300, 200));
-		lUsuario = new Label(shellPartida, SWT.HORIZONTAL);
+		shellPartida.setSize(new Point(ANCHO, ALTO));
+         Label lUsuario = new Label(shellPartida, SWT.HORIZONTAL);
 		lUsuario.setText("Nombre de Usuario");
 		lUsuario.setLayoutData(gridData7);
 		tUsuario = new Text(shellPartida, SWT.BORDER);
 		tUsuario.setLayoutData(gridData);
-		lDineroInicial = new Label(shellPartida, SWT.HORIZONTAL);
+         Label lDineroInicial = new Label(shellPartida, SWT.HORIZONTAL);
 		lDineroInicial.setText("Monto Inicial");
 		lDineroInicial.setLayoutData(gridData6);
 		sDineroInicial = new Spinner(shellPartida, SWT.BORDER);
-		sDineroInicial.setSelection(1000);
+		sDineroInicial.setSelection(DINERO_INICIAL);
 		sDineroInicial.setEnabled(true);
-		sDineroInicial.setPageIncrement(1000);
+		sDineroInicial.setPageIncrement(DINERO_INICIAL);
 		sDineroInicial.setLayoutData(gridData4);
-		sDineroInicial.setMaximum(10000);
-		lTipoLaboratorio = new Label(shellPartida, SWT.NONE);
+		sDineroInicial.setMaximum(DINERO_MAXIMO);
+         Label lTipoLaboratorio = new Label(shellPartida, SWT.NONE);
 		lTipoLaboratorio.setText("Tipo de Laboratorio");
 		createCTipoLaboratorio();
-		bCreate = new Button(shellPartida, SWT.NONE);
+         Button bCreate = new Button(shellPartida, SWT.NONE);
 		bCreate.setText("Crear Partida");
 		bCreate.setLayoutData(gridData21);
-		bCreate.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+		bCreate.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(final SelectionEvent e) {
                 String mensaje = "";
-                if (tUsuario.getText().length() < 1)
+                if (tUsuario.getText().length() < 1) {
                     mensaje += "Debe ingresar su nombre\n";
-                if (new Float(sDineroInicial.getText()) < 100)
+                }
+                if (new Float(sDineroInicial.getText()) < DINERO_MINIMO) {
                     mensaje += "El dinero inicial debe ser al menos 100\n";
-
-                if (mensaje.length() > 0)
+                }
+                
+                if (mensaje.length() > 0) {
                     new DialogoMensaje(mensaje);
-                else
+                } else {
 				    crearJuego();
+                }
 			}
 		});
-		bCancel = new Button(shellPartida, SWT.NONE);
+        Button bCancel = new Button(shellPartida, SWT.NONE);
 		bCancel.setText("Cancelar");
 		bCancel.setLayoutData(gridData31);
-		bCancel.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
+		bCancel.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(final SelectionEvent e) {
 				shellPartida.close();
 			}
 		});
@@ -141,26 +144,26 @@ public class DialogoNuevaPartida {
 	 *
 	 */
 	private void createCTipoLaboratorio() {
-		hashLaboratorios = new HashMap<String,Laboratorio>();
+		hashLaboratorios = new HashMap<String, Laboratorio>();
 		Laboratorio labo = null;
 		
-		labo = new Laboratorio("Comidas","comida.jpg");
+		labo = new Laboratorio("Comidas", "comida.jpg");
 		hashLaboratorios.put("Comidas", labo);
 		
-		labo = new Laboratorio("Bebidas","bebida.jpg");
+		labo = new Laboratorio("Bebidas", "bebida.jpg");
 		hashLaboratorios.put("Bebidas", labo);
 		
-		labo = new Laboratorio("Ropa","ropa.jpg");
+		labo = new Laboratorio("Ropa", "ropa.jpg");
 		hashLaboratorios.put("Ropa", labo);
 		
-		labo = new Laboratorio("Videojuegos","videojuegos.jpg");
+		labo = new Laboratorio("Videojuegos", "videojuegos.jpg");
 		hashLaboratorios.put("Videojuegos", labo);
 		
-		labo = new Laboratorio("Electrodomesticos","electrodomesticos.jpg");
+		labo = new Laboratorio("Electrodomesticos", "electrodomesticos.jpg");
 		hashLaboratorios.put("Electrodomesticos", labo);
 		
 		
-		String[] laboratorios = new String[]{"Comidas","Bebidas","Ropa","Videojuegos","Electrodomesticos"};
+		String[] laboratorios = new String[] { "Comidas", "Bebidas", "Ropa", "Videojuegos", "Electrodomesticos"};
 		
 		cTipoLaboratorio = new Combo(shellPartida, SWT.NONE);
 		cTipoLaboratorio.setItems(laboratorios);

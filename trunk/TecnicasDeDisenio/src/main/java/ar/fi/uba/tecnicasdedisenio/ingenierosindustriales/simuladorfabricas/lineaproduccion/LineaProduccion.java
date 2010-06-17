@@ -85,8 +85,8 @@ public class LineaProduccion {
 				&& !maquinaAVerificar.obtenerMateriasPrimasFisicas().isEmpty()) {
 			esPrimera = true;
 		}
-		else{
-			if (maquinaAVerificar.obtenerPrecedentesFisicos().isEmpty()){
+		else {
+			if (maquinaAVerificar.obtenerPrecedentesFisicos().isEmpty()) {
 				esPrimera = true;
 			}
 		}

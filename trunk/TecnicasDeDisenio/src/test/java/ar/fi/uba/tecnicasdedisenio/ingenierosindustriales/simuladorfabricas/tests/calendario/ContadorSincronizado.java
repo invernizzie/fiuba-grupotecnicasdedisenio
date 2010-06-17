@@ -13,10 +13,12 @@ public class ContadorSincronizado implements Sincronizado {
     public int notificacionesSemanales = 0;
 
     @Override
-    public void notificar(Evento evento) {
-        if (evento == Evento.COMIENZO_DE_DIA)
+    public void notificar(final Evento evento) {
+        if (evento == Evento.COMIENZO_DE_DIA) {
             notificacionesDiarias++;
-        else if (evento == Evento.COMIENZO_DE_SEMANA)
+            
+        } else if (evento == Evento.COMIENZO_DE_SEMANA) {
             notificacionesSemanales++;
+        }
     }
 }

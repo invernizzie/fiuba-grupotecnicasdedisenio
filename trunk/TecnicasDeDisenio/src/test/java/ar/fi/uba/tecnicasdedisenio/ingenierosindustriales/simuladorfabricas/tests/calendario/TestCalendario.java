@@ -18,6 +18,8 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.cale
 public class TestCalendario {
 
     private static final int SEGUNDOS_POR_DIA = 1;
+    private static final int DIAS_POR_SEMANA = 7;
+    private static final int OFFSET_MILLIS = 250;
 
     @After
     public void tearDown() {
@@ -36,7 +38,7 @@ public class TestCalendario {
         notificado = false;
         Sincronizado sincronizado = new Sincronizado() {
             @Override
-            public void notificar(Evento evento) {
+            public void notificar(final Evento evento) {
                 notificado = true;
             }
         };
@@ -46,22 +48,25 @@ public class TestCalendario {
         Calendario.instancia().registrar(sincronizado);
         Calendario.instancia().iniciar();
         esperar(2 * SEGUNDOS_POR_DIA);
-        if (!notificado)
+        if (!notificado) {
             Assert.fail("No se ha notificado ningun evento");
+        }
     }
 
     private boolean notificadoDia;
     private boolean notificadoSemana;
     @Test
     public void testNotificacionDiaYSemana() {
-        notificadoDia = notificadoSemana = false;
+        notificadoDia = false;
+        notificadoSemana = false;
         Sincronizado sincronizado = new Sincronizado() {
             @Override
-            public void notificar(Evento evento) {
-                if (evento == Evento.COMIENZO_DE_DIA)
+            public void notificar(final Evento evento) {
+                if (evento == Evento.COMIENZO_DE_DIA) {
                     notificadoDia = true;
-                else if (evento == Evento.COMIENZO_DE_SEMANA)
+                } else if (evento == Evento.COMIENZO_DE_SEMANA) {
                     notificadoSemana = true;
+                }
             }
         };
 
@@ -69,10 +74,11 @@ public class TestCalendario {
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         Calendario.instancia().registrar(sincronizado);
         Calendario.instancia().iniciar();
-        esperar(SEGUNDOS_POR_DIA * 7);
+        esperar(SEGUNDOS_POR_DIA * DIAS_POR_SEMANA);
         Calendario.instancia().detener();
-        if (!notificadoDia || ! notificadoSemana)
+        if (!notificadoDia || !notificadoSemana) {
             Assert.fail("No se recibieron ambas notificaciones");
+        }
     }
 
     @Test
@@ -141,7 +147,7 @@ public class TestCalendario {
         Assert.assertEquals("Cantidad de semanas incorrecta para s2",
                 0, s2.notificacionesSemanales);
         Assert.assertEquals("Cantidad de dias incorrecta para s3",
-                7, s3.notificacionesDiarias);
+                DIAS_POR_SEMANA, s3.notificacionesDiarias);
         Assert.assertEquals("Cantidad de semanas incorrecta para s3",
                 1, s3.notificacionesSemanales);
     }
@@ -196,7 +202,7 @@ public class TestCalendario {
         Calendario.instancia().setSegundosPorDia(SEGUNDOS_POR_DIA);
         Calendario.instancia().registrar(s1);
         Calendario.instancia().iniciar();
-        esperar(SEGUNDOS_POR_DIA * 7);
+        esperar(SEGUNDOS_POR_DIA * DIAS_POR_SEMANA);
         Calendario.instancia().detener();
         Calendario.instancia().inicializar();
 
@@ -215,12 +221,12 @@ public class TestCalendario {
         Calendario.instancia().detener();
 
         Assert.assertEquals("Cantidad de dias incorrecta",
-                16, s1.notificacionesDiarias+ s2.notificacionesDiarias);
+                16, s1.notificacionesDiarias + s2.notificacionesDiarias);
         Assert.assertEquals("Cantidad de semanas incorrecta",
                 3, s1.notificacionesSemanales + s2.notificacionesSemanales);
     }
 
-    private void esperar(int segundos) {
+    private void esperar(final int segundos) {
 
     	try {
         	/* Se agrega un offset de 250ms para evitar el problema
@@ -228,8 +234,8 @@ public class TestCalendario {
         	 * de los suscriptores al calendario. Eso probablemente
         	 * sucede porque este thread es muy activo y se prioriza
         	 * ante el del calendario. */
-            Thread.sleep((1000 * segundos) + 250);
-        } catch (InterruptedException e) {}
+            Thread.sleep((1000 * segundos) + OFFSET_MILLIS);
+        } catch (InterruptedException ignored) { }
 
     }
 }

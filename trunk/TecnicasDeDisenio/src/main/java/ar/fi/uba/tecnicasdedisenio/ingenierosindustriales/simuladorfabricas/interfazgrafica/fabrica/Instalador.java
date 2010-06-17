@@ -8,20 +8,20 @@ public abstract class Instalador {
 
     private EspacioFabril espacioFabril;
 
-    public Instalador(EspacioFabril espacioFabril) {
+    public Instalador(final EspacioFabril espacioFabril) {
         this.espacioFabril = espacioFabril;
     }
 
-    public final void mouseMove(int x, int y) {
+    public final void mouseMove(final int x, final int y) {
         doMouseMove(x, y);
     }
 
-    public final void mouseDown(int x, int y) {
+    public final void mouseDown(final int x, final int y) {
         doMouseDown(x, y);
         getEspacioFabril().redibujar();
     }
 
-    public final void mouseUp(int x, int y) {
+    public final void mouseUp(final int x, final int y) {
         doMouseUp(x, y);
         getEspacioFabril().redibujar();
     }
