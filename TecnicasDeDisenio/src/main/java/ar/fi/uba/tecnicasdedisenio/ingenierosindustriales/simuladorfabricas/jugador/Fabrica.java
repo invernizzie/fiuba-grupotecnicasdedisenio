@@ -96,15 +96,12 @@ public class Fabrica implements Sincronizado {
         return cinta;
     }
 
-    // TODO Eliminar repeticion de codigo con su sobrecarga para (Maquina, Maquina)
 	public CintaTransportadora conectarMaquina(final Fuente fuente, final Maquina maquina, final float longitud) {
 		if (!maquinas.contains(maquina)) {
 			this.comprarMaquina(maquina);
 		}
-		
 		CintaTransportadora cinta = new CintaTransportadora(longitud);
 		cinta.conectar(fuente, maquina);
-		
 		boolean maquinaEnLinea = false;
 		for (LineaProduccion linea : lineas) {
 			if (linea.contieneMaquina(maquina)) {
@@ -127,19 +124,16 @@ public class Fabrica implements Sincronizado {
 	 * @param origen
 	 * @param destino
 	 */
-    // TODO Dividir en metodos mas cohesivos
 	public CintaTransportadora conectarMaquina(final Maquina origen, final Maquina destino, final float longitud) {
 		if (!maquinas.contains(origen)) {
 			this.comprarMaquina(origen);
 		}
-		
 		if (!maquinas.contains(destino)) {
 			this.comprarMaquina(destino);
 		}
 		
 		CintaTransportadora cinta = new CintaTransportadora(longitud);
 		cinta.conectar(origen, destino);
-		
 		/*
 		 * Si una linea contiene alguna de las m�quinas agrego la otra a esa linea.
 		 */
@@ -148,20 +142,13 @@ public class Fabrica implements Sincronizado {
 			if (!linea.contieneMaquina(origen)
 					&& !linea.contieneMaquina(destino)) {
 				maquinasEnLinea = false;
-			} else if (linea.contieneMaquina(origen)) {
-				linea.agregarMaquina(destino);
-				maquinasEnLinea = true;
-			} else if (linea.contieneMaquina(destino)) {
-				linea.agregarMaquina(origen);
-				maquinasEnLinea = true;
-			}
+            }
 		}
-		
 		/*
 		 * Ninguna de las dos m�quinas est� en alguna de las lineas, creo una 
 		 * nueva linea que las contenga.
 		 */
-		if (!maquinasEnLinea){
+		if (!maquinasEnLinea) {
 			LineaProduccion linea = new LineaProduccion(this.jugador);
 			linea.agregarMaquina(origen);
 			linea.agregarMaquina(destino);
@@ -342,7 +329,6 @@ public class Fabrica implements Sincronizado {
 		try {
 			this.verificarJugadorAsignado();
 		} catch (FabricaOcupadaException e) {
-			//TODO Habria que sumarle el costo de las lineas de produccion.
 			this.getJugador().disminuirDinero(this.getCostoFabricaXMes());
 		}
 	}
@@ -381,7 +367,6 @@ public class Fabrica implements Sincronizado {
 		}
 	}
 
-    // TODO Eliminar repeticion de codigo con su sobrecarga para Maquinas
     private void limpiarCintas(final Fuente fuente) {
 		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
 		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
