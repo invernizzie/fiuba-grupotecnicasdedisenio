@@ -9,8 +9,6 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 
 public class TestProductos {
 
-    private static final double VEINTE_PORCIENTO = 0.2;
-
 	private Producto producto;
     private ValidadorProductos val;
 
@@ -18,7 +16,7 @@ public class TestProductos {
 	public void setUp() throws Exception {
         String posibleEstado = "pan";
 		val = ValidadorProductos.instancia();
-		producto = new Producto(val, posibleEstado, VEINTE_PORCIENTO);
+		producto = new Producto(val, posibleEstado, 0f);
 	}
 
 	@After

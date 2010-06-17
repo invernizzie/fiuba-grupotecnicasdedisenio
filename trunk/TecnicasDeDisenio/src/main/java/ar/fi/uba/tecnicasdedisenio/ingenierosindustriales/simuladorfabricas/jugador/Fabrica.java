@@ -340,7 +340,6 @@ public class Fabrica implements Sincronizado {
 		try {
 			this.verificarJugadorAsignado();
 		} catch (FabricaOcupadaException e) {
-			//TODO Habria que sumarle el costo de las lineas de produccion.
 			this.getJugador().disminuirDinero(this.getCostoFabricaXMes());
 		}
 	}
@@ -379,7 +378,6 @@ public class Fabrica implements Sincronizado {
 		}
 	}
 
-    // TODO Eliminar repeticion de codigo con su sobrecarga para Maquinas
     private void limpiarCintas(final Fuente fuente) {
 		Set<CintaTransportadora> cintas = cintasMaquinas.keySet();
 		Set<CintaTransportadora> cintasAEliminar = new HashSet<CintaTransportadora>();
