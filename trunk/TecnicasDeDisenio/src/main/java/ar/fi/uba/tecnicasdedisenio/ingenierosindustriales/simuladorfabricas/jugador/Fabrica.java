@@ -401,11 +401,14 @@ public class Fabrica implements Sincronizado {
 
 	private void limpiarLineas(final Maquina maquina) {
 		List<LineaProduccion> lineasAEliminar = new ArrayList<LineaProduccion>();
-		
 		for (LineaProduccion linea : this.getLineas()) {
 			if (linea.contieneMaquina(maquina)) {
 				linea.eliminarMaquina(maquina);
-				
+				for(Maquina maq : linea.getMaquinas()){
+					if(maq.getPrecedentes().size()==0 && maq.getSiguiente()==null){
+						linea.eliminarMaquina(maq);
+					}
+				}
 				if (linea.estaVacia()) {
 					lineasAEliminar.add(linea);
 				}
