@@ -18,11 +18,14 @@ import org.eclipse.swt.widgets.Button;
 
 public class AreaLaboratorio {
 
+    private static final int DEFAULT_ANCHO = 358;
+    private static final int DEFAULT_ALTO = 361;
+
 	private Shell sShellLaboratorio = null;
 	private CTabFolder cTabFolderLaboratorio = null;
 	private Composite compositeLaboratorio = null;
     private Image imagenLaboratorio = null;
-	
+
     public void run() {
     	createSShellLaboratorio();
 	}
@@ -40,11 +43,12 @@ public class AreaLaboratorio {
 		sShellLaboratorio.setMaximized(false);
 		sShellLaboratorio.setMinimized(false);
 		createCTabFolderLaboratorio();
-		sShellLaboratorio.setSize(new Point(358, 361));
+		sShellLaboratorio.setSize(new Point(DEFAULT_ANCHO, DEFAULT_ALTO));
 		
 		while (!sShellLaboratorio.isDisposed()) {
-			if (!display.readAndDispatch())
+			if (!display.readAndDispatch()) {
 				display.sleep();
+            }
 		}
 		imagenLaboratorio.dispose();
 		display.dispose();

@@ -13,17 +13,17 @@ public class TrasladadorDeMaquinas extends Instalador {
     private int xOriginal;
     private int yOriginal;
 
-    public TrasladadorDeMaquinas(EspacioFabril espacioFabril) {
+    public TrasladadorDeMaquinas(final EspacioFabril espacioFabril) {
         super(espacioFabril);
     }
 
     @Override
-    public void doMouseMove(int x, int y) {
+    public void doMouseMove(final int x, final int y) {
         // TODO Previsualizar
     }
 
     @Override
-    public void doMouseDown(int x, int y) {
+    public void doMouseDown(final int x, final int y) {
         if (getEspacioFabril().hayMaquinaEn(x, y)) {
             trasladando = true;
             xOriginal = x;

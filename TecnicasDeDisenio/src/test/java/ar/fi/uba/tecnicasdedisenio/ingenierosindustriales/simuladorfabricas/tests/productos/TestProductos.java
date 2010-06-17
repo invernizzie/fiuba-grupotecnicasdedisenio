@@ -8,14 +8,15 @@ import org.junit.Test;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.*;
 
 public class TestProductos {
-	private Producto producto;
-	private String posibleEstado;
-	private ValidadorProductos val;
+
     private static final double VEINTE_PORCIENTO = 0.2;
+
+	private Producto producto;
+    private ValidadorProductos val;
 
     @Before
 	public void setUp() throws Exception {
-		posibleEstado = "pan";
+        String posibleEstado = "pan";
 		val = ValidadorProductos.instancia();
 		producto = new Producto(val, posibleEstado, VEINTE_PORCIENTO);
 	}

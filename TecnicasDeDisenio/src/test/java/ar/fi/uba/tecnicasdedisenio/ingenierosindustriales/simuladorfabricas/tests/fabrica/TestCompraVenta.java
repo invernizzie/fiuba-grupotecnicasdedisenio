@@ -29,11 +29,12 @@ public class TestCompraVenta {
     private static final int DINERO_INICIAL_2 = 2000;
     private static final int DINERO_INICIAL_3 = 5000;
     private static final double VEINTE_PORCIENTO = 0.2;
+    private static final int CANTIDAD_DE_FABRICAS = 5;
 
     @Before
 	public void setUp() throws Exception {
 		fabricas = new ArrayList<Fabrica>();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < CANTIDAD_DE_FABRICAS; i++) {
 			fabricas.add(new Fabrica((i + 1) * PASO_SUPERFICIE, (i + 1) * PASO_COMPRA, (i + 1) * PASO_ALQUILER));
 		}
 	}

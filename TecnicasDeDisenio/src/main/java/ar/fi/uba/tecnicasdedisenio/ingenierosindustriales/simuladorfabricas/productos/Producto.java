@@ -14,29 +14,29 @@ public class Producto implements Cloneable {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
-		if (!this.estado.equals("Defectuoso") || !this.estado.equals("Desecho"))
+	public void setEstado(final String estado) {
+		if (!this.estado.equals("Defectuoso") || !this.estado.equals("Desecho")) {
 			this.estado = estado;
+        }
 	}
 
-	public Producto(ValidadorProductos val, String estado, double tasa_falla) {
+	public Producto(final ValidadorProductos val, final String estado, final double tasa_falla) {
 		super();
 		this.validador = val;
-		if (val.existe(estado)){
-			double proba= Math.random();
+		if (val.existe(estado)) {
+			double proba = Math.random();
 			if (tasa_falla < proba) {
 				this.estado = estado;
-			} else{
-				this.estado= "Defectuoso";
+			} else {
+				this.estado = "Defectuoso";
 			}
-		}
-		else {
-			this.estado= "Desecho";
+		} else {
+			this.estado = "Desecho";
 		}
 	}
 
     @Deprecated
-    public Producto() {}
+    public Producto() { }
 	
 	@Override
 	public int hashCode() {
@@ -47,23 +47,24 @@ public class Producto implements Cloneable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+        }
+		if ((obj == null) || !(obj instanceof Producto)) {
 			return false;
-		if (!(obj instanceof Producto))
-			return false;
+        }
 		Producto other = (Producto) obj;
 		if (estado == null) {
-			if (other.estado != null)
+			if (other.estado != null) {
 				return false;
+            }
 		} else if (!estado.equals(other.estado))
 			return false;
 		return true;
 	}
 
-	public Producto clone(){
+	public Producto clone() {
 		return new Producto(this.validador, estado, 0F);
 	}
 

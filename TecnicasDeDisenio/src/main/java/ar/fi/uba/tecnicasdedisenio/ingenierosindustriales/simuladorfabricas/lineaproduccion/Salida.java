@@ -7,18 +7,18 @@ public class Salida implements ISalida {
 
 	private Producto producto;
 	
-	public Salida(){ 
+	public Salida() { 
 	}
 	
-	public Salida(Producto producto){
+	public Salida(final Producto producto) {
 		this.producto = producto;
 	}
 	
-	public void asignarProducto(Producto producto) {
+	public void asignarProducto(final Producto producto) {
 		this.producto = producto;
 	}
 
-	public Producto obtenerProducto(){
+	public Producto obtenerProducto() {
 		return this.producto;
 	}
 }

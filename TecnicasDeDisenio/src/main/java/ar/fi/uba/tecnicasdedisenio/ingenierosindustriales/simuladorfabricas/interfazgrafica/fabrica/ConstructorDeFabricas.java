@@ -1,6 +1,5 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica;
 
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.Instalador;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -13,15 +12,15 @@ public class ConstructorDeFabricas implements Listener {
 
     private Instalador instalador;
 
-    public ConstructorDeFabricas(Instalador instaladorInicial) {
+    public ConstructorDeFabricas(final Instalador instaladorInicial) {
         instalador = instaladorInicial;
     }
 
-    public void setInstalador(Instalador instalador) {
+    public void setInstalador(final Instalador instalador) {
         this.instalador = instalador;
     }
 
-    public void handleEvent (Event event) {
+    public void handleEvent(final Event event) {
 
         switch (event.type) {
             case SWT.MouseMove:
@@ -33,8 +32,9 @@ public class ConstructorDeFabricas implements Listener {
                 break;
 
             case SWT.MouseUp:
-                if ((event.stateMask & SWT.BUTTON1) == 0)
+                if ((event.stateMask & SWT.BUTTON1) == 0) {
                     return;
+                }
                 instalador.mouseUp(event.x, event.y);
                 break;
         }

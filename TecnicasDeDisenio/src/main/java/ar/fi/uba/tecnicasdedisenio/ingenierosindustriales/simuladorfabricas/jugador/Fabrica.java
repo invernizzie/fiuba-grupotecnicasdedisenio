@@ -26,6 +26,8 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 
 public class Fabrica implements Sincronizado {
 
+    private static final double OCHENTA_PORCIENTO = 0.8;
+
 	private List<Maquina> maquinas;
 	private List<LineaProduccion> lineas;
 	private List<Fuente> fuentes;
@@ -35,7 +37,6 @@ public class Fabrica implements Sincronizado {
 	private int metrosCuadrados;
 	private Jugador jugador;
 	private float costoFabricaXMes;
-    private static final double OCHENTA_PORCIENTO = 0.8;
 
     public Fabrica(final int metrosCuadrados, final float costoCompra, final float costoAlquiler) {
 		this.maquinas = new ArrayList<Maquina>();
@@ -294,7 +295,6 @@ public class Fabrica implements Sincronizado {
 			
 			this.getJugador().aumentarDinero(costoMaquinas);
 			
-			/*Borra todo lo que tiene seteado, hay que empezar de nuevo. Verificar si esta bien esto.*/
 			this.maquinas = new ArrayList<Maquina>();
 			this.lineas = new ArrayList<LineaProduccion>();
 			this.fuentes = new ArrayList<Fuente>();
@@ -404,8 +404,8 @@ public class Fabrica implements Sincronizado {
 		for (LineaProduccion linea : this.getLineas()) {
 			if (linea.contieneMaquina(maquina)) {
 				linea.eliminarMaquina(maquina);
-				for(Maquina maq : linea.getMaquinas()){
-					if(maq.getPrecedentes().size()==0 && maq.getSiguiente()==null){
+				for (Maquina maq : linea.getMaquinas()) {
+					if ((maq.getPrecedentes().size() == 0) && (maq.getSiguiente() == null)) {
 						linea.eliminarMaquina(maq);
 					}
 				}

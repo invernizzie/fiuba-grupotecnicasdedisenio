@@ -15,10 +15,8 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPrensa;
 
 public class TestLaboratorioInversion {
-	
-	
-	private Jugador jugador;
-	private final float PORCENTAJE = 10;
+
+    private static final float PORCENTAJE = 10;
     private static final int DINERO_INCIAL_1 = 10000;
     private static final int CIEN = 100;
     private static final int COSTO_1 = 2000;
@@ -26,7 +24,9 @@ public class TestLaboratorioInversion {
     private static final int COSTO_3 = 100;
     private static final int COSTO_4 = 125;
     private static final int COSTO_5 = 1000;
-    private static final int COSTO_6 = 2439;
+    private static final int COSTO_6 = 2439;    
+	
+	private Jugador jugador;
 
     @Before
 	public void setUp() throws Exception {

@@ -15,7 +15,10 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
  *
  */
 public abstract class Maquina implements Cloneable, IFuente  {
-	
+
+    private static final float VEINTICINCO_PORCIENTO = 0.25f;
+    private static final float CINCUENTA_PORCIENTO = 0.5f;
+
 	private IEntrada entrada;
 	private ISalida salida;
 	private List<Producto> productos;
@@ -31,8 +34,6 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	
 	private Float costoMaquina;
 	private boolean conectadaAContenedor;
-    private static final float VEINTICINCO_PORCIENTO = 0.25f;
-    private static final float CINCUENTA_PORCIENTO = 0.5f;
 
     /**
 	 * Usar Maquina(Float)

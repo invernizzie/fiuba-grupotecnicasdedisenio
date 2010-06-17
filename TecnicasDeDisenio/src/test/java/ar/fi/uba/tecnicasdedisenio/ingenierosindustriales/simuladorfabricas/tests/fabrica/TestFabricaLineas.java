@@ -50,13 +50,13 @@ public class TestFabricaLineas {
 		this.fabrica.agregarFuente(fuenteAgua);
 		this.fabrica.agregarFuente(fuenteSal);
 		
-		this.jugador = new Jugador("Gustavo",1000);
-		this.jugador.setLaboratorio(new Laboratorio("Cocina",""));
+		this.jugador = new Jugador("Gustavo", 1000);
+		this.jugador.setLaboratorio(new Laboratorio("Cocina", ""));
 		this.fabrica.comprar(jugador);
 	}
 
 	@Test
-	public void testCrearLinea(){
+	public void testCrearLinea() {
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
@@ -65,8 +65,8 @@ public class TestFabricaLineas {
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
 		
-		fabrica.conectarMaquina(fuenteTrigo, horno,0);
-		fabrica.conectarMaquina(horno, licuadora,0);
+		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
+		fabrica.conectarMaquina(horno, licuadora, 0);
 		
 		
 		List<LineaProduccion> lineas = fabrica.getLineas();
@@ -75,7 +75,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testCrearLineas(){
+	public void testCrearLineas() {
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
@@ -109,7 +109,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testCostos(){
+	public void testCostos() {
 
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
@@ -154,7 +154,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testCostosProcesoInvalido(){
+	public void testCostosProcesoInvalido() {
 
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
@@ -186,7 +186,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testCrearLineasEliminarMaquinas(){
+	public void testCrearLineasEliminarMaquinas() {
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
@@ -224,7 +224,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testMaquinaRota(){
+	public void testMaquinaRota() {
 
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
@@ -269,7 +269,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testConControlDeCalidad(){
+	public void testConControlDeCalidad() {
 
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
@@ -312,7 +312,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testNoHayUnCiclo(){
+	public void testNoHayUnCiclo() {
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
@@ -325,26 +325,29 @@ public class TestFabricaLineas {
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertFalse("Las m�quinas no deber�an estar rotas", maquina.estaRota());
+        }
 		
 		fabrica.conectarMaquina(horno, licuadora, 0);
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertFalse("Las m�quinas no deber�an estar rotas", maquina.estaRota());
+        }
 		
 		fabrica.conectarMaquina(licuadora, plancha, 0);
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertFalse("Las m�quinas no deber�an estar rotas", maquina.estaRota());
+        }
 	}
 	
 	@Test
-	public void testHayUnCiclo(){
+	public void testHayUnCiclo() {
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
@@ -357,33 +360,37 @@ public class TestFabricaLineas {
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertFalse("Las m�quinas no deber�an estar rotas", maquina.estaRota());
+        }
 		
 		fabrica.conectarMaquina(horno, licuadora, 0);
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertFalse("Las m�quinas no deber�an estar rotas", maquina.estaRota());
+        }
 		
 		fabrica.conectarMaquina(licuadora, plancha, 0);
 		fabrica.validarCiclos();
 
 		/*Las m�quinas no deber�an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertFalse("Las m�quinas no deber�an estar rotas", maquina.estaRota());
+        }
 		
 		fabrica.conectarMaquina(plancha, horno, 0);
 		fabrica.validarCiclos();
 
 		/*Todas las m�quinas deber�an estar rotas ya que ahora hay un ciclo.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertTrue("Las m�quinas deber�an estar rotas", maquina.estaRota());
+        }
 	}
 	
 	@Test
-	public void testCiclosControlCalidad(){
+	public void testCiclosControlCalidad() {
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina control = new ControlCalidad(0F, 0F);
@@ -396,29 +403,33 @@ public class TestFabricaLineas {
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertFalse("Las m�quinas no deber�an estar rotas", maquina.estaRota());
+        }
 		
 		fabrica.conectarMaquina(horno, licuadora, 0);
 		fabrica.validarCiclos();
 		
 		/*Las m�quinas no deber�an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertFalse("Las m�quinas no deber�an estar rotas", maquina.estaRota());
+        }
 		
 		fabrica.conectarMaquina(licuadora, control, 0);
 		fabrica.validarCiclos();
 
 		/*Las m�quinas no deber�an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertFalse("Las m�quinas no deber�an estar rotas", maquina.estaRota());
+        }
 		
 		fabrica.conectarMaquina(control, horno, 0);
 		fabrica.validarCiclos();
 
 		/*Las m�quinas no deber�an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas())
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
 			Assert.assertTrue("Las m�quinas deber�an estar rotas", maquina.estaRota());
+        }
 	}
 	
 	@After
