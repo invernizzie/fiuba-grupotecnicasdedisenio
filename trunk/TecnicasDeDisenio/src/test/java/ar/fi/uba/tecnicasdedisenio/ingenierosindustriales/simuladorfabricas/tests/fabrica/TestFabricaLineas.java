@@ -56,31 +56,38 @@ public class TestFabricaLineas {
 	}
 
 	@Test
-	public void testCrearLinea() {
+	public void testSeCreaUnaSolaLineaCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltima() {
+		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
+		List<LineaProduccion> lineas = null;
 		
+		/*Asignación.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
 		
 		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
 		fabrica.conectarMaquina(horno, licuadora, 0);
-		
-		
-		List<LineaProduccion> lineas = fabrica.getLineas();
-		Assert.assertEquals("Se esperaba una sola linea", 1, lineas.size());
+
+		lineas = fabrica.getLineas();
+
+		/*Test.*/
+		Assert.assertEquals("Se esperaba una sola linea.", 1, lineas.size());
 
 	}
 	
 	@Test
-	public void testCrearLineas() {
+	public void testSeCreanDosLineasCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltimaYSeHaceLoMismoConOtraFuenteYOtrasMaquinas() {
+		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		Maquina prensa = new Prensa(0F, 0F);
+		List<LineaProduccion> lineas = null;
 		
+		/*Asignación.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
@@ -88,15 +95,36 @@ public class TestFabricaLineas {
 		
 		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
 		fabrica.conectarMaquina(horno, licuadora, 0);
-		
-		List<LineaProduccion> lineas = fabrica.getLineas();
-		Assert.assertEquals("Se esperaba una sola linea", 1, lineas.size());
 
 		fabrica.conectarMaquina(fuenteAgua, plancha, 0);
 		fabrica.conectarMaquina(plancha, prensa, 0);
 		
 		lineas = fabrica.getLineas();
-		Assert.assertEquals("Se esperaban 2 lineas", 2, lineas.size());
+		
+		/*Test.*/
+		Assert.assertEquals("Se esperaban 2 lineas.", 2, lineas.size());
+	}
+	
+	@Test
+	public void testSeCreanTresLineasCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltimaYSeHaceLoMismoConOtrasDosFuenteYOtrasCuatroMaquinas() {
+		/*Inicialización.*/
+		Maquina horno = new Horno(0F, 0F);
+		Maquina licuadora = new Licuadora(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		Maquina prensa = new Prensa(0F, 0F);
+		List<LineaProduccion> lineas = null;
+		
+		/*Asignación.*/
+		fabrica.comprarMaquina(horno);
+		fabrica.comprarMaquina(licuadora);
+		fabrica.comprarMaquina(plancha);
+		fabrica.comprarMaquina(prensa);
+		
+		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
+		fabrica.conectarMaquina(horno, licuadora, 0);
+
+		fabrica.conectarMaquina(fuenteAgua, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
 		
 		plancha = new Plancha(0F, 0F);
 		prensa = new Prensa(0F, 0F);
@@ -105,12 +133,14 @@ public class TestFabricaLineas {
 		fabrica.conectarMaquina(plancha, prensa, 0);
 		
 		lineas = fabrica.getLineas();
-		Assert.assertEquals("Se esperaban 3 lineas", 3, lineas.size());
+		
+		/*Test.*/
+		Assert.assertEquals("Se esperaban 3 lineas.", 3, lineas.size());
 	}
 	
 	@Test
-	public void testCostos() {
-
+	public void testSeDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoValido() {
+		/*Inicialización.*/
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
 		 */
@@ -125,6 +155,7 @@ public class TestFabricaLineas {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
+		/*Asignación.*/
 		fabrica.comprarMaquina(prensa);
 		fabrica.comprarMaquina(plancha);
 		
@@ -141,24 +172,63 @@ public class TestFabricaLineas {
 		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
 		dineroEsperado += 100F;
 		
-		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
-		
-		fabrica.notificar(Evento.COMIENZO_DE_DIA);
-		fabrica.notificar(Evento.COMIENZO_DE_DIA);
-		
-		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
-		dineroEsperado += 100F;
-		
-		dineroJugador = jugador.getDineroActual();
-		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
+		/*Test.*/
+		Assert.assertEquals("El dinero del jugador no es el esperado.", dineroEsperado, dineroJugador);
 	}
 	
 	@Test
-	public void testCostosProcesoInvalido() {
-
+	public void testSeDescuentanLosCostosCorrectosAlPasarCuatroDiasConProcesoValido() {
+		/*Inicialización.*/
+		/*
+		 * Creo un proceso de prueba para simplificar el test.
+		 */
+		Proceso proceso = new Proceso(1000);
+		TipoMaquina maq = new TipoMaquinaPrensa();
+		TipoMaquinaPlancha tipoPlancha = new TipoMaquinaPlancha();
+		tipoPlancha.addMateriaPrima(new Producto(ValidadorProductos.instancia(), "trigo", 0));
+		maq.addPrecedente(tipoPlancha);
+		proceso.setMaquinaFinal(maq);
+		jugador.getLaboratorio().getProcesosHabilitados().add(proceso);
+		
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
+		/*Asignación.*/
+		fabrica.comprarMaquina(prensa);
+		fabrica.comprarMaquina(plancha);
+		
+		fabrica.conectarMaquina(fuenteTrigo, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
+		
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		
+		float dineroJugador = jugador.getDineroActual();
+		float dineroEsperado = 1000 - fabrica.getCostoCompra();
+		dineroEsperado -= prensa.getCostoMaquina();
+		dineroEsperado -= plancha.getCostoMaquina();
+		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
+		dineroEsperado += 100F;
+		
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		
+		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
+		dineroEsperado += 100F;
+		
+		dineroJugador = jugador.getDineroActual();
+		
+		/*Test.*/
+		Assert.assertEquals("El dinero del jugador no es el esperado.", dineroEsperado, dineroJugador);
+	}
+	
+	@Test
+	public void testSeDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoInvalido() {
+		/*Inicialización.*/
+		Maquina prensa = new Prensa(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		
+		/*Asignación.*/
 		fabrica.comprarMaquina(prensa);
 		fabrica.comprarMaquina(plancha);
 		
@@ -174,7 +244,31 @@ public class TestFabricaLineas {
 		dineroEsperado -= plancha.getCostoMaquina();
 		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
 		
-		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
+		/*Test.*/
+		Assert.assertEquals("El dinero del jugador no es el esperado.", dineroEsperado, dineroJugador);
+	}
+	
+	@Test
+	public void testSeDescuentanLosCostosCorrectosAlPasarCuatroDiasConProcesoInValido() {
+		/*Inicialización.*/
+		Maquina prensa = new Prensa(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		
+		/*Asignación.*/
+		fabrica.comprarMaquina(prensa);
+		fabrica.comprarMaquina(plancha);
+		
+		fabrica.conectarMaquina(fuenteTrigo, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
+		
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		fabrica.notificar(Evento.COMIENZO_DE_DIA);
+		
+		float dineroJugador = jugador.getDineroActual();
+		float dineroEsperado = 1000 - fabrica.getCostoCompra();
+		dineroEsperado -= prensa.getCostoMaquina();
+		dineroEsperado -= plancha.getCostoMaquina();
+		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
 		
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
@@ -182,16 +276,22 @@ public class TestFabricaLineas {
 		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
 		
 		dineroJugador = jugador.getDineroActual();
-		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
+		
+		/*Test.*/
+		Assert.assertEquals("El dinero del jugador no es el esperado.", dineroEsperado, dineroJugador);
 	}
+
 	
 	@Test
-	public void testCrearLineasEliminarMaquinas() {
+	public void testSeEsperaUnaSolaLineaAlCrearDosLineasYEliminarLasMaquinasDeUna() {
+		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		Maquina prensa = new Prensa(0F, 0F);
+		List<LineaProduccion> lineas = null;
 		
+		/*Asignación.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
@@ -199,27 +299,50 @@ public class TestFabricaLineas {
 		
 		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
 		fabrica.conectarMaquina(horno, licuadora, 0);
-		
-		List<LineaProduccion> lineas = fabrica.getLineas();
-		Assert.assertEquals("Se esperaba una sola linea", 1, lineas.size());
 
 		fabrica.conectarMaquina(fuenteAgua, plancha, 0);
 		fabrica.conectarMaquina(plancha, prensa, 0);
-		
-		lineas = fabrica.getLineas();
-		Assert.assertEquals("Se esperaban 2 lineas", 2, lineas.size());
 		
 		fabrica.venderMaquina(horno);
 		fabrica.venderMaquina(licuadora);
 		
 		lineas = fabrica.getLineas();
-		Assert.assertEquals("Se esperaba una sola linea", 1, lineas.size());
+		
+		/*Test.*/
+		Assert.assertEquals("Se esperaba una sola linea.", 1, lineas.size());
+	}
+	
+	@Test
+	public void testNoSeEsperanLineasAlCrearDosLineasYEliminarLasMaquinasDeAmbas() {
+		/*Inicialización.*/
+		Maquina horno = new Horno(0F, 0F);
+		Maquina licuadora = new Licuadora(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		Maquina prensa = new Prensa(0F, 0F);
+		List<LineaProduccion> lineas = null;
+		
+		/*Asignación.*/
+		fabrica.comprarMaquina(horno);
+		fabrica.comprarMaquina(licuadora);
+		fabrica.comprarMaquina(plancha);
+		fabrica.comprarMaquina(prensa);
+		
+		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
+		fabrica.conectarMaquina(horno, licuadora, 0);
+
+		fabrica.conectarMaquina(fuenteAgua, plancha, 0);
+		fabrica.conectarMaquina(plancha, prensa, 0);
+		
+		fabrica.venderMaquina(horno);
+		fabrica.venderMaquina(licuadora);
 		
 		fabrica.venderMaquina(plancha);
 		fabrica.venderMaquina(prensa);
 		
 		lineas = fabrica.getLineas();
-		Assert.assertEquals("No se esperaba una linea", 0, lineas.size());
+		
+		/*Test.*/
+		Assert.assertEquals("No se esperaba una linea.", 0, lineas.size());
 		
 	}
 	

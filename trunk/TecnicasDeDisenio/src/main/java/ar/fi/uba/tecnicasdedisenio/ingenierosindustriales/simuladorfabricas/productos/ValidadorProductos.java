@@ -7,7 +7,6 @@ import java.util.Set;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Evento;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.calendario.Sincronizado;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util.XMLParserProductos;
 
 /**
  * Clase que contiene las colecciones de Productos utilizables
@@ -20,9 +19,7 @@ public class ValidadorProductos implements Sincronizado {
 	
 	private HashMap<String, Boolean> mapProductos;
 	private HashMap<String, Float> mapProductosPrecio;
-	private XMLParserProductos parser;
-	private final String pathXML = "Productos.xml";
-
+	private CargadorDeProductos cargador;
 
     public HashMap<String, Boolean> getMapProductos() {
 		return mapProductos;
@@ -41,6 +38,11 @@ public class ValidadorProductos implements Sincronizado {
 		return this.mapProductos.containsKey(producto);
     }
 	
+	/**
+	 * Obtiene el precio con el cual se venderá el producto en el mercado.
+	 * @param producto
+	 * @return
+	 */
 	public Float obtenerPrecioMercado(final String producto) {
 		Float precio = this.mapProductosPrecio.get(producto);
 		if (precio == null) {
@@ -53,6 +55,10 @@ public class ValidadorProductos implements Sincronizado {
 		return mapProductos.toString();
 	}
 	
+	/**
+	 * Devuelve todas las que sean materias primas de los productos existentes.
+	 * @return
+	 */
 	public String[] getMateriasPrimas() {
 		Iterator<Map.Entry<String, Boolean>> it = mapProductos.entrySet().iterator();
 		HashMap<String, Boolean> mapMateriasPrimas = new HashMap<String, Boolean>();
@@ -65,7 +71,12 @@ public class ValidadorProductos implements Sincronizado {
 		Set<String> productosSet = mapMateriasPrimas.keySet();
         return productosSet.toArray(new String[productosSet.size()]);
 	}
-
+	
+	/**
+	 * Obtiene el precio de compra de un producto.
+	 * @param producto
+	 * @return
+	 */
 	public Float obtenerPrecioCompra(final String producto) {
 		Float precio = this.mapProductosPrecio.get(producto);
 		if (precio == null) {
@@ -80,32 +91,38 @@ public class ValidadorProductos implements Sincronizado {
 	public void notificar(final Evento evento) {
 		/*Una vez por semana se vuelven a cargar los costos de las materias primas.*/
 		if (evento == Evento.COMIENZO_DE_SEMANA) {
-			this.cargarXML();
+			this.mapProductos = obtenerProductos();
+			this.mapProductosPrecio = obtenerPreciosProductos();
 		}
 		
 	}
 	
 	private ValidadorProductos() {
-		this.mapProductos = new HashMap<String, Boolean>();
-		this.mapProductosPrecio = new HashMap<String, Float>();
-		this.cargarXML();
-	}
-	
-	private XMLParserProductos getParser() {
-		return parser;
-	}
-
-	private void setParser(final XMLParserProductos parser) {
-		this.parser = parser;
+		this.setCargador(new CargadorDeProductos());
+		this.mapProductos = obtenerProductos();
+		this.mapProductosPrecio = obtenerPreciosProductos();
+		
 	}
 	
 	/**
-	 * Se cargan los productos desde el XML con sus precios.
+	 * Devuelve los productos que devuelve el cargador.
 	 */
-	private void cargarXML() {
-		this.setParser(new XMLParserProductos(pathXML));
-		this.getParser().leerDoc();
-		this.mapProductos = parser.obtenerProductos();
-		this.mapProductosPrecio = parser.obtenerPrecios();
+	private HashMap<String, Boolean> obtenerProductos() {
+		return this.getCargador().obtenerProductos();
+	}
+
+	/**
+	 * Devuelve los precios que devuelve el cargador.
+	 */
+	private HashMap<String, Float> obtenerPreciosProductos() {
+		return this.getCargador().obtenerPreciosProductos();
+	}
+	
+	private void setCargador(CargadorDeProductos cargador) {
+		this.cargador = cargador;
+	}
+
+	private CargadorDeProductos getCargador() {
+		return cargador;
 	}
 }
