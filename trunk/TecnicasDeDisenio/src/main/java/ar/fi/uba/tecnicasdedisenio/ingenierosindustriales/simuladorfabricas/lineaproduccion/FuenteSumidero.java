@@ -1,7 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
 /**
- * Container class que almacena dos máquinas, o una máquina y una fuente, que se 
+ * Container class que almacena dos máquinas, o una máquina y una fuente, que se
  * encuentran conectadas por una cinta
  * @author santiago
  */

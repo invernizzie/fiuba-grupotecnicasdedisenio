@@ -199,7 +199,7 @@ public class MainWindow implements Sincronizado {
 
 		gridLayout.horizontalSpacing = 1;
 		sShell = new Shell(SWT.V_SCROLL | SWT.SHELL_TRIM | SWT.H_SCROLL);
-		sShell.setText("Tecnincas de Dise�o");
+		sShell.setText("Tecnincas de Diseño");
 		sShell.setMaximized(false);
 		sShell.setVisible(true);
 		sShell.setLayout(gridLayout);

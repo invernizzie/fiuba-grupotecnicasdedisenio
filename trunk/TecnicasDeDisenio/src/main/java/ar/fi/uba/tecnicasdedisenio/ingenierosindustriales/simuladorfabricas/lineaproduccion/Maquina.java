@@ -9,7 +9,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 
 
 /**
- * Abstracci�n que representa una entidad encargada de realizar un procesamiento sobre 
+ * Abstracción que representa una entidad encargada de realizar un procesamiento sobre 
  * una serie de materiales ({@link Producto}).
  * @author santiago
  *
@@ -57,7 +57,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 	
 	/**
-	 * Template para la realización del proceso, las subclases deberín implementar
+	 * Template para la realización del proceso, las subclases deberían implementar
 	 * el método realizarProceso que es el que realiza efectivemente la tarea y
 	 * validarEntrada que verifica si los datos que los elementos que ingresan
 	 * son válidos para la tarea a realizar.
@@ -71,9 +71,9 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		if (!this.estaRota) {
 			obtenerProductosEntrada();
 			
-			Boolean isEntradaValida = this.validarEntrada();
+			//Boolean isEntradaValida =;
 			
-			if (isEntradaValida) {
+			if ( this.validarEntrada()) {
 				if (construirProductoValido) {
 					elementoProcesado = this.realizarProceso();
 				} else {
@@ -228,7 +228,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	}
 
 	/**
-	 * Devuelve el costo de venta de la m�quina. Un 50% del costo si la m�quina 
+	 * Devuelve el costo de venta de la máquina. Un 50% del costo si la máquina
 	 * no se encuentra rota, 0 en caso contrario.
 	 * @return
 	 */
@@ -298,15 +298,15 @@ public abstract class Maquina implements Cloneable, IFuente  {
 	
 	/**
 	 * Verifica que ingresen los elementos correctos para realizar la tarea que 
-	 * le corresponde a cada m�quina.
-	 * La validaci�n puede ser por tipo, cantidad, etc.
-	 * @return true si y solo si los elementos son los que precisa la máquina 
+	 * le corresponde a cada máquina.
+	 * La validación puede ser por tipo, cantidad, etc.
+	 * @return true si y solo si los elementos son los que precisa la máquina
 	 * para operar, false en otro caso.
 	 */
 	protected abstract Boolean validarEntrada();
 	
 	/**
-	 * M�todo que realiza el procesamiento de los elementos, devuelve el elemento
+	 * Método que realiza el procesamiento de los elementos, devuelve el elemento
 	 * resultado de procesar los elementos de entrada.
 	 * 
 	 * @return

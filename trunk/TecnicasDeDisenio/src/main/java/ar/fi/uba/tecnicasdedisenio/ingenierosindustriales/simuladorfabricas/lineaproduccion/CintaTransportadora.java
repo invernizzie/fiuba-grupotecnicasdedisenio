@@ -4,7 +4,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 
 
 /**
- * Representa la conexión entre dos máquinas {@link Maquina} o una fuente de materia prima 
+ * Representa la conexión entre dos máquinas {@link Maquina} o una fuente de materia prima
  * y una máquina. Traslada los elementos ({@link Producto})  entre ellas.
  * @author santiago
  *

@@ -16,8 +16,8 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 /**
  * Representa a un jugador.
  * Tiene un nombre y un dinero el cual va siendo actualizado.
- * Puede comprar, alquilar o vender una f�brica.
- * Puede crear l�neas de producci�n dentro de cada f�brica que tenga.
+ * Puede comprar, alquilar o vender una fábrica.
+ * Puede crear líneas de producción dentro de cada fábrica que tenga.
  *
  * @author Gustavo A. Meller (gmeller@gmail.com)
  */

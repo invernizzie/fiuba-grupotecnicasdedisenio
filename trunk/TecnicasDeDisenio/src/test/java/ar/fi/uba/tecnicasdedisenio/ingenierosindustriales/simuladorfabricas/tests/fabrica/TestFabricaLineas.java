@@ -57,13 +57,13 @@ public class TestFabricaLineas {
 
 	@Test
 	public void testSeCreaUnaSolaLineaCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltima() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		List<LineaProduccion> lineas = null;
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
@@ -80,14 +80,14 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testSeCreanDosLineasCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltimaYSeHaceLoMismoConOtraFuenteYOtrasMaquinas() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		List<LineaProduccion> lineas = null;
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
@@ -107,14 +107,14 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testSeCreanTresLineasCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltimaYSeHaceLoMismoConOtrasDosFuenteYOtrasCuatroMaquinas() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		List<LineaProduccion> lineas = null;
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
@@ -140,7 +140,7 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testSeDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoValido() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
 		 */
@@ -155,7 +155,7 @@ public class TestFabricaLineas {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(prensa);
 		fabrica.comprarMaquina(plancha);
 		
@@ -178,7 +178,7 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testSeDescuentanLosCostosCorrectosAlPasarCuatroDiasConProcesoValido() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
 		 */
@@ -193,7 +193,7 @@ public class TestFabricaLineas {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(prensa);
 		fabrica.comprarMaquina(plancha);
 		
@@ -224,11 +224,11 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testSeDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoInvalido() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(prensa);
 		fabrica.comprarMaquina(plancha);
 		
@@ -250,11 +250,11 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testSeDescuentanLosCostosCorrectosAlPasarCuatroDiasConProcesoInValido() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(prensa);
 		fabrica.comprarMaquina(plancha);
 		
@@ -284,14 +284,14 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testSeEsperaUnaSolaLineaAlCrearDosLineasYEliminarLasMaquinasDeUna() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		List<LineaProduccion> lineas = null;
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
@@ -314,14 +314,14 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testNoSeEsperanLineasAlCrearDosLineasYEliminarLasMaquinasDeAmbas() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		List<LineaProduccion> lineas = null;
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
@@ -347,8 +347,8 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testElDineroDisminuidoAlJugadorEsSolamenteElDeLaConsumisi髇DeLaMateriaPrimaCuandoSeRompeUnaMaquinaYPasanDosDias() {
-		/*Inicializaci髇.*/
+	public void testElDineroDisminuidoAlJugadorEsSolamenteElDeLaConsumisionDeLaMateriaPrimaCuandoSeRompeUnaMaquinaYPasanDosDias() {
+		/*Inicializaci贸n.*/
 		float dineroJugador, dineroEsperado;
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
@@ -364,7 +364,7 @@ public class TestFabricaLineas {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(prensa);
 		fabrica.comprarMaquina(plancha);
 		
@@ -395,7 +395,7 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testSeDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoValidoYTieneControlDeCalidad() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
 		 */
@@ -411,7 +411,7 @@ public class TestFabricaLineas {
 		Maquina plancha = new Plancha(0F, 0F);
 		Maquina controlCalidad = new ControlCalidad(0F, 0F);
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(prensa);
 		fabrica.comprarMaquina(plancha);
 		fabrica.comprarMaquina(controlCalidad);
@@ -439,12 +439,12 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testNoHayUnCicloCuandoConectoTresMaquinasMaquinasSinArmarUnCiclo() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
@@ -464,12 +464,12 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testHayUnCicloCuandoConectoTresMaquinasYLaUltimaLaConectoALaPrimera() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
@@ -489,12 +489,12 @@ public class TestFabricaLineas {
 	
 	@Test
 	public void testHayUnCicloCuandoConectoTresMaquinasYLaUltimaLaConectoAUnaDeLasAnterioresQueNoEsLaPrimera() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);

@@ -126,7 +126,7 @@ public class TestCintaTransporte {
 		
 		this.cintaTransportadora.conectar(prensa, plancha);
 		
-		Assert.assertEquals("La plancha tiene más de un precedente", 
+		Assert.assertEquals("La plancha tiene más de un precedente",
 								1, plancha.getPrecedentes().size());
 		
 		Assert.assertEquals("El precedente de la plancha no es la prensa", 
@@ -174,7 +174,7 @@ public class TestCintaTransporte {
 		
 		this.cintaTransportadora.conectar(fuente, prensa);
 		
-		Assert.assertEquals("La prensa tiene más de una materia prima", 
+		Assert.assertEquals("La prensa tiene más de una materia prima",
 								1, prensa.getMateriasPrimas().size());
 		
 		Assert.assertEquals("El tipo de producto recibido por la máquina no se "

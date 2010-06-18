@@ -47,8 +47,8 @@ public class Proceso {
 	}
 	
 	/**
-	 * Dada la maquina final de una linea de producci�n verifica si un proceso (receta)
-	 * es igual a una l�nea de producci�n.
+	 * Dada la maquina final de una linea de producción verifica si un proceso (receta)
+	 * es igual a una línea de producción.
 	 * @param maquinaFinalLinea
 	 * @return
 	 */

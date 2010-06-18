@@ -20,7 +20,7 @@ public class ControlCalidad extends Maquina {
 
 	@Override
 	public Producto getTipoProducto() {
-		// El control de calidad se aplica sobre una �nica m�quina y su tipo de
+		// El control de calidad se aplica sobre una única máquina y su tipo de
 		// producto es el de esta última
 		return this.obtenerPrecedentesFisicos().get(0).getTipoProducto();
 	}

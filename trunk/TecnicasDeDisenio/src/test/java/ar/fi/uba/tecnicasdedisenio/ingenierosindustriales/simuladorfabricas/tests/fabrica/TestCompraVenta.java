@@ -44,10 +44,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testSolamenteLanzaExcepcionDineroInsuficienteXQueJugadorNoPudoComprarLaFabricaXDineroInsuficiente() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", PASO_COMPRA);
 		
-		/*Asignación.*/
+		/*AsignaciÃ³n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 			/*Test.*/
@@ -64,10 +64,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testElJugadorNoTieneFabricaAsignadaXQueJugadorNoPudoComprarLaFabricaXDineroInsuficiente() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", PASO_COMPRA);
 		
-		/*Asignación.*/
+		/*AsignaciÃ³n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -81,10 +81,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testLaFabricaNoTieneJugadorAsignadoXQueJugadorNoPudoComprarLaFabricaXDineroInsuficiente(){
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", PASO_COMPRA);
 		
-		/*Asignación.*/
+		/*AsignaciÃ³n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -99,10 +99,10 @@ public class TestCompraVenta {
 
 	@Test
 	public void testNoHayExcepcionesYaQueJugadorSinFabricaAsignadaYConDineroSuficienteCompraUnaFabricaLibre() {
-		/*Inicialización.*/
+		/*Inicializacion.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -119,10 +119,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testElJugadorTieneUnaFabricaAsignadaYaQueEseJugadorSinFabricaAsignadaYConDineroSuficienteCompraUnaFabricaLibre() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -136,10 +136,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testLaFabricaTieneUnJugadorAsignadoYaQueJugadorSinFabricaAsignadaYConDineroSuficienteCompraEsaFabricaLibre() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -154,10 +154,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testElJugadorTieneComoDineroActualLoQueTeniaAntesMenosElCostoDeLaFabricaQueCompro() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		float plata = this.jugador.getDineroActual();
 		try {
 			this.fabricas.get(1).comprar(jugador);
@@ -172,10 +172,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testElJugadorTieneAsignadaLaFabricaQueCompro() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -190,10 +190,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testLaFabricaTieneAsignadaAlJugadorQueLaCompro() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -208,10 +208,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testNoHayExcepcionesYaQueJugadorSinFabricaAsignadaAlquilaUnaFabricaLibre() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(4).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -225,10 +225,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testElJugadorTieneUnaFabricaAsignadaYaQueEseJugadorSinFabricaAsignadaAlquilaUnaFabricaLibre() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(4).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -241,10 +241,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testLaFabricaTieneUnJugadorAsignadoYaQueJugadorSinFabricaAsignadaYAlquilaEsaFabricaLibre() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(4).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -252,16 +252,16 @@ public class TestCompraVenta {
 		}
 		
 		/*Test.*/
-		Assert.assertNotNull("La fabrica deberÃ­a tener un jugador que la alquiló.", this.fabricas.get(4).getJugador());
+		Assert.assertNotNull("La fabrica deberÃ­a tener un jugador que la alquilï¿½.", this.fabricas.get(4).getJugador());
 	}
 	
 	
 	@Test
 	public void testElJugadorNoSufreCambiosEnSuDineroActualYaQueAlquilarTieneCostoCero() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		float plata = this.jugador.getDineroActual();
 		try {
 			this.fabricas.get(4).alquilar(jugador);
@@ -275,10 +275,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testElJugadorTieneAsignadaLaFabricaQueAlquilo() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(4).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -291,10 +291,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testLaFabricaTieneAsignadaAlJugadorQueLaAlquilo() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(4).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -307,11 +307,11 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testSeLanzaExcepcionDeFabricaOcupadaCuandoUnJugadorIntentaComprarUnaFabricaCompradaPorOtro() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -332,13 +332,13 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testLaPlataDeUnJugadorNoSeModificaCuandoEseJugadorIntentaComprarUnaFabricaCompradaPorOtro() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
 		float plata2 = jug2.getDineroActual();
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -361,11 +361,11 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testUnJugadorNoTieneAsignadaUnaFabricaCuandoEseJugadorIntentaComprarUnaFabricaCompradaPorOtro() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -388,11 +388,11 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testUnJugadorSigueTeniendoAsignadaLaFabricaQueComproAntesCuandoOtroJugadorIntentaComprarEsaFabrica() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -414,10 +414,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testLanzaExcepcionCuandoUnJugadorConUnaFabricaAsignadaIntentaComprarOtra() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -438,12 +438,12 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testLaPlataDeUnJugadorNoCambiaCuandoEseJugadorConUnaFabricaAsignadaIntentaComprarOtra(){
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
 		float plata = this.jugador.getDineroActual();
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -464,10 +464,10 @@ public class TestCompraVenta {
 	}
 	@Test
 	public void testUnaFabricaNoTieneUnJugadorAsignadoCuandoUnJugadorConUnaFabricaAsignadaIntentaComprarEsaFabrica() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -489,10 +489,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testUnJugadorSigueTeniendoLaFabricaQueComproAntesCuandoEseJugadorIntentaComprarOtraFabrica() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -513,11 +513,11 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testSeLanzaExcepcionDeFabricaOcupadaCuandoUnJugadorIntentaAlquilarUnaFabricaAlquiladaPorOtro() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -536,11 +536,11 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testUnJugadorNoTieneAsignadaUnaFabricaCuandoEseJugadorIntentaAlquilarUnaFabricaAlquiadaPorOtro() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -561,11 +561,11 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testUnJugadorSigueTeniendoAsignadaLaFabricaQueAlquiloAntesCuandoOtroJugadorIntentaAlquilarEsaFabrica() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -585,10 +585,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testLanzaExcepcionCuandoUnJugadorConUnaFabricaAsignadaIntentaAlquilarOtra() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -607,10 +607,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testUnaFabricaNoTieneUnJugadorAsignadoCuandoUnJugadorConUnaFabricaAsignadaIntentaAlquilarEsaFabrica() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -629,10 +629,10 @@ public class TestCompraVenta {
 	}
 	@Test
 	public void testUnJugadorSigueTeniendoLaFabricaQueAlquiloAntesCuandoEseJugadorIntentaAlquilarOtraFabrica() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -651,10 +651,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testUnaFabricaNoTieneUnJugadorAsignadoCuandoUnJugadorLaCompraYLaVende() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -670,10 +670,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testUnJugadorNoTieneUnaFabricaAsignadaCuandoEseJugadorCompraUnaFabricaYLaVende(){
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -689,11 +689,11 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testElJugadorTieneUnVeintePorCientoMenosDePlataDeLaQueTeniaAntesDeComprarYVenderUnaFabrica() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		float plata = this.jugador.getDineroActual();
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -710,10 +710,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testUnaFabricaNoTieneUnJugadorAsignadoCuandoUnJugadorLaAlquilaYLaVende() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -728,10 +728,10 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testUnJugadorNoTieneUnaFabricaAsignadaCuandoEseJugadorAlquilaUnaFabricaYLaVende(){
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -746,11 +746,11 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testElJugadorTieneElMismoDineroQueAntesDeAlquilarYVenderUnaFabrica() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		float plata = this.jugador.getDineroActual();
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -765,13 +765,13 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testElJugadorRecuperaUnPorcentajeDeLaFabricaYDeLaMaquinaQueTieneLaFabricaLuegoDeComprarYVenderEsaFabricaQueTieneUnaMaquina() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		Maquina maquina1 = new Horno(0F, 0F);
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
 		float plata = this.jugador.getDineroActual();
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
@@ -786,8 +786,8 @@ public class TestCompraVenta {
 		/*Test.*/
 		Assert.assertEquals("El dinero actual del jugador deberÃ­a ser el del "
 							+ "principio menos el 20% del costo de la fÃ¡brica," +
-									"menos el costo compra de la máquina," +
-									"más el costo de venta de la máquina.",
+									"menos el costo compra de la mï¿½quina," +
+									"mï¿½s el costo de venta de la mï¿½quina.",
 								this.jugador.getDineroActual(),
 								(float) (plata - this.fabricas.get(1).getCostoCompra() * VEINTE_PORCIENTO
 										+ maquina1.obtenerCostoVenta() - maquina1.getCostoMaquina()));	
@@ -795,13 +795,13 @@ public class TestCompraVenta {
 	
 	@Test
 	public void testElJugadorRecuperaUnPorcentajeDeLaMaquinaQueTieneLaFabricaLuegoDeAlquilarYVenderEsaFabricaQueTieneUnaMaquina() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		Maquina maquina1 = new Horno(0F, 0F);
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
 		float plata = this.jugador.getDineroActual();
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -814,19 +814,19 @@ public class TestCompraVenta {
 		
 		/*Test.*/
 		Assert.assertEquals("El dinero actual del jugador deberÃ­a ser el del "
-							+"menos el costo compra de la máquina," +
-							"más el costo de venta de la máquina.",
+							+"menos el costo compra de la mï¿½quina," +
+							"mï¿½s el costo de venta de la mï¿½quina.",
 								this.jugador.getDineroActual(),
 								(float) (plata + maquina1.obtenerCostoVenta() - maquina1.getCostoMaquina()));	
 	}
 	
 	@Test
 	public void testNoCambiaLaPlataDeUnJugadorSiSeLlamaAVenderUnaFabricaYNoTieneFabricaAsiganda() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		float plata = this.jugador.getDineroActual();
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		this.jugador.venderFabrica(PASO_COMPRA);
 		
 		/*Test.*/
