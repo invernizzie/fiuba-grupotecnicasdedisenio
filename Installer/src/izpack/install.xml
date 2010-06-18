@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<installation version="1.0">
+
+    <!-- 
+        The info section.
+        The meaning of the tags should be natural ...
+    -->
+    <info>
+        <appname>Simulador de fabricas</appname>
+        <appversion>1.0</appversion>
+        <authors>
+            <author name="Garcia Jaime, Diego" email="diegogarcia666@gmail.com"/>
+            <author name="Invernizzi, Esteban Ignacio" email="invernizzie@gmail.com"/>
+            <author name="Meller, Gustavo Ariel" email="gmeller@gmail.com"/>
+            <author name="Risaro Sesar, Santiago Nicolas" email="nrisaro@gmail.com"/>
+        </authors>
+        <url>https://code.google.com/p/grupotecnicasdedisenio</url>
+    </info>
+
+	<variables>
+		<variable name="DesktopShortcutCheckboxEnabled" value="true"/>
+	</variables>
+
+    <!-- 
+        The gui preferences indication.
+        Sets the installer window to 640x480. It will not be able to change the size.
+    -->
+    <guiprefs width="448" height="336" resizable="no"/>
+
+    <!-- 
+        The locale section.
+        Asks here to include the English and French langpacks.
+    -->
+    <locale>
+        <langpack iso3="spa"/>
+        <langpack iso3="por"/>
+        <langpack iso3="eng"/>
+    </locale>
+
+    <!-- 
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+    <resources>
+        <res id="shortcutSpec.xml" src="resources/Windows_shortcutSpec.xml"/>
+        <res id="Unix_shortcutSpec.xml" src="resources/Unix_shortcutSpec.xml"/>
+        <res id="TargetPanel.dir.windows" src="resources/Windows_target.txt"/>
+        <res id="TargetPanel.dir.unix" src="resources/Unix_target.txt"/>
+    </resources>
+
+    <!-- 
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+    <panels>
+        <panel classname="HelloPanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="ShortcutPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="FinishPanel"/>
+    </panels>
+
+	<native type="izpack" name="ShellLink.dll"/>
+    
+    <!-- 
+        The packs section.
+        We specify here our packs.
+    -->
+    <packs>
+        <pack name="Base" required="yes">
+            <description>The base files</description>
+            <!-- Common files -->
+            <fileset dir="icons" targetdir="$INSTALL_PATH/icons" includes="*"/>
+            <!-- Unix files -->
+            <file src="executables/unix/SimuladorDeFabricas.jar" targetdir="$INSTALL_PATH" os="unix"/>
+            <!-- Windows files -->
+            <file src="executables/windows/SimuladorDeFabricas.jar" targetdir="$INSTALL_PATH" os="windows"/>
+            <!-- Mac files -->
+        </pack>
+    </packs>
+
+</installation>
