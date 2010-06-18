@@ -86,8 +86,8 @@ public abstract class TipoMaquina {
 		
 		if (this.verificarTipo(maquina)){
 			try{
-				this.verificarMateriasPrimas(listMatPrimasAux);
-				this.verificarPrecedencias(listPrecedentesAux);
+				this.verificarMismasMateriasPrimas(listMatPrimasAux);
+				this.verificarMismosPrecedencias(listPrecedentesAux);
 			}
 			catch(MateriaPrimaDistintaException e){
 				return false;
@@ -105,7 +105,7 @@ public abstract class TipoMaquina {
 			
 	}
 	
-	public void verificarMateriasPrimas(List<Producto> matPrimas) throws MateriaPrimaDistintaException{
+	public void verificarMismasMateriasPrimas(List<Producto> matPrimas) throws MateriaPrimaDistintaException{
 		int i,j;
 		
 		/*Si las cantidades son distintas no estan bien las materias primas.*/
@@ -129,7 +129,7 @@ public abstract class TipoMaquina {
 		}
 	}
 	
-	public void verificarPrecedencias(List<Maquina> maquinas) throws PrecedentesDistintosException{
+	public void verificarMismosPrecedencias(List<Maquina> maquinas) throws PrecedentesDistintosException{
 		int i, j;
 		
 		/*Si las cantidades son distintas no estan bien las precedencias.*/

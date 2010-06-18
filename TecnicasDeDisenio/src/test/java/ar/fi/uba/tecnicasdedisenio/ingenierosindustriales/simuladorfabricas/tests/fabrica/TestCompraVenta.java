@@ -26,8 +26,7 @@ public class TestCompraVenta {
     private static final int PASO_COMPRA = 1000;
     private static final int PASO_ALQUILER = 150;
     private static final int DINERO_INICIAL_1 = 3000;
-    private static final int DINERO_INICIAL_2 = 2000;
-    private static final int DINERO_INICIAL_3 = 5000;
+    private static final int DINERO_INICIAL_2 = 5000;
     private static final double VEINTE_PORCIENTO = 0.2;
     private static final int CANTIDAD_DE_FABRICAS = 5;
 
@@ -44,249 +43,793 @@ public class TestCompraVenta {
 	}
 	
 	@Test
-	public void testCompraFallidaXDineroInsuficiente() {
+	public void testSolamenteLanzaExcepcionDineroInsuficienteXQueJugadorNoPudoComprarLaFabricaXDineroInsuficiente() {
+		/*InicializaciÛn.*/
 		jugador = new Jugador("Gustavo", PASO_COMPRA);
 		
+		/*AsignaciÛn.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
-			Assert.fail("Deberia haber lanzado una excepcion de DineroInsuficiente");
+			/*Test.*/
+			Assert.fail("Deberia haber lanzado una excepcion de DineroInsuficiente.");
 		} catch (DineroInsuficienteException e) {
         } catch (FabricaOcupadaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
+			/*Test.*/
+        	Assert.fail("No deberia haber lanzado una excepcion.");
 		} catch (JugadorConFabricaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
+			/*Test.*/
+			Assert.fail("No deberia haber lanzado una excepcion.");
 		}
-		Assert.assertNull("El jugador no deber√≠a tener una fabrica asignada", this.jugador.getFabrica());
-		Assert.assertNull("La fabrica no deber√≠a tener un jugador que la compr√≥", this.fabricas.get(1).getJugador());
-		
-		
-		
-	}
-
-	@Test
-	public void testCompraExitosa() {
-		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
-		
-		float plata = this.jugador.getDineroActual();
-		try {
-			this.fabricas.get(1).comprar(jugador);
-		} catch (DineroInsuficienteException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
-		} catch (FabricaOcupadaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
-		} catch (JugadorConFabricaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
-		}
-		
-		Assert.assertNotNull("El jugador deber√≠a tener una fabrica asignada", this.jugador.getFabrica());
-		Assert.assertNotNull("La fabrica deber√≠a tener un jugador que la compr√≥", this.fabricas.get(1).getJugador());
-		Assert.assertEquals("El jugador deberia tener la plata anterior menos el costo de la fabrica", jugador.getDineroActual(), plata - this.fabricas.get(1).getCostoCompra());
-		Assert.assertEquals("El jugador deberia tener la fabrica que compr√≥", this.jugador.getFabrica(), this.fabricas.get(1));
-		Assert.assertEquals("La fabrica deber√≠a tener asignada al jugador que la compr√≥", this.fabricas.get(1).getJugador(), this.jugador);
 	}
 	
 	@Test
-	public void testAlquilerExitoso() {
-		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+	public void testElJugadorNoTieneFabricaAsignadaXQueJugadorNoPudoComprarLaFabricaXDineroInsuficiente() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", PASO_COMPRA);
 		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+        } catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertNull("El jugador no deber√≠a tener una fabrica asignada.", this.jugador.getFabrica());
+	}
+	
+	@Test
+	public void testLaFabricaNoTieneJugadorAsignadoXQueJugadorNoPudoComprarLaFabricaXDineroInsuficiente(){
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", PASO_COMPRA);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+        } catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertNull("La fabrica no deber√≠a tener un jugador que la compr√≥.", this.fabricas.get(1).getJugador());
+	}
+	
+
+	@Test
+	public void testNoHayExcepcionesYaQueJugadorSinFabricaAsignadaYConDineroSuficienteCompraUnaFabricaLibre() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+			/*Test.*/
+			Assert.fail("No deberia haber lanzado una excepcion.");
+		} catch (FabricaOcupadaException e) {
+			/*Test.*/
+			Assert.fail("No deberia haber lanzado una excepcion.");
+		} catch (JugadorConFabricaException e) {
+			/*Test.*/
+			Assert.fail("No deberia haber lanzado una excepcion.");
+		}
+	}
+	
+	@Test
+	public void testElJugadorTieneUnaFabricaAsignadaYaQueEseJugadorSinFabricaAsignadaYConDineroSuficienteCompraUnaFabricaLibre() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertNotNull("El jugador deber√≠a tener una fabrica asignada.", this.jugador.getFabrica());
+	}
+	
+	@Test
+	public void testLaFabricaTieneUnJugadorAsignadoYaQueJugadorSinFabricaAsignadaYConDineroSuficienteCompraEsaFabricaLibre() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertNotNull("La fabrica deber√≠a tener un jugador que la compr√≥.", this.fabricas.get(1).getJugador());
+	}
+	
+	
+	@Test
+	public void testElJugadorTieneComoDineroActualLoQueTeniaAntesMenosElCostoDeLaFabricaQueCompro() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
 		float plata = this.jugador.getDineroActual();
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
 		
+		/*Test.*/
+		Assert.assertEquals("El jugador deberia tener la plata anterior menos el costo de la fabrica.", jugador.getDineroActual(), plata - this.fabricas.get(1).getCostoCompra());
+	}
+	
+	@Test
+	public void testElJugadorTieneAsignadaLaFabricaQueCompro() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertEquals("El jugador deberia tener la fabrica que compr√≥.", this.jugador.getFabrica(), this.fabricas.get(1));
+	}
+	
+	
+	@Test
+	public void testLaFabricaTieneAsignadaAlJugadorQueLaCompro() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertEquals("La fabrica deber√≠a tener asignada al jugador que la compr√≥.", this.fabricas.get(1).getJugador(), this.jugador);
+	}
+	
+	
+	@Test
+	public void testNoHayExcepcionesYaQueJugadorSinFabricaAsignadaAlquilaUnaFabricaLibre() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
 		try {
 			this.fabricas.get(4).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
+			/*Test.*/
+			Assert.fail("No deberia haber lanzado una excepcion.");
 		} catch (JugadorConFabricaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
+			/*Test.*/
+			Assert.fail("No deberia haber lanzado una excepcion.");
 		}
-		
-		
-		Assert.assertEquals("El jugador deberia tener la plata anterior sin ninguna reducci√≥n", jugador.getDineroActual(), plata);
-		Assert.assertNotNull("El jugador deber√≠a tener una fabrica asignada", this.jugador.getFabrica());
-		Assert.assertNotNull("La fabrica deber√≠a tener un jugador que la alquil√≥", this.fabricas.get(4).getJugador());
-		Assert.assertEquals("El jugador deberia tener la fabrica que alquil√≥", this.jugador.getFabrica(), this.fabricas.get(4));
-		Assert.assertEquals("La fabrica deber√≠a tener asignada al jugador que la alquil√≥", this.fabricas.get(4).getJugador(), this.jugador);
 	}
 	
 	@Test
-	public void testDoblesAsignacionesCompra() {
-		jugador = new Jugador("Gustavo", DINERO_INICIAL_3);
-		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_3);
+	public void testElJugadorTieneUnaFabricaAsignadaYaQueEseJugadorSinFabricaAsignadaAlquilaUnaFabricaLibre() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(4).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertNotNull("El jugador deber√≠a tener una fabrica asignada.", this.jugador.getFabrica());
+	}
+	
+	@Test
+	public void testLaFabricaTieneUnJugadorAsignadoYaQueJugadorSinFabricaAsignadaYAlquilaEsaFabricaLibre() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(4).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertNotNull("La fabrica deber√≠a tener un jugador que la alquilÛ.", this.fabricas.get(4).getJugador());
+	}
+	
+	
+	@Test
+	public void testElJugadorNoSufreCambiosEnSuDineroActualYaQueAlquilarTieneCostoCero() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
 		float plata = this.jugador.getDineroActual();
-		float plata2 = jug2.getDineroActual();
+		try {
+			this.fabricas.get(4).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
 		
+		/*Test.*/
+		Assert.assertEquals("El jugador deberia tener la plata anterior sin ninguna reducci√≥n.", jugador.getDineroActual(), plata);
+	}
+	
+	@Test
+	public void testElJugadorTieneAsignadaLaFabricaQueAlquilo() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(4).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertEquals("El jugador deberia tener la fabrica que compr√≥.", this.jugador.getFabrica(), this.fabricas.get(4));
+	}
+	
+	@Test
+	public void testLaFabricaTieneAsignadaAlJugadorQueLaAlquilo() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(4).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertEquals("La fabrica deber√≠a tener asignada al jugador que la compr√≥.", this.fabricas.get(4).getJugador(), this.jugador);
+	}
+	
+	@Test
+	public void testSeLanzaExcepcionDeFabricaOcupadaCuandoUnJugadorIntentaComprarUnaFabricaCompradaPorOtro() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (FabricaOcupadaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (JugadorConFabricaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
 		/*El jugador 2 intenta comprar la fabrica que ya esta comprada.*/
 		try {
 			this.fabricas.get(1).comprar(jug2);
-			Assert.fail("Deberia haber lanzado una excepcion de FabricaOcupada");
+			/*Test.*/
+			Assert.fail("Deberia haber lanzado una excepcion de FabricaOcupada.");	
 		} catch (DineroInsuficienteException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
-		} catch (FabricaOcupadaException e) {
-			
+		} catch (FabricaOcupadaException e) {	
 		} catch (JugadorConFabricaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
+		}
+	}
+	
+	@Test
+	public void testLaPlataDeUnJugadorNoSeModificaCuandoEseJugadorIntentaComprarUnaFabricaCompradaPorOtro() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		float plata2 = jug2.getDineroActual();
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
 		}
 		
-		Assert.assertEquals("La plata del jugador 2 no deber√≠a haberse modificado", jug2.getDineroActual(), plata2);
-		Assert.assertNull("El jugador 2 no deber√≠a tener una fabrica asignada", jug2.getFabrica());
-		Assert.assertEquals("La f√°brica 1 deber√≠a tener asignado al jugador 1", this.fabricas.get(1).getJugador(), this.jugador);
+		/*El jugador 2 intenta comprar la fabrica que ya esta comprada.*/
+		try {
+			this.fabricas.get(1).comprar(jug2);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertEquals("La plata del jugador 2 no deber√≠a haberse modificado.", jug2.getDineroActual(), plata2);
+	}
+	
+	
+	@Test
+	public void testUnJugadorNoTieneAsignadaUnaFabricaCuandoEseJugadorIntentaComprarUnaFabricaCompradaPorOtro() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*El jugador 2 intenta comprar la fabrica que ya esta comprada.*/
+		try {
+			this.fabricas.get(1).comprar(jug2);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertNull("El jugador 2 no deber√≠a tener una fabrica asignada.", jug2.getFabrica());
+	}
+	
+	
+	@Test
+	public void testUnJugadorSigueTeniendoAsignadaLaFabricaQueComproAntesCuandoOtroJugadorIntentaComprarEsaFabrica() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*El jugador 2 intenta comprar la fabrica que ya esta comprada.*/
+		try {
+			this.fabricas.get(1).comprar(jug2);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertEquals("La f√°brica 1 deber√≠a tener asignado al jugador 1.", this.fabricas.get(1).getJugador(), this.jugador);
+	}
+	
+	@Test
+	public void testLanzaExcepcionCuandoUnJugadorConUnaFabricaAsignadaIntentaComprarOtra() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*El jugador 1 intenta comprar otra f√°brica.*/
+		try {
+			this.fabricas.get(0).comprar(jugador);
+			/*Test.*/
+			Assert.fail("Deberia haber lanzado una excepcion de JugadorConFabrica.");
+		} catch (JugadorConFabricaException e) {
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		}
+	}
+	
+	@Test
+	public void testLaPlataDeUnJugadorNoCambiaCuandoEseJugadorConUnaFabricaAsignadaIntentaComprarOtra(){
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		float plata = this.jugador.getDineroActual();
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
 		
 		/*El jugador 1 intenta comprar otra f√°brica.*/
 		plata = jugador.getDineroActual();
 		try {
 			this.fabricas.get(0).comprar(jugador);
-			Assert.fail("Deberia haber lanzado una excepcion de JugadorConFabrica");
 		} catch (DineroInsuficienteException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (FabricaOcupadaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (JugadorConFabricaException e) { }
 		
-		Assert.assertEquals("La plata del jugador 1 no deber√≠a haberse modificado", this.jugador.getDineroActual(), plata);
-		Assert.assertNull("La f√°brica 0 no deberia tener un jugador asignado", this.fabricas.get(0).getJugador());
-		Assert.assertEquals("El jugador 1 deber√≠a tener asignada la f√°brica 1", this.jugador.getFabrica(), this.fabricas.get(1));
+		/*Test.*/
+		Assert.assertEquals("La plata del jugador 1 no deber√≠a haberse modificado.", this.jugador.getDineroActual(), plata);
 	}
-	
 	@Test
-	public void testDoblesAsignacionesAlquiler() {
-		jugador = new Jugador("Gustavo", DINERO_INICIAL_3);
-		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_3);
+	public void testUnaFabricaNoTieneUnJugadorAsignadoCuandoUnJugadorConUnaFabricaAsignadaIntentaComprarEsaFabrica() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
 		
+		/*AsignaciÛn.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (FabricaOcupadaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (JugadorConFabricaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		/*El jugador 2 intenta alquilar la fabrica que ya esta comprada.*/
-		try {
-			this.fabricas.get(1).comprar(jug2);
-			Assert.fail("Deberia haber lanzado una excepcion de FabricaOcupada");
-		} catch (DineroInsuficienteException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
-		} catch (FabricaOcupadaException e) {
-			
-		} catch (JugadorConFabricaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
-		}
-		
-		Assert.assertNull("El jugador 2 no deber√≠a tener una fabrica asignada", jug2.getFabrica());
-		Assert.assertEquals("La f√°brica 1 deber√≠a tener asignado al jugador 1", this.fabricas.get(1).getJugador(), this.jugador);
-		
-		/*El jugador 1 intenta alquilar otra f√°brica.*/
+		/*El jugador 1 intenta comprar otra f√°brica.*/
 		try {
 			this.fabricas.get(0).comprar(jugador);
-			Assert.fail("Deberia haber lanzado una excepcion de JugadorConFabrica");
 		} catch (DineroInsuficienteException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (FabricaOcupadaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (JugadorConFabricaException e) { }
-	
-		Assert.assertNull("La f√°brica 0 no deberia tener un jugador asignado", this.fabricas.get(0).getJugador());
-		Assert.assertEquals("El jugador 1 deber√≠a tener asignada la f√°brica 1", this.jugador.getFabrica(), this.fabricas.get(1));
+		
+		/*Test.*/
+		Assert.assertNull("La f√°brica 0 no deberia tener un jugador asignado.", this.fabricas.get(0).getJugador());
+		
 	}
 	
 	@Test
-	public void testCompraYVentaExitosa() {
-		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
-		float plata = this.jugador.getDineroActual();
+	public void testUnJugadorSigueTeniendoLaFabricaQueComproAntesCuandoEseJugadorIntentaComprarOtraFabrica() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (FabricaOcupadaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (JugadorConFabricaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		Assert.assertNotNull("La f√°brica deber√≠a tener un jugador asignado", this.fabricas.get(1).getJugador());
-		Assert.assertNotNull("El jugador deber√≠a tener una f√°brica asignada", this.jugador.getFabrica());
+		/*El jugador 1 intenta comprar otra f√°brica.*/
+		try {
+			this.fabricas.get(0).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) { }
+		
+		/*Test.*/
+		Assert.assertEquals("El jugador 1 deber√≠a tener asignada la f√°brica 1.", this.jugador.getFabrica(), this.fabricas.get(1));
+	}
+	
+	@Test
+	public void testSeLanzaExcepcionDeFabricaOcupadaCuandoUnJugadorIntentaAlquilarUnaFabricaAlquiladaPorOtro() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*El jugador 2 intenta comprar la fabrica que ya esta comprada.*/
+		try {
+			this.fabricas.get(1).alquilar(jug2);
+			/*Test.*/
+			Assert.fail("Deberia haber lanzado una excepcion de FabricaOcupada.");	
+		} catch (FabricaOcupadaException e) {	
+		} catch (JugadorConFabricaException e) {
+		}
+	}
+	
+	@Test
+	public void testUnJugadorNoTieneAsignadaUnaFabricaCuandoEseJugadorIntentaAlquilarUnaFabricaAlquiadaPorOtro() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*El jugador 2 intenta comprar la fabrica que ya esta comprada.*/
+		try {
+			this.fabricas.get(1).alquilar(jug2);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertNull("El jugador 2 no deber√≠a tener una fabrica asignada.", jug2.getFabrica());
+	}
+	
+	
+	@Test
+	public void testUnJugadorSigueTeniendoAsignadaLaFabricaQueAlquiloAntesCuandoOtroJugadorIntentaAlquilarEsaFabrica() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		Jugador jug2 = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*El jugador 2 intenta comprar la fabrica que ya esta comprada.*/
+		try {
+			this.fabricas.get(1).alquilar(jug2);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*Test.*/
+		Assert.assertEquals("La f√°brica 1 deber√≠a tener asignado al jugador 1.", this.fabricas.get(1).getJugador(), this.jugador);
+	}
+	
+	@Test
+	public void testLanzaExcepcionCuandoUnJugadorConUnaFabricaAsignadaIntentaAlquilarOtra() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*El jugador 1 intenta comprar otra f√°brica.*/
+		try {
+			this.fabricas.get(0).alquilar(jugador);
+			/*Test.*/
+			Assert.fail("Deberia haber lanzado una excepcion de JugadorConFabrica.");
+		} catch (JugadorConFabricaException e) {
+		} catch (FabricaOcupadaException e) {
+		}
+	}
+	
+	@Test
+	public void testUnaFabricaNoTieneUnJugadorAsignadoCuandoUnJugadorConUnaFabricaAsignadaIntentaAlquilarEsaFabrica() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*El jugador 1 intenta comprar otra f√°brica.*/
+		try {
+			this.fabricas.get(0).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) { }
+		
+		/*Test.*/
+		Assert.assertNull("La f√°brica 0 no deberia tener un jugador asignado.", this.fabricas.get(0).getJugador());
+		
+	}
+	@Test
+	public void testUnJugadorSigueTeniendoLaFabricaQueAlquiloAntesCuandoEseJugadorIntentaAlquilarOtraFabrica() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_2);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		/*El jugador 1 intenta comprar otra f√°brica.*/
+		try {
+			this.fabricas.get(0).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) { }
+		
+		/*Test.*/
+		Assert.assertEquals("El jugador 1 deber√≠a tener asignada la f√°brica 1.", this.jugador.getFabrica(), this.fabricas.get(1));
+	}
+	
+	@Test
+	public void testUnaFabricaNoTieneUnJugadorAsignadoCuandoUnJugadorLaCompraYLaVende() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+
+		this.fabricas.get(1).vender();
+		
+		/*Test.*/
+		Assert.assertNull("La f√°brica no deber√≠a tener un jugador asignado.", this.fabricas.get(1).getJugador());
+	}
+	
+	@Test
+	public void testUnJugadorNoTieneUnaFabricaAsignadaCuandoEseJugadorCompraUnaFabricaYLaVende(){
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
 		
 		this.fabricas.get(1).vender();
-		Assert.assertNull("La f√°brica no deber√≠a tener un jugador asignado", this.fabricas.get(1).getJugador());
-		Assert.assertNull("El jugador no deber√≠a tener una f√°brica asignada", this.jugador.getFabrica());
-		Assert.assertEquals("El dinero actual del jugador deber√≠a ser el del principio menos el 20% del costo de la f√°brica",
+		
+		/*Test.*/
+		Assert.assertNull("El jugador no deber√≠a tener una f√°brica asignada.", this.jugador.getFabrica());
+	}
+	
+	@Test
+	public void testElJugadorTieneUnVeintePorCientoMenosDePlataDeLaQueTeniaAntesDeComprarYVenderUnaFabrica() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		float plata = this.jugador.getDineroActual();
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).comprar(jugador);
+		} catch (DineroInsuficienteException e) {
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		this.fabricas.get(1).vender();
+		
+		/*Test.*/
+		Assert.assertEquals("El dinero actual del jugador deber√≠a ser el del principio menos el 20% del costo de la f√°brica.",
                 this.jugador.getDineroActual(), (float) (plata - this.fabricas.get(1).getCostoCompra() * VEINTE_PORCIENTO));
 	}
 	
 	@Test
-	public void testCompraYVentaExitosaConMaquinas() {
+	public void testUnaFabricaNoTieneUnJugadorAsignadoCuandoUnJugadorLaAlquilaYLaVende() {
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+
+		this.fabricas.get(1).vender();
+		
+		/*Test.*/
+		Assert.assertNull("La f√°brica no deber√≠a tener un jugador asignado.", this.fabricas.get(1).getJugador());
+	}
+	
+	@Test
+	public void testUnJugadorNoTieneUnaFabricaAsignadaCuandoEseJugadorAlquilaUnaFabricaYLaVende(){
+		/*InicializaciÛn.*/
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		this.fabricas.get(1).vender();
+		
+		/*Test.*/
+		Assert.assertNull("El jugador no deber√≠a tener una f√°brica asignada.", this.jugador.getFabrica());
+	}
+	
+	@Test
+	public void testElJugadorTieneElMismoDineroQueAntesDeAlquilarYVenderUnaFabrica() {
+		/*InicializaciÛn.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		float plata = this.jugador.getDineroActual();
+		
+		/*AsignaciÛn.*/
+		try {
+			this.fabricas.get(1).alquilar(jugador);
+		} catch (FabricaOcupadaException e) {
+		} catch (JugadorConFabricaException e) {
+		}
+		
+		this.fabricas.get(1).vender();
+		
+		/*Test.*/
+		Assert.assertEquals("El dinero actual del jugador deber√≠a ser el del principio.", this.jugador.getDineroActual(), plata);
+	}
+	
+	@Test
+	public void testElJugadorRecuperaUnPorcentajeDeLaFabricaYDeLaMaquinaQueTieneLaFabricaLuegoDeComprarYVenderEsaFabricaQueTieneUnaMaquina() {
+		/*InicializaciÛn.*/
+		Maquina maquina1 = new Horno(0F, 0F);
+		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
+		float plata = this.jugador.getDineroActual();
+		
+		/*AsignaciÛn.*/
 		try {
 			this.fabricas.get(1).comprar(jugador);
 		} catch (DineroInsuficienteException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (FabricaOcupadaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (JugadorConFabricaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		Assert.assertNotNull("La f√°brica deber√≠a tener un jugador asignado",
-								this.fabricas.get(1).getJugador());
-		Assert.assertNotNull("El jugador deber√≠a tener una f√°brica asignada",
-								this.jugador.getFabrica());
-		
-		Maquina maquina1 = new Horno(0F, 0F);
 		this.jugador.getFabrica().comprarMaquina(maquina1);
-		
+
 		this.fabricas.get(1).vender();
-		Assert.assertNull("La f√°brica no deber√≠a tener un jugador asignado",
-							this.fabricas.get(1).getJugador());
-		Assert.assertNull("El jugador no deber√≠a tener una f√°brica asignada",
-							this.jugador.getFabrica());
+		
+		/*Test.*/
 		Assert.assertEquals("El dinero actual del jugador deber√≠a ser el del "
-							+ "principio menos el 20% del costo de la f√°brica",
+							+ "principio menos el 20% del costo de la f√°brica," +
+									"menos el costo compra de la m·quina," +
+									"m·s el costo de venta de la m·quina.",
 								this.jugador.getDineroActual(),
 								(float) (plata - this.fabricas.get(1).getCostoCompra() * VEINTE_PORCIENTO
 										+ maquina1.obtenerCostoVenta() - maquina1.getCostoMaquina()));	
 	}
 	
 	@Test
-	public void testAlquilerYVentaExitoso() {
+	public void testElJugadorRecuperaUnPorcentajeDeLaMaquinaQueTieneLaFabricaLuegoDeAlquilarYVenderEsaFabricaQueTieneUnaMaquina() {
+		/*InicializaciÛn.*/
+		Maquina maquina1 = new Horno(0F, 0F);
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
+		
 		float plata = this.jugador.getDineroActual();
+		
+		/*AsignaciÛn.*/
 		try {
 			this.fabricas.get(1).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		} catch (JugadorConFabricaException e) {
-			Assert.fail("No deberia haber lanzado una excepcion");
 		}
 		
-		Assert.assertNotNull("La f√°brica deber√≠a tener un jugador asignado", this.fabricas.get(1).getJugador());
-		Assert.assertNotNull("El jugador deber√≠a tener una f√°brica asignada", this.jugador.getFabrica());
-		
+		this.jugador.getFabrica().comprarMaquina(maquina1);
+
 		this.fabricas.get(1).vender();
-		Assert.assertNull("La f√°brica no deber√≠a tener un jugador asignado", this.fabricas.get(1).getJugador());
-		Assert.assertNull("El jugador no deber√≠a tener una f√°brica asignada", this.jugador.getFabrica());
-		Assert.assertEquals("El dinero actual del jugador deber√≠a ser el del principio", this.jugador.getDineroActual(), plata);	
+		
+		/*Test.*/
+		Assert.assertEquals("El dinero actual del jugador deber√≠a ser el del "
+							+"menos el costo compra de la m·quina," +
+							"m·s el costo de venta de la m·quina.",
+								this.jugador.getDineroActual(),
+								(float) (plata + maquina1.obtenerCostoVenta() - maquina1.getCostoMaquina()));	
 	}
 	
 	@Test
-	public void testVenderSinCompraOAlquiler() {
+	public void testNoCambiaLaPlataDeUnJugadorSiSeLlamaAVenderUnaFabricaYNoTieneFabricaAsiganda() {
+		/*InicializaciÛn.*/
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		float plata = this.jugador.getDineroActual();
-		this.fabricas.get(1).vender();
+		
+		/*AsignaciÛn.*/
 		this.jugador.venderFabrica(PASO_COMPRA);
 		
-		Assert.assertEquals("El jugador no deber√≠a haber ganado plata", this.jugador.getDineroActual(), plata);
+		/*Test.*/
+		Assert.assertEquals("El jugador no deber√≠a haber ganado plata.", this.jugador.getDineroActual(), plata);
 	}
 }
