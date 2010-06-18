@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shortcuts>
+	<skipIfNotSupported />
+	<programGroup defaultName="FIUBA" location="applications" />
+	<shortcut name="Simulador de fábricas" target="$INSTALL_PATH\SimuladorDeFabricas.jar"
+		description="Simulador de fábricas" workingDirectory="$INSTALL_PATH"
+		iconFile="$INSTALL_PATH\icons\iconoDesktop.ico" initialState="normal"
+		programGroup="yes" desktop="yes" applications="no" startMenu="no"
+		startup="no">
+
+		<createForPack name="Base" />
+	</shortcut>
+</shortcuts>
