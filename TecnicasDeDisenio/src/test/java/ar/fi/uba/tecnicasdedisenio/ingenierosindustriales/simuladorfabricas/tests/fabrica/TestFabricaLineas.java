@@ -347,8 +347,9 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testMaquinaRota() {
-
+	public void testElDineroDisminuidoAlJugadorEsSolamenteElDeLaConsumisiónDeLaMateriaPrimaCuandoSeRompeUnaMaquinaYPasanDosDias() {
+		/*Inicialización.*/
+		float dineroJugador, dineroEsperado;
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
 		 */
@@ -363,6 +364,7 @@ public class TestFabricaLineas {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
+		/*Asignación.*/
 		fabrica.comprarMaquina(prensa);
 		fabrica.comprarMaquina(plancha);
 		
@@ -372,14 +374,12 @@ public class TestFabricaLineas {
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
 		
-		float dineroJugador = jugador.getDineroActual();
-		float dineroEsperado = 1000 - fabrica.getCostoCompra();
+		dineroJugador = jugador.getDineroActual();
+		dineroEsperado = 1000 - fabrica.getCostoCompra();
 		dineroEsperado -= prensa.getCostoMaquina();
 		dineroEsperado -= plancha.getCostoMaquina();
 		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
 		dineroEsperado += 100F;
-		
-		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
 		
 		prensa.forzarRotura();
 		fabrica.notificar(Evento.COMIENZO_DE_DIA);
@@ -388,12 +388,14 @@ public class TestFabricaLineas {
 		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
 		
 		dineroJugador = jugador.getDineroActual();
-		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
+		
+		/*Test.*/
+		Assert.assertEquals("El dinero del jugador no es el esperado.", dineroEsperado, dineroJugador);
 	}
 	
 	@Test
-	public void testConControlDeCalidad() {
-
+	public void testSeDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoValidoYTieneControlDeCalidad() {
+		/*Inicialización.*/
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
 		 */
@@ -409,6 +411,7 @@ public class TestFabricaLineas {
 		Maquina plancha = new Plancha(0F, 0F);
 		Maquina controlCalidad = new ControlCalidad(0F, 0F);
 		
+		/*Asignación.*/
 		fabrica.comprarMaquina(prensa);
 		fabrica.comprarMaquina(plancha);
 		fabrica.comprarMaquina(controlCalidad);
@@ -429,91 +432,88 @@ public class TestFabricaLineas {
 		dineroEsperado -= fuenteTrigo.getTipoProducto().getPrecioCompra();
 		dineroEsperado += 100F;
 		
-		
+		/*Test.*/
 		Assert.assertEquals("El dinero del jugador no es el esperado", dineroEsperado, dineroJugador);
 
 	}
 	
 	@Test
-	public void testNoHayUnCiclo() {
+	public void testNoHayUnCicloCuandoConectoTresMaquinasMaquinasSinArmarUnCiclo() {
+		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
+		/*Asignación.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
 		
 		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
-		fabrica.validarCiclos();
-		
-		/*Las mï¿½quinas no deberï¿½an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertFalse("Las mï¿½quinas no deberï¿½an estar rotas", maquina.estaRota());
-        }
-		
 		fabrica.conectarMaquina(horno, licuadora, 0);
-		fabrica.validarCiclos();
-		
-		/*Las mï¿½quinas no deberï¿½an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertFalse("Las mï¿½quinas no deberï¿½an estar rotas", maquina.estaRota());
-        }
-		
 		fabrica.conectarMaquina(licuadora, plancha, 0);
 		fabrica.validarCiclos();
 		
+		
 		/*Las mï¿½quinas no deberï¿½an estar rotas.*/
 		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertFalse("Las mï¿½quinas no deberï¿½an estar rotas", maquina.estaRota());
+			/*Test.*/
+			Assert.assertFalse("Las mï¿½quinas no deberï¿½an estar rotas.", maquina.estaRota());
         }
 	}
 	
 	@Test
-	public void testHayUnCiclo() {
+	public void testHayUnCicloCuandoConectoTresMaquinasYLaUltimaLaConectoALaPrimera() {
+		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
+		/*Asignación.*/
 		fabrica.comprarMaquina(horno);
 		fabrica.comprarMaquina(licuadora);
 		fabrica.comprarMaquina(plancha);
 		
 		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
-		fabrica.validarCiclos();
-		
-		/*Las mï¿½quinas no deberï¿½an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertFalse("Las mï¿½quinas no deberï¿½an estar rotas", maquina.estaRota());
-        }
-		
 		fabrica.conectarMaquina(horno, licuadora, 0);
-		fabrica.validarCiclos();
-		
-		/*Las mï¿½quinas no deberï¿½an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertFalse("Las mï¿½quinas no deberï¿½an estar rotas", maquina.estaRota());
-        }
-		
 		fabrica.conectarMaquina(licuadora, plancha, 0);
-		fabrica.validarCiclos();
-
-		/*Las mï¿½quinas no deberï¿½an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertFalse("Las mï¿½quinas no deberï¿½an estar rotas", maquina.estaRota());
-        }
-		
 		fabrica.conectarMaquina(plancha, horno, 0);
 		fabrica.validarCiclos();
 		
 		/*Todas las mï¿½quinas deberï¿½an estar rotas ya que ahora hay un ciclo.*/
 		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertTrue("Las mï¿½quinas deberï¿½an estar rotas", maquina.estaRota());
+			/*Test.*/
+			Assert.assertTrue("Las mï¿½quinas deberï¿½an estar rotas.", maquina.estaRota());
         }
 	}
 	
 	@Test
-	public void testCiclosControlCalidad() {
+	public void testHayUnCicloCuandoConectoTresMaquinasYLaUltimaLaConectoAUnaDeLasAnterioresQueNoEsLaPrimera() {
+		/*Inicialización.*/
+		Maquina horno = new Horno(0F, 0F);
+		Maquina licuadora = new Licuadora(0F, 0F);
+		Maquina plancha = new Plancha(0F, 0F);
+		
+		/*Asignación.*/
+		fabrica.comprarMaquina(horno);
+		fabrica.comprarMaquina(licuadora);
+		fabrica.comprarMaquina(plancha);
+		
+		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
+		fabrica.conectarMaquina(horno, licuadora, 0);
+		fabrica.conectarMaquina(licuadora, plancha, 0);
+		fabrica.conectarMaquina(plancha,licuadora, 0);
+		fabrica.validarCiclos();
+		
+		/*Todas las mï¿½quinas deberï¿½an estar rotas ya que ahora hay un ciclo.*/
+		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
+			/*Test.*/
+			Assert.assertTrue("Las mï¿½quinas deberï¿½an estar rotas.", maquina.estaRota());
+        }
+	}
+	
+	@Test
+	public void testHayUnCicloCuandoConectoTresMaquinasSiendoLaUltimaControlCalidadYLaUltimaLaConectoALaPrimera() {
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina control = new ControlCalidad(0F, 0F);
@@ -523,35 +523,14 @@ public class TestFabricaLineas {
 		fabrica.comprarMaquina(control);
 		
 		fabrica.conectarMaquina(fuenteTrigo, horno, 0);
-		fabrica.validarCiclos();
-		
-		/*Las mï¿½quinas no deberï¿½an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertFalse("Las mï¿½quinas no deberï¿½an estar rotas", maquina.estaRota());
-        }
-		
 		fabrica.conectarMaquina(horno, licuadora, 0);
-		fabrica.validarCiclos();
-		
-		/*Las mï¿½quinas no deberï¿½an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertFalse("Las mï¿½quinas no deberï¿½an estar rotas", maquina.estaRota());
-        }
-		
 		fabrica.conectarMaquina(licuadora, control, 0);
-		fabrica.validarCiclos();
-
-		/*Las mï¿½quinas no deberï¿½an estar rotas.*/
-		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertFalse("Las mï¿½quinas no deberï¿½an estar rotas", maquina.estaRota());
-        }
-		
 		fabrica.conectarMaquina(control, horno, 0);
 		fabrica.validarCiclos();
 
 		/*Las mï¿½quinas no deberï¿½an estar rotas.*/
 		for (Maquina maquina : fabrica.getLineas().get(0).getMaquinas()) {
-			Assert.assertTrue("Las mï¿½quinas deberï¿½an estar rotas", maquina.estaRota());
+			Assert.assertTrue("Las mï¿½quinas deberï¿½an estar rotas.", maquina.estaRota());
         }
 	}
 	
