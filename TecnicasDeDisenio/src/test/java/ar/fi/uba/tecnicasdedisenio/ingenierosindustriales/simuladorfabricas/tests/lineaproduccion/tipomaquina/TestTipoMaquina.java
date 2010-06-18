@@ -29,7 +29,7 @@ public class TestTipoMaquina {
 	public void testGetInstancia() {
 		Maquina maquina = tipoMaquina.getInstancia();
 		Assert.assertNotNull("La máquina obtenida es nula", maquina);
-		Assert.assertEquals("La máquina obtenida no es del tipo esperado", 
+		Assert.assertEquals("La máquina obtenida no es del tipo esperado",
 				Prensa.class, maquina.getClass());
 	}
 
@@ -37,7 +37,7 @@ public class TestTipoMaquina {
 	public void testVerificarTipo() {
 		Maquina prensa = new Prensa(0F, 0F);
 		boolean verificacion = tipoMaquina.verificarTipo(prensa);
-		Assert.assertTrue("La verificaci�n del tipo de m�quina no fue satisfactoria", verificacion);
+		Assert.assertTrue("La verificación del tipo de máquina no fue satisfactoria", verificacion);
 	}
 
 }

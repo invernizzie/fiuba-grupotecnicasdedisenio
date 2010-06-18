@@ -39,7 +39,7 @@ public class ValidadorProductos implements Sincronizado {
     }
 	
 	/**
-	 * Obtiene el precio con el cual se vender· el producto en el mercado.
+	 * Obtiene el precio con el cual se vender√° el producto en el mercado.
 	 * @param producto
 	 * @return
 	 */

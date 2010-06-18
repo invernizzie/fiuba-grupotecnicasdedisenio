@@ -48,10 +48,10 @@ public class TestLineaProduccion {
 		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
 							this.linea.contieneMaquina(maquina));
 		
-		Assert.assertTrue("La máquina insertada no es la primera", 
+		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina));
 		
-		Assert.assertEquals("La máquina insertada no es la última", 
+		Assert.assertEquals("La máquina insertada no es la última",
 								linea.obtenerUltimaMaquina(), maquina);
 	}
 	
@@ -71,10 +71,10 @@ public class TestLineaProduccion {
 		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
 							this.linea.contieneMaquina(maquina2));
 
-		Assert.assertTrue("La máquina insertada no es la primera", 
+		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina));
 
-		Assert.assertEquals("La máquina insertada no es la última", maquina2, 
+		Assert.assertEquals("La máquina insertada no es la última", maquina2,
 								linea.obtenerUltimaMaquina());
 	}
 	
@@ -104,13 +104,13 @@ public class TestLineaProduccion {
 		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
 							this.linea.contieneMaquina(maquina3));
 		
-		Assert.assertTrue("La máquina insertada no es la primera", 
+		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina));
 
-		Assert.assertTrue("La máquina insertada no es la primera", 
+		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina3));
 		
-		Assert.assertEquals("La máquina insertada no es la última", maquina2, 
+		Assert.assertEquals("La máquina insertada no es la última", maquina2,
 								linea.obtenerUltimaMaquina());
 		
 	}
@@ -153,16 +153,16 @@ public class TestLineaProduccion {
 		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
 							this.linea.contieneMaquina(maquina4));
 		
-		Assert.assertTrue("La máquina insertada no es la primera", 
+		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina));
 
-		Assert.assertTrue("La máquina insertada no es la primera", 
+		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina3));
 		
-		Assert.assertFalse("La máquina insertada es la primera", 
+		Assert.assertFalse("La máquina insertada es la primera",
 							linea.esPrimeraMaquina(maquina4));
 		
-		Assert.assertEquals("La máquina insertada no es la última", maquina4, 
+		Assert.assertEquals("La máquina insertada no es la última", maquina4,
 								linea.obtenerUltimaMaquina());
 		
 	}
@@ -206,16 +206,16 @@ public class TestLineaProduccion {
 		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
 							this.linea.contieneMaquina(maquina4));
 		
-		Assert.assertTrue("La máquina insertada no es la primera", 
+		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina));
 
-		Assert.assertTrue("La máquina insertada no es la primera", 
+		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina3));
 		
-		Assert.assertFalse("La máquina insertada es la primera", 
+		Assert.assertFalse("La máquina insertada es la primera",
 							linea.esPrimeraMaquina(maquina4));
 		
-		Assert.assertEquals("La máquina insertada no es la última", maquina4, 
+		Assert.assertEquals("La máquina insertada no es la última", maquina4,
 								linea.obtenerUltimaMaquina());
 		
 	}
@@ -226,7 +226,7 @@ public class TestLineaProduccion {
 		Maquina maquina = new Prensa(0F, 0F);
 		linea.agregarMaquina(maquina);
 
-		Assert.assertEquals("El costo de la linea no es el mismo que el de la máquina", 
+		Assert.assertEquals("El costo de la linea no es el mismo que el de la máquina",
 								linea.getCostoLinea(), maquina.getCostoMaquina());
 	}
 	
@@ -239,7 +239,7 @@ public class TestLineaProduccion {
 		
 		float costoMaquinas = maquina.getCostoMaquina() + maquina2.getCostoMaquina();
 
-		Assert.assertEquals("El costo de la linea no es el mismo que el de la máquinas", 
+		Assert.assertEquals("El costo de la linea no es el mismo que el de la máquinas",
 								linea.getCostoLinea(), costoMaquinas);
 	}
 	

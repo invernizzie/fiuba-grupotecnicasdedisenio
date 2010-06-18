@@ -23,7 +23,7 @@ public class TestRecursosAplicacion {
 
 	@Test
 	public void testGetProperty() {
-		Assert.assertEquals("No se recuperó la property esperada", "testValue", instanciaRecursosAplicacion.getProperty("testProperty"));
+		Assert.assertEquals("No se recuperÃ³ la property esperada", "testValue", instanciaRecursosAplicacion.getProperty("testProperty"));
 	}
 
 	@Test

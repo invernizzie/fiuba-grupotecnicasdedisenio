@@ -26,10 +26,10 @@ public class TestLaboratorioValidacion {
 	
 	@Test
 	public void testUnProcesoTieneUnTipoDeMaquinaAsignadaCuandoSeLeAsignaUnTipoDeMaquina() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		TipoMaquina tipoMaquina = new TipoMaquinaPrensa();
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		proceso.setMaquinaFinal(tipoMaquina);
 		
 		/*Test.*/
@@ -38,10 +38,10 @@ public class TestLaboratorioValidacion {
 	
 	@Test
 	public void testUnProcesoTieneUnTipoDeMaquinaAsignadaQueEsExactamenteElMismoTipoDeMaquinaQueSeLeAsigno() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		TipoMaquina tipoMaquina = new TipoMaquinaPrensa();
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		proceso.setMaquinaFinal(tipoMaquina);
 		
 		/*Test.*/
@@ -50,12 +50,12 @@ public class TestLaboratorioValidacion {
 	
 	@Test
 	public void testLaLineaQueSeCreaEsUnProcesoValidoYaQueHayAlgunProcesoSimilarEnElLaboratorio(){
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		TipoMaquina maq = null;
 		Maquina maquina = null;
 		ValidadorProductos val = ValidadorProductos.instancia();
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		proceso = new Proceso(COSTO_2);
 		maq = new TipoMaquinaPrensa();
 		maq.addPrecedente(new TipoMaquinaPlancha());
@@ -93,12 +93,12 @@ public class TestLaboratorioValidacion {
 	
 	@Test
 	public void testLaLineaQueSeCreaNoEsUnProcesoValidoYaQueNoHayNingunProcesoSimilarEnElLaboratorio(){
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		TipoMaquina maq = null;
 		Maquina maquina = null;
 		ValidadorProductos val = ValidadorProductos.instancia();
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		proceso = new Proceso(COSTO_2);
 		maq = new TipoMaquinaPrensa();
 		maq.addPrecedente(new TipoMaquinaPlancha());

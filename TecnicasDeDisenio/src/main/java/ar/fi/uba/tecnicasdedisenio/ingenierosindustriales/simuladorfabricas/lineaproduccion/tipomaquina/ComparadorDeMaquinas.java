@@ -5,7 +5,7 @@ import java.util.Comparator;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 
 /**
- * Compara dos m·quinas y determina si son iguales.
+ * Compara dos m√°quinas y determina si son iguales.
  * @author santiago
  *
  */

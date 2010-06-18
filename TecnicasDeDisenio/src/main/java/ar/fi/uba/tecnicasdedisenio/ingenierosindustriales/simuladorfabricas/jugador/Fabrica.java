@@ -17,7 +17,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.ProcesamientoException;
 
 /**
- * Representa a una f�brica en particular.
+ * Representa a una fábrica en particular.
  * La misma tiene unos metros cuadrados, un costo de compra y un costo de alquiler.
  * Puede ser comprada, alquilada o vendida por un jugador.
  *
@@ -120,8 +120,8 @@ public class Fabrica implements Sincronizado {
 	}
 
 	/**
-	 * Conecta dos m�quinas dadas, verifica si alguna de las dos pertenece a una linea
-	 * de producci�n existente, en caso negativo crea una nueva linea que las contenga.
+	 * Conecta dos máquinas dadas, verifica si alguna de las dos pertenece a una linea
+	 * de producción existente, en caso negativo crea una nueva linea que las contenga.
 	 * @param origen
 	 * @param destino
 	 */
@@ -136,7 +136,7 @@ public class Fabrica implements Sincronizado {
 		CintaTransportadora cinta = new CintaTransportadora(longitud);
 		cinta.conectar(origen, destino);
 		/*
-		 * Si una linea contiene alguna de las m�quinas agrego la otra a esa linea.
+		 * Si una linea contiene alguna de las máquinas agrego la otra a esa linea.
 		 */
 		boolean maquinasEnLinea = true;
 		for (LineaProduccion linea : lineas) {
@@ -156,7 +156,7 @@ public class Fabrica implements Sincronizado {
 		 * Si una de las dos esta en una linea agrego la otra a la linea.
 		 */
 		/*
-		 * Ninguna de las dos m�quinas est� en alguna de las lineas, creo una 
+		 * Ninguna de las dos máquinas está en alguna de las lineas, creo una
 		 * nueva linea que las contenga.
 		 */
 		if (!maquinasEnLinea) {
@@ -222,7 +222,7 @@ public class Fabrica implements Sincronizado {
 	}
 	
 	/**
-	 * Verifica la existencia de un jugador poseyendo la f�brica.
+	 * Verifica la existencia de un jugador poseyendo la fábrica.
 	 * @throws FabricaOcupadaException
 	 */
 	public void verificarJugadorAsignado() throws FabricaOcupadaException {
@@ -232,7 +232,7 @@ public class Fabrica implements Sincronizado {
 	}
 	
 	/**
-	 * La f�brica se intenta comprar, previamente verificando que se cumplan las condiciones de
+	 * La fábrica se intenta comprar, previamente verificando que se cumplan las condiciones de
 	 * dinero suficiente.
 	 * @param jugador
 	 * @throws DineroInsuficienteException
@@ -246,7 +246,7 @@ public class Fabrica implements Sincronizado {
 	}
 	
 	/**
-	 * La f�brica se intenta alquilar.
+	 * La fábrica se intenta alquilar.
 	 * @param jugador
 	 * @throws FabricaOcupadaException
 	 * @throws JugadorConFabricaException
@@ -257,8 +257,8 @@ public class Fabrica implements Sincronizado {
 	}
 	
 	/**
-	 * Realiza la compra o alquiler de la f�brica verificando que el jugador no tenga
-	 * ya una f�brica asignada y que la f�brica no este asignada a un jugador.
+	 * Realiza la compra o alquiler de la fábrica verificando que el jugador no tenga
+	 * ya una fábrica asignada y que la fábrica no este asignada a un jugador.
 	 * @param jugador
 	 * @param costoXMes
 	 * @throws FabricaOcupadaException
@@ -274,7 +274,7 @@ public class Fabrica implements Sincronizado {
 	}
 
 	/**
-	 * La f�brica deja de tener un jugador asignado.
+	 * La fábrica deja de tener un jugador asignado.
 	 */
 	public void vender() {
 		try{
@@ -353,7 +353,7 @@ public class Fabrica implements Sincronizado {
 	}
 	
 	/**
-	 * Para cada linea de producci�n se verifica si se tiene un ciclo.
+	 * Para cada linea de producción se verifica si se tiene un ciclo.
 	 */
 	public void validarCiclos() {
 		for (LineaProduccion linea : this.getLineas()) {

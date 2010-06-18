@@ -4,7 +4,7 @@
 	<Producto nombre="agua" precio="2" mp="true"/>
 	<Producto nombre="trigo" precio="3" mp="true"/>
 	<Producto nombre="pan" precio="5" mp="true"/>
-	<Producto nombre="centeno" precio="2" mp="true"/>
+	<Producto nombre="centeno" precio="8" mp="true"/>
 	<Producto nombre="maiz" precio="7" mp="true"/>
 	<Producto nombre="sal" precio="2" mp="true"/>
 	<Producto nombre="azucar" precio="10" mp="true"/>

@@ -38,7 +38,7 @@ public class TestMaquinaPrensa {
 		try {
 			this.prensa.procesar(true);
 		} catch (EntradaInvalidaException e) {
-			Assert.fail("La entrada a la prensa es inválida");
+			Assert.fail("La entrada a la prensa es invÃ¡lida");
 		}
 		
 		Producto productoPrensado = this.prensa.getSalida().obtenerProducto();
@@ -56,9 +56,9 @@ public class TestMaquinaPrensa {
 		
 		try {
 			this.prensa.procesar(true);
-			Assert.fail("Se esperaba una excepción pero no se produjo");
+			Assert.fail("Se esperaba una excepciÃ³n pero no se produjo");
 		} catch (Exception e) {
-			Assert.assertEquals("Se esperaba una excepción de tipo EntradaInvalidaException", 
+			Assert.assertEquals("Se esperaba una excepciÃ³n de tipo EntradaInvalidaException",
 					EntradaInvalidaException.class , e.getClass());
 		}
 	}
@@ -76,7 +76,7 @@ public class TestMaquinaPrensa {
 					productoTest, obtenido);
 		} catch (Exception e) {
 			e.printStackTrace();
-			Assert.fail("No se esperaba una excepción");
+			Assert.fail("No se esperaba una excepciÃ³n");
 		}
 	}
 

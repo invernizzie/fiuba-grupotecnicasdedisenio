@@ -96,7 +96,7 @@ public class LineaProduccion {
 	
 	/**
 	 * Verifica si, para el laboratorio recibido, la linea produce un producto
-	 * ya descubierto, de no ser as� retorna false y los producido por esta linea 
+	 * ya descubierto, de no ser así retorna false y los producido por esta linea 
 	 * debe considerarse desecho.
 	 * @param laboratorio
 	 * @return

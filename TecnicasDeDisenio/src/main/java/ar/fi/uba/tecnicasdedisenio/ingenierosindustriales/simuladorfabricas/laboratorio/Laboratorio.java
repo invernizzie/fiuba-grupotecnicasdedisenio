@@ -63,7 +63,7 @@ public class Laboratorio {
 	}
 	
 	/**
-	 * Invierte una cantidad de dinero en el laboratorio y llama a la habilitaci�n de
+	 * Invierte una cantidad de dinero en el laboratorio y llama a la habilitación de
 	 * procesos.
 	 * @param cantidad
 	 * @throws LaboratorioInhabilitadoException
@@ -94,7 +94,7 @@ public class Laboratorio {
 	}
 	
 	/**
-	 * Recorre cada proceso inhabilitado y verifica si se puede habilitar. Si es as�
+	 * Recorre cada proceso inhabilitado y verifica si se puede habilitar. Si es así
 	 * lo habilita y debita el dinero.
 	 */
 	public void habilitarProcesos() {
@@ -120,7 +120,7 @@ public class Laboratorio {
 	}
 	
 	/**
-	 * Si existe un proceso que sea igual a la linea de producci�n
+	 * Si existe un proceso que sea igual a la linea de producción
 	 * entonces devuelve el elemento que produce.
 	 * @param maquinaFinalLinea
 	 * @return

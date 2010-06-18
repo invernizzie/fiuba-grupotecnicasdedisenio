@@ -144,7 +144,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
     public void setJugador(final Jugador jugador) {
     	this.jugador = jugador;
         areaFabrica.setFabrica(jugador.getFabrica());
-        cambiarHabilitacionBotonesDePartida(jugador != null);
+        cambiarHabilitacionBotonesDePartida(true);
         
 	}
 
@@ -397,7 +397,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		tabFolderFabrica.setLayoutData(gridData);
 		createCanvasFabrica();
 		CTabItem tabItemFabrica = new CTabItem(tabFolderFabrica, SWT.NONE);
-		tabItemFabrica.setText("Fabrica");
+		tabItemFabrica.setText("Fábrica");
 		CTabItem tabItemLaboratorio = new CTabItem(tabFolderFabrica, SWT.NONE);
 		tabItemLaboratorio.setText("Laboratorio");
 		tabItemFabrica.setControl(areaFabrica.getCompositeControles());
@@ -418,7 +418,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		gridData6.horizontalAlignment = GridData.FILL;
 		
 		buttonAlquilar = new Button(groupJugador, SWT.NONE);
-		buttonAlquilar.setText("Alquilar F�brica");
+		buttonAlquilar.setText("Alquilar Fábrica");
 		buttonAlquilar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
 				alquilar();
@@ -426,7 +426,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		});
 		
 		buttonComprar = new Button(groupJugador, SWT.NONE);
-		buttonComprar.setText("Comprar F�brica");
+		buttonComprar.setText("Comprar Fábrica");
 		buttonComprar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
 				comprar();
@@ -434,7 +434,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		});
 		
 		buttonVender = new Button(groupJugador, SWT.NONE);
-		buttonVender.setText("Vender F�brica");
+		buttonVender.setText("Vender Fábrica");
 		buttonVender.setEnabled(false);
 		buttonVender.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
@@ -606,7 +606,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
     }
     
     /**
-	 * Vende la fábrica del jugador.
+	 * Vende la fÃ¡brica del jugador.
 	 */
 	private void vender() {
 		try {
@@ -619,7 +619,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	}
 	
 	/**
-	 * Compra la fábrica seleccionada.
+	 * Compra la fÃ¡brica seleccionada.
 	 */
 	private void comprar() {
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());
@@ -647,7 +647,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	}
 	
 	/**
-	 * Alquila la fábrica seleccionada.
+	 * Alquila la fÃ¡brica seleccionada.
 	 */
 	private void alquilar() {
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());

@@ -41,7 +41,7 @@ public class TestCompraVentaCalendario {
 	
 	@Test
 	public void testAlJugadorSeLeDebitaCostoDeAlquilerCuandoPasaUnMesYaQueElJugadorTieneAlquiladaUnaFabrica() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		Jugador jugador;
 
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
@@ -49,7 +49,7 @@ public class TestCompraVentaCalendario {
 	
 		float plata = jugador.getDineroActual();
 		
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			fabricas.get(2).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -70,7 +70,7 @@ public class TestCompraVentaCalendario {
 	
 	@Test
 	public void testAlJugadorNoSeLeDebitaNadaCuandoPasaUnMesYaQueElJugadorTieneCompradaUnaFabrica() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		Jugador jugador;
 		float plata;
 		
@@ -99,14 +99,14 @@ public class TestCompraVentaCalendario {
 	
 	@Test
 	public void testAlJugadorNoSeLeDebitaNadaCuandoVendioUnaFabricaQueTeniaAlquiladaYPasoUnMes() {
-		/*Inicialización.*/
+		/*InicializaciÃ³n.*/
 		Jugador jugador;
 		float plata;
 
 		jugador = new Jugador("Gustavo", DINERO_INICIAL_1);
 		jugador.setLaboratorio(new Laboratorio("Cocina", ""));
 	
-		/*Asignación.*/
+		/*Asignaciï¿½n.*/
 		try {
 			fabricas.get(2).alquilar(jugador);
 		} catch (FabricaOcupadaException e) {
@@ -123,7 +123,7 @@ public class TestCompraVentaCalendario {
 	   
 	    plata = jugador.getDineroActual();
 	    
-	    Assert.assertEquals("No deberia debitarse de la plata el costo por mes ya que el jugador no tiene fábrica.", jugador.getDineroActual(), plata);
+	    Assert.assertEquals("No deberia debitarse de la plata el costo por mes ya que el jugador no tiene fï¿½brica.", jugador.getDineroActual(), plata);
 	}
 	
 	private void esperar(final int segundos) {

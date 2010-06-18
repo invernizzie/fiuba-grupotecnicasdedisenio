@@ -46,7 +46,7 @@ public class TestLaboratorioInversion {
 	
 	@Test
 	public void testElLaboratorioNoAcumulaDineroCuandoSeInvierteEnElYEstaInhabilitado() {
-		/*Asignaci髇.*/
+		/*Asignaci贸n.*/
 		jugador.invertirDineroLaboratorio(PORCENTAJE);
 		
 		/*Test.*/
@@ -56,11 +56,11 @@ public class TestLaboratorioInversion {
 	
 	@Test
 	public void testElLaboratorioTieneDeDineroAcumuladoElPorcentajeDeLoInvertidoPorElJugadorYaQueElJugadorInvirtioEnElLaboratorioYEsteEstabaHabilitado() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		float jugadorInvertido;
 		float laboratorioAntesInversion;
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		jugador.habilitarLaboratorio();
 		
 		
@@ -78,11 +78,11 @@ public class TestLaboratorioInversion {
 	
 	@Test
 	public void testElJugadorTieneUnPorcentajeMenosEnSuDineroYaQueElJugadorInvirtioEnElLaboratorioYEsteEstabaHabilitado() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		float jugadorAntesInvertir;
 		float jugadorInvertido;
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		jugador.habilitarLaboratorio();
 		
 		
@@ -114,11 +114,11 @@ public class TestLaboratorioInversion {
 	
 	@Test
 	public void testUnLaboratorioTieneUnProcesoHabiltadoCuandoSeLeAgregaUnProcesoASuListaDeHabilitadosVacia() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		TipoMaquina tipoMaq;
 		Proceso proc;
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		/*Agrego un proceso habilitado.*/
 		proc = new Proceso(COSTO_1);
 		tipoMaq = new TipoMaquinaPrensa();
@@ -132,11 +132,11 @@ public class TestLaboratorioInversion {
 	
 	@Test
 	public void testUnLaboratorioNoTieneNingunProcesoInhabiltadoCuandoSeLeAgregaUnProcesoASuListaDeHabilitadosYSuListaDeInhabilitadosEstabaVacia() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		TipoMaquina tipoMaq;
 		Proceso proc;
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		/*Agrego un proceso habilitado.*/
 		proc = new Proceso(COSTO_1);
 		tipoMaq = new TipoMaquinaPrensa();
@@ -150,11 +150,11 @@ public class TestLaboratorioInversion {
 	
 	@Test
 	public void testUnLaboratorioTieneUnProcesoInhabiltadoCuandoSeLeAgregaUnProcesoASuListaDeInhabilitadosVacia() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		TipoMaquina tipoMaq;
 		Proceso proc;
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		/*Agrego un proceso habilitado.*/
 		proc = new Proceso(COSTO_1);
 		tipoMaq = new TipoMaquinaPrensa();
@@ -168,11 +168,11 @@ public class TestLaboratorioInversion {
 	
 	@Test
 	public void testUnLaboratorioNoTieneNingunProcesoHabiltadoCuandoSeLeAgregaUnProcesoASuListaDeInhabilitadosYSuListaDeHabilitadosEstabaVacia() {
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		TipoMaquina tipoMaq;
 		Proceso proc;
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		/*Agrego un proceso habilitado.*/
 		proc = new Proceso(COSTO_1);
 		tipoMaq = new TipoMaquinaPrensa();
@@ -188,11 +188,11 @@ public class TestLaboratorioInversion {
 	
 	@Test
 	public void testSeEsperanTresProcesosHabilitadosCuandoSeCarganDosProcesosHabilitadosYDosInhabilitadosYSeLlamaaHabilitarProcesosTeniendoDineroSuficienteParaHabilitarUnProcesoDeLosInhabilitados(){
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		TipoMaquina tipoMaq;
 		Proceso proc;
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		jugador.habilitarLaboratorio();
 		
 		/*Agrego un proceso habilitado.*/
@@ -228,11 +228,11 @@ public class TestLaboratorioInversion {
 	}
 	
 	public void testSeEsperanUnProcesoInhabilitadoCuandoSeCarganDosProcesosHabilitadosYDosInhabilitadosYSeLlamaaHabilitarProcesosTeniendoDineroSuficienteParaHabilitarUnProcesoDeLosInhabilitados(){
-		/*Inicializaci髇.*/
+		/*Inicializaci贸n.*/
 		TipoMaquina tipoMaq;
 		Proceso proc;
 		
-		/*Asignaci髇.*/
+		/*Asignaci锟絥.*/
 		jugador.habilitarLaboratorio();
 		
 		/*Agrego un proceso habilitado.*/
