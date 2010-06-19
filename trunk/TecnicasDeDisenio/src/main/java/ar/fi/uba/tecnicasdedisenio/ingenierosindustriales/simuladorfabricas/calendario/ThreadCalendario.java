@@ -19,6 +19,8 @@ class ThreadCalendario extends Thread {
     private static final int PAUSA_MINIMA = 10;
 
     private Calendario calendario;
+    private int diaDeLaSemana;
+    private int mesVigente;
 
     /**
      * Bucle de ejecucion del hilo.
@@ -29,42 +31,65 @@ class ThreadCalendario extends Thread {
      */
     @Override
     public void run() {
-        int i = DIAS_POR_SEMANA;
-        while (calendario.esValido()) {
+        diaDeLaSemana = DIAS_POR_SEMANA;
+        while (!calendario.estaDetenido()) {
             try {
-                while (calendario.estaPausado()) {
-                    sleep(1);
-                    if (!calendario.esValido()) {
-                        break;
-                    }
-                }
-                Date inicio = new Date();
-                while ((new Date().getTime() - inicio.getTime() < MIL * calendario.getSegundosPorDia())
-                        && calendario.esValido() && !calendario.estaPausado()) {
-                    sleep(PAUSA_MINIMA);
-                }
+                esperarReanudacionSiEstaPausado();
 
-                if (!calendario.esValido() || calendario.estaPausado())
+                if (esDetenidoOPausadoAlEsperarUnDia())
                     continue;
 
-                int mesAnterior = calendario.getVirtualCalendar().get(Calendar.MONTH);
-                calendario.getVirtualCalendar().add(Calendar.DAY_OF_WEEK, 1);
+                avanzarUnDia();
 
-                calendario.notificar(Evento.COMIENZO_DE_DIA);
-
-                if ((i % DIAS_POR_SEMANA) == 0) {
-                    calendario.notificar(Evento.COMIENZO_DE_SEMANA);
-                    i -= DIAS_POR_SEMANA;
-                }
-                i++;
-
-                if (mesAnterior != calendario.getVirtualCalendar().get(Calendar.MONTH)) {
-                    calendario.notificar(Evento.COMIENZO_DE_MES);
-                }
             } catch (InterruptedException ignored) { }
         }
     }
-    
+
+    private void esperarReanudacionSiEstaPausado() throws InterruptedException {
+        while (calendario.estaPausado() && ! calendario.estaDetenido()) {
+            sleep(1);
+        }
+    }
+
+    private boolean esDetenidoOPausadoAlEsperarUnDia() throws InterruptedException {
+        Date inicio = new Date();
+        while (noTranscurrioUnDia(inicio)
+                && !calendario.estaDetenido() && !calendario.estaPausado()) {
+            sleep(PAUSA_MINIMA);
+        }
+        return calendario.estaDetenido() || calendario.estaPausado();
+    }
+
+    private boolean noTranscurrioUnDia(Date inicio) {
+        return (new Date().getTime() - inicio.getTime() < MIL * calendario.getSegundosPorDia());
+    }
+
+    private void avanzarUnDia() {
+        // Se registra el mes corriente para verificar cuando cambia
+        mesVigente = calendario.getVirtualCalendar().get(Calendar.MONTH);
+        calendario.getVirtualCalendar().add(Calendar.DAY_OF_WEEK, 1);
+
+        calendario.notificar(Evento.COMIENZO_DE_DIA);
+
+        detectarYNotificarComienzoDeSemana();
+        diaDeLaSemana++;
+
+        detectarYNotificarComienzoDeMes();
+    }
+
+    private void detectarYNotificarComienzoDeSemana() {
+        if ((diaDeLaSemana % DIAS_POR_SEMANA) == 0) {
+            calendario.notificar(Evento.COMIENZO_DE_SEMANA);
+            diaDeLaSemana -= DIAS_POR_SEMANA;
+        }
+    }
+
+    private void detectarYNotificarComienzoDeMes() {
+        if (mesVigente != calendario.getVirtualCalendar().get(Calendar.MONTH)) {
+            calendario.notificar(Evento.COMIENZO_DE_MES);
+        }
+    }
+
     ThreadCalendario(final Calendario calendario) {
         this.calendario = calendario;
     }
