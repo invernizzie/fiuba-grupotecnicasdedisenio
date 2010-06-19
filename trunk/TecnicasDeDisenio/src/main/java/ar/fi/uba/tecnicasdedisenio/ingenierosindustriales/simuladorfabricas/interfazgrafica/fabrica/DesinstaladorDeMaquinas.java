@@ -21,7 +21,6 @@ public class DesinstaladorDeMaquinas extends Instalador {
         try {
             getEspacioFabril().borrarMaquina(x, y);
         } catch (CoordenadasIncorrectasException ignored) {
-
         } catch (CubiculoVacioException ignored) { }
     }
 

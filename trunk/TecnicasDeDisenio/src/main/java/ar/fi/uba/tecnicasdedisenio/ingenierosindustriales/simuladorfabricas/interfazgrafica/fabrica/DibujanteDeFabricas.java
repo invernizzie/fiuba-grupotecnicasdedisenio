@@ -24,10 +24,10 @@ public class DibujanteDeFabricas {
 
         if (iFuente instanceof Maquina) {
             Maquina maquina = (Maquina) iFuente;
-            dibujarMaquina(maquina, x, y, EspacioFabril.ANCHO_MAQUINA, EspacioFabril.ANCHO_MAQUINA);
+            dibujarMaquina(maquina, x, y, EspacioFabril.LADO_MAQUINA, EspacioFabril.LADO_MAQUINA);
         } else if (iFuente instanceof Fuente) {
             Fuente fuente = (Fuente) iFuente;
-            dibujarMateriaPrima(fuente.getNombreProducto(), x, y, EspacioFabril.ANCHO_MATERIA_PRIMA, EspacioFabril.ANCHO_MATERIA_PRIMA);
+            dibujarMateriaPrima(fuente.getNombreProducto(), x, y, EspacioFabril.LADO_MATERIA_PRIMA, EspacioFabril.LADO_MATERIA_PRIMA);
         }
     }
 

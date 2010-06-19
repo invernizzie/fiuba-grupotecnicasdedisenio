@@ -28,15 +28,21 @@ public class ConstructorDeFabricas implements Listener {
                 break;
 
             case SWT.MouseDown:
-                instalador.mouseDown(event.x, event.y);
+                if (sePresionoElBotonIzquierdo(event)) {
+                    instalador.mouseDown(event.x, event.y);
+                }
                 break;
 
             case SWT.MouseUp:
-                if ((event.stateMask & SWT.BUTTON1) == 0) {
-                    return;
+                if (sePresionoElBotonIzquierdo(event)) {
+                    instalador.mouseUp(event.x, event.y);
                 }
-                instalador.mouseUp(event.x, event.y);
                 break;
         }
+    }
+
+    private boolean sePresionoElBotonIzquierdo(Event event) {
+        //return (event.stateMask & SWT.BUTTON1) != 0;
+        return (event.button == 1);
     }
 }

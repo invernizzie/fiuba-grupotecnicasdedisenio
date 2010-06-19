@@ -71,6 +71,7 @@ public class Fabrica implements Sincronizado {
         limpiarCintas(maquina);
         limpiarLineas(maquina);
         maquinas.remove(maquina);
+        maquina.reset();
     }
 
     public void eliminarFuente(final Fuente fuente) {

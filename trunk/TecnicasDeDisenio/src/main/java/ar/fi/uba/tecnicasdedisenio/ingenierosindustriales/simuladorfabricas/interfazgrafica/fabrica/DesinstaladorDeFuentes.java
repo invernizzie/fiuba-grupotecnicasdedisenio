@@ -22,7 +22,6 @@ public class DesinstaladorDeFuentes extends Instalador {
         try {
             getEspacioFabril().borrarFuente(x, y);
         } catch (CoordenadasIncorrectasException ignored) {
-
         } catch (CubiculoVacioException ignored) { }
     }
 

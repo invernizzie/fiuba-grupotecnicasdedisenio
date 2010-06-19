@@ -20,14 +20,21 @@ public class CubiculoFabril {
         return (maquina != null) || (fuente != null);
     }
 
-    public void ubicarMaquina(final Maquina maquina) throws CubiculoOcupadoExcetion {
+    public void ocuparCon(final IFuente fuente) throws CubiculoOcupadoExcetion {
+        if (fuente instanceof Maquina)
+            asignarMaquina((Maquina) fuente);
+        if (fuente instanceof Fuente)
+            asignarMateriaPrima((Fuente) fuente);
+    }
+
+    public void asignarMaquina(final Maquina maquina) throws CubiculoOcupadoExcetion {
         if (estaOcupado()) {
             throw new CubiculoOcupadoExcetion();
         }
         this.maquina = maquina;
     }
 
-    public void ubicarMateriaPrima(final Fuente fuente) throws CubiculoOcupadoExcetion {
+    public void asignarMateriaPrima(final Fuente fuente) throws CubiculoOcupadoExcetion {
         if (estaOcupado()) {
             throw new CubiculoOcupadoExcetion();
         }
