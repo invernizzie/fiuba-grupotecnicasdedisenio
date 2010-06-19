@@ -1,4 +1,7 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.util;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,7 +29,17 @@ public abstract class XMLParser {
      * Lee un XML y lo deja en memoria.
      */
     public void leerDoc() {
-    	InputStream is = this.getClass().getClassLoader().getResourceAsStream(path);
+
+    	//Intentamos cargar el archivo, si falla leemos el del jar.
+    	InputStream is = null;
+		try {
+			is = new FileInputStream(new File(path));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			is = this.getClass().getClassLoader().getResourceAsStream(path);
+			System.out.println("No se encontró el archivo " + path +
+									" se usará el del jar");
+		}
         // 1. Obtener el objeto DocumentBuilderFactory, con el que se creará el documento XML
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         

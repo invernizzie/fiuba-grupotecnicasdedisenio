@@ -33,7 +33,7 @@
 					<target>1.6</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
-				
+
 			</plugin>
 			<plugin>
 				<groupId>org.objectstyle.woproject.maven2</groupId>
@@ -54,15 +54,23 @@
 					</execution>
 				</executions>
 			</plugin>
-
-            <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<copy file="Productos.xml" tofile="target/Productos.xml" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
+
 
 
 		</plugins>
@@ -131,7 +139,7 @@
 				<japplication.os.name>mac</japplication.os.name>
 			</properties>
 		</profile>
-		
+
 	</profiles>
 
 	<dependencies>
@@ -187,7 +195,7 @@
 		</repository>
 
 	</repositories>
-	
+
 	<reporting>
 		<plugins>
 			<plugin>

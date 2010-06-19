@@ -10,6 +10,7 @@ public class CargadorDeProductos {
 	private XMLParserProductos parser;
 	
 	public CargadorDeProductos(){
+		System.out.println("Cargando productos");
 		this.setParser(new XMLParserProductos(pathXML));
 		this.getParser().leerDoc();
 	}
