@@ -295,7 +295,7 @@ public class TestCalendario {
         Assert.assertEquals("No se restaura la fecha inicial",
                 new GregorianCalendar(Calendario.ANIO_INICIAL, Calendario.MES_INICIAL, Calendario.DIA_INICIAL).getTime(),
                 Calendario.instancia().getFechaActual());
-        Assert.assertTrue("Se encuentra detenido tras inicializar", Calendario.instancia().esValido());
+        Assert.assertTrue("Se encuentra detenido tras inicializar", !Calendario.instancia().estaDetenido());
         Assert.assertFalse("Se encuentra pausado tras reanudar", Calendario.instancia().estaPausado());
         Assert.assertEquals("No se mantiene la configuracion de segundos por dia tras inicializar",
                 SEGUNDOS_POR_DIA,

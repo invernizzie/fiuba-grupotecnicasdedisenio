@@ -36,6 +36,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
     private static final int PASO_PRECIO_ALQUILER = 150;
     private static final int DEFAULT_ANCHO = 792;
     private static final int DEFAULT_ALTO = 459;
+    private static final String PATRON_FECHA_ESPANIOL = "d 'de' MMMM 'de' yyyy ";
 
 	private boolean actualizado = false;
 	private Shell shellPrincipal = null;
@@ -292,7 +293,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		textTime = new Text(groupTiempo, SWT.BORDER);
 		textTime.setEditable(false);
 		textTime.setLayoutData(gridData3);
-		textTime.setText(Calendario.instancia().fechaAsString());
+		textTime.setText(Calendario.instancia().fechaFormateada(PATRON_FECHA_ESPANIOL));
 		buttonTimer.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(final SelectionEvent selectionEvent) {
@@ -601,12 +602,12 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	 * Actualiza los datos del tiempo en la pantalla.
 	 */
     private void actualizarDatosTiempo() {
-    	this.textTime.setText(Calendario.instancia().fechaAsString());
+    	this.textTime.setText(Calendario.instancia().fechaFormateada(PATRON_FECHA_ESPANIOL));
     	notificarActualizacion();
     }
     
     /**
-	 * Vende la fÃ¡brica del jugador.
+	 * Vende la fábrica del jugador.
 	 */
 	private void vender() {
 		try {
@@ -619,7 +620,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	}
 	
 	/**
-	 * Compra la fÃ¡brica seleccionada.
+	 * Compra la fábrica seleccionada.
 	 */
 	private void comprar() {
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());
@@ -647,7 +648,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	}
 	
 	/**
-	 * Alquila la fÃ¡brica seleccionada.
+	 * Alquila la fábrica seleccionada.
 	 */
 	private void alquilar() {
 		Fabrica fabrica = fabricas.get(comboFabrica.getText());

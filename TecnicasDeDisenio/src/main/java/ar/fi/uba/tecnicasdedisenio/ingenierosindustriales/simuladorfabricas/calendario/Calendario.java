@@ -43,20 +43,26 @@ public class Calendario {
     private Thread threadCalendario = new ThreadCalendario(this);
 
     /**
+     * Devuelve la unica instancia valida del Calendario
+     * @return instancia valida actual del Calendario
+     */
+    public static Calendario instancia() {
+        return instancia;
+    }
+
+    /**
      * Restaura el calendario virtual a la fecha inicial.
      * Luego debe ser iniciado para comenzar el paso del tiempo.
      */
     public void inicializar() {
         detener();
-        try {
-        threadCalendario.join(CIEN_MILLIS);
-        } catch (InterruptedException e) { /* ?? */ }
+        reemplazarThread();
+
         sincronizados = new ArrayList<Sincronizado>();
         virtualCalendar = new GregorianCalendar(ANIO_INICIAL, MES_INICIAL, DIA_INICIAL);
         iniciado = false;
         detenido = false;
         pausado = false;
-        threadCalendario = new ThreadCalendario(this);
     }
 
     /**
@@ -67,8 +73,8 @@ public class Calendario {
         return virtualCalendar.getTime();
     }
 
-    public String fechaAsString() {
-        return new SimpleDateFormat("d 'de' MMMM 'de' yyyy ", Locale.getDefault())
+    public String fechaFormateada(String patron) {
+        return new SimpleDateFormat(patron, Locale.getDefault())
                 .format(getFechaActual());
     }
 
@@ -87,7 +93,7 @@ public class Calendario {
      *
      * @param sincronizado El Sincronizado a desregistrar.
      * @return true si estaba registrado y se puedo desregistrar.
-     * false si no estaba registrado, o bien no puedo ser desregistrado.
+     *         false si no estaba registrado, o bien no puedo ser desregistrado.
      */
     public synchronized boolean desregistrar(final Sincronizado sincronizado) {
         return getSincronizados().remove(sincronizado);
@@ -133,9 +139,10 @@ public class Calendario {
      * Informa si el Calendario ha sido detenido definitivamente.
      *
      * @return true si el Calendario ha sido detenido.
+     * @param hola
      */
-    public boolean esValido() {
-        return !detenido;
+    public boolean estaDetenido() {
+        return detenido;
     }
 
     public boolean estaIniciado() {
@@ -192,15 +199,12 @@ public class Calendario {
     private synchronized List<Sincronizado> getSincronizados() {
         return sincronizados;
     }
-    
-    /**
-     * Devuelve la unica instancia valida del Calendario
-     * @return instancia valida actual del Calendario
-     */
-    public static Calendario instancia() {
-        return instancia;
-    }
-    
 
-    
+    private void reemplazarThread() {
+        try {
+            threadCalendario.join(CIEN_MILLIS);
+        } catch (InterruptedException e) { /* ?? */ }
+        threadCalendario = new ThreadCalendario(this);
+    }
+
 }
