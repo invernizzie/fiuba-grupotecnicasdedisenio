@@ -75,8 +75,10 @@
             <fileset dir="icons" targetdir="$INSTALL_PATH/icons" includes="*"/>
             <!-- Unix files -->
             <file src="executables/unix/SimuladorDeFabricas.jar" targetdir="$INSTALL_PATH" os="unix"/>
+            <file src="executables/Productos.xml" targetdir="$INSTALL_PATH" os="unix"/>
             <!-- Windows files -->
             <file src="executables/windows/SimuladorDeFabricas.jar" targetdir="$INSTALL_PATH" os="windows"/>
+            <file src="executables/Productos.xml" targetdir="$INSTALL_PATH" os="windows"/>
             <!-- Mac files -->
         </pack>
     </packs>
