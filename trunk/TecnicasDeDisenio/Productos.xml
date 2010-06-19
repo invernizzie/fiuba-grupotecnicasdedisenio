@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Productos>
+	<Producto nombre="harina" precio="1" mp="true"/>
+	<Producto nombre="agua" precio="2" mp="true"/>
+	<Producto nombre="trigo" precio="3" mp="true"/>
+	<Producto nombre="pan" precio="5" mp="true"/>
+	<Producto nombre="centeno" precio="8" mp="true"/>
+	<Producto nombre="maiz" precio="7" mp="true"/>
+	<Producto nombre="sal" precio="2" mp="true"/>
+	<Producto nombre="azucar" precio="10" mp="true"/>
+	<Producto nombre="vainilla" precio="9" mp="true"/>
+	<Producto nombre="edulcorante" precio="11" mp="true"/>
+	<Producto nombre="miel" precio="2" mp="true"/>
+	<Producto nombre="prensado" precio="10" mp="false"/>
+	<Producto nombre="planchado" precio="11" mp="false"/>
+	<Producto nombre="horneado" precio="12" mp="false"/>
+	<Producto nombre="mezclado" precio="13" mp="false"/>
+	<Producto nombre="licuado" precio="14" mp="false"/>
+</Productos>

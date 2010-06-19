@@ -28,7 +28,18 @@ public class TestXMLParser {
 	}
 
 	@Test
-	public void testLeerDoc() {
+	public void leerDocumentoXML() {
+		try {
+			parser.leerDoc();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Falló la lectura del XML: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void intentarLeerDocumentoQueNoEstaUsarAlternativo() {
+		parser = new XMLParserProductos("config.xml");
 		try {
 			parser.leerDoc();
 		} catch (Exception e) {
