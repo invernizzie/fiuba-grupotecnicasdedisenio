@@ -17,38 +17,57 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class DialogoMensaje {
     private static final int MARGEN = 8;
+    private Shell dialogo;
+    private Label campoDelMensaje;
+    private Button botonOk;
 
     public DialogoMensaje(final String mensaje) {
-        Display display = Display.getCurrent();
-        final Shell dialog = new Shell(SWT.DIALOG_TRIM);
-        Label label = new Label(dialog, SWT.NONE);
-        label.setText(mensaje);
-        Button okButton = new Button(dialog, SWT.PUSH);
-        okButton.setText("&Ok");
+        crearCuadroDeDialogo();
+        crearCampoDelMensaje(mensaje);
+        crearBotonOk();
+        configurarYMostrarCuadroDeDialogo();
+        esperarASerCerrado();
+    }
 
-        FormLayout form = new FormLayout();
-        form.marginWidth = MARGEN;
-        form.marginHeight = MARGEN;
-        dialog.setLayout(form);
-        FormData okData = new FormData();
-        okData.top = new FormAttachment(label, MARGEN);
-        okButton.setLayoutData(okData);
-        okButton.addSelectionListener(new SelectionListener() {
+    private void crearCuadroDeDialogo() {
+        dialogo = new Shell(SWT.DIALOG_TRIM);
+        FormLayout layoutParaElDialogo = new FormLayout();
+        layoutParaElDialogo.marginWidth = MARGEN;
+        layoutParaElDialogo.marginHeight = MARGEN;
+        dialogo.setLayout(layoutParaElDialogo);
+    }
+
+    private void crearCampoDelMensaje(String mensaje) {
+        campoDelMensaje = new Label(dialogo, SWT.NONE);
+        campoDelMensaje.setText(mensaje);
+    }
+
+    private void crearBotonOk() {
+        FormData layoutParaElBotonOk = new FormData();
+        layoutParaElBotonOk.top = new FormAttachment(campoDelMensaje, MARGEN);
+        botonOk = new Button(dialogo, SWT.PUSH);
+        botonOk.setText("&Ok");
+        botonOk.setLayoutData(layoutParaElBotonOk);
+
+        botonOk.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(final SelectionEvent selectionEvent) {
-                dialog.close();
+                dialogo.close();
             }
-
             @Override
             public void widgetDefaultSelected(final SelectionEvent selectionEvent) { }
         });
+    }
 
-        dialog.setDefaultButton(okButton);
-        dialog.pack();
-        dialog.open();
+    private void configurarYMostrarCuadroDeDialogo() {
+        dialogo.setDefaultButton(botonOk);
+        dialogo.pack();
+        dialogo.open();
+    }
 
-        while (!dialog.isDisposed()) {
-            if (!display.readAndDispatch()) { display.sleep(); }
+    private void esperarASerCerrado() {
+        while (!dialogo.isDisposed()) {
+            if (!Display.getCurrent().readAndDispatch()) { Display.getCurrent().sleep(); }
         }
     }
 }
