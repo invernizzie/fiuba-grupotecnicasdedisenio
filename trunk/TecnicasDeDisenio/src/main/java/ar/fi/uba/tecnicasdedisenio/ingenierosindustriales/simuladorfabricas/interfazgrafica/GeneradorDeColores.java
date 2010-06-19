@@ -1,13 +1,15 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Display;
+
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 
 /**
  * Clase que asocia colores a Strings u objetos Class
@@ -41,7 +43,7 @@ public class GeneradorDeColores {
     }
 
     private static Map<String, Color> claveString = new HashMap<String, Color>();
-    private static Map<Class, Color> claveClass = new HashMap<Class, Color>();
+    private static Map<Class<? extends Maquina>, Color> claveClass = new HashMap<Class<? extends Maquina>, Color>();
    
     private static Color siguienteColor() {
         indice %= cantidad;
@@ -55,7 +57,7 @@ public class GeneradorDeColores {
         return claveString.get(clave);
     }
 
-    public static Color porClass(final Class clave) {
+    public static Color porClass(final Class<? extends Maquina> clave) {
         if (!claveClass.containsKey(clave)) {
             claveClass.put(clave, siguienteColor());
         }
