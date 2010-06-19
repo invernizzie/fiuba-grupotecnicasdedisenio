@@ -2,6 +2,8 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lin
 
 public class ProcesamientoException extends Exception {
 
+	private static final long serialVersionUID = 5165862492529076192L;
+
 	public ProcesamientoException() {
 		super();
 	}
