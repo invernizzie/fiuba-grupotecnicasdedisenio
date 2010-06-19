@@ -22,7 +22,6 @@ public class GeneradorDeColores {
     private GeneradorDeColores() { }
 
     private static List<Color> colores = new ArrayList<Color>();
-    private static int cantidad;
     private static int indice = 0;
     static {
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_BLUE));
@@ -38,15 +37,13 @@ public class GeneradorDeColores {
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_YELLOW));
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_YELLOW));
         colores.add(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-
-        cantidad = colores.size();
     }
 
     private static Map<String, Color> claveString = new HashMap<String, Color>();
     private static Map<Class<? extends Maquina>, Color> claveClass = new HashMap<Class<? extends Maquina>, Color>();
    
     private static Color siguienteColor() {
-        indice %= cantidad;
+        indice %= colores.size();
         return colores.get(indice++);
     }
     
