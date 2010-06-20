@@ -119,7 +119,7 @@ public class DialogoNuevaPartida {
                     mensaje += "Debe ingresar su nombre\n";
                 }
                 if (new Float(sDineroInicial.getText()) < DINERO_MINIMO) {
-                    mensaje += "El dinero inicial debe ser al menos 100\n";
+                    mensaje += "El dinero inicial debe ser al menos "+ DINERO_MINIMO +"\n";
                 }
                 
                 if (mensaje.length() > 0) {
