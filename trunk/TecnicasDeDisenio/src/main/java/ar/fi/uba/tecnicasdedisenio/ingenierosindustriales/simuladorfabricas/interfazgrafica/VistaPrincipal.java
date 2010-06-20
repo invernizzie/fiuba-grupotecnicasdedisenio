@@ -39,6 +39,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
     private static final String PATRON_FECHA_ESPANIOL = "d 'de' MMMM 'de' yyyy ";
 
 	private boolean actualizado = false;
+	private Display display = null;
 	private Shell shellPrincipal = null;
 	private MenuBar menuPrincipal = null;
 	private Group groupJugador = null;
@@ -57,11 +58,8 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	private HashMap<String, Fabrica> fabricas;
     private NumberFormat formateador = NumberFormat.getInstance();
     private Set<Widget> botonesPartida = new HashSet<Widget>();
-	private Composite compositeLaboratorio = null;
-    private Text textTipoLabo = null;
-    private Text textDineroAcumLabo = null;
-	private Button buttonImagenLabo = null;
-    private Display display = null;
+    private AreaLaboratorio areaLaboratorio = null;
+
 
 	public Shell getShellPrincipal() {
 		return shellPrincipal;
@@ -332,9 +330,14 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		CTabItem tabItemLaboratorio = new CTabItem(tabFolderFabrica, SWT.NONE);
 		tabItemLaboratorio.setText("Laboratorio");
 		tabItemFabrica.setControl(areaFabrica.getCompositeControles());
-		createCompositeLaboratorio();
-		tabItemLaboratorio.setControl(compositeLaboratorio);
+		createAreaLaboratorio();
+		tabItemLaboratorio.setControl(areaLaboratorio.getCompositeLaboratorio());
 	}
+
+	private void createAreaLaboratorio() {
+		areaLaboratorio = new AreaLaboratorio(tabFolderFabrica);
+	}
+
 
 	/**
 	 * This method initializes comboFabrica
@@ -413,55 +416,6 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		System.out.println("Se Invoca la pantalla de Creacion");
 	}
 	
-	private void createCompositeLaboratorio() {
-		GridData gridData5 = new GridData();
-		gridData5.grabExcessHorizontalSpace = true;
-		gridData5.verticalAlignment = GridData.CENTER;
-		gridData5.horizontalAlignment = GridData.FILL;
-		GridData gridData4 = new GridData();
-		gridData4.horizontalAlignment = GridData.FILL;
-		gridData4.grabExcessHorizontalSpace = true;
-		gridData4.verticalAlignment = GridData.CENTER;
-		GridData gridData3 = new GridData();
-		gridData3.horizontalAlignment = GridData.FILL;
-		gridData3.grabExcessHorizontalSpace = true;
-		gridData3.verticalAlignment = GridData.CENTER;
-		GridData gridData2 = new GridData();
-		gridData2.horizontalAlignment = GridData.FILL;
-		gridData2.grabExcessHorizontalSpace = true;
-		gridData2.verticalAlignment = GridData.CENTER;
-		GridData gridData1 = new GridData();
-		gridData1.horizontalSpan = 2;
-		gridData1.grabExcessVerticalSpace = true;
-		gridData1.horizontalAlignment = GridData.FILL;
-		gridData1.verticalAlignment = GridData.FILL;
-		gridData1.grabExcessHorizontalSpace = true;
-		GridLayout gridLayout1 = new GridLayout();
-		gridLayout1.numColumns = 2;
-		compositeLaboratorio  = new Composite(tabFolderFabrica, SWT.NONE);
-		compositeLaboratorio.setLayout(gridLayout1);
-        Label labelTipoLabo = new Label(compositeLaboratorio, SWT.NONE);
-		labelTipoLabo.setText("Tipo Laboratorio");
-		labelTipoLabo.setVisible(true);
-		labelTipoLabo.setLayoutData(gridData2);
-		textTipoLabo = new Text(compositeLaboratorio, SWT.BORDER | SWT.READ_ONLY);
-		textTipoLabo.setVisible(true);
-		textTipoLabo.setText("<Tipo Laboratorio>");
-		textTipoLabo.setLayoutData(gridData5);
-        Label labelDineroAcumLabo = new Label(compositeLaboratorio, SWT.NONE);
-		labelDineroAcumLabo.setText("Dinero Acumulado");
-		labelDineroAcumLabo.setEnabled(true);
-		labelDineroAcumLabo.setLayoutData(gridData3);
-		textDineroAcumLabo = new Text(compositeLaboratorio, SWT.BORDER);
-		textDineroAcumLabo.setEditable(false);
-		textDineroAcumLabo.setText("<Dinero Acumulado>");
-		textDineroAcumLabo.setLayoutData(gridData4);
-		buttonImagenLabo = new Button(compositeLaboratorio, SWT.PUSH);
-		buttonImagenLabo.setSelection(true);
-		buttonImagenLabo.setVisible(true);
-		buttonImagenLabo.setLayoutData(gridData1);
-	}
-	
     private void cambiarHabilitacionBotonesDePartida(final boolean habilitados) {
         for (Widget boton : botonesPartida) {
             ((Control) boton).setEnabled(habilitados);
@@ -521,11 +475,10 @@ public class VistaPrincipal implements Sincronizado, Observer {
     }
     
     private void actualizarDatosLaboratorio() {
-    	textTipoLabo.setText(getJugador().getLaboratorio().getTipo());
-    	textDineroAcumLabo.setText(Float.toString(getJugador().getLaboratorio().getDineroAcumulado()));
-        Image imagenLaboratorio = new Image(display, RecursosAplicacion.instance()
-                .getResourceAsStream("images/" + getJugador().getLaboratorio().getNombreImagen()));
-    	buttonImagenLabo.setImage(imagenLaboratorio);
+    	String nombreImagen = new String(getJugador().getLaboratorio().getNombreImagen());
+    	String tipoLabo =new String(getJugador().getLaboratorio().getTipo());
+    	String dineroAcumulado = new String(Float.toString(getJugador().getLaboratorio().getDineroAcumulado()));
+    	areaLaboratorio.actualizarDatosLaboratorio(display, nombreImagen, tipoLabo, dineroAcumulado);
     }
     
     /**
