@@ -21,28 +21,46 @@ public class AreaLaboratorio {
     private static final int DEFAULT_ANCHO = 358;
     private static final int DEFAULT_ALTO = 361;
 
-	private Shell sShellLaboratorio = null;
-	private CTabFolder cTabFolderLaboratorio = null;
+	//private Shell sShellLaboratorio = null;
+	//private CTabFolder cTabFolderLaboratorio = null;
 	private Composite compositeLaboratorio = null;
-    private Image imagenLaboratorio = null;
+	private Text textTipoLaboratorio = null;
+    //private Image imagenLaboratorio = null;
+	private Text textDineroAcumulado = null;
+	private Button buttonImagenLaboratorio = null;
 
-    public void run() {
-    	createSShellLaboratorio();
+    public Composite getCompositeLaboratorio() {
+		return compositeLaboratorio;
+	}
+
+	public AreaLaboratorio(final CTabFolder cTabFolder) {
+		createCompositeLaboratorio(cTabFolder);
+	}
+
+	public void run() {
+    	Display display = new Display();
+		Shell shell = new Shell(display);
+		CTabFolder cTabFolder = new CTabFolder(shell, SWT.FLAT | SWT.BORDER | SWT.TOP);
+    	createSShellLaboratorio(shell, display, cTabFolder);
 	}
     
     /**
 	 * This method initializes sShellLaboratorio
+     * @param sShellLaboratorio 
+     * @param display 
+     * @param path 
 	 *
 	 */
-	private void createSShellLaboratorio() {
-        Display display = new Display();
-		sShellLaboratorio = new Shell(display);
-		imagenLaboratorio = new Image(display, RecursosAplicacion.instance().getResourceAsStream("lab.jpg"));
+	private void createSShellLaboratorio(Shell sShellLaboratorio, Display display, CTabFolder cTabFolder) {
+        //Display display = new Display();
+		//sShellLaboratorio = new Shell(display);
+		String path = new String("lab.jpg");
+		Image imagenLaboratorio = new Image(display, RecursosAplicacion.instance().getResourceAsStream(path));
 		sShellLaboratorio.setVisible(true);
 		sShellLaboratorio.setLayout(new GridLayout());
 		sShellLaboratorio.setMaximized(false);
 		sShellLaboratorio.setMinimized(false);
-		createCTabFolderLaboratorio();
+		createCTabFolderLaboratorio(cTabFolder);
 		sShellLaboratorio.setSize(new Point(DEFAULT_ANCHO, DEFAULT_ALTO));
 		
 		while (!sShellLaboratorio.isDisposed()) {
@@ -56,28 +74,34 @@ public class AreaLaboratorio {
 	
 	/**
 	 * This method initializes cTabFolderLaboratorio
+	 * @param cTabFolderLaboratorio 
+	 * @param imagenLaboratorio 
+	 * @param sShellLaboratorio 
 	 *
 	 */
-	private void createCTabFolderLaboratorio() {
+	private void createCTabFolderLaboratorio(CTabFolder cTabFolderLaboratorio) {
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.FILL;
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.grabExcessVerticalSpace = true;
 		gridData.verticalAlignment = GridData.FILL;
-		cTabFolderLaboratorio = new CTabFolder(sShellLaboratorio, SWT.FLAT | SWT.BORDER | SWT.TOP);
+		//cTabFolderLaboratorio = new CTabFolder(sShellLaboratorio, SWT.FLAT | SWT.BORDER | SWT.TOP);
 		cTabFolderLaboratorio.setLayoutData(gridData);
 		CTabItem cTabItem = new CTabItem(cTabFolderLaboratorio, SWT.NONE);
 		cTabItem.setText("Laboratorio");
-		createCompositeLaboratorio();
+		createCompositeLaboratorio(cTabFolderLaboratorio);
 		cTabItem.setControl(compositeLaboratorio);
 		
 	}
 	
 	/**
 	 * This method initializes compositeLaboratorio
+	 * @param cTabFolderLaboratorio 
+	 * @param imagenLaboratorio 
+	 * @param cTabFolderLaboratorio 
 	 *
 	 */
-	private void createCompositeLaboratorio() {
+	private void createCompositeLaboratorio(CTabFolder cTabFolderLaboratorio) {
 		GridData gridData5 = new GridData();
 		gridData5.grabExcessHorizontalSpace = true;
 		gridData5.verticalAlignment = GridData.CENTER;
@@ -108,7 +132,7 @@ public class AreaLaboratorio {
 		labelTipoLaboratorio.setText("Tipo Laboratorio");
 		labelTipoLaboratorio.setVisible(true);
 		labelTipoLaboratorio.setLayoutData(gridData2);
-        Text textTipoLaboratorio = new Text(compositeLaboratorio, SWT.BORDER | SWT.READ_ONLY);
+        textTipoLaboratorio = new Text(compositeLaboratorio, SWT.BORDER | SWT.READ_ONLY);
 		textTipoLaboratorio.setVisible(true);
 		textTipoLaboratorio.setText("<Tipo Laboratorio>");
 		textTipoLaboratorio.setLayoutData(gridData5);
@@ -116,15 +140,22 @@ public class AreaLaboratorio {
 		labelDineroAcumulado.setText("Dinero Acumulado");
 		labelDineroAcumulado.setEnabled(true);
 		labelDineroAcumulado.setLayoutData(gridData3);
-        Text textDineroAcumulado = new Text(compositeLaboratorio, SWT.BORDER);
+        textDineroAcumulado = new Text(compositeLaboratorio, SWT.BORDER);
 		textDineroAcumulado.setEditable(false);
 		textDineroAcumulado.setText("<Dinero Acumulado>");
 		textDineroAcumulado.setLayoutData(gridData4);
-        Button buttonImagenLaboratorio = new Button(compositeLaboratorio, SWT.PUSH);
-		buttonImagenLaboratorio.setImage(imagenLaboratorio);
+        buttonImagenLaboratorio = new Button(compositeLaboratorio, SWT.PUSH);
+		//buttonImagenLaboratorio.setImage(imagenLaboratorio);
 		buttonImagenLaboratorio.setSelection(true);
 		buttonImagenLaboratorio.setVisible(true);
 		buttonImagenLaboratorio.setLayoutData(gridData1);
 	}
+	
+	public void actualizarDatosLaboratorio(Display display, String nombreImagen, String tipoLabo, String dineroAcumulado) {
+    	textTipoLaboratorio.setText(tipoLabo);
+    	textDineroAcumulado.setText(dineroAcumulado);
+        Image imagenLaboratorio = new Image(display, RecursosAplicacion.instance().getResourceAsStream("images/" + nombreImagen));
+    	buttonImagenLaboratorio.setImage(imagenLaboratorio);
+    }
 
 }
