@@ -83,8 +83,11 @@ public class EspacioFabril {
         int x = transformarCoordenada(_x);
         int y = transformarCoordenada(_y);
 
-        return (obtenerCubiculo(x, y) != null)
-                && obtenerCubiculo(x, y).puedeSerComienzoDeCinta();
+        try {
+            return obtenerCubiculo(x, y).puedeSerComienzoDeCinta();
+        } catch (CubiculoVacioException e) {
+            return false;
+        }
     }
 
     public CintaTransportadora crearCinta(final int _x1, final int _y1, final int _x2, final int _y2)
@@ -94,31 +97,30 @@ public class EspacioFabril {
         int y1 = transformarCoordenada(_y1);
         int x2 = transformarCoordenada(_x2);
         int y2 = transformarCoordenada(_y2);
-        CubiculoFabril cubiculoInicial = obtenerCubiculo(x1, y1);
-        CubiculoFabril cubiculoFinal = obtenerCubiculo(x2, y2);
 
-        if ((cubiculoInicial == null) || (cubiculoFinal == null)) {
-            throw new CintaImposibleException();
-        }
-
-        CintaTransportadora nuevaCinta;
-        float longitud = (float) Math.sqrt((_x1 - _x2) * (_x1 - _x2) + (_y1 - _y2) * (_y1 - _y2));
         try {
-            nuevaCinta = getFabrica().conectarMaquina(cubiculoInicial.obtenerPrincipioDeCinta(), cubiculoFinal.obtenerFinDeCinta(), longitud);
+            CubiculoFabril cubiculoInicial = obtenerCubiculo(x1, y1);
+            CubiculoFabril cubiculoFinal = obtenerCubiculo(x2, y2);
+
+            float longitud = (float) Math.sqrt((_x1 - _x2) * (_x1 - _x2) + (_y1 - _y2) * (_y1 - _y2));
+            
+            CintaTransportadora nuevaCinta = getFabrica().conectarMaquina(
+                    cubiculoInicial.obtenerPrincipioDeCinta(), cubiculoFinal.obtenerFinDeCinta(), longitud);
+            
             cintas.put(nuevaCinta, new Integer[][] {{_x1, _y1}, {_x2, _y2}});
             cubiculoInicial.conectarCinta(nuevaCinta);
             cubiculoFinal.conectarCinta(nuevaCinta);
+            return nuevaCinta;
         } catch (CubiculoVacioException e) {
             throw new CintaImposibleException();
         }
-        return nuevaCinta;
     }
 
     public void borrarMaquina(final int _x, final int _y) throws CoordenadasIncorrectasException, CubiculoVacioException {
         int x = transformarCoordenada(_x);
         int y = transformarCoordenada(_y);
 
-        Maquina maquina = obtenerCubiculoOcupado(x, y).obtenerMaquina();
+        Maquina maquina = obtenerCubiculo(x, y).obtenerMaquina();
         getFabrica().venderMaquina(maquina);
         borrar(maquina, x, y);
     }
@@ -127,7 +129,7 @@ public class EspacioFabril {
         int x = transformarCoordenada(_x);
         int y = transformarCoordenada(_y);
 
-        Fuente fuente = obtenerCubiculoOcupado(x, y).obtenerFuente();
+        Fuente fuente = obtenerCubiculo(x, y).obtenerFuente();
         getFabrica().eliminarFuente(fuente);
         borrar(fuente, x, y);
     }
@@ -136,7 +138,7 @@ public class EspacioFabril {
         int x = transformarCoordenada(_x);
         int y = transformarCoordenada(_y);
 
-        Maquina maquina = obtenerCubiculoOcupado(x, y).obtenerMaquina();
+        Maquina maquina = obtenerCubiculo(x, y).obtenerMaquina();
         if (maquina.estaRota()) {
             getFabrica().repararMaquina(maquina);
         }
@@ -153,7 +155,7 @@ public class EspacioFabril {
         int xInicial = transformarCoordenada(_xInicial);
         int yInicial = transformarCoordenada(_yInicial);
 
-        Maquina maquina = obtenerCubiculoOcupado(xInicial, yInicial).obtenerMaquina();
+        Maquina maquina = obtenerCubiculo(xInicial, yInicial).obtenerMaquina();
         borrar(maquina, xInicial, yInicial);
         getFabrica().eliminarMaquina(maquina);
         getFabrica().agregarMaquina(maquina);
@@ -167,18 +169,22 @@ public class EspacioFabril {
     }
 
     public void redibujar() {
-        List<IFuente> dibujados = new ArrayList<IFuente>();
         GC gc = new GC(canvas);
         borrarCanvas(gc);
 
-        gc.drawRectangle(0, 0, limiteCanvas.width - LONGITUD_DEL_LADO, limiteCanvas.height - LONGITUD_DEL_LADO);
+        dibujanteDeFabricas.dibujarLimiteDeFabrica(gc);
 
+        dibujarFuentes();
+
+        dibujarCintas();
+    }
+
+    private void dibujarFuentes() {
+        List<IFuente> dibujados = new ArrayList<IFuente>();
+        
         for (int x = 0; x < ancho; x++) {
             for (int y = 0; y < alto; y++) {
                 try {
-                    if (obtenerCubiculo(x, y) == null) {
-                        continue;
-                    }
                     IFuente fuente = obtenerCubiculo(x, y).getFuente();
                     if (!dibujados.contains(fuente)) {
                         dibujados.add(fuente);
@@ -192,7 +198,9 @@ public class EspacioFabril {
                 }
             }
         }
+    }
 
+    private void dibujarCintas() {
         for (CintaTransportadora cinta : cintas.keySet()) {
             Integer[][] coordenadas = cintas.get(cinta);
             dibujanteDeFabricas.dibujarCinta(coordenadas[0][0], coordenadas[0][1], coordenadas[1][0], coordenadas[1][1]);
@@ -211,11 +219,8 @@ public class EspacioFabril {
 
     public boolean hayMaquinaEn(final int _x, final int _y) {
         try {
-            CubiculoFabril cubiculo = obtenerCubiculo(transformarCoordenada(_x), transformarCoordenada(_y));
-            if (cubiculo == null) {
-                return false;
-            }
-            cubiculo.obtenerMaquina();
+            obtenerCubiculo((transformarCoordenada(_x)), transformarCoordenada(_y))
+                    .obtenerMaquina();
         } catch (CubiculoVacioException e) {
             return false;
         } catch (CoordenadasIncorrectasException e) {
@@ -226,6 +231,10 @@ public class EspacioFabril {
 
     int transformarCoordenada(final int coordenada) {
         return coordenada / LONGITUD_DEL_LADO;
+    }
+
+    int antitransformarCoordenada(final int coordenada) {
+        return coordenada * LONGITUD_DEL_LADO;
     }
 
     protected Fabrica getFabrica() {
@@ -259,15 +268,15 @@ public class EspacioFabril {
     }
 
     private void borrar(IFuente fuente, int x, int y) {
-        borrarFuenteEn(fuente, x, y);
+        intentarBorrarFuenteEn(fuente, x, y);
         borrarFuenteAlrededorDe(fuente, x, y);
     }
 
     private void borrarFuenteAlrededorDe(final IFuente fuente, final int x, final int y) {
-        boolean borradoIzquierda = borrarFuenteEn(fuente, x - 1, y);
-        boolean borradoDerecha = borrarFuenteEn(fuente, x + 1, y);
-        boolean borradoArriba = borrarFuenteEn(fuente, x, y - 1);
-        boolean borradoAbajo = borrarFuenteEn(fuente, x, y + 1);
+        boolean borradoIzquierda = intentarBorrarFuenteEn(fuente, x - 1, y);
+        boolean borradoDerecha = intentarBorrarFuenteEn(fuente, x + 1, y);
+        boolean borradoArriba = intentarBorrarFuenteEn(fuente, x, y - 1);
+        boolean borradoAbajo = intentarBorrarFuenteEn(fuente, x, y + 1);
 
         if (borradoIzquierda) {
             borrarFuenteAlrededorDe(fuente, x - 1, y);
@@ -283,33 +292,35 @@ public class EspacioFabril {
         }
     }
 
-    private boolean borrarFuenteEn(final IFuente fuente, final int x, final int y) {
-        CubiculoFabril cubiculoFabril;
+    /**
+     * De haber un cubiculo en la posicion (x, y), y de tener
+     * asignada la fuente indicada, la borra.
+     *
+     * @param fuente Fuente a borrar
+     * @param x Coordenada x de la posicion del cubiculo apuntado
+     * @param y Coordenada y de la posicion del cubiculo apuntado
+     * @return Devuelve true si la fuente se encontraba en la posicion
+     * (x, y) y pudo ser borrada; false en caso contrario.
+     */
+    private boolean intentarBorrarFuenteEn(final IFuente fuente, final int x, final int y) {
         try {
-            cubiculoFabril = obtenerCubiculo(x, y);
-        } catch (CoordenadasIncorrectasException e) {
-            return false;
-        }
-        if ((cubiculoFabril != null) && cubiculoFabril.eliminar(fuente)) {
-            for (CintaTransportadora cinta : cubiculoFabril.obtenerCintas()) {
-                cintas.remove(cinta);
+            CubiculoFabril cubiculoFabril = obtenerCubiculo(x, y);
+            if (cubiculoFabril.eliminar(fuente)) {
+                for (CintaTransportadora cinta: cubiculoFabril.obtenerCintas()) {
+                    cintas.remove(cinta);
+                }
+                cubiculoFabril.eliminarCintasIncidentes();
+                return true;
             }
-            cubiculoFabril.eliminarCintasIncidentes();
-            return true;
-        }
+        } catch (CubiculoVacioException ignored) {
+        } catch (CoordenadasIncorrectasException ignored) { }
         return false;
     }
 
     private boolean estaDentroDelEspacio(final int x, final int y, final int ancho, final int alto) {
-        if ((x < 0) || (y < 0)) {
-            return false;
-        }
-        return !((transformarCoordenada(x + antitransformarCoordenada(ancho)) >= this.ancho)
-                || (transformarCoordenada(y + antitransformarCoordenada(alto)) >= this.alto));
-    }
-    
-    private int antitransformarCoordenada(final int coordenada) {
-        return coordenada * LONGITUD_DEL_LADO;
+        return (x >= 0) && (y >= 0)
+                && (transformarCoordenada(x + antitransformarCoordenada(ancho)) < this.ancho)
+                && (transformarCoordenada(y + antitransformarCoordenada(alto)) < this.alto);
     }
 
     private void ocupar(final IFuente fuente, final int _x, final int _y, final int ancho, final int alto) 
@@ -325,7 +336,7 @@ public class EspacioFabril {
     }
 
     private CubiculoFabril obtenerOCrearCubiculo(final int x, final int y) throws CoordenadasIncorrectasException {
-        CubiculoFabril cubiculo = obtenerCubiculo(x, y);
+        CubiculoFabril cubiculo = buscarCubiculo(x, y);
         if (cubiculo == null) {
             cubiculo = new CubiculoFabril();
             superficieFabril[x][y] = cubiculo;
@@ -333,21 +344,21 @@ public class EspacioFabril {
         return cubiculo;
     }
 
-    private CubiculoFabril obtenerCubiculo(final int x, final int y) throws CoordenadasIncorrectasException {
+    private CubiculoFabril buscarCubiculo(final int x, final int y) throws CoordenadasIncorrectasException {
         if ((x < 0) || (y < 0) || (x >= ancho) || (y >= alto)) {
             throw new CoordenadasIncorrectasException();
         }
         return superficieFabril[x][y];
     }
 
-    private CubiculoFabril obtenerCubiculoOcupado(int x, int y)
+    private CubiculoFabril obtenerCubiculo(int x, int y)
             throws CoordenadasIncorrectasException, CubiculoVacioException {
         
-        CubiculoFabril cubiculoClickeado = obtenerCubiculo(x, y);
-        if (cubiculoClickeado == null) {
+        CubiculoFabril cubiculo = buscarCubiculo(x, y);
+        if (cubiculo == null) {
             throw new CubiculoVacioException();
         }
-        return cubiculoClickeado;
+        return cubiculo;
     }
 
     private boolean estaOcupado(final int _x, final int _y, final int ancho, final int alto) throws CoordenadasIncorrectasException {
@@ -356,9 +367,11 @@ public class EspacioFabril {
 
         for (int offsetX = 0; offsetX <= ancho; offsetX++) {
             for (int offsetY = 0; offsetY <= alto; offsetY++) {
-                if ((obtenerCubiculo(x + offsetX, y + offsetY) != null)
-                        && obtenerCubiculo(x + offsetX, y + offsetY).estaOcupado()) {
-                    return true;
+                try {
+                    if (obtenerCubiculo(x + offsetX, y + offsetY).estaOcupado())
+                        return true;
+                } catch (CubiculoVacioException e) {
+                    // No esta ocupado, continua el bucle
                 }
             }
         }
