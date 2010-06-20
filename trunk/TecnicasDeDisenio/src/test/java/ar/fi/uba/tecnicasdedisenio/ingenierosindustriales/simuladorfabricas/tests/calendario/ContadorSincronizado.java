@@ -17,11 +17,15 @@ public class ContadorSincronizado implements Sincronizado {
 
     @Override
     public void notificar(final Evento evento) {
-        if (evento == Evento.COMIENZO_DE_DIA) {
-            notificacionesDiarias = getNotificacionesDiarias() + 1;
-            
-        } else if (evento == Evento.COMIENZO_DE_SEMANA) {
-            notificacionesSemanales = getNotificacionesSemanales() + 1;
+
+        switch (evento) {
+            case COMIENZO_DE_DIA:
+                notificacionesDiarias++;
+                break;
+
+            case COMIENZO_DE_SEMANA:
+                notificacionesSemanales++;
+                break;
         }
     }
 
