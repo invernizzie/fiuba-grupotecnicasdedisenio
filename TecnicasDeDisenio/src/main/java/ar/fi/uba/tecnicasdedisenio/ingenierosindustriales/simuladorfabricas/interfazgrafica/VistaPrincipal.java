@@ -40,8 +40,8 @@ public class VistaPrincipal implements Sincronizado, Observer {
 
 	private boolean actualizado = false;
 	private Shell shellPrincipal = null;
-	private Menu menuBar = null;
-    private Group groupJugador = null;
+	private MenuBar menuPrincipal = null;
+	private Group groupJugador = null;
 	private CTabFolder tabFolderFabrica = null;
     private Button buttonTimer = null;
     private Text textTime = null;
@@ -63,6 +63,16 @@ public class VistaPrincipal implements Sincronizado, Observer {
 	private Button buttonImagenLabo = null;
     private Display display = null;
 
+	public Shell getShellPrincipal() {
+		return shellPrincipal;
+	}
+
+
+	public void setShellPrincipal(Shell shellPrincipal) {
+		this.shellPrincipal = shellPrincipal;
+	}
+    
+    
     /**
 	 * Carga las distintas fabricas standard.
 	 */
@@ -178,95 +188,15 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
 		shellPrincipal = new Shell(SWT.V_SCROLL | SWT.SHELL_TRIM | SWT.H_SCROLL);
-		shellPrincipal.setText("TP Tecnicas de diseño");
+		shellPrincipal.setText("TP Tecnicas de diseno");
 		createGroupTiempo();
 		createTabFolderFabrica();
 		createGroupJugador();
 		shellPrincipal.setLayout(gridLayout);
 		shellPrincipal.setSize(new Point(DEFAULT_ANCHO, DEFAULT_ALTO));
-		createMenuBar();
-		shellPrincipal.setMenuBar(menuBar);
+		menuPrincipal = new MenuBar(this);
+		shellPrincipal.setMenuBar(menuPrincipal.getMenuBar());
 	}
-
-	private void createMenuBar() {
-		menuBar = new Menu(shellPrincipal, SWT.BAR);
-		menuBar.setEnabled(true);
-        MenuItem submenuItemJuego = crearSubmenu(menuBar, "Juego");
-        MenuItem submenuItemAyuda = crearSubmenu(menuBar, "Ayuda");
-        Menu submenuAyuda = new Menu(submenuItemAyuda);
-        MenuItem pushContenido = crearItemDeMenu(submenuAyuda, "Contenido");
-		@SuppressWarnings("unused")
-		MenuItem separatorAyuda = new MenuItem(submenuAyuda, SWT.SEPARATOR);
-        MenuItem pushAcercaDe = crearItemDeMenu(submenuAyuda, "Acerca de...");
-		submenuItemAyuda.setMenu(submenuAyuda);
-        Menu submenuJuego = new Menu(submenuItemJuego);
-		submenuJuego.setVisible(true);
-		submenuJuego.setEnabled(true);
-		submenuItemJuego.setMenu(submenuJuego);
-        MenuItem pushJuegoNuevo = crearItemDeMenu(submenuJuego, "Juego Nuevo");
-		pushJuegoNuevo.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(final SelectionEvent selectionEvent) {
-			}
-			public void widgetSelected(final SelectionEvent selectionEvent) {
-				System.out.println("widgetDefaultSelected()");
-				juegoNuevo();
-			}
-		});
-        MenuItem pushAbrir = crearItemDeMenu(submenuJuego, "Abrir");
-		pushAbrir.setEnabled(false);
-        MenuItem pushGuardar = crearItemDeMenu(submenuJuego, "Guardar");
-		pushGuardar.setEnabled(false);
-        MenuItem pushGuardarComo = crearItemDeMenu(submenuJuego, "Guardar Como");
-		pushGuardarComo.setEnabled(false);
-		new MenuItem(submenuJuego, SWT.SEPARATOR);
-        MenuItem pushSalir = crearItemDeMenu(submenuJuego, "Salir");
-		pushSalir.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(final SelectionEvent e) {
-				Calendario.instancia().detener();
-				shellPrincipal.close();
-			}
-			public void widgetDefaultSelected(final SelectionEvent e) {
-			}
-		});
-		pushContenido.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(final SelectionEvent e) {
-				 MessageBox messageBox = new MessageBox(shellPrincipal, SWT.OK | SWT.ICON_INFORMATION);
-				 String mensaje = "Contenido:\n";
-				 mensaje += "TP Tecnicas de Diseño 2010 - Simulador de Fábricas";
-				 messageBox.setMessage(mensaje);
-				 messageBox.open();
-			}
-			public void widgetDefaultSelected(SelectionEvent selectionEvent) {
-			}
-		});
-		pushAcercaDe.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(final SelectionEvent selectionEvent) {
-				 MessageBox messageBox = new MessageBox(shellPrincipal, SWT.OK | SWT.ICON_INFORMATION);
-				 String mensaje = "Creditos:\n";
-				 mensaje += "Esteban Invernizzi\n"; 
-				 mensaje += "Gustavo Meller\n"; 
-				 mensaje += "Santiago Risaro\n"; 
-				 mensaje += "Diego Garcia Jaime\n"; 
-				 messageBox.setMessage(mensaje);
-				 messageBox.open();
-			}
-			public void widgetDefaultSelected(final SelectionEvent selectionEvent) {
-			}
-		});
-
-	}
-
-    private MenuItem crearItemDeMenu(final Menu padre, final String texto) {
-        MenuItem itemDeMenu = new MenuItem(padre, SWT.PUSH);
-        itemDeMenu.setText(texto);
-        return itemDeMenu;
-    }
-
-    private MenuItem crearSubmenu(final Menu padre, final String texto) {
-        MenuItem submenu = new MenuItem(padre, SWT.CASCADE);
-        submenu.setText(texto);
-        return submenu;
-    }
 
 	/**
 	 * This method initializes groupTiempo
@@ -398,7 +328,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		tabFolderFabrica.setLayoutData(gridData);
 		createCanvasFabrica();
 		CTabItem tabItemFabrica = new CTabItem(tabFolderFabrica, SWT.NONE);
-		tabItemFabrica.setText("Fábrica");
+		tabItemFabrica.setText("Fabrica");
 		CTabItem tabItemLaboratorio = new CTabItem(tabFolderFabrica, SWT.NONE);
 		tabItemLaboratorio.setText("Laboratorio");
 		tabItemFabrica.setControl(areaFabrica.getCompositeControles());
@@ -419,7 +349,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		gridData6.horizontalAlignment = GridData.FILL;
 		
 		buttonAlquilar = new Button(groupJugador, SWT.NONE);
-		buttonAlquilar.setText("Alquilar Fábrica");
+		buttonAlquilar.setText("Alquilar Fabrica");
 		buttonAlquilar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
 				alquilar();
@@ -427,7 +357,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		});
 		
 		buttonComprar = new Button(groupJugador, SWT.NONE);
-		buttonComprar.setText("Comprar Fábrica");
+		buttonComprar.setText("Comprar Fabrica");
 		buttonComprar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
 				comprar();
@@ -435,7 +365,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
 		});
 		
 		buttonVender = new Button(groupJugador, SWT.NONE);
-		buttonVender.setText("Vender Fábrica");
+		buttonVender.setText("Vender Fabrica");
 		buttonVender.setEnabled(false);
 		buttonVender.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
@@ -477,7 +407,7 @@ public class VistaPrincipal implements Sincronizado, Observer {
     /**
      * Crea un juego nuevo.
      */
-	private void juegoNuevo() {
+	public void juegoNuevo() {
 		DialogoNuevaPartida partida = new DialogoNuevaPartida(this);
 		partida.hacerVisible();
 		System.out.println("Se Invoca la pantalla de Creacion");
