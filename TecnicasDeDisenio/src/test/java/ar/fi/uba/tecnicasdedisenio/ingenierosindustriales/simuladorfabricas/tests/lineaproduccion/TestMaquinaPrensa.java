@@ -41,7 +41,7 @@ public class TestMaquinaPrensa {
 		Producto productoPrensado = this.prensa.getSalida().obtenerProducto();
 		
 		Assert.assertEquals("El Producto no es un Producto prensado", "prensado", 
-				productoPrensado.getEstado());
+				productoPrensado.getTipoProducto());
 	}
 	
 	@Test

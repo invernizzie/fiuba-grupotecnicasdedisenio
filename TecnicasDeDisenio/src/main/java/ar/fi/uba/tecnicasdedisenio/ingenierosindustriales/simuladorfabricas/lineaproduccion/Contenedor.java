@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.EstadoProducto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 /**
@@ -44,7 +45,7 @@ public class Contenedor {
 		int cantidadDesecho = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (producto.getEstado().equals(Producto.DESECHO)) {
+			if (producto.getEstado() == EstadoProducto.DESECHO) {
 				cantidadDesecho++;
 			}
 		}
@@ -56,7 +57,7 @@ public class Contenedor {
 		int cantidadDefectuosos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (producto.getEstado().equals(Producto.DEFECTUOSO)) {
+			if (producto.getEstado() == EstadoProducto.DEFECTUOSO) {
 				cantidadDefectuosos++;
 			}
 		}
