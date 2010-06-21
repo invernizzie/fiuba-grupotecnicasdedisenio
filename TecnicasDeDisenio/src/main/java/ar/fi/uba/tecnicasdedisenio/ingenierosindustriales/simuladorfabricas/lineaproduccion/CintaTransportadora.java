@@ -52,42 +52,40 @@ public class CintaTransportadora {
 	}
 	
 	public void conectar(final Maquina origen, final Maquina destino) {
-		this.extremoInicial = origen.getSalida();
-		this.extremoFinal = destino.getEntrada();
+		actualizarExtremos(origen, destino);
 		
 		origen.setCintaSalida(this);
-		destino.addCintaEntrada(this);
-		
 		origen.setSiguiente(destino);
+		
+		destino.addCintaEntrada(this);
 		destino.addPrecedente(origen);
 		
 	}
 
 	public void conectar(final Fuente origen, final Maquina destino) {
-		this.extremoInicial = origen.getSalida();
-		this.extremoFinal = destino.getEntrada();
+		actualizarExtremos(origen, destino);
 		
 		origen.agregarCinta(this);
-		destino.addCintaEntrada(this);
 		
+		destino.addCintaEntrada(this);
 		destino.addMateriaPrima(origen.getTipoProducto());
 		destino.addFuente(origen);
 	}
 	
 	public void desconectar(final Maquina origen, final Maquina destino) {
-		this.extremoInicial = null;
-		this.extremoFinal = null;
+		resetExtremos();
 		
 		origen.setCintaSalida(null);
-		destino.removeCintaEntrada(this);
 		
+		destino.removeCintaEntrada(this);
 		destino.removePrecedente(origen);
 	}
 
 	public void desconectar(final Fuente origen, final Maquina destino) {
-		this.extremoInicial = null;
-		this.extremoFinal = null;
+		resetExtremos();
+		
 		origen.removerCinta(this);
+		
 		destino.removeMateriaPrima(origen.getTipoProducto());
 		destino.removeFuente(origen);
 		destino.removeCintaEntrada(this);
@@ -97,12 +95,27 @@ public class CintaTransportadora {
 		return COSTOXMETRO * longitud;
 	}
 
+	/**
+	 * Método de desambiguación entre los distintos tipos de fuente.
+	 * @param fuente
+	 * @param maquina
+	 */
 	public void desconectar(final IFuente fuente, final Maquina maquina) {
 		if (fuente instanceof Fuente) {
 			desconectar((Fuente) fuente, maquina);
         } else {
         	desconectar((Maquina) fuente, maquina);
         }
+	}
+
+	private void actualizarExtremos(final IFuente origen, final Maquina destino) {
+		this.extremoInicial = origen.getSalida();
+		this.extremoFinal = destino.getEntrada();
+	}
+	
+	private void resetExtremos() {
+		this.extremoInicial = null;
+		this.extremoFinal = null;
 	}
 	
 }

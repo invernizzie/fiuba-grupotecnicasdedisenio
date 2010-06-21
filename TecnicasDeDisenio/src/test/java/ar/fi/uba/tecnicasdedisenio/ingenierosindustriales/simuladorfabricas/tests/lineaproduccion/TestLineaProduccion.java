@@ -31,7 +31,7 @@ public class TestLineaProduccion {
 		jugador.setLaboratorio(new Laboratorio("Cocina", ""));
 		this.linea = new LineaProduccion(jugador);
 		this.fuenteTrigo = new Fuente("trigo", DEFAULT_CANTIDAD, 
-				new Producto("trigo", 0));
+				new Producto( "trigo", 0));
 		this.fuenteAgua = new Fuente("agua", DEFAULT_CANTIDAD,
 				new Producto("agua", 0));	
 		this.fuenteSal = new Fuente("agua", DEFAULT_CANTIDAD,
@@ -40,7 +40,7 @@ public class TestLineaProduccion {
 	}
 
 	@Test
-	public void testAgregarPrimeraMaquina() {
+	public void agregarUnaMaquinaAUnaLineaNuevaColocaEsaMaquinaComoPrimeraYUltimaDeLaLinea() {
 		Maquina maquina = new Prensa(0F, 0F);
 		cinta.conectar(fuenteTrigo, maquina);
 		linea.agregarMaquina(maquina);
@@ -55,7 +55,7 @@ public class TestLineaProduccion {
 	}
 	
 	@Test
-	public void testAgregarDosMaquinas() {
+	public void agregarDosMaquinasAUnaLineaNuevaColocaUnaComoPrimeraDeLaLineaLaOtraComoUltima() {
 		Maquina maquina = new Prensa(0F, 0F);
 		cinta.conectar(fuenteTrigo, maquina);
 		Maquina maquina2 = new Plancha(0F, 0F);
@@ -65,11 +65,6 @@ public class TestLineaProduccion {
 		linea.agregarMaquina(maquina);
 		linea.agregarMaquina(maquina2);
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina));
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina2));
-
 		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina));
 
@@ -78,7 +73,7 @@ public class TestLineaProduccion {
 	}
 	
 	@Test
-	public void testAgregarTresMaquinas() {
+	public void agregarTresMaquinasAUnaLineaNuevaColocaDosComoPrimeraDeLaLineaLaOtraComoUltima() {
 		CintaTransportadora cintaMaquinas = new CintaTransportadora(0);
 		CintaTransportadora cintaPrensaAgua = new CintaTransportadora(0);
 		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora(0);
@@ -95,14 +90,6 @@ public class TestLineaProduccion {
 		linea.agregarMaquina(maquina2);
 		linea.agregarMaquina(maquina3);
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina));
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina2));
-
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina3));
-		
 		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina));
 
@@ -115,60 +102,7 @@ public class TestLineaProduccion {
 	}
 	
 	@Test
-	public void testAgregarCuatroMaquinas() {
-		CintaTransportadora cintaMaquinas = new CintaTransportadora(0);
-		CintaTransportadora cintaPrensaAgua = new CintaTransportadora(0);
-		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora(0);
-		CintaTransportadora cintaMaquina2Maquina4 = new CintaTransportadora(0);
-		CintaTransportadora cintaSalMaquina4 = new CintaTransportadora(0);
-		
-		Maquina maquina = new Prensa(0F, 0F);
-		cinta.conectar(fuenteTrigo, maquina);
-		Maquina maquina2 = new Plancha(0F, 0F);
-		cintaMaquinas.conectar(maquina, maquina2);
-		Maquina maquina3 = new Prensa(0F, 0F);
-		cintaPrensaAgua.conectar(fuenteAgua, maquina3);
-		
-		cintaMaquina2Maquina3.conectar(maquina3, maquina2);
-		
-		Maquina maquina4 = new Prensa(0F, 0F);
-		cintaSalMaquina4.conectar(fuenteSal, maquina4);
-		cintaMaquina2Maquina4.conectar(maquina2, maquina4);
-		
-		linea.agregarMaquina(maquina);
-		linea.agregarMaquina(maquina2);
-		linea.agregarMaquina(maquina3);
-		linea.agregarMaquina(maquina4);
-		
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina));
-		
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina2));
-
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina3));
-		
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina4));
-		
-		Assert.assertTrue("La máquina insertada no es la primera",
-							linea.esPrimeraMaquina(maquina));
-
-		Assert.assertTrue("La máquina insertada no es la primera",
-							linea.esPrimeraMaquina(maquina3));
-		
-		Assert.assertFalse("La máquina insertada es la primera",
-							linea.esPrimeraMaquina(maquina4));
-		
-		Assert.assertEquals("La máquina insertada no es la última", maquina4,
-								linea.obtenerUltimaMaquina());
-		
-	}
-	
-	
-	@Test
-	public void testAgregarCuatroMaquinasDesordenadas() {
+	public void agregarCuatroMaquinasDesordenadasNoAfectaElOrdenFinalDeLaLinea() {
 		CintaTransportadora cintaMaquinas = new CintaTransportadora(0);
 		CintaTransportadora cintaPrensaAgua = new CintaTransportadora(0);
 		CintaTransportadora cintaMaquina2Maquina3 = new CintaTransportadora(0);
@@ -193,18 +127,6 @@ public class TestLineaProduccion {
 		linea.agregarMaquina(maquina2);
 		linea.agregarMaquina(maquina);
 		
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina));
-		
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina2));
-
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina3));
-		
-		Assert.assertTrue("Se esperaba que la linea tuviera una máquina",
-							this.linea.contieneMaquina(maquina4));
-		
 		Assert.assertTrue("La máquina insertada no es la primera",
 							linea.esPrimeraMaquina(maquina));
 
@@ -221,7 +143,7 @@ public class TestLineaProduccion {
 	
 	
 	@Test
-	public void testCostoLineaUnaMaquina() {
+	public void agregarUnaMaquinaALaLineaYVerificarQueSuCostoSeaELDeLaMaquina() {
 		Maquina maquina = new Prensa(0F, 0F);
 		linea.agregarMaquina(maquina);
 
@@ -230,7 +152,7 @@ public class TestLineaProduccion {
 	}
 	
 	@Test
-	public void testCostoLineaDosMaquinas() {
+	public void agregarDosMaquinasALaLineaYVerificarQueSuCostoSeaELDeLaSumaDeLasdosMaquinas() {
 		Maquina maquina = new Prensa(0F, 0F);
 		Maquina maquina2 = new Plancha(0F, 0F);
 		linea.agregarMaquina(maquina);
