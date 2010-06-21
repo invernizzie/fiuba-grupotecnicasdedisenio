@@ -99,11 +99,14 @@ public class Fabrica implements Sincronizado {
 
 
 	public CintaTransportadora conectarMaquina(final Fuente fuente, final Maquina maquina, final float longitud) {
-		if (!maquinas.contains(maquina)) {
-			this.comprarMaquina(maquina);
-		}
-		CintaTransportadora cinta = new CintaTransportadora(longitud);
-		cinta.conectar(fuente, maquina);
+		adquirirMaquina(maquina);
+		CintaTransportadora cinta = crearCintaTransportadora(fuente, maquina, longitud);
+		actualizarLineas(maquina);
+		
+		return cinta;
+	}
+
+	private void actualizarLineas(final Maquina maquina) {
 		boolean maquinaEnLinea = false;
 		for (LineaProduccion linea : lineas) {
 			if (linea.contieneMaquina(maquina)) {
@@ -116,8 +119,20 @@ public class Fabrica implements Sincronizado {
 			linea.agregarMaquina(maquina);
 			agregarLinea(linea);
 		}
+	}
+
+	private CintaTransportadora crearCintaTransportadora(final IFuente fuente,
+			final Maquina maquina, final float longitud) {
+		CintaTransportadora cinta = new CintaTransportadora(longitud);
+		cinta.conectar(fuente, maquina);
 		this.getJugador().disminuirDinero(cinta.getCostoConectar());
 		return cinta;
+	}
+
+	private void adquirirMaquina(final Maquina maquina) {
+		if (!maquinas.contains(maquina)) {
+			this.comprarMaquina(maquina);
+		}
 	}
 
 	/**
@@ -127,15 +142,15 @@ public class Fabrica implements Sincronizado {
 	 * @param destino
 	 */
 	public CintaTransportadora conectarMaquina(final Maquina origen, final Maquina destino, final float longitud) {
-		if (!maquinas.contains(origen)) {
-			this.comprarMaquina(origen);
-		}
-		if (!maquinas.contains(destino)) {
-			this.comprarMaquina(destino);
-		}
+		adquirirMaquina(origen);
+		adquirirMaquina(destino);
 		
-		CintaTransportadora cinta = new CintaTransportadora(longitud);
-		cinta.conectar(origen, destino);
+		CintaTransportadora cinta = crearCintaTransportadora(origen, destino, longitud);
+		actualizarLineas(origen, destino);
+		return cinta;
+	}
+
+	private void actualizarLineas(final Maquina origen, final Maquina destino) {
 		/*
 		 * Si una linea contiene alguna de las máquinas agrego la otra a esa linea.
 		 */
@@ -166,8 +181,6 @@ public class Fabrica implements Sincronizado {
 			linea.agregarMaquina(destino);
 			agregarLinea(linea);
 		}
-		this.getJugador().disminuirDinero(cinta.getCostoConectar());
-		return cinta;
 	}
 	
 	public void desconectar(){

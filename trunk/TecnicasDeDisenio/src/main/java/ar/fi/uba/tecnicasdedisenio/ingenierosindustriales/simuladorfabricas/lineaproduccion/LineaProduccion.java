@@ -54,20 +54,28 @@ public class LineaProduccion {
 		for (Maquina maquina : getMaquinas()) {
 			maquina.setConectadaAContenedor(false);
 			if (esPrimeraMaquina(maquina)) {
-				this.primerasMaquinas.add(maquina);
+				actualizarPrimeraMaquina(maquina);
 			}
 			
 			if (esUltimaMaquina(maquina)) {
-				ultimaMaquina = maquina;
-				this.contenedor = new Contenedor(maquina.getTipoProducto());
-				CintaTransportadora cinta = new CintaTransportadora(new Salida(), new Entrada());
-				this.contenedor.agregarCinta(cinta);
-				ultimaMaquina.setCintaSalida(cinta);
-				maquina.setConectadaAContenedor(true);
+				actualizarUltimaMaquina(maquina);
 			}
 		}
 		/*Si no hay ultima maquina entonces es un ciclo.*/
         setCiclo(ultimaMaquina == null);
+	}
+
+	private void actualizarPrimeraMaquina(Maquina maquina) {
+		this.primerasMaquinas.add(maquina);
+	}
+
+	private void actualizarUltimaMaquina(Maquina maquina) {
+		ultimaMaquina = maquina;
+		this.contenedor = new Contenedor(maquina.getTipoProducto());
+		CintaTransportadora cinta = new CintaTransportadora(new Salida(), new Entrada());
+		this.contenedor.agregarCinta(cinta);
+		ultimaMaquina.setCintaSalida(cinta);
+		maquina.setConectadaAContenedor(true);
 	}
 
 	public boolean contieneMaquina(final Maquina maquina) {
@@ -119,37 +127,18 @@ public class LineaProduccion {
 		
 		Set<Maquina> siguientes = new HashSet<Maquina>();
 		
-		Boolean productoValido;
-		
 		for (Maquina maquina : maquinasActuales) {
 			try {
 				
-				if (!maquina.getFuentes().isEmpty()) {
-					for (Fuente fuente : maquina.getFuentes()) {
-						Float precioCompra = fuente.getTipoProducto().getPrecioCompra();
-						this.jugador.disminuirDinero(precioCompra);
-					}
-				}
+				consumirMateriasPrimas(maquina);
+				
+				Producto productoObtenido = maquina.procesar
+												((!this.esUltimaMaquina(maquina) 
+														|| this.construyeProductoValido()));
+				
+				actualizarSiguientes(siguientes, maquina);
 
-                productoValido = !this.esUltimaMaquina(maquina) || this.construyeProductoValido();
-				
-				Producto productoObtenido = maquina.procesar(productoValido);
-				
-				
-				if (maquina.getSiguiente() != null) {
-					siguientes.add(maquina.getSiguiente());
-				}
-
-				if (this.esUltimaMaquina(maquina)) {
-					// Si se terminó la linea guardamos el producto en el contenedor
-					this.getContenedor().recibirProducto(productoObtenido, CANTIDAD_PRODUCIDA_FIJA);
-					// Y seteamos la siguiente máquina en null para que vuelva a procesar desde el principio
-					siguientes = null;
-					
-					Float ganancia = this.getContenedor().calcularGanancia();
-					this.jugador.aumentarDinero(ganancia);
-					this.contenedor.vaciar();
-				}
+				siguientes = almacenarProducto(siguientes, maquina, productoObtenido);
 				
 			} catch (EntradaInvalidaException e) {
 				throw new ProcesamientoException("No se pudo realizar el proceso", e);
@@ -157,6 +146,36 @@ public class LineaProduccion {
 		}
 		
 		this.maquinasActuales = siguientes;
+	}
+
+	private Set<Maquina> almacenarProducto(Set<Maquina> siguientes,
+			Maquina maquina, Producto productoObtenido) {
+		if (this.esUltimaMaquina(maquina)) {
+			// Si se terminó la linea guardamos el producto en el contenedor
+			this.getContenedor().recibirProducto(productoObtenido, CANTIDAD_PRODUCIDA_FIJA);
+			// Y seteamos la siguiente máquina en null para que vuelva a procesar desde el principio
+			siguientes = null;
+			
+			Float ganancia = this.getContenedor().calcularGanancia();
+			this.jugador.aumentarDinero(ganancia);
+			this.contenedor.vaciar();
+		}
+		return siguientes;
+	}
+
+	private void actualizarSiguientes(Set<Maquina> siguientes, Maquina maquina) {
+		if (maquina.getSiguiente() != null) {
+			siguientes.add(maquina.getSiguiente());
+		}
+	}
+
+	private void consumirMateriasPrimas(Maquina maquina) {
+		if (!maquina.getFuentes().isEmpty()) {
+			for (Fuente fuente : maquina.getFuentes()) {
+				Float precioCompra = fuente.getTipoProducto().getPrecioCompra();
+				this.jugador.disminuirDinero(precioCompra);
+			}
+		}
 	}
 
 	public void setCostoLinea(final Float costoLinea) {

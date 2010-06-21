@@ -79,7 +79,7 @@ public abstract class TipoMaquina {
 	}
 	
 	public boolean equals(final Maquina maquina){
-		
+		Boolean iguales = false;
 		/*Se copian las listas a auxiliares para poder trabajar mejor.*/
 		List<Producto> listMatPrimasAux = new ArrayList<Producto>(maquina.getMateriasPrimas());
 		List<Maquina> listPrecedentesAux = new ArrayList<Maquina>(maquina.getPrecedentes());
@@ -88,21 +88,12 @@ public abstract class TipoMaquina {
 			try{
 				this.verificarMismasMateriasPrimas(listMatPrimasAux);
 				this.verificarMismosPrecedencias(listPrecedentesAux);
+				iguales = true;
+			} catch(MateriaPrimaDistintaException e){
+			} catch(PrecedentesDistintosException e){
 			}
-			catch(MateriaPrimaDistintaException e){
-				return false;
-
-			}
-			catch(PrecedentesDistintosException e){
-				return false;
-
-			}
-			return true;
 		}
-		else{
-			return false;
-		}
-			
+		return iguales;
 	}
 	
 	public void verificarMismasMateriasPrimas(List<Producto> matPrimas) throws MateriaPrimaDistintaException{
