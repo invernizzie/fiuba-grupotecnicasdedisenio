@@ -1,7 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 /**
  * Maquina ({@link Maquina}) encargada de mezclar.
@@ -24,12 +23,12 @@ public class Mezcladora extends Maquina {
 
 	@Override
 	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(), "Mezclado", 0);
+		return new Producto("mezclado", 0);
 	}
 	
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(), "Mezclado", this.getTasaDeFallos());
+		return new Producto("mezclado", this.getTasaDeFallos());
 	}
 
 	/**

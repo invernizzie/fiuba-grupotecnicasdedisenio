@@ -14,7 +14,6 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Plancha;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Prensa;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class TestLineaProduccion {
 
@@ -32,11 +31,11 @@ public class TestLineaProduccion {
 		jugador.setLaboratorio(new Laboratorio("Cocina", ""));
 		this.linea = new LineaProduccion(jugador);
 		this.fuenteTrigo = new Fuente("trigo", DEFAULT_CANTIDAD, 
-				new Producto(ValidadorProductos.instancia(), "trigo", 0));
+				new Producto("trigo", 0));
 		this.fuenteAgua = new Fuente("agua", DEFAULT_CANTIDAD,
-				new Producto(ValidadorProductos.instancia(), "agua", 0));	
+				new Producto("agua", 0));	
 		this.fuenteSal = new Fuente("agua", DEFAULT_CANTIDAD,
-				new Producto(ValidadorProductos.instancia(), "sal", 0));
+				new Producto("sal", 0));
 		this.cinta = new CintaTransportadora(0);
 	}
 

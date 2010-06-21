@@ -12,16 +12,13 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Prensa;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class TestMaquinaPrensa {
 	
 	private Maquina prensa;
-	private ValidadorProductos val;
 
 	@Before
 	public void setUp() throws Exception {
-		val = ValidadorProductos.instancia();
 		prensa = new Prensa(0F, 0F);
 		prensa.setCintaSalida(new CintaTransportadora(prensa.getSalida(), new Entrada()));
 	}
@@ -32,7 +29,7 @@ public class TestMaquinaPrensa {
 
 	@Test
 	public void testProcesar() {
-		Producto productoAPrensar = new Producto(val, "Pan", 0F);
+		Producto productoAPrensar = new Producto("Pan", 0F);
 		this.prensa.getEntrada().agregarProducto(productoAPrensar);
 		
 		try {
@@ -49,8 +46,8 @@ public class TestMaquinaPrensa {
 	
 	@Test
 	public void testEntradaInvalida() {
-		Producto productoAPrensar1 = new Producto(val, "Pan", 0F);
-		Producto productoAPrensar2 = new Producto(val, "Pan", 0F);
+		Producto productoAPrensar1 = new Producto("Pan", 0F);
+		Producto productoAPrensar2 = new Producto("Pan", 0F);
 		this.prensa.getEntrada().agregarProducto(productoAPrensar1);
 		this.prensa.getEntrada().agregarProducto(productoAPrensar2);
 		
@@ -65,8 +62,8 @@ public class TestMaquinaPrensa {
 	
 	@Test
 	public void testCrearProductoInvalido() {
-		Producto productoAPrensar = new Producto(val, "Pan", 0F);
-		Producto productoTest = new Producto(val, "Desecho", 0F);
+		Producto productoAPrensar = new Producto("Pan", 0F);
+		Producto productoTest = new Producto("Desecho", 0F);
 		this.prensa.getEntrada().agregarProducto(productoAPrensar);
 		
 		try {

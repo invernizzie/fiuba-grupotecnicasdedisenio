@@ -94,7 +94,7 @@ public class AreaFabrica {
         constructorDeFabricas.setInstalador(
                 new InstaladorDeFuentes(
                         espacioFabril,
-                        new Producto(validadorProd, comboMP.getText(), 0F), comboMP.getText()));
+                        new Producto(comboMP.getText(), 0F), comboMP.getText()));
     }
 
     private void elegirMaquina() {
