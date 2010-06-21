@@ -11,6 +11,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Entrada;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.IEntrada;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.IFuente;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.ISalida;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Plancha;
@@ -32,7 +33,7 @@ public class TestCintaTransporte {
 	}
 
 	@Test
-	public void testAsignarProducto() {
+	public void asignarProductoAlExtremoInicialLoDejaEnElExtremoInicial() {
 		Producto testProduct = new Producto("Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct);
 		
@@ -46,7 +47,7 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testTrasladarProducto() {
+	public void trasladarProductoSacaLoSacaDelExtremoInicialYLoPoneEnElFinal() {
 		Producto testProduct = new Producto("Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct);
 		
@@ -63,25 +64,28 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testAsignarProductos() {
+	public void asignarDosProductosEnElExtremoInicialDejaDosProductosEnEl() {
 		Producto testProduct1 = new Producto("Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct1);
 		
-		Assert.assertSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct1);
+		Assert.assertSame("Se esperaba el ultimo Producto asignado", 
+							this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct1);
 		
 		Producto testProduct2 = new Producto("Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct2);
 		
-		Assert.assertNotSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct1);
-		Assert.assertSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct2);
+		Assert.assertNotSame("Se esperaba el ultimo Producto asignado", 
+								this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct1);
+		Assert.assertSame("Se esperaba el ultimo Producto asignado", 
+								this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct2);
 		
 	}
 	
 	@Test
-	public void testConectarMaquina() {
+	public void crearDosMaquinasYConectarlasMedianteUnaCintaHabilitaElTrasladoEntreLasMaquinas() {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
-		Producto testProduct = new Producto("Pan", 0F);
+		Producto testProduct = new Producto( "Pan", 0F);
 		
 		this.cintaTransportadora.conectar(prensa, plancha);
 		
@@ -97,7 +101,7 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testConectarMaquinas() {
+	public void conectarDosMaquinasAUnaTerceraLasSeteaComoPrecedentesDeLaTercera() {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		Maquina plancha2 = new Plancha(0F, 0F);
@@ -117,7 +121,7 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testPrecedente() {
+	public void conectarUnaMaquinaAOtraLaSeteaComoPrecedente() {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
@@ -131,13 +135,13 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testDesconectar() {
+	public void alDesconectarDosMaquinasDejanDeEstarConectadas() {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
 		
 		this.cintaTransportadora.conectar(prensa, plancha);
 		
-		this.cintaTransportadora.desconectar(prensa, plancha);
+		this.cintaTransportadora.desconectar((IFuente)prensa, plancha);
 		
 		Assert.assertEquals("La plancha tiene al menos un precedente", 
 								0, plancha.getPrecedentes().size());
@@ -147,8 +151,8 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testConectarMaquinaFuente() {
-		Producto testProduct = new Producto("Pan", 0F);
+	public void conectarUnaFuenteAUnaMaquinaPermiteTrasladarLosProductosDeLaFuenteALaMaquina() {
+		Producto testProduct = new Producto( "Pan", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		
@@ -164,8 +168,8 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testMateriaPrima() {
-		Producto testProduct = new Producto("Pan", 0F);
+	public void conectarUnaFuenteAUnaMaquinaAgregaLaFuenteAlListadoDeMateriasPrimas() {
+		Producto testProduct = new Producto( "Pan", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		
@@ -179,9 +183,9 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testMateriasPrimas() {
-		Producto testProduct = new Producto("Pan", 0F);
-		Producto testProduct2 = new Producto("trigo", 0F);
+	public void conectarDosFuentesAUnaMaquinaAgregaLasFuentesAlListadoDeMateriasPrimas() {
+		Producto testProduct = new Producto( "Pan", 0F);
+		Producto testProduct2 = new Producto( "trigo", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		Fuente fuente2 = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct2);
@@ -200,14 +204,14 @@ public class TestCintaTransporte {
 	}
 	
 	@Test
-	public void testDesconectarFuente() {
-		Producto testProduct = new Producto("Pan", 0F);
+	public void desconectarUnaFuenteLaEliminaDeLaListaDeMateriasPrimas() {
+		Producto testProduct = new Producto( "Pan", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		
 		this.cintaTransportadora.conectar(fuente, prensa);
 		
-		this.cintaTransportadora.desconectar(fuente, prensa);
+		this.cintaTransportadora.desconectar((IFuente)fuente, prensa);
 		
 		Assert.assertEquals("La plancha tiene al menos una materia prima", 
 								0, prensa.getMateriasPrimas().size());

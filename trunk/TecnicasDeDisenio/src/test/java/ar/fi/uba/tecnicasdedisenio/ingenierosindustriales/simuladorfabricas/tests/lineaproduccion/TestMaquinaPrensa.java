@@ -11,6 +11,7 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Prensa;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.EstadoProducto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 public class TestMaquinaPrensa {
@@ -28,7 +29,7 @@ public class TestMaquinaPrensa {
 	}
 
 	@Test
-	public void testProcesar() {
+	public void procesarProductoValidoParaPrensaGeneraProductoPrensado() {
 		Producto productoAPrensar = new Producto("Pan", 0F);
 		this.prensa.getEntrada().agregarProducto(productoAPrensar);
 		
@@ -45,7 +46,7 @@ public class TestMaquinaPrensa {
 	}
 	
 	@Test
-	public void testEntradaInvalida() {
+	public void procesarDosProductosEnLaPrensaGeneraExcepecionDeEntradaInvalida() {
 		Producto productoAPrensar1 = new Producto("Pan", 0F);
 		Producto productoAPrensar2 = new Producto("Pan", 0F);
 		this.prensa.getEntrada().agregarProducto(productoAPrensar1);
@@ -61,16 +62,16 @@ public class TestMaquinaPrensa {
 	}
 	
 	@Test
-	public void testCrearProductoInvalido() {
+	public void realizarProcesoNoValidadoPorElLaboratorioProduceDesecho() {
 		Producto productoAPrensar = new Producto("Pan", 0F);
-		Producto productoTest = new Producto("Desecho", 0F);
+		Producto productoTest = new Producto(EstadoProducto.DESECHO);
 		this.prensa.getEntrada().agregarProducto(productoAPrensar);
 		
 		try {
 			this.prensa.procesar(false);
 			Producto obtenido = this.prensa.getSalida().obtenerProducto();
 			Assert.assertEquals("Se esperaba un desecho", 
-					productoTest, obtenido);
+					productoTest.getEstado(), obtenido.getEstado());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("No se esperaba una excepción");

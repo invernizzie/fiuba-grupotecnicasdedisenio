@@ -2,6 +2,7 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lin
 
 import java.util.List;
 
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.EstadoProducto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 public class ControlCalidad extends Maquina {
@@ -43,8 +44,8 @@ public class ControlCalidad extends Maquina {
 	protected Producto realizarProceso() {
 		Producto salida = this.getProductos().get(0); 
 		
-		if (salida.getEstado().equals("Defectuoso")) {
-			salida = new Producto("Desecho", 0);
+		if (salida.getEstado().equals(EstadoProducto.DEFECTUOSO)) {
+			salida = new Producto(EstadoProducto.DESECHO);
 		}
 		
 		return salida;

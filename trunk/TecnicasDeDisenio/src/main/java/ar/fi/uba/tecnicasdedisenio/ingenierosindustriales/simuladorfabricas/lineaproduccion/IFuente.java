@@ -5,4 +5,5 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lin
  *         Date: 12/06/2010
  */
 public interface IFuente {
+	ISalida getSalida();
 }

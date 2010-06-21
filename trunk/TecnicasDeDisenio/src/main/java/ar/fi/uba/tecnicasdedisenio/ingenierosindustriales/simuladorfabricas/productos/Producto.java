@@ -10,6 +10,10 @@ public class Producto implements Cloneable {
 	
 	private EstadoProducto estado = null;
 	
+	public Producto(EstadoProducto estado){
+		this.estado = estado;
+	}
+	
 	public EstadoProducto getEstado() {
 		return estado;
 	}
@@ -44,9 +48,6 @@ public class Producto implements Cloneable {
 		}
 	}
 
-    @Deprecated
-    public Producto() { }
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

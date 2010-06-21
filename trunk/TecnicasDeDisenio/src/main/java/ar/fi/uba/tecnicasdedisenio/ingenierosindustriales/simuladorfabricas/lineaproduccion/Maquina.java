@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.EstadoProducto;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
 
 
@@ -70,18 +71,9 @@ public abstract class Maquina implements Cloneable, IFuente  {
 		if (!this.estaRota) {
 			obtenerProductosEntrada();
 			
-			//Boolean isEntradaValida =;
-			
 			if ( this.validarEntrada()) {
-				if (construirProductoValido) {
-					elementoProcesado = this.realizarProceso();
-				} else {
-					elementoProcesado = new Producto("Desecho", 0F);
-				}
-				this.getProductos().clear();
-				this.getEntrada().getProdcutos().clear();
-				this.getSalida().asignarProducto(elementoProcesado);
-				this.cintaSalida.trasladarElementos();
+				elementoProcesado = producir(construirProductoValido);
+				colocarProductosEnSalida(elementoProcesado);
 				this.verificarRotura();
 			} else {
 				throw new EntradaInvalidaException("Los elementos que ingresaron"
@@ -89,7 +81,36 @@ public abstract class Maquina implements Cloneable, IFuente  {
 													+ "para que esta máquina opere");
 			}
 		} else {
-			elementoProcesado = new Producto("Desecho", 0F);
+			elementoProcesado = new Producto(EstadoProducto.DESECHO);
+		}
+		return elementoProcesado;
+	}
+
+	/**
+	 * Limpia la entrada de la máquina y coloca el producto terminado en la salida.
+	 * @param elementoProcesado
+	 */
+	private void colocarProductosEnSalida(Producto elementoProcesado) {
+		this.getProductos().clear();
+		this.getEntrada().getProdcutos().clear();
+		this.getSalida().asignarProducto(elementoProcesado);
+		this.cintaSalida.trasladarElementos();
+	}
+
+	/**
+	 * Realiza el procesamineto de la entrada si es que se debe construir un producto
+	 * autorizado por el laboratorio, si el producto no es válido (no es reconocido por 
+	 * el laboratorio) genera un desecho.
+	 * 
+	 * @param construirProductoValido indica si el producto es conocido por el laboratorio.
+	 * @return
+	 */
+	private Producto producir(final Boolean construirProductoValido) {
+		Producto elementoProcesado;
+		if (construirProductoValido) {
+			elementoProcesado = this.realizarProceso();
+		} else {
+			elementoProcesado = new Producto(EstadoProducto.DESECHO);
 		}
 		return elementoProcesado;
 	}
