@@ -28,7 +28,7 @@ public class TestValidadorProductos {
 	@Test
 	public void testNoEncontrarProducto() {
 		Assert.assertEquals(false, val.existe("remera"));
-		//System.out.print("Se encontro el producto buscado\n");
+		//System.out.print("No se encontro el producto buscado\n");
 	}
 	
 	@Test
