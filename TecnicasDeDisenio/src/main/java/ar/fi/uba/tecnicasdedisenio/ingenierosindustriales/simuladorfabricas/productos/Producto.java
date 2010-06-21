@@ -6,23 +6,15 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.pro
  * @author Diego
  *
  */
-
-
 public class Producto implements Cloneable {
-	public static final int DESECHO = 0;
-	public static final int DEFECTUOSO = 1;
-	public static final int PRODUCTO_OK = 2;
 	
-	public enum Estado {DESECHO,DEFECTUOSO, PRODUCTO_OK};
+	private EstadoProducto estado = null;
 	
-	private Estado estado = null;
-	
-	
-	public Estado getEstado() {
+	public EstadoProducto getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Estado estado) {
+	public void setEstado(EstadoProducto estado) {
 		this.estado = estado;
 	}
 
@@ -33,7 +25,7 @@ public class Producto implements Cloneable {
 	}
 
 	public void setTipoProducto(final String tipo) {
-		if (!this.estado.equals(DEFECTUOSO) || !this.estado.equals(DESECHO)) {
+		if ((this.estado != EstadoProducto.DEFECTUOSO) && (this.estado != EstadoProducto.DESECHO)) {
 			this.tipoProducto = tipo;
         }
 	}
@@ -43,12 +35,12 @@ public class Producto implements Cloneable {
 			double proba = Math.random();
 			if (tasa_falla < proba) {
 				this.tipoProducto = tipo;
-				estado = Estado.PRODUCTO_OK;
+				estado = EstadoProducto.CORRECTO;
 			} else {
-				estado = Estado.DEFECTUOSO;
+				estado = EstadoProducto.DEFECTUOSO;
 			}
 		} else {
-			estado = Estado.DESECHO;
+			estado = EstadoProducto.DESECHO;
 		}
 	}
 
