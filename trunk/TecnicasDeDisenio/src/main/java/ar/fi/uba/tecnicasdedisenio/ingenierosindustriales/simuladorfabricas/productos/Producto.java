@@ -6,30 +6,49 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.pro
  * @author Diego
  *
  */
-public class Producto implements Cloneable {
-	private String estado;
 
-	public String getEstado() {
+
+public class Producto implements Cloneable {
+	public static final int DESECHO = 0;
+	public static final int DEFECTUOSO = 1;
+	public static final int PRODUCTO_OK = 2;
+	
+	public enum Estado {DESECHO,DEFECTUOSO, PRODUCTO_OK};
+	
+	private Estado estado = null;
+	
+	
+	public Estado getEstado() {
 		return estado;
 	}
 
-	public void setEstado(final String estado) {
-		if (!this.estado.equals("Defectuoso") || !this.estado.equals("Desecho")) {
-			this.estado = estado;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	private String tipoProducto;
+
+	public String getTipoProducto() {
+		return tipoProducto;
+	}
+
+	public void setTipoProducto(final String tipo) {
+		if (!this.estado.equals(DEFECTUOSO) || !this.estado.equals(DESECHO)) {
+			this.tipoProducto = tipo;
         }
 	}
 
-	public Producto(final String estado, final double tasa_falla) {
-		super();
-		if (ValidadorProductos.instancia().existe(estado)) {
+	public Producto(final String tipo, final double tasa_falla) {
+		if (ValidadorProductos.instancia().existe(tipo)) {
 			double proba = Math.random();
 			if (tasa_falla < proba) {
-				this.estado = estado;
+				this.tipoProducto = tipo;
+				estado = Estado.PRODUCTO_OK;
 			} else {
-				this.estado = "Defectuoso";
+				estado = Estado.DEFECTUOSO;
 			}
 		} else {
-			this.estado = "Desecho";
+			estado = Estado.DESECHO;
 		}
 	}
 
@@ -40,7 +59,7 @@ public class Producto implements Cloneable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
+		result = prime * result + ((tipoProducto == null) ? 0 : tipoProducto.hashCode());
 		return result;
 	}
 
@@ -53,24 +72,24 @@ public class Producto implements Cloneable {
 			return false;
         }
 		Producto other = (Producto) obj;
-		if (estado == null) {
-			if (other.estado != null) {
+		if (tipoProducto == null) {
+			if (other.tipoProducto != null) {
 				return false;
             }
-		} else if (!estado.equals(other.estado))
+		} else if (!tipoProducto.equals(other.tipoProducto))
 			return false;
 		return true;
 	}
 
 	public Producto clone() {
-		return new Producto(estado, 0F);
+		return new Producto(tipoProducto, 0F);
 	}
 
 	public Float getPrecioMercado() {
-		return ValidadorProductos.instancia().obtenerPrecioMercado(this.estado);
+		return ValidadorProductos.instancia().obtenerPrecioMercado(this.tipoProducto);
 	}
 
 	public Float getPrecioCompra() {
-		return ValidadorProductos.instancia().obtenerPrecioCompra(this.estado);		
+		return ValidadorProductos.instancia().obtenerPrecioCompra(this.tipoProducto);		
 	}
 }

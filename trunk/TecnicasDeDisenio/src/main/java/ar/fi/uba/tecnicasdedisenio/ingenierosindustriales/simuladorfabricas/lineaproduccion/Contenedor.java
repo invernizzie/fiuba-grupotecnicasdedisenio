@@ -44,7 +44,7 @@ public class Contenedor {
 		int cantidadDesecho = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (producto.getEstado().equalsIgnoreCase("Desecho")) {
+			if (producto.getEstado().equals(Producto.DESECHO)) {
 				cantidadDesecho++;
 			}
 		}
@@ -56,7 +56,7 @@ public class Contenedor {
 		int cantidadDefectuosos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (producto.getEstado().equalsIgnoreCase("Defectuoso")) {
+			if (producto.getEstado().equals(Producto.DEFECTUOSO)) {
 				cantidadDefectuosos++;
 			}
 		}
@@ -68,7 +68,7 @@ public class Contenedor {
 		int cantidadValidos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (producto.getEstado().equalsIgnoreCase(this.producto.getEstado())) {
+			if (producto.getEstado().equals(this.producto.getEstado())) {
 				cantidadValidos++;
 			}
 		}
@@ -80,7 +80,7 @@ public class Contenedor {
 		int cantidadInvalidos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (!producto.getEstado().equalsIgnoreCase(this.producto.getEstado())) {
+			if (!producto.getEstado().equals(this.producto.getEstado())) {
 				cantidadInvalidos++;
 			}
 		}

@@ -23,12 +23,18 @@ public class TestProductos {
 	
 	@Test
 	public void testCrearProducto() {
-		Assert.assertNotNull("No se puede crear producto", producto.getEstado());
+		Assert.assertNotNull("No se puede crear producto", producto.getTipoProducto());
 	}
 	
 	@Test
-	public void testEqualsProducto() {
+	public void testEqualsProductoTrue() {
 		Producto prod = new Producto("pan", 0);
-		Assert.assertEquals("Error en el estado de Producto", producto.getEstado(), prod.getEstado());
+		Assert.assertEquals("Creo el tipo de Producto", producto.getTipoProducto(), prod.getTipoProducto());
+	}
+	
+	@Test
+	public void testEqualsProductoFalse() {
+		Producto prod = new Producto("harina", 0);
+		Assert.assertNotSame("Error en el tipo de Producto", producto.getTipoProducto(), prod.getTipoProducto());
 	}
 }
