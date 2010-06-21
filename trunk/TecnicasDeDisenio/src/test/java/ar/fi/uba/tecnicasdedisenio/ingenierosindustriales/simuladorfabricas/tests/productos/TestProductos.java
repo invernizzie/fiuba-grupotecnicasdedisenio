@@ -10,13 +10,11 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.prod
 public class TestProductos {
 
 	private Producto producto;
-    private ValidadorProductos val;
 
     @Before
 	public void setUp() throws Exception {
         String posibleEstado = "pan";
-		val = ValidadorProductos.instancia();
-		producto = new Producto(val, posibleEstado, 0f);
+		producto = new Producto(posibleEstado, 0f);
 	}
 
 	@After
@@ -30,7 +28,7 @@ public class TestProductos {
 	
 	@Test
 	public void testEqualsProducto() {
-		Producto prod = new Producto(val, "pan", 0);
+		Producto prod = new Producto("pan", 0);
 		Assert.assertEquals("Error en el estado de Producto", producto.getEstado(), prod.getEstado());
 	}
 }

@@ -17,18 +17,15 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Prensa;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Salida;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class TestCintaTransporte {
 
     private static final int CANTIDAD_DE_PRUEBA = 100;
 
 	private CintaTransportadora cintaTransportadora;
-	private ValidadorProductos val;
 
     @Before
 	public void setUp() throws Exception {
-		val = ValidadorProductos.instancia();
 		ISalida extremoInicial = new Salida();
 		IEntrada extremoFinal = new Entrada();
 		this.cintaTransportadora = new CintaTransportadora(extremoInicial, extremoFinal);
@@ -36,7 +33,7 @@ public class TestCintaTransporte {
 
 	@Test
 	public void testAsignarProducto() {
-		Producto testProduct = new Producto(val, "Pan", 0F);
+		Producto testProduct = new Producto("Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct);
 		
 		Assert.assertNotNull("Se esperaba un solo Producto en la lista de Productos "
@@ -50,7 +47,7 @@ public class TestCintaTransporte {
 	
 	@Test
 	public void testTrasladarProducto() {
-		Producto testProduct = new Producto(val, "Pan", 0F);
+		Producto testProduct = new Producto("Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct);
 		
 		this.cintaTransportadora.trasladarElementos();
@@ -67,12 +64,12 @@ public class TestCintaTransporte {
 	
 	@Test
 	public void testAsignarProductos() {
-		Producto testProduct1 = new Producto(val, "Pan", 0F);
+		Producto testProduct1 = new Producto("Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct1);
 		
 		Assert.assertSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct1);
 		
-		Producto testProduct2 = new Producto(val, "Pan", 0F);
+		Producto testProduct2 = new Producto("Pan", 0F);
 		this.cintaTransportadora.getExtremoInicial().asignarProducto(testProduct2);
 		
 		Assert.assertNotSame("Se esperaba el ultimo Producto asignado", this.cintaTransportadora.getExtremoInicial().obtenerProducto(), testProduct1);
@@ -84,7 +81,7 @@ public class TestCintaTransporte {
 	public void testConectarMaquina() {
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
-		Producto testProduct = new Producto(val, "Pan", 0F);
+		Producto testProduct = new Producto("Pan", 0F);
 		
 		this.cintaTransportadora.conectar(prensa, plancha);
 		
@@ -151,7 +148,7 @@ public class TestCintaTransporte {
 	
 	@Test
 	public void testConectarMaquinaFuente() {
-		Producto testProduct = new Producto(val, "Pan", 0F);
+		Producto testProduct = new Producto("Pan", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		
@@ -168,7 +165,7 @@ public class TestCintaTransporte {
 	
 	@Test
 	public void testMateriaPrima() {
-		Producto testProduct = new Producto(val, "Pan", 0F);
+		Producto testProduct = new Producto("Pan", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		
@@ -183,8 +180,8 @@ public class TestCintaTransporte {
 	
 	@Test
 	public void testMateriasPrimas() {
-		Producto testProduct = new Producto(val, "Pan", 0F);
-		Producto testProduct2 = new Producto(val, "trigo", 0F);
+		Producto testProduct = new Producto("Pan", 0F);
+		Producto testProduct2 = new Producto("trigo", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		Fuente fuente2 = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct2);
@@ -204,7 +201,7 @@ public class TestCintaTransporte {
 	
 	@Test
 	public void testDesconectarFuente() {
-		Producto testProduct = new Producto(val, "Pan", 0F);
+		Producto testProduct = new Producto("Pan", 0F);
 		Maquina prensa = new Prensa(0F, 0F);
 		Fuente fuente = new Fuente("pan", CANTIDAD_DE_PRUEBA, testProduct);
 		

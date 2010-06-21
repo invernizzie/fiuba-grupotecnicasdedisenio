@@ -1,7 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 /**
  * Maquina ({@link Maquina}) encargada de planchar.
@@ -23,12 +22,12 @@ public class Plancha extends Maquina {
 
 	@Override
 	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(), "Planchado", 0);
+		return new Producto("planchado", 0);
 	}
 	
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(), "planchado", this.getTasaDeFallos());
+		return new Producto("planchado", this.getTasaDeFallos());
 	}
 
 	/**

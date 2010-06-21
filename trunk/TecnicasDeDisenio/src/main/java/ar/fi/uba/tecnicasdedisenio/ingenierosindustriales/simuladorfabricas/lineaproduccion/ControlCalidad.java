@@ -3,7 +3,6 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lin
 import java.util.List;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class ControlCalidad extends Maquina {
 
@@ -45,7 +44,7 @@ public class ControlCalidad extends Maquina {
 		Producto salida = this.getProductos().get(0); 
 		
 		if (salida.getEstado().equals("Defectuoso")) {
-			salida = new Producto(ValidadorProductos.instancia(), "Desecho", 0);
+			salida = new Producto("Desecho", 0);
 		}
 		
 		return salida;

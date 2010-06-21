@@ -1,7 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 /**
  * Maquina ({@link Maquina}) encargada de prensar.
@@ -24,12 +23,12 @@ public class Prensa extends Maquina {
 
 	@Override
 	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(), "prensado", 0);
+		return new Producto("prensado", 0);
 	}
 	
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(), "prensado", this.getTasaDeFallos());
+		return new Producto("prensado", this.getTasaDeFallos());
 	}
 
 	/**

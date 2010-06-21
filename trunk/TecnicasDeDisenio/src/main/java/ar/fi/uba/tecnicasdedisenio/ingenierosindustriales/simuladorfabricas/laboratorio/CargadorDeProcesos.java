@@ -23,7 +23,6 @@ public class CargadorDeProcesos {
 	public List<Proceso> cargarProcesos(String tipo){
 		TipoMaquina maq = null;
 		Proceso proceso = null;
-		ValidadorProductos val = ValidadorProductos.instancia();
 		
 		List<Proceso> procesos = new ArrayList<Proceso>();
 		
@@ -32,20 +31,20 @@ public class CargadorDeProcesos {
 			maq = new TipoMaquinaPrensa();
 			maq.getPrecedentes().add(new TipoMaquinaHorno());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaMezcladora());
-			maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto(val, "centeno", 0));
+			maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto("centeno", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
-			maq.addMateriaPrima(new Producto(val,"centeno",0));
+			maq.addMateriaPrima(new Producto("centeno",0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
 			maq.addPrecedente(new TipoMaquinaPlancha());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "centeno", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("centeno", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
@@ -54,7 +53,7 @@ public class CargadorDeProcesos {
 			maq.addPrecedente(new TipoMaquinaMezcladora());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 			maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "centeno", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("centeno", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
@@ -63,13 +62,13 @@ public class CargadorDeProcesos {
 			maq.addPrecedente(new TipoMaquinaMezcladora());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 			maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "centeno", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("centeno", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(200);
 			maq = new TipoMaquinaPlancha();
-			maq.addMateriaPrima(new Producto(val,"centeno",0));
+			maq.addMateriaPrima(new Producto("centeno",0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 		}
@@ -78,20 +77,20 @@ public class CargadorDeProcesos {
 			maq = new TipoMaquinaPrensa();
 			maq.getPrecedentes().add(new TipoMaquinaHorno());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaMezcladora());
-			maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
+			maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto("agua", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
-			maq.addMateriaPrima(new Producto(val,"agua",0));
+			maq.addMateriaPrima(new Producto("agua",0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
 			maq.addPrecedente(new TipoMaquinaPlancha());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("agua", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
@@ -100,7 +99,7 @@ public class CargadorDeProcesos {
 			maq.addPrecedente(new TipoMaquinaMezcladora());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 			maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("agua", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
@@ -109,13 +108,13 @@ public class CargadorDeProcesos {
 			maq.addPrecedente(new TipoMaquinaMezcladora());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 			maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "agua", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("agua", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(200);
 			maq = new TipoMaquinaHorno();
-			maq.addMateriaPrima(new Producto(val,"agua",0));
+			maq.addMateriaPrima(new Producto("agua",0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 		}
@@ -124,20 +123,20 @@ public class CargadorDeProcesos {
 			maq = new TipoMaquinaPrensa();
 			maq.getPrecedentes().add(new TipoMaquinaHorno());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaMezcladora());
-			maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto(val, "trigo", 0));
+			maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto("trigo", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
-			maq.addMateriaPrima(new Producto(val,"trigo",0));
+			maq.addMateriaPrima(new Producto("trigo",0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
 			maq.addPrecedente(new TipoMaquinaPlancha());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "trigo", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("trigo", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
@@ -146,7 +145,7 @@ public class CargadorDeProcesos {
 			maq.addPrecedente(new TipoMaquinaMezcladora());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 			maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "trigo", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("trigo", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
@@ -155,13 +154,13 @@ public class CargadorDeProcesos {
 			maq.addPrecedente(new TipoMaquinaMezcladora());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 			maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "trigo", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("trigo", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(200);
 			maq = new TipoMaquinaHorno();
-			maq.addMateriaPrima(new Producto(val,"trigo",0));
+			maq.addMateriaPrima(new Producto("trigo",0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 		}
@@ -170,20 +169,20 @@ public class CargadorDeProcesos {
 			maq = new TipoMaquinaPrensa();
 			maq.getPrecedentes().add(new TipoMaquinaHorno());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaMezcladora());
-			maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto(val, "azucar", 0));
+			maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto("azucar", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
-			maq.addMateriaPrima(new Producto(val,"azucar",0));
+			maq.addMateriaPrima(new Producto("azucar",0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
 			maq.addPrecedente(new TipoMaquinaPlancha());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "azucar", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("azucar", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
@@ -192,7 +191,7 @@ public class CargadorDeProcesos {
 			maq.addPrecedente(new TipoMaquinaMezcladora());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 			maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "azucar", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("azucar", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
@@ -201,13 +200,13 @@ public class CargadorDeProcesos {
 			maq.addPrecedente(new TipoMaquinaMezcladora());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 			maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "azucar", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("azucar", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(200);
 			maq = new TipoMaquinaHorno();
-			maq.addMateriaPrima(new Producto(val,"azucar",0));
+			maq.addMateriaPrima(new Producto("azucar",0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 		}
@@ -216,20 +215,20 @@ public class CargadorDeProcesos {
 			maq = new TipoMaquinaPrensa();
 			maq.getPrecedentes().add(new TipoMaquinaHorno());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaMezcladora());
-			maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto(val, "edulcorante", 0));
+			maq.getPrecedentes().get(0).getPrecedentes().get(0).addMateriaPrima(new Producto("edulcorante", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
-			maq.addMateriaPrima(new Producto(val,"edulcorante",0));
+			maq.addMateriaPrima(new Producto("edulcorante",0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(0);
 			maq = new TipoMaquinaPrensa();
 			maq.addPrecedente(new TipoMaquinaPlancha());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "edulcorante", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("edulcorante", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
@@ -238,7 +237,7 @@ public class CargadorDeProcesos {
 			maq.addPrecedente(new TipoMaquinaMezcladora());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 			maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "edulcorante", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("edulcorante", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
@@ -247,13 +246,13 @@ public class CargadorDeProcesos {
 			maq.addPrecedente(new TipoMaquinaMezcladora());
 			maq.getPrecedentes().get(0).addPrecedente(new TipoMaquinaPrensa());
 			maq.getPrecedentes().get(0).getPrecedentes().get(0).addPrecedente(new TipoMaquinaHorno());
-			maq.getPrecedentes().get(0).addMateriaPrima(new Producto(val, "edulcorante", 0));
+			maq.getPrecedentes().get(0).addMateriaPrima(new Producto("edulcorante", 0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 			
 			proceso = new Proceso(200);
 			maq = new TipoMaquinaHorno();
-			maq.addMateriaPrima(new Producto(val,"edulcorante",0));
+			maq.addMateriaPrima(new Producto("edulcorante",0));
 			proceso.setMaquinaFinal(maq);
 			procesos.add(proceso);
 		}

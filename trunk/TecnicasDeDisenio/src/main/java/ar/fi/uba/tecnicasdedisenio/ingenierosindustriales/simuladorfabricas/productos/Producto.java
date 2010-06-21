@@ -8,7 +8,6 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.pro
  */
 public class Producto implements Cloneable {
 	private String estado;
-	private ValidadorProductos validador;
 
 	public String getEstado() {
 		return estado;
@@ -20,10 +19,9 @@ public class Producto implements Cloneable {
         }
 	}
 
-	public Producto(final ValidadorProductos val, final String estado, final double tasa_falla) {
+	public Producto(final String estado, final double tasa_falla) {
 		super();
-		this.validador = val;
-		if (val.existe(estado)) {
+		if (ValidadorProductos.instancia().existe(estado)) {
 			double proba = Math.random();
 			if (tasa_falla < proba) {
 				this.estado = estado;
@@ -65,14 +63,14 @@ public class Producto implements Cloneable {
 	}
 
 	public Producto clone() {
-		return new Producto(this.validador, estado, 0F);
+		return new Producto(estado, 0F);
 	}
 
 	public Float getPrecioMercado() {
-		return this.validador.obtenerPrecioMercado(this.estado);
+		return ValidadorProductos.instancia().obtenerPrecioMercado(this.estado);
 	}
 
 	public Float getPrecioCompra() {
-		return this.validador.obtenerPrecioCompra(this.estado);		
+		return ValidadorProductos.instancia().obtenerPrecioCompra(this.estado);		
 	}
 }

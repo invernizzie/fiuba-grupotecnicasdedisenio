@@ -26,7 +26,6 @@ import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.line
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPlancha;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.tipomaquina.TipoMaquinaPrensa;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 public class TestFabricaLineas {
 
@@ -40,11 +39,11 @@ public class TestFabricaLineas {
 	public void setUp() throws Exception {
 		this.fabrica = new Fabrica(1, 1, 1);
 		this.fuenteTrigo = new Fuente("trigo", 100, 
-				new Producto(ValidadorProductos.instancia(), "trigo", 0));
+				new Producto("trigo", 0));
 		this.fuenteAgua = new Fuente("agua", 100, 
-				new Producto(ValidadorProductos.instancia(), "agua", 0));	
+				new Producto("agua", 0));	
 		this.fuenteSal = new Fuente("agua", 100, 
-				new Producto(ValidadorProductos.instancia(), "sal", 0));
+				new Producto("sal", 0));
 		
 		this.fabrica.agregarFuente(fuenteTrigo);
 		this.fabrica.agregarFuente(fuenteAgua);
@@ -147,7 +146,7 @@ public class TestFabricaLineas {
 		Proceso proceso = new Proceso(1000);
 		TipoMaquina maq = new TipoMaquinaPrensa();
 		TipoMaquinaPlancha tipoPlancha = new TipoMaquinaPlancha();
-		tipoPlancha.addMateriaPrima(new Producto(ValidadorProductos.instancia(), "trigo", 0));
+		tipoPlancha.addMateriaPrima(new Producto("trigo", 0));
 		maq.addPrecedente(tipoPlancha);
 		proceso.setMaquinaFinal(maq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proceso);
@@ -185,7 +184,7 @@ public class TestFabricaLineas {
 		Proceso proceso = new Proceso(1000);
 		TipoMaquina maq = new TipoMaquinaPrensa();
 		TipoMaquinaPlancha tipoPlancha = new TipoMaquinaPlancha();
-		tipoPlancha.addMateriaPrima(new Producto(ValidadorProductos.instancia(), "trigo", 0));
+		tipoPlancha.addMateriaPrima(new Producto("trigo", 0));
 		maq.addPrecedente(tipoPlancha);
 		proceso.setMaquinaFinal(maq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proceso);
@@ -356,7 +355,7 @@ public class TestFabricaLineas {
 		Proceso proceso = new Proceso(1000);
 		TipoMaquina maq = new TipoMaquinaPrensa();
 		TipoMaquinaPlancha tipoPlancha = new TipoMaquinaPlancha();
-		tipoPlancha.addMateriaPrima(new Producto(ValidadorProductos.instancia(), "trigo", 0));
+		tipoPlancha.addMateriaPrima(new Producto("trigo", 0));
 		maq.addPrecedente(tipoPlancha);
 		proceso.setMaquinaFinal(maq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proceso);
@@ -402,7 +401,7 @@ public class TestFabricaLineas {
 		Proceso proceso = new Proceso(1000);
 		TipoMaquina maq = new TipoMaquinaPrensa();
 		TipoMaquinaPlancha tipoPlancha = new TipoMaquinaPlancha();
-		tipoPlancha.addMateriaPrima(new Producto(ValidadorProductos.instancia(), "trigo", 0));
+		tipoPlancha.addMateriaPrima(new Producto("trigo", 0));
 		maq.addPrecedente(tipoPlancha);
 		proceso.setMaquinaFinal(maq);
 		jugador.getLaboratorio().getProcesosHabilitados().add(proceso);

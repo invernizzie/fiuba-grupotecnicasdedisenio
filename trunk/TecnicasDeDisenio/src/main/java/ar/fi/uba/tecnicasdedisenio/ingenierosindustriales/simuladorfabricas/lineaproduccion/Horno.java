@@ -1,7 +1,6 @@
 package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 /**
  * Maquina ({@link Maquina}) encargada de hornear.
@@ -24,12 +23,12 @@ public class Horno extends Maquina {
 
 	@Override
 	public Producto getTipoProducto() {
-		return new Producto(ValidadorProductos.instancia(), "Horneado", 0);
+		return new Producto("horneado", 0);
 	}
 	
 	@Override
 	protected Producto realizarProceso() {
-		return new Producto(ValidadorProductos.instancia(), "Horneado", this.getTasaDeFallos());
+		return new Producto("horneado", this.getTasaDeFallos());
 	}
 
 	/**

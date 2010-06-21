@@ -5,7 +5,6 @@ import java.util.List;
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.excepciones.EntradaInvalidaException;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.Producto;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.productos.ValidadorProductos;
 
 
 /**
@@ -77,7 +76,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 				if (construirProductoValido) {
 					elementoProcesado = this.realizarProceso();
 				} else {
-					elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
+					elementoProcesado = new Producto("Desecho", 0F);
 				}
 				this.getProductos().clear();
 				this.getEntrada().getProdcutos().clear();
@@ -90,7 +89,7 @@ public abstract class Maquina implements Cloneable, IFuente  {
 													+ "para que esta máquina opere");
 			}
 		} else {
-			elementoProcesado = new Producto(ValidadorProductos.instancia(), "Desecho", 0F);
+			elementoProcesado = new Producto("Desecho", 0F);
 		}
 		return elementoProcesado;
 	}
