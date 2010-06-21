@@ -2,118 +2,50 @@ package ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.int
 
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CubiculoOcupadoExcetion;
 import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.CubiculoVacioException;
-import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.*;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.interfazgrafica.fabrica.excepciones.FuenteNoSoportadaException;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.CintaTransportadora;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Fuente;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.IFuente;
+import ar.fi.uba.tecnicasdedisenio.ingenierosindustriales.simuladorfabricas.lineaproduccion.Maquina;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Esteban I. Invernizzi (invernizzie@gmail.com)
- *         Date: 06/06/2010
+ *         Date: 21/06/2010
  */
-public class CubiculoFabril {
+public abstract class CubiculoFabril {
 
-    private Maquina maquina = null;
-    private Fuente fuente = null;
     private List<CintaTransportadora> cintasIncidentes = new ArrayList<CintaTransportadora>();
-      
-    public boolean estaOcupado() {
-        return (maquina != null) || (fuente != null);
-    }
 
-    public void ocuparCon(final IFuente fuente) throws CubiculoOcupadoExcetion {
-        if (fuente instanceof Maquina)
-            asignarMaquina((Maquina) fuente);
-        if (fuente instanceof Fuente)
-            asignarMateriaPrima((Fuente) fuente);
-    }
-
-    public void asignarMaquina(final Maquina maquina) throws CubiculoOcupadoExcetion {
-        if (estaOcupado()) {
-            throw new CubiculoOcupadoExcetion();
-        }
-        this.maquina = maquina;
-    }
-
-    public void asignarMateriaPrima(final Fuente fuente) throws CubiculoOcupadoExcetion {
-        if (estaOcupado()) {
-            throw new CubiculoOcupadoExcetion();
-        }
-        this.fuente = fuente;
-    }
-
-    public void conectarCinta(final CintaTransportadora cinta) {
+    void conectarCinta(CintaTransportadora cinta) {
         cintasIncidentes.add(cinta);
     }
 
-    public boolean puedeSerComienzoDeCinta() {
-        return fuente != null || (maquina != null && !maquina.tieneCintaDeSalida());
-    }
-
-    public IFuente obtenerPrincipioDeCinta() throws CubiculoVacioException {
-        if (fuente != null) {
-            return fuente;
-        }
-        if (maquina == null) {
-            throw new CubiculoVacioException();
-        }
-        if (!maquina.tieneCintaDeSalida()) {
-            return maquina;
-        }
-        throw new CubiculoVacioException();
-    }
-
-    public Maquina obtenerFinDeCinta() throws CubiculoVacioException {
-        if (!puedeSerFinDeCinta()) {
-            throw new CubiculoVacioException();
-        }
-        return maquina;
-    }
-
-    public Maquina obtenerMaquina() throws CubiculoVacioException {
-        if (maquina == null) {
-            throw new CubiculoVacioException();
-        }
-        return maquina;
-    }
-
-    public Fuente obtenerFuente() throws CubiculoVacioException {
-        if (fuente == null) {
-            throw new CubiculoVacioException();
-        }
-        return fuente;
-    }
-
-    public IFuente getFuente() throws CubiculoVacioException {
-        if (fuente != null) {
-            return fuente;
-        }
-        if (maquina != null) {
-            return maquina;
-        }
-        throw new CubiculoVacioException();
-    }
-
-    public List<CintaTransportadora> obtenerCintas() {
+    List<CintaTransportadora> obtenerCintas() {
         return cintasIncidentes;
     }
 
-    public void eliminarCintasIncidentes() {
+    void eliminarCintasIncidentes() {
         cintasIncidentes = new ArrayList<CintaTransportadora>();
     }
 
-    public boolean eliminar(final IFuente fuente) {
-        if (fuente == null) {
-            return false;
-        }
-        if ((maquina == fuente) || this.fuente == fuente) {
-            maquina = null;
-            this.fuente = null;
-            return true;
-        }
-        return false;
-    }
-    
-    private boolean puedeSerFinDeCinta() {
-        return (maquina != null);
-    }
+    public abstract boolean estaOcupado();
+
+    public abstract void ocuparCon(IFuente fuente) throws CubiculoOcupadoExcetion, FuenteNoSoportadaException;
+
+    public abstract boolean puedeSerComienzoDeCinta();
+
+    public abstract IFuente obtenerPrincipioDeCinta() throws CubiculoVacioException;
+
+    public abstract Maquina obtenerFinDeCinta() throws CubiculoVacioException;
+
+    public abstract Maquina obtenerMaquina() throws CubiculoVacioException;
+
+    public abstract Fuente obtenerFuente() throws CubiculoVacioException;
+
+    public abstract IFuente getFuente() throws CubiculoVacioException;
+
+    public abstract boolean eliminar(IFuente fuente);
 }

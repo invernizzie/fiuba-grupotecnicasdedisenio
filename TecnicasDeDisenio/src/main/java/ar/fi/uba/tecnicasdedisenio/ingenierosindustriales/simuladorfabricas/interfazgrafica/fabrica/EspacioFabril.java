@@ -268,8 +268,10 @@ public class EspacioFabril {
     }
 
     private void borrar(IFuente fuente, int x, int y) {
-        intentarBorrarFuenteEn(fuente, x, y);
-        borrarFuenteAlrededorDe(fuente, x, y);
+        if (fuente != null) {
+            intentarBorrarFuenteEn(fuente, x, y);
+            borrarFuenteAlrededorDe(fuente, x, y);
+        }
     }
 
     private void borrarFuenteAlrededorDe(final IFuente fuente, final int x, final int y) {
@@ -330,18 +332,30 @@ public class EspacioFabril {
         int y = transformarCoordenada(_y);
         for (int offsetX = 0; offsetX <= ancho; offsetX++) {
             for (int offsetY = 0; offsetY <= alto; offsetY++) {
-                obtenerOCrearCubiculo(x + offsetX, y + offsetY).ocuparCon(fuente);
+                ocuparCubiculo(x + offsetX, y + offsetY, fuente);
             }
         }
     }
 
-    private CubiculoFabril obtenerOCrearCubiculo(final int x, final int y) throws CoordenadasIncorrectasException {
+    private void ocuparCubiculo(final int x, final int y, IFuente fuente) throws CoordenadasIncorrectasException, CubiculoOcupadoExcetion {
         CubiculoFabril cubiculo = buscarCubiculo(x, y);
         if (cubiculo == null) {
-            cubiculo = new CubiculoFabril();
+            try {
+                cubiculo = new CubiculoMutante(fuente);
+            } catch (FuenteNoSoportadaException e) {
+                // No deberia arrojarse nunca
+                e.printStackTrace();
+            }
             superficieFabril[x][y] = cubiculo;
+
+        } else {
+            try {
+                cubiculo.ocuparCon(fuente);
+            } catch (FuenteNoSoportadaException e) {
+                // No deberia arrojarse nunca
+                e.printStackTrace();
+            }
         }
-        return cubiculo;
     }
 
     private CubiculoFabril buscarCubiculo(final int x, final int y) throws CoordenadasIncorrectasException {
