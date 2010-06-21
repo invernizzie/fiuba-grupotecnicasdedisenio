@@ -71,6 +71,19 @@ public class CintaTransportadora {
 		destino.addMateriaPrima(origen.getTipoProducto());
 		destino.addFuente(origen);
 	}
+
+	/**
+	 * Método de desambiguación entre los distintos tipos de fuente.
+	 * @param fuente
+	 * @param maquina
+	 */
+	public void conectar(final IFuente fuente, final Maquina maquina) {
+		if (fuente instanceof Fuente) {
+			conectar((Fuente) fuente, maquina);
+        } else {
+        	conectar((Maquina) fuente, maquina);
+        }
+	}
 	
 	public void desconectar(final Maquina origen, final Maquina destino) {
 		resetExtremos();

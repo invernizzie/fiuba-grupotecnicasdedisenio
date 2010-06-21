@@ -45,7 +45,7 @@ public class Contenedor {
 		int cantidadDesecho = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (producto.getEstado() == EstadoProducto.DESECHO) {
+			if (producto.getEstado().equals(EstadoProducto.DESECHO)) {
 				cantidadDesecho++;
 			}
 		}
@@ -57,7 +57,7 @@ public class Contenedor {
 		int cantidadDefectuosos = 0;
 		
 		for (Producto producto : productosRecibidos) {
-			if (producto.getEstado() == EstadoProducto.DEFECTUOSO) {
+			if (producto.getEstado().equals(EstadoProducto.DEFECTUOSO)) {
 				cantidadDefectuosos++;
 			}
 		}

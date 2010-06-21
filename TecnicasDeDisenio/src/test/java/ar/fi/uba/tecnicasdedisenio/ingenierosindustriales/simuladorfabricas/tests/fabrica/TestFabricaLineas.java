@@ -55,7 +55,7 @@ public class TestFabricaLineas {
 	}
 
 	@Test
-	public void testSeCreaUnaSolaLineaCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltima() {
+	public void seCreaUnaSolaLineaCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltima() {
 		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
@@ -78,7 +78,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testSeCreanDosLineasCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltimaYSeHaceLoMismoConOtraFuenteYOtrasMaquinas() {
+	public void seCreanDosLineasCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltimaYSeHaceLoMismoConOtraFuenteYOtrasMaquinas() {
 		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
@@ -105,7 +105,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testSeCreanTresLineasCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltimaYSeHaceLoMismoConOtrasDosFuenteYOtrasCuatroMaquinas() {
+	public void seCreanTresLineasCuandoSeConectaUnaFuenteAUnaMaquinaYOtraMaquinaAEstaUltimaYSeHaceLoMismoConOtrasDosFuenteYOtrasCuatroMaquinas() {
 		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
@@ -138,7 +138,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testSeDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoValido() {
+	public void seDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoValido() {
 		/*Inicialización.*/
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
@@ -176,7 +176,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testSeDescuentanLosCostosCorrectosAlPasarCuatroDiasConProcesoValido() {
+	public void seDescuentanLosCostosCorrectosAlPasarCuatroDiasConProcesoValido() {
 		/*Inicialización.*/
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
@@ -222,7 +222,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testSeDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoInvalido() {
+	public void seDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoInvalido() {
 		/*Inicialización.*/
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
@@ -248,7 +248,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testSeDescuentanLosCostosCorrectosAlPasarCuatroDiasConProcesoInValido() {
+	public void seDescuentanLosCostosCorrectosAlPasarCuatroDiasConProcesoInValido() {
 		/*Inicialización.*/
 		Maquina prensa = new Prensa(0F, 0F);
 		Maquina plancha = new Plancha(0F, 0F);
@@ -282,7 +282,7 @@ public class TestFabricaLineas {
 
 	
 	@Test
-	public void testSeEsperaUnaSolaLineaAlCrearDosLineasYEliminarLasMaquinasDeUna() {
+	public void seEsperaUnaSolaLineaAlCrearDosLineasYEliminarLasMaquinasDeUna() {
 		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
@@ -312,7 +312,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testNoSeEsperanLineasAlCrearDosLineasYEliminarLasMaquinasDeAmbas() {
+	public void noSeEsperanLineasAlCrearDosLineasYEliminarLasMaquinasDeAmbas() {
 		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
@@ -346,7 +346,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testElDineroDisminuidoAlJugadorEsSolamenteElDeLaConsumisionDeLaMateriaPrimaCuandoSeRompeUnaMaquinaYPasanDosDias() {
+	public void elDineroDisminuidoAlJugadorEsSolamenteElDeLaConsumisionDeLaMateriaPrimaCuandoSeRompeUnaMaquinaYPasanDosDias() {
 		/*Inicialización.*/
 		float dineroJugador, dineroEsperado;
 		/*
@@ -393,7 +393,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testSeDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoValidoYTieneControlDeCalidad() {
+	public void seDescuentanLosCostosCorrectosAlPasarDosDiasConProcesoValidoYTieneControlDeCalidad() {
 		/*Inicialización.*/
 		/*
 		 * Creo un proceso de prueba para simplificar el test.
@@ -437,7 +437,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testNoHayUnCicloCuandoConectoTresMaquinasMaquinasSinArmarUnCiclo() {
+	public void noHayUnCicloCuandoConectoTresMaquinasMaquinasSinArmarUnCiclo() {
 		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
@@ -462,7 +462,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testHayUnCicloCuandoConectoTresMaquinasYLaUltimaLaConectoALaPrimera() {
+	public void hayUnCicloCuandoConectoTresMaquinasYLaUltimaLaConectoALaPrimera() {
 		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
@@ -487,7 +487,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testHayUnCicloCuandoConectoTresMaquinasYLaUltimaLaConectoAUnaDeLasAnterioresQueNoEsLaPrimera() {
+	public void hayUnCicloCuandoConectoTresMaquinasYLaUltimaLaConectoAUnaDeLasAnterioresQueNoEsLaPrimera() {
 		/*Inicialización.*/
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
@@ -512,7 +512,7 @@ public class TestFabricaLineas {
 	}
 	
 	@Test
-	public void testHayUnCicloCuandoConectoTresMaquinasSiendoLaUltimaControlCalidadYLaUltimaLaConectoALaPrimera() {
+	public void hayUnCicloCuandoConectoTresMaquinasSiendoLaUltimaControlCalidadYLaUltimaLaConectoALaPrimera() {
 		Maquina horno = new Horno(0F, 0F);
 		Maquina licuadora = new Licuadora(0F, 0F);
 		Maquina control = new ControlCalidad(0F, 0F);
